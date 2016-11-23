@@ -11,7 +11,8 @@
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack src/index.js dist/backendless-console-sdk.js",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack src/index.js dist/backendless-console-sdk.min.js",
-    "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min"
+    "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
+    "postinstall": "postinstall-build lib \"npm run build\""
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "webpack": "^1.13.3"
   },
   "dependencies": {
-    "lodash": "^4.17.2"
+    "lodash": "^4.17.2",
+    "postinstall-build": "^2.1.3"
   }
 }
