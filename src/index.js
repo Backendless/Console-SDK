@@ -1,11 +1,97 @@
-const createClient = (host, port) => {
-    return {
-        login: () => {
-            return Promise.resolve(`logged in to ${host}:${port}`)
-        }
+import { Request, methods } from './utils/request'
+import * as CacheTags from './utils/cache-tags'
+import urls from './urls'
+
+import security from './security'
+import geo from './geo'
+import tables from './tables'
+import codegen from './codegen'
+import files from './files'
+import bl from './bl'
+import email from './email'
+import user from './user'
+import messaging from './messaging'
+import settings from './settings'
+import projectTemplate from './project-template'
+import billing from './billing'
+import analytics from './analytics'
+import apps from './apps'
+import users from './users'
+import status from './status'
+import transfer from './transfer'
+
+class Context {
+
+  constructor(authKey) {
+    this.authKey = authKey
+  }
+
+  setAuthKey(authKey) {
+    this.authKey = authKey
+  }
+
+  /**
+   * @param {Request} req
+   * @returns {Request}
+   */
+  apply(req) {
+    if (this.authKey) {
+      req.set('auth-key', this.authKey)
     }
+
+    return req
+  }
+}
+
+/**
+ * @param {Context} context
+ * @param {String} serverUrl
+ */
+const contextifyRequest = (context, serverUrl) => {
+  const result = {}
+
+  serverUrl = serverUrl || ''
+
+  if (serverUrl && !serverUrl.endsWith('/')) {
+    serverUrl += '/'
+  }
+
+  methods.forEach(method => {
+    result[method] = (path, body) => context.apply(new Request(serverUrl + path, method, body))
+  })
+
+  return result
+}
+
+const createClient = (serverUrl, authKey) => {
+  const context = new Context(authKey)
+
+  const request = contextifyRequest(context, serverUrl)
+
+  return {
+    user           : user(request, context),
+    users          : users(request, context),
+    apps           : apps(request, context),
+    security       : security(request, context),
+    geo            : geo(request, context),
+    tables         : tables(request, context),
+    files          : files(request, context),
+    codegen        : codegen(request, context),
+    bl             : bl(request, context),
+    email          : email(request, context),
+    messaging      : messaging(request, context),
+    settings       : settings(request, context),
+    projectTemplate: projectTemplate(request, context),
+    billing        : billing(request, context),
+    analytics      : analytics(request, context),
+    status         : status(request, context),
+    transfer       : transfer(request, context)
+  }
 }
 
 export {
-    createClient
+  createClient,
+  CacheTags,
+  Request,
+  urls
 }

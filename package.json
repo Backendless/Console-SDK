@@ -1,23 +1,38 @@
 {
-  "name": "console-sdk",
+  "name": "backendless-console-sdk",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "browser": "dist/backendless-console-sdk.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "src"
+  ],
   "scripts": {
+    "clean": "rimraf lib dist es",
     "lint": "eslint src test build",
     "test": "",
-    "check": "npm run lint:src && npm run test",
+    "check": "npm run lint && npm run test",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack src/index.js dist/backendless-console-sdk.js",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack src/index.js dist/backendless-console-sdk.min.js",
-    "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
-    "postinstall": "postinstall-build lib \"npm run build\""
+    "build": "npm run build:commonjs && npm run build:es",
+    "build_backup": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
+    "prepublish": "npm run clean && npm run check && npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git@gitlab.backendless.com:backendless/console-sdk.git"
   },
+  "keywords": [
+    "backendless",
+    "sdk"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -26,12 +41,13 @@
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.8",
     "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-1": "^6.16.0",
     "cross-env": "^3.1.3",
     "eslint": "^3.10.2",
+    "rimraf": "^2.5.4",
     "webpack": "^1.13.3"
   },
   "dependencies": {
-    "lodash": "^4.17.2",
-    "postinstall-build": "^2.1.3"
+    "lodash": "^4.17.2"
   }
 }

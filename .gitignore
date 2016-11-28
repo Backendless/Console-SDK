@@ -4,5 +4,5 @@ node_modules
 dist
 lib
 es
-.idea
-.idea/**
+.idea/*
+!.idea/codeStyleSettings.xml
