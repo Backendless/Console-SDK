@@ -80,6 +80,10 @@ export default req => ({
     return req.delete(hostedServices(appId), [serviceId])
   },
 
+  updateService(appId, serviceId, updates) {
+    return req.put(`${ hostedServices(appId) }/${ serviceId }/update`, updates)
+  },
+
   loadServiceConfig(appId, serviceId) {
     // TODO: remove this transformation when the format of config will be changed
     return req.get(hostedServiceConfig(appId, serviceId))
