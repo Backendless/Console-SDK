@@ -52,10 +52,6 @@ const contextifyRequest = (context, serverUrl) => {
 
   serverUrl = serverUrl || ''
 
-  if (serverUrl && !serverUrl.endsWith('/')) {
-    serverUrl += '/'
-  }
-
   methods.forEach(method => {
     result[method] = (path, body) => context.apply(new Request(serverUrl + path, method, body))
   })

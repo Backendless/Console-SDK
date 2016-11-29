@@ -1,11 +1,11 @@
 export const DataTypes = {
   INT            : 'INT',
   DOUBLE         : 'DOUBLE',
-  BOOLEAN        : 'BOOLEAN        ',
-  STRING         : 'STRING         ',
-  DATETIME       : 'DATETIME       ',
-  TEXT           : 'TEXT           ',
-  STRING_ID      : 'STRING_ID      ',
+  BOOLEAN        : 'BOOLEAN',
+  STRING         : 'STRING',
+  DATETIME       : 'DATETIME',
+  TEXT           : 'TEXT',
+  STRING_ID      : 'STRING_ID',
   EXTENDED_STRING: 'EXTENDED_STRING',
 
   FILE_REF: 'FILE_REF',
@@ -13,7 +13,7 @@ export const DataTypes = {
   GEO_REF : 'GEO_REF ',
   CHILD_OF: 'CHILD_OF',
 
-  UNKNOWN: 'l'
+  UNKNOWN: 'UNKNOWN'
 }
 
 export const PRIMITIVES = [

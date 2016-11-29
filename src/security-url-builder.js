@@ -5,6 +5,7 @@
  */
 
 import urls from './urls'
+import { toQueryString } from './utils/path'
 import { PermissionPolicies, PermissionServices, ALL_OBJECTS } from './constants/security'
 
 const baseUrl = appId => urls.security(appId)
@@ -44,7 +45,7 @@ export const buildGetUrl = (appId, policy, service, serviceItemId, serviceItemNa
     stickingPoint = `${service}/${serviceItemName}/objectAcl/${objectId}/${policy}`
   }
 
-  return `${baseUrl(appId)}/${stickingPoint}?${stringify(filterParams)}`
+  return `${baseUrl(appId)}/${stickingPoint}?${toQueryString(filterParams)}`
 }
 
 /**

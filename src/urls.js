@@ -3,19 +3,20 @@ export const appConsole = (appId, authKey) => `/${appId}${console(authKey)}`
 
 const consoleSection = section => appId => `${appConsole(appId)}/${section}`
 
-export const securityRoles = appId => `${security(appId)}/roles`
 export const mailSettings = consoleSection('mailsettings')
 export const security = consoleSection('security')
 export const serverCode = consoleSection('servercode')
 export const blBasePath = consoleSection('localservices')
 export const data = consoleSection('data')
 export const geo = consoleSection('geo')
+
 export const dataTables = appId => `${data(appId)}/tables`
 export const dataTable = (appId, tableName) => `${data(appId)}/${tableName}`
 export const dataRecord = (appId, tableName, recordId) => `${dataTable(appId, tableName)}/${recordId}`
 export const dataConfigs = appId => `${data(appId)}/config`
 export const files = (appId, apiKey) => `${appId}/${apiKey}/files`
 export const tableColumns = (appId, tableName) => `${dataTables(appId)}/${tableName}/columns`
+export const securityRoles = appId => `${security(appId)}/roles`
 
 const generalizeEventCategory = category => !category || category === 'TIMER' ? 'timers' : 'events'
 

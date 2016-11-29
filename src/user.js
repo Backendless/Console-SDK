@@ -5,11 +5,11 @@
  */
 export default (req, context) => ({
   getAccountInfo() {
-    return req.get('console/home/myaccount').send()
+    return req.get('/console/home/myaccount').send()
   },
 
   login(login, password) {
-    return req.post('console/home/login')
+    return req.post('/console/home/login')
       .unwrapBody(false)
       .send({ login, password })
       .then(res => {
@@ -23,21 +23,21 @@ export default (req, context) => ({
   },
 
   register(userData) {
-    return req.post('console/devreg').send(userData)
+    return req.post('/console/devreg').send(userData)
   },
 
   checkForCaptchaRequirement() {
-    return req.get('console/devreg/captcha_required')
+    return req.get('/console/devreg/captcha_required')
   },
 
   logout() {
-    return req.delete('console/home/logout').then(() => {
+    return req.delete('/console/home/logout').then(() => {
       context.setAuthKey(null)
     })
   },
 
   restorePassword(email) {
-    return req.post('console/restorepassword')
+    return req.post('/console/restorepassword')
       .type('application/x-www-form-urlencoded; charset=UTF-8')
       .send('email=' + encodeURIComponent(email))
   }
