@@ -48,5 +48,9 @@ export default (req, context) => ({
     return req.post('/console/restorepassword')
       .type('application/x-www-form-urlencoded; charset=UTF-8')
       .send('email=' + encodeURIComponent(email))
+  },
+
+  resendConfirmEmail(email) {
+    return req.get('console/resend').query({ email })
   }
 })
