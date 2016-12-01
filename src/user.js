@@ -4,7 +4,11 @@
  * @param {Context} context
  */
 export default (req, context) => ({
-  getAccountInfo() {
+  getAccountInfo(authKey) {
+    if (authKey) {
+      context.setAuthKey(authKey)
+    }
+
     return req.get('/console/home/myaccount').send()
   },
 
@@ -28,6 +32,10 @@ export default (req, context) => ({
 
   checkForCaptchaRequirement() {
     return req.get('/console/devreg/captcha_required')
+  },
+
+  loginWithGoogle() {
+    return req.get('/console/social/oauth/googleplus/request_url')
   },
 
   logout() {
