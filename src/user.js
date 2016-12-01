@@ -34,8 +34,8 @@ export default (req, context) => ({
     return req.get('/console/devreg/captcha_required')
   },
 
-  loginWithGoogle() {
-    return req.get('/console/social/oauth/googleplus/request_url')
+  loginSocial(type) {
+    return req.get(`/console/social/oauth/${type}/request_url`)
   },
 
   logout() {
