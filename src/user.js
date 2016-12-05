@@ -14,7 +14,7 @@ export default (req, context) => ({
       .send({ login, password })
       .then(res => {
         const { name, email } = res.body
-        const authKey = res.headers.get('auth-key')
+        const authKey = res.headers['auth-key']
 
         context.setAuthKey(authKey)
 

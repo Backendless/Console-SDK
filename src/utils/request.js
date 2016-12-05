@@ -1,3 +1,5 @@
+/* global fetch */
+
 import Cache from './cache'
 import { toQueryString } from './path'
 
@@ -7,6 +9,7 @@ const CACHE_FLUSH_INTERVAL = 60000 //60 sec
 const cache = new Cache(CACHE_FLUSH_INTERVAL)
 
 const isObject = obj => null !== obj && 'object' === typeof obj
+const isFormData = obj => null !== obj && obj.toString() === '[object FormData]'
 
 class ResponseError extends Error {
   constructor(error, status, headers) {
@@ -19,24 +22,6 @@ class ResponseError extends Error {
   }
 }
 
-const parseResponse = res => {
-  return parseResponseBody(res).then(body => ({
-    ok        : res.ok,
-    status    : res.status,
-    statusText: res.statusText,
-    headers   : res.headers,
-    body      : body
-  }))
-}
-
-const parseResponseBody = res => {
-  if (res.status === 404) {
-    return Promise.resolve(null)
-  }
-
-  return res.clone().json().catch(() => res.text())
-}
-
 function parseError(res) {
   if (res.status === 502) {
     return 'No connection with server'
@@ -44,6 +29,72 @@ function parseError(res) {
 
   return res.body || `Status Code ${res.status} (${res.statusText})`
 }
+
+function parseBody(res) {
+  try {
+    return { ...res, body: JSON.parse(res.body) }
+  } catch (e) {
+    return res
+  }
+}
+
+const sendFetchAPIRequest = (path, method, headers, body) => {
+  const options = { method, headers, body }
+
+  const responseHeadersToJSON = headers => {
+    const result = {}
+
+    for(const key of headers.keys()) {
+      result[key] = headers.get(key)
+    }
+
+    return result
+  }
+
+  return fetch(path, options).then(res => {
+    const { ok, status, statusText } = res
+    const headers = responseHeadersToJSON(res.headers)
+
+    return res.text().then(body => ({ ok, status, statusText, headers, body }))
+  })
+}
+
+const sendNodeAPIRequest = (path, method, headers, body) => {
+  return new Promise((resolve, reject) => {
+    const u = require('url').parse(path)
+    const https = u.protocol === 'https:'
+    const options = {
+      host   : u.hostname,
+      port   : u.port || (https ? 443 : 80),
+      method : method,
+      path   : u.path,
+      headers: headers
+    }
+
+    const httpClient = require(https ? 'https' : 'http')
+
+    const req = httpClient.request(options, res => {
+      res.setEncoding('utf8')
+
+      const { statusCode: status, statusMessage: statusText, headers } = res
+      const ok = status >= 200 && status < 300
+
+      let body = ''
+      res.on('data', chunk => body += chunk)
+      res.on('end', () => resolve({ ok, status, statusText, headers, body }))
+      res.on('error', reject)
+    })
+
+    if (body) {
+      req.write(body)
+    }
+
+    req.on('error', reject)
+    req.end()
+  })
+}
+
+const sendRequest = typeof fetch !== 'undefined' ? sendFetchAPIRequest : sendNodeAPIRequest
 
 /**
  * Checks if a network request came back fine, and throws an error if not
@@ -171,19 +222,14 @@ export class Request {
 
     const type = this.headers[CONTENT_TYPE_HEADER]
 
-    if (!type && isObject(body) && !(body instanceof FormData)) {
+    if (!type && isObject(body) && !isFormData(body)) {
       this.type('application/json')
-    }
-
-    const options = {
-      method : this.method.toUpperCase(),
-      headers: this.headers
     }
 
     if (body) {
       const isJSON = this.headers[CONTENT_TYPE_HEADER] === 'application/json'
 
-      options.body = isJSON ? JSON.stringify(body) : body
+      body = (isJSON && typeof body !== 'string') ? JSON.stringify(body) : body
     }
 
     const unwrapBody = res => {
@@ -212,8 +258,8 @@ export class Request {
       return res
     }
 
-    return fetch(path, options)
-      .then(parseResponse)
+    return sendRequest(path, this.method.toUpperCase(), this.headers, body)
+      .then(parseBody)
       .then(checkStatus)
       .then(unwrapBody)
       .then(cacheResponse)
@@ -223,19 +269,24 @@ export class Request {
   /**
    * If you are too lazy to use method 'send', don't use it and stay cool :)
    *
-   * @param {Function} callback
+   * @param {Function} successHandler
+   * @param {Function} errorHandler
    * @returns {Promise}
    */
-  then(onSuccess, onError) {
+  then(successHandler, errorHandler) {
     this.promise = this.promise || this.send(this.body)
 
-    return this.promise.then(onSuccess, onError)
+    return this.promise.then(successHandler, errorHandler)
   }
 
-  catch(callback) {
+  /**
+   * @param {Function} errorHandler
+   * @returns {Promise}
+   */
+  catch(errorHandler) {
     this.promise = this.promise || this.send(this.body)
 
-    return this.promise.catch(callback)
+    return this.promise.catch(errorHandler)
   }
 }
 
