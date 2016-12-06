@@ -83,10 +83,9 @@ const invokeServiceApiClient = ({ method, path, headers, params, body }) => {
   return request
     .set('Content-Type', 'application/json')
     .set('Accept', 'application/json')
+    .unwrapBody(false)
     .query(params)
     .send(body)
-    .then(success => ({ success }))
-    .catch(error => ({ error }))
 }
 
 export default req => ({
