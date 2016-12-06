@@ -66,4 +66,8 @@ export default req => ({
     return req.delete(`${urls.appConsole(appId)}/logging/loggers`)
   },
 
+  updateSocialParams(appId, param) {
+    return req.post(`${urls.appConsole(appId)}/socialparams`, param)
+  }
+
 })
