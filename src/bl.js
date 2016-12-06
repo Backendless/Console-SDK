@@ -2,7 +2,6 @@ import _map from 'lodash/map'
 import _each from 'lodash/each'
 import _omit from 'lodash/omit'
 
-import { Request } from 'utils/request'
 import urls from './urls'
 
 const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
@@ -73,21 +72,6 @@ const parseServiceSpec = spec => {
   }
 }
 
-const invokeServiceApiClient = ({ method, path, headers, params, body }) => {
-  const request = new Request(path, method.toLowerCase())
-
-  Object.keys(headers).forEach(headerKey => {
-    request.set(headerKey, headers[headerKey])
-  })
-
-  return request
-    .set('Content-Type', 'application/json')
-    .set('Accept', 'application/json')
-    .unwrapBody(false)
-    .query(params)
-    .send(body)
-}
-
 export default req => ({
   getServices(appId) {
     return req.get(urls.blBasePath(appId))
@@ -139,10 +123,6 @@ export default req => ({
   testServiceConfig(appId, serviceId, config) {
     // TODO: remove this transformation when the format of config will be changed
     return req.post(hostedServiceConfig(appId, `test/${serviceId}`), toServerServiceConfig(config))
-  },
-
-  invokeService(invocationRequest) {
-    return invokeServiceApiClient(invocationRequest)
   },
 
   getDraftFiles(appId, language) {
