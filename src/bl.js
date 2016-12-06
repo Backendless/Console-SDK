@@ -1,5 +1,10 @@
 import _map from 'lodash/map'
+import _each from 'lodash/each'
+import _isEmpty from 'lodash/isEmpty'
+import _omit from 'lodash/omit'
 
+import { Request } from 'utils/request'
+import { toQueryString } from 'utils/path'
 import urls from './urls'
 
 const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
@@ -47,6 +52,50 @@ const normalizeServiceConfigDescription = configDescription => {
   return configDescription
 }
 
+const parseServiceSpec = spec => {
+  const methods = {}
+
+  _each(spec.paths, (pathBody, path) => {
+    _each(pathBody, (methodBody, type) => {
+      const id = methodBody.operationId
+
+      methods[id] = {
+        ...methodBody,
+        path,
+        type,
+        id
+      }
+
+    })
+  })
+
+  return {
+    summary: _omit(spec, 'paths'),
+    methods
+  }
+}
+
+const invokeMethodApiClient = (method, path, headers, query, body) => {
+  if (!_isEmpty(query)) {
+    path = `${path}?${toQueryString(query)}`
+  }
+
+  method = method.toLowerCase()
+
+  const request = new Request(path, method)
+
+  Object.keys(headers).forEach(headerKey => {
+    request.set(headerKey, headers[headerKey])
+  })
+
+  return request
+    .set('Content-Type', 'application/json')
+    .set('Accept', 'application/json')
+    .send(body)
+    .then(success => ({ success }))
+    .catch(error => ({ error }))
+}
+
 export default req => ({
   getServices(appId) {
     return req.get(urls.blBasePath(appId))
@@ -55,7 +104,7 @@ export default req => ({
   },
 
   getServiceSpec(appId, serviceId) {
-    return req.get(`${ urls.blBasePath(appId) }/${ serviceId }/api-docs`)
+    return req.get(`${ urls.blBasePath(appId) }/${ serviceId }/api-docs`).then(parseServiceSpec)
   },
 
   importService(appId, data) {
@@ -98,6 +147,10 @@ export default req => ({
   testServiceConfig(appId, serviceId, config) {
     // TODO: remove this transformation when the format of config will be changed
     return req.post(hostedServiceConfig(appId, `test/${serviceId}`), toServerServiceConfig(config))
+  },
+
+  invokeMethod(method, url, { headers, params, body }) {
+    return invokeMethodApiClient(method, url, headers, params, body)
   },
 
   getDraftFiles(appId, language) {
