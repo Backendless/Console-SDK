@@ -4,11 +4,7 @@
  * @param {Context} context
  */
 export default (req, context) => ({
-  getAccountInfo(authKey) {
-    if (authKey) {
-      context.setAuthKey(authKey)
-    }
-
+  getAccountInfo() {
     return req.get('/console/home/myaccount').send()
   },
 
