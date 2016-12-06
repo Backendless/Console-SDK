@@ -1,10 +1,8 @@
 import _map from 'lodash/map'
 import _each from 'lodash/each'
-import _isEmpty from 'lodash/isEmpty'
 import _omit from 'lodash/omit'
 
 import { Request } from 'utils/request'
-import { toQueryString } from 'utils/path'
 import urls from './urls'
 
 const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
@@ -75,14 +73,8 @@ const parseServiceSpec = spec => {
   }
 }
 
-const invokeMethodApiClient = (method, path, headers, query, body) => {
-  if (!_isEmpty(query)) {
-    path = `${path}?${toQueryString(query)}`
-  }
-
-  method = method.toLowerCase()
-
-  const request = new Request(path, method)
+const invokeServiceApiClient = ({ method, path, headers, params, body }) => {
+  const request = new Request(path, method.toLowerCase())
 
   Object.keys(headers).forEach(headerKey => {
     request.set(headerKey, headers[headerKey])
@@ -91,6 +83,7 @@ const invokeMethodApiClient = (method, path, headers, query, body) => {
   return request
     .set('Content-Type', 'application/json')
     .set('Accept', 'application/json')
+    .query(params)
     .send(body)
     .then(success => ({ success }))
     .catch(error => ({ error }))
@@ -149,8 +142,8 @@ export default req => ({
     return req.post(hostedServiceConfig(appId, `test/${serviceId}`), toServerServiceConfig(config))
   },
 
-  invokeMethod(method, url, { headers, params, body }) {
-    return invokeMethodApiClient(method, url, headers, params, body)
+  invokeService(invocationRequest) {
+    return invokeServiceApiClient(invocationRequest)
   },
 
   getDraftFiles(appId, language) {
