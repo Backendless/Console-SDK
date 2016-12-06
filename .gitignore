@@ -1,8 +1,14 @@
 .DS_Store
 *.log
 node_modules
+
+# Build results
 dist
 lib
 es
-.idea/*
-!.idea/codeStyleSettings.xml
+
+# User-specific WebStorm/IDEA stuff
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/misc.xml
+.idea/dictionaries
