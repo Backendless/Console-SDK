@@ -48,5 +48,9 @@ export default (req, context) => ({
 
   resendConfirmEmail(email) {
     return req.get('console/resend').query({ email })
+  },
+
+  updateProfile(profileData) {
+    return req.put('/console/home/myaccount/', profileData)
   }
 })
