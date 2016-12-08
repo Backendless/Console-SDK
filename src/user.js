@@ -50,7 +50,7 @@ export default (req, context) => ({
     return req.get('console/resend').query({ email })
   },
 
-  updateProfile(profileData) {
-    return req.put('/console/home/myaccount/', profileData)
+  updateProfile(profile) {
+    return req.put('/console/home/myaccount/', profile)
   }
 })
