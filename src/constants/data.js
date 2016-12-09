@@ -10,7 +10,7 @@ export const DataTypes = {
 
   FILE_REF: 'FILE_REF',
   DATA_REF: 'DATA_REF',
-  GEO_REF : 'GEO_REF ',
+  GEO_REF : 'GEO_REF',
   CHILD_OF: 'CHILD_OF',
 
   UNKNOWN: 'UNKNOWN'
