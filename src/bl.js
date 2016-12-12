@@ -1,6 +1,5 @@
 import _map from 'lodash/map'
 import _each from 'lodash/each'
-import _omit from 'lodash/omit'
 
 import urls from './urls'
 
@@ -50,9 +49,10 @@ const normalizeServiceConfigDescription = configDescription => {
 }
 
 const parseServiceSpec = spec => {
+  const { paths, ...summary } = spec
   const methods = {}
 
-  _each(spec.paths, (pathBody, path) => {
+  _each(paths, (pathBody, path) => {
     _each(pathBody, (methodBody, type) => {
       const id = methodBody.operationId
 
@@ -66,10 +66,7 @@ const parseServiceSpec = spec => {
     })
   })
 
-  return {
-    summary: _omit(spec, 'paths'),
-    methods
-  }
+  return { summary, methods }
 }
 
 export default req => ({
