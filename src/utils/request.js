@@ -1,4 +1,5 @@
 /* global fetch */
+import _isObject from 'lodash/isObject'
 
 import Cache from './cache'
 import { toQueryString } from './path'
@@ -129,12 +130,19 @@ export class Request {
   /**
    * Sets a header
    *
-   * @param {String} key
-   * @param {String} value
+   * @param {String|Object} key or map of headers
+   * @param {String} [value]
    * @returns {Request}
    */
   set(key, value) {
-    this.headers[key] = value
+    if (_isObject(key)) {
+      this.headers = {
+        ...this.headers,
+        ...key
+      }
+    } else {
+      this.headers[key] = value
+    }
 
     return this
   }
