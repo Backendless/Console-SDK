@@ -1,4 +1,5 @@
 import _map from 'lodash/map'
+import _each from 'lodash/each'
 
 import urls from './urls'
 
@@ -47,6 +48,27 @@ const normalizeServiceConfigDescription = configDescription => {
   return configDescription
 }
 
+const parseServiceSpec = spec => {
+  const { paths, ...summary } = spec
+  const methods = {}
+
+  _each(paths, (pathBody, path) => {
+    _each(pathBody, (methodBody, type) => {
+      const id = methodBody.operationId
+
+      methods[id] = {
+        ...methodBody,
+        path,
+        type,
+        id
+      }
+
+    })
+  })
+
+  return { summary, methods }
+}
+
 export default req => ({
   getServices(appId) {
     return req.get(urls.blBasePath(appId))
@@ -55,7 +77,7 @@ export default req => ({
   },
 
   getServiceSpec(appId, serviceId) {
-    return req.get(`${ urls.blBasePath(appId) }/${ serviceId }/api-docs`)
+    return req.get(`${ urls.blBasePath(appId) }/${ serviceId }/api-docs`).then(parseServiceSpec)
   },
 
   importService(appId, data) {
