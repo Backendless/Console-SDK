@@ -98,7 +98,7 @@ export default req => {
   }
 
   const getPoints = (appId, category, params) => {
-    const { where, offset = 0, pageSize = 15, includemetadata = true, objectIds = [] } = params
+    const { where, offset = 0, pageSize = 15, includemetadata = true, filterString } = params
     const { mapBounds, mapDriven, mapZoom, mapWidth, clustering } = params
     const { radiusDriven, radiusCenter, radius, radiusUnits } = params
 
@@ -109,12 +109,10 @@ export default req => {
       pagesize  : pageSize
     }
 
-    if (where || objectIds.length) {
-      const byIdsSQL = objectIds.length ? `objectId IN ('${objectIds.join("', '")}')` : ''
-
-      queryParams.where = (byIdsSQL && where)
-        ? `${byIdsSQL} AND (${where})`
-        : byIdsSQL || where
+    if (where || filterString) {
+      queryParams.where = (filterString && where)
+        ? `${filterString} AND (${where})`
+        : filterString || where
     }
 
     if (mapDriven) {

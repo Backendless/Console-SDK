@@ -48,10 +48,10 @@ const removeRelationsUrl = (appId, table, columnName, recordId) => {
 }
 
 const recordsReq = (req, appId, table, query = {}) => {
-  const { pageSize = 15, offset = 0, sqlSearch, where, sortField, sortDir, objectIds } = query
+  const { pageSize = 15, offset = 0, sqlSearch, where, sortField, sortDir, filterString } = query
 
   const params = { pageSize, offset }
-  const search = buildRecordsSearch(table, sqlSearch, where, objectIds)
+  const search = buildRecordsSearch(table, sqlSearch, where, filterString)
 
   if (search) {
     params.where = search
@@ -64,6 +64,10 @@ const recordsReq = (req, appId, table, query = {}) => {
   return req.get(urls.dataTable(appId, table.name))
     .query(params)
     .cacheTags(TABLE_DATA(table.tableId))
+}
+
+const getRelationColumn = (table, columnName) => {
+  return [...table.relations, ...table.geoRelations].find(r => r.name === columnName)
 }
 
 export default req => ({
@@ -107,11 +111,19 @@ export default req => ({
   },
 
   updateRelations(appId, table, columnName, recordId, relationIds) {
-    return req.put(updateRelationsUrl(appId, table, columnName, recordId), relationIds)
+    const relationColumn = getRelationColumn(table, columnName)
+
+    return req
+      .put(updateRelationsUrl(appId, table, columnName, recordId), relationIds)
+      .cacheTags(TABLE_DATA(relationColumn.toTableId))
   },
 
   removeRelations(appId, table, columnName, recordId, relationIds) {
-    return req.delete(removeRelationsUrl(appId, table, columnName, recordId), relationIds)
+    const relationColumn = getRelationColumn(table, columnName)
+
+    return req
+      .delete(removeRelationsUrl(appId, table, columnName, recordId), relationIds)
+      .cacheTags(TABLE_DATA(relationColumn.toTableId))
   },
 
   createColumn(appId, table, column) {
@@ -183,23 +195,16 @@ const normalizeGEORelationTableColumn = ({ columnName, ...relation }) => {
   return { ...relation, name: columnName, dataType: DataTypes.GEO_REF }
 }
 
-const buildRecordsSearch = (table, sql, searchString, objectIds) => {
+const buildRecordsSearch = (table, sql, searchString, filterString) => {
   searchString = searchString ? searchString.trim() : ''
 
-  const byIdsSQL = buildRecordsSearchByIds(objectIds)
   const searchSQL = (sql || !searchString) ? searchString : searchStringToSQLFormat(table, searchString)
 
-  if (byIdsSQL && searchSQL) {
-    return `${byIdsSQL} AND (${searchSQL})`
+  if (filterString && searchSQL) {
+    return `${filterString} AND (${searchSQL})`
   }
 
-  return byIdsSQL || searchSQL
-}
-
-const buildRecordsSearchByIds = objectIds => {
-  if (objectIds && objectIds.length) {
-    return `objectId IN ('${objectIds.join("', '")}')`
-  }
+  return filterString || searchSQL
 }
 
 const searchStringToSQLFormat = (table, searchValue) => {
