@@ -9,8 +9,8 @@ const CACHE_FLUSH_INTERVAL = 60000 //60 sec
 
 const cache = new Cache(CACHE_FLUSH_INTERVAL)
 
-const isObject = obj => null !== obj && 'object' === typeof obj
-const isFormData = obj => null !== obj && obj.toString() === '[object FormData]'
+const isObject = val => null !== val && 'object' === typeof val
+const isFormData = val => (typeof FormData !== 'undefined') && (val instanceof FormData)
 
 class ResponseError extends Error {
   constructor(error, status, headers) {
@@ -39,13 +39,69 @@ function parseBody(res) {
   }
 }
 
+function parseHeaders(headersString) {
+  const parsed = {}
+
+  if (!headersString) {
+    return parsed
+  }
+
+  headersString.split('\n').forEach(line => {
+    const i = line.indexOf(':')
+    const key = line.substr(0, i).trim()
+    const val = line.substr(i + 1).trim()
+
+    if (key) {
+      parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val
+    }
+  })
+
+  return parsed
+}
+
+const sendXmlHttpRequest = (path, method, headers, body) => {
+  return new Promise(function sendRequest(resolve, reject) {
+    let request = new XMLHttpRequest()
+
+    request.open(method.toUpperCase(), path, true)
+
+    request.onload = function handleLoadEvent() {
+      const headers = parseHeaders(request.getAllResponseHeaders())
+      const { status, statusText, response, responseText } = request
+      const body = response || responseText
+
+      resolve({ status, statusText, headers, body })
+
+      request = null
+    }
+
+    request.onerror = function handleErrorEvent() {
+      reject(new Error('Network Error'))
+
+      request = null
+    }
+
+    request.ontimeout = function handleTimeout() {
+      reject(new Error('Connection aborted due to timeout'))
+
+      request = null
+    }
+
+    Object.keys(headers).forEach(key => {
+      request.setRequestHeader(key, headers[key])
+    })
+
+    request.send(body)
+  })
+}
+
 const sendFetchAPIRequest = (path, method, headers, body) => {
   const options = { method, headers, body }
 
   const responseHeadersToJSON = headers => {
     const result = {}
 
-    for(const key of headers.keys()) {
+    for (const key of headers.keys()) {
       result[key] = headers.get(key)
     }
 
@@ -53,10 +109,10 @@ const sendFetchAPIRequest = (path, method, headers, body) => {
   }
 
   return fetch(path, options).then(res => {
-    const { ok, status, statusText } = res
+    const { status, statusText } = res
     const headers = responseHeadersToJSON(res.headers)
 
-    return res.text().then(body => ({ ok, status, statusText, headers, body }))
+    return res.text().then(body => ({ status, statusText, headers, body }))
   })
 }
 
@@ -78,11 +134,10 @@ const sendNodeAPIRequest = (path, method, headers, body) => {
       res.setEncoding('utf8')
 
       const { statusCode: status, statusMessage: statusText, headers } = res
-      const ok = status >= 200 && status < 300
 
       let body = ''
       res.on('data', chunk => body += chunk)
-      res.on('end', () => resolve({ ok, status, statusText, headers, body }))
+      res.on('end', () => resolve({ status, statusText, headers, body }))
       res.on('error', reject)
     })
 
@@ -95,7 +150,7 @@ const sendNodeAPIRequest = (path, method, headers, body) => {
   })
 }
 
-const sendRequest = typeof fetch !== 'undefined' ? sendFetchAPIRequest : sendNodeAPIRequest
+const sendRequest = typeof XMLHttpRequest !== 'undefined' ? sendXmlHttpRequest : sendNodeAPIRequest
 
 /**
  * Checks if a network request came back fine, and throws an error if not
@@ -105,7 +160,7 @@ const sendRequest = typeof fetch !== 'undefined' ? sendFetchAPIRequest : sendNod
  * @return {object|undefined} Returns either the response, or throws an error
  */
 function checkStatus(response) {
-  if (response.ok) {
+  if (response.status >= 200 && response.status < 300) {
     return response
   }
 
