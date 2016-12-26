@@ -21,7 +21,5 @@ export default req => ({
 
   deleteApp(appId, payment = false) {
     return req.delete(`${urls.appConsole(appId)}/application`).query({ payment })
-  },
-
-
+  }
 })
