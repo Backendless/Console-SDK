@@ -14,13 +14,24 @@ const getFileFolder = file => {
   return ''
 }
 
+const SERVER_CODE_FOLDER = /^servercode/
+const isServerCodeFolder = folderName => SERVER_CODE_FOLDER.test(folderName)
+
+const enrichDirectoryParams = (directory, path) => {
+  const readOnly = isServerCodeFolder(path)
+
+  directory.readOnly = readOnly
+
+  return directory
+}
+
 export default req => ({
   loadDirectory(appId, path = '', pattern, sub = false, pageSize = 15, offset = 0) {
     const params = { pageSize, offset, pattern, sub }
     const dataReq = req.get(urls.fileView(appId, path)).query(params)
       .cacheTags(FOLDER(path))
 
-    return totalRows(req).getWithData(dataReq)
+    return totalRows(req).getWithData(dataReq).then(result => enrichDirectoryParams(result, path))
   },
 
   createDir(appId, path, folderName) {
