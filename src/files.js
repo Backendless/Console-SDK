@@ -55,7 +55,9 @@ export default req => ({
   },
 
   createFile(appId, filePath, fileContent) {
-    return req.post(urls.fileCreate(appId, filePath), fileContent)
+    return req
+      .post(urls.fileCreate(appId, filePath), fileContent)
+      .set('Accept', '*/*') //workarround for BKNDLSS-13702
       .cacheTags(FOLDER(getFileFolder(filePath)))
   },
 
@@ -71,6 +73,7 @@ export default req => ({
 
   createConsoleFile(appId, path, content) {
     return req.post(`${urls.appConsole(appId)}/files/create/${path}`, content)
+      .set('Accept', '*/*') //workarround for BKNDLSS-13702
       .cacheTags(FOLDER(getFileFolder(path)))
   },
 
