@@ -33,7 +33,7 @@ export const createDir = (appId, path = '', folderName) =>
   `${appConsole(appId)}/files/createdir/${path}/${folderName}/`
 
 export const fileView = (appId, filePath) =>
-  `${appConsole(appId)}/files/view/${filePath}/`
+  `${appConsole(appId)}/files/view/${filePath}`
 
 export const fileEdit = (appId, filePath) =>
   `${appConsole(appId)}/files/edit/${filePath}/`
