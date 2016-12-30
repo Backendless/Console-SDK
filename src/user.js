@@ -4,10 +4,25 @@
  * @param {Context} context
  */
 export default (req, context) => ({
-  getAccountInfo() {
-    return req.get('/console/home/myaccount').send()
+  /**
+   * @param {String=}authKey
+   * @return {Promise|*}
+   */
+  getAccountInfo(authKey) {
+    const request = req.get('/console/home/myaccount')
+
+    if (authKey) {
+      request.set('auth-key', authKey)
+    }
+
+    return request.send()
   },
 
+  /**
+   * @param {String} login
+   * @param {String} password
+   * @return {Promise.<{name:String, email:String, authKey:String}>}
+   */
   login(login, password) {
     return req.post('/console/home/login')
       .unwrapBody(false)
@@ -24,6 +39,10 @@ export default (req, context) => ({
 
   register(userData) {
     return req.post('/console/devreg').send(userData)
+  },
+
+  suicide() {
+    return req.delete('console/developer-suicide').send()
   },
 
   checkForCaptchaRequirement() {
