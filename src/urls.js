@@ -14,7 +14,6 @@ export const dataTables = appId => `${data(appId)}/tables`
 export const dataTable = (appId, tableName) => `${data(appId)}/${tableName}`
 export const dataRecord = (appId, tableName, recordId) => `${dataTable(appId, tableName)}/${recordId}`
 export const dataConfigs = appId => `${data(appId)}/config`
-export const files = (appId, apiKey) => `${appId}/${apiKey}/files`
 export const tableColumns = (appId, tableName) => `${dataTables(appId)}/${tableName}/columns`
 export const securityRoles = appId => `${security(appId)}/roles`
 
@@ -32,8 +31,8 @@ export const fileUpload = (appId, filePath) =>
 export const createDir = (appId, path = '', folderName) =>
   `${appConsole(appId)}/files/createdir/${path}/${folderName}/`
 
-export const fileView = (appId, filePath) =>
-  `${appConsole(appId)}/files/view/${filePath}`
+export const fileView = (appId, authKey, filePath) =>
+  `${appConsole(appId, authKey)}/files/view/${filePath}`
 
 export const fileEdit = (appId, filePath) =>
   `${appConsole(appId)}/files/edit/${filePath}/`
@@ -91,7 +90,6 @@ export default {
   fileDelete,
   fileCreate,
   createDir,
-  files,
   blDraft,
   blProd,
   blDraftsProjectDownload,
