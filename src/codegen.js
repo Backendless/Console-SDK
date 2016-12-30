@@ -47,7 +47,7 @@ export default req => {
       .then(feature => {
         if (_isObject(feature) && !Array.isArray(feature)) {
           if (feature.icon) {
-            feature.icon = `//${document.location.host}/${urls.fileView(appId, authKey)}/${feature.icon}`
+            feature.icon = `//${document.location.host}${urls.fileView(appId, authKey, feature.icon)}`
           } else {
             feature.icon = feature.icon = '//placehold.it/205'
           }
