@@ -34,16 +34,16 @@ const normalizeOption = option => {
 }
 
 export default req => {
-  const getCodegenCache = (appId, authKey, path) => {
-    return req.get(`${urls.fileView(appId, authKey, path)}`)
-  }
-
-  const loadCodegenItem = (appId, authKey, endpoint) => {
+  const loadItem = (appId, authKey, endpoint) => {
     return req.get(`${urls.fileView(appId, authKey, endpoint)}`)
   }
 
   const getGenerators = (appId, authKey) => {
-    const getFeatureFile = file => loadCodegenItem(appId, authKey, file.url)
+    const listGenerators = (appId, authKey) => {
+      return files(req).loadDirectory(appId, authKey, GENERATORS_PATH, JSON_PATTERN, PAGE_SIZE)
+    }
+
+    const getFeatureFile = file => loadItem(appId, authKey, file.url)
       .then(feature => {
         if (_isObject(feature) && !Array.isArray(feature)) {
           if (feature.icon) {
@@ -60,14 +60,10 @@ export default req => {
         }
       })
 
-    return listCodegenGenerators(appId, authKey).then(({ data }) => Promise.all(data.map(getFeatureFile)))
+    return listGenerators(appId, authKey).then(({ data }) => Promise.all(data.map(getFeatureFile)))
   }
 
-  const getCache = (appId, authKey) => getCodegenCache(appId, authKey, CACHE_PATH)
-
-  const listCodegenGenerators = (appId, authKey) => {
-    return files(req).loadDirectory(appId, authKey, GENERATORS_PATH, JSON_PATTERN, PAGE_SIZE)
-  }
+  const getCache = (appId, authKey) => req.get(urls.fileView(appId, authKey, CACHE_PATH))
 
   const getGeneratedProject = (appId, codegenData) => {
     return req.post(`${urls.appConsole(appId)}/codegen`, codegenData)
