@@ -1,12 +1,5 @@
 import urls from './urls'
 
-const enrichEmailSettings = emailSettings => {
-  emailSettings.sslEnabled = emailSettings.protocol === 'SSL'
-  emailSettings.tlsEnabled = emailSettings.protocol === 'TLS'
-
-  return emailSettings
-}
-
 export default req => ({
   loadEmailTemplates (appId) {
     return req.get(`${urls.appConsole(appId)}/email`)
@@ -21,7 +14,7 @@ export default req => ({
   },
 
   updateEmailParams(appId, emailSettings) {
-    return req.put(urls.mailSettings(appId), enrichEmailSettings(emailSettings))
+    return req.put(urls.mailSettings(appId), emailSettings)
   },
 
   resetEmailParams(appId) {
@@ -33,6 +26,6 @@ export default req => ({
   },
 
   testSMTPConnection(appId, emailSettings) {
-    return req.put(`${urls.mailSettings(appId)}/test`, enrichEmailSettings(emailSettings))
+    return req.put(`${urls.mailSettings(appId)}/test`, emailSettings)
   }
 })
