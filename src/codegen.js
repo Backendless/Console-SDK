@@ -3,7 +3,7 @@ import _isObject from 'lodash/isObject'
 import urls from './urls'
 import files from './files'
 
-const GENERATORS_PATH = 'codegen/generators'
+const GENERATORS_PATH = 'codegen/features/generators'
 const JSON_PATTERN = '*.json'
 const PAGE_SIZE = 100
 
