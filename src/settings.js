@@ -33,14 +33,6 @@ export default req => ({
     return req.post(`${urls.appConsole(appId)}/ioscert`, data)
   },
 
-  addExternalHost(appId, hostNames) {
-    return req.post(`${urls.appConsole(appId)}/externalhosts`, hostNames)
-  },
-
-  removeExternalHosts(appId, hostNames) {
-    return req.delete(`${urls.appConsole(appId)}/externalhosts`, hostNames)
-  },
-
   getDataValidators() {
     return req.get('/console/datavalidators')
   },

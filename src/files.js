@@ -79,7 +79,7 @@ export default req => ({
       .cacheTags(FOLDER(getFileFolder(path)))
   },
 
-  viewFiles(appId, path = '') {
-    return req.get(`${urls.appConsole(appId)}/files/view/${path}`)
+  viewFiles(appId, authKey, path = '') {
+    return req.get(urls.fileView(appId, authKey, path))
   }
 })
