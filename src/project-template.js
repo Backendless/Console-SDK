@@ -10,25 +10,25 @@ const DEFAULT_PROMPT = 'Make a selection'
 const getFolders = folders => folders.filter(({ size }) => !size)
 
 export default req => {
-  const loadDirectory = (appId, apiKey, path) => req.get(`/${urls.files(appId, apiKey)}/${path}`)
+  const loadDirectory = (appId, authKey, path) => req.get(urls.fileView(appId, authKey, path))
 
-  const loadTemplates = (appId, apiKey, path = '') => {
+  const loadTemplates = (appId, authKey, path = '') => {
     const result = {}
 
-    return loadDirectory(appId, apiKey, `${PROJECT_TEMPLATES_PATH}/${path}`)
+    return loadDirectory(appId, authKey, `${PROJECT_TEMPLATES_PATH}/${path}`)
       .then(children => {
         result.children = getFolders(children)
 
         const map = children.map(child => {
           if (child.name === PROMPT_FILE_NAME) {
-            return loadDirectory(appId, apiKey, child.url)
+            return loadDirectory(appId, authKey, child.url)
               .then(({ prompt }) => result.prompt = prompt)
           } else {
             result.prompt = DEFAULT_PROMPT
           }
 
           if (!child.size) {
-            return loadDirectory(appId, apiKey, child.url).then(children => {
+            return loadDirectory(appId, authKey, child.url).then(children => {
               const icon = children.find(({ name }) => IMAGE_FILE.test(name))
 
               if (icon) {

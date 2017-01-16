@@ -3,11 +3,11 @@ import _isObject from 'lodash/isObject'
 import urls from './urls'
 import files from './files'
 
-const GENERATORS_PATH = '/codegen/generators'
+const GENERATORS_PATH = 'codegen/features/generators'
 const JSON_PATTERN = '*.json'
 const PAGE_SIZE = 100
 
-export const CACHE_PATH = '/codegen/cache.json/'
+export const CACHE_PATH = 'codegen/cache.json'
 
 // TODO: remove this transformation when the format of options will be changed
 const OPTION_NAMES_MAP = {
@@ -34,20 +34,20 @@ const normalizeOption = option => {
 }
 
 export default req => {
-  const getCodegenCache = (appId, apiKey, path) => {
-    return req.get(`/${urls.files(appId, apiKey)}${path}`)
+  const loadItem = (appId, authKey, endpoint) => {
+    return req.get(`${urls.fileView(appId, authKey, endpoint)}`)
   }
 
-  const loadCodegenItem = (appId, apiKey, endpoint) => {
-    return req.get(`/${urls.files(appId, apiKey)}/${endpoint}`)
-  }
+  const getGenerators = (appId, authKey) => {
+    const listGenerators = (appId, authKey) => {
+      return files(req).loadDirectory(appId, authKey, GENERATORS_PATH, JSON_PATTERN, PAGE_SIZE)
+    }
 
-  const getGenerators = (appId, apiKey) => {
-    const getFeatureFile = file => loadCodegenItem(appId, apiKey, file.url)
+    const getFeatureFile = file => loadItem(appId, authKey, file.url)
       .then(feature => {
         if (_isObject(feature) && !Array.isArray(feature)) {
           if (feature.icon) {
-            feature.icon = `//${document.location.host}/${urls.files(appId, apiKey)}/${feature.icon}`
+            feature.icon = `//${document.location.host}${urls.fileView(appId, authKey, feature.icon)}`
           } else {
             feature.icon = feature.icon = '//placehold.it/205'
           }
@@ -60,14 +60,10 @@ export default req => {
         }
       })
 
-    return listCodegenGenerators(appId, apiKey).then(({ data }) => Promise.all(data.map(getFeatureFile)))
+    return listGenerators(appId, authKey).then(({ data }) => Promise.all(data.map(getFeatureFile)))
   }
 
-  const getCache = (appId, apiKey) => getCodegenCache(appId, apiKey, CACHE_PATH)
-
-  const listCodegenGenerators = appId => {
-    return files(req).loadDirectory(appId, GENERATORS_PATH, JSON_PATTERN, false, PAGE_SIZE)
-  }
+  const getCache = (appId, authKey) => req.get(urls.fileView(appId, authKey, CACHE_PATH))
 
   const getGeneratedProject = (appId, codegenData) => {
     return req.post(`${urls.appConsole(appId)}/codegen`, codegenData)
