@@ -147,6 +147,7 @@ export default req => {
 
   const getFencePoints = (appId, fenceId) => {
     return req.get(`${fenceUrl(appId, fenceId)}/geopoints`)
+      .then(data => ({ data: data, totalPoints: data.length }))
   }
 
   const deletePoints = (appId, category, pointsIds) => {
