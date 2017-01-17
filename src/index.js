@@ -19,6 +19,7 @@ import apps from './apps'
 import users from './users'
 import status from './status'
 import transfer from './transfer'
+import marketplace from './marketplace'
 
 class Context {
 
@@ -81,7 +82,8 @@ const createClient = (serverUrl, authKey) => {
     billing        : billing(request, context),
     analytics      : analytics(request, context),
     status         : status(request, context),
-    transfer       : transfer(request, context)
+    transfer       : transfer(request, context),
+    marketplace    : marketplace(request, context)
   }
 }
 
