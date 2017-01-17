@@ -67,6 +67,9 @@ export const messagingChannel = (appId, channelId) =>
 export const mobileSettings = appId =>
   `${appConsole(appId)}/mobilesettings`
 
+export const marketplace = appId =>
+  `${appConsole(appId)}/marketplace`
+
 export default {
   console,
   appConsole,
@@ -98,4 +101,5 @@ export default {
   messagingChannels,
   messagingChannel,
   mobileSettings,
+  marketplace,
 }
