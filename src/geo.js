@@ -1,6 +1,7 @@
 import urls from './urls'
 import totalRows from './utils/total-rows'
 import { GEO_CATEGORY } from './utils/cache-tags'
+import { toQueryString } from './utils/path'
 
 const toServerFence = ({ objectId, name, qualCriteria, type, nodes }) => ({
   name,
@@ -97,7 +98,7 @@ export default req => {
     return req.put(`${fenceUrl(appId, fenceId)}/deactivate`)
   }
 
-  const getPoints = (appId, category, params) => {
+  const getPoints = (appId, category, params = {}) => {
     const { where, offset = 0, pageSize = 15, includemetadata = true, objectIds = [] } = params
     const { mapBounds, mapDriven, mapZoom, mapWidth, clustering } = params
     const { radiusDriven, radiusCenter, radius, radiusUnits } = params
@@ -156,6 +157,10 @@ export default req => {
       .cacheTags(GEO_CATEGORY(category))
   }
 
+  const addPoint = (appId, lat, lon) => {
+    return req.put(pointsUrl(appId) + '?' + toQueryString({ lat, lon }))
+  }
+
   const copyPoints = (appId, pointsIds, targetCategory) => {
     return req.put(urls.geo(appId) + '/' + targetCategory, pointsIds)
       .cacheTags(GEO_CATEGORY(targetCategory))
@@ -191,6 +196,7 @@ export default req => {
     deleteFence,
     activateFence,
     deactivateFence,
+    addPoint,
     deletePoints,
     copyPoints,
     sampleSetup,
