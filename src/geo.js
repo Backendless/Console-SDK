@@ -90,7 +90,7 @@ export default req => {
     return req.delete(fenceUrl(appId, fenceId))
   }
 
-  const activateFence = (appId, fenceId, applyOnStay) => {
+  const activateFence = (appId, fenceId, applyOnStay = false) => {
     return req.put(`${fenceUrl(appId, fenceId)}/activate`, { applyOnStay })
   }
 
