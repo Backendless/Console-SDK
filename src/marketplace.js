@@ -1970,5 +1970,10 @@ export default req => ({
   getCategories(appId) {
     return Promise.resolve(dummyCategories)
     //return req.get(categoriesUrl(appId))
+  },
+
+  activateProduct(appId, productId, params) {
+    return Promise.resolve(true)
+    //return req.post(`${ urls.marketplace(appId) }/activate/${ productId }`, params)
   }
 })
