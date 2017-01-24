@@ -1,7 +1,7 @@
 {
   "name": "backendless-console-sdk",
   "version": "1.0.0",
-  "description": "Backendless JavaScript Console SDK for Node.js and the browser",
+  "description": "Backendless Console SDK for Node.js and browser",
   "browser": "dist/backendless-console-sdk.js",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.backendless.com:backendless/console-sdk.git"
+    "url": "git@github.com:Backendless/Console-SDK.git"
   },
   "keywords": [
     "backendless",
