@@ -1,5 +1,7 @@
 # Backendless Console SDK for Node.js and browser   
 
+[![npm version](https://img.shields.io/npm/v/backendless-console-sdk.svg?style=flat)](https://www.npmjs.com/package/backendless-console-sdk)
+
 Alongside with the app development APIs, Backendless Service Platform also provides an extremely rich set of administrative and management functions for a developer. 
 
 Every single feature is available either in Backendless console or via specialized REST API. 
