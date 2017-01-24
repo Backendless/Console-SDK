@@ -1,5 +1,6 @@
 import urls from './urls'
 import totalRows from './utils/total-rows'
+import SQL from './utils/sql-builder'
 import { GEO_CATEGORY } from './utils/cache-tags'
 
 const toServerFence = ({ objectId, name, qualCriteria, type, nodes }) => ({
@@ -98,24 +99,54 @@ export default req => {
   }
 
   const getPoints = (appId, category, params) => {
-    const { where, offset = 0, pageSize = 15, includemetadata = true, filterString } = params
+    const { offset = 0, pageSize = 15, relationTableName } = params
+
+    const pageParams = {
+      offset,
+      pagesize: pageSize
+    }
+
+    if (relationTableName) {
+      return loadPointsAsRelations(appId, params, pageParams).then(({ totalRows, data }) => {
+        const objectIds = data.map(point => point.objectId)
+
+        return loadPoints(appId, category, params, pageParams, objectIds).then(points => {
+          const sortedPoints = []
+
+          points.forEach(point => {
+            sortedPoints[objectIds.indexOf(point.objectId)] = point
+          })
+
+          return { totalRows, data: sortedPoints }
+        })
+      })
+    }
+
+    return totalRows(req).getWithData(loadPoints(appId, category, params, pageParams))
+  }
+
+  const loadPoints = (appId, category, params, pageParams, objectIds = []) => {
+    const { where, includemetadata = true, filterString } = params
     const { mapBounds, mapDriven, mapZoom, mapWidth, clustering } = params
     const { radiusDriven, radiusCenter, radius, radiusUnits } = params
+    const { relationTableName, relationObjectId, relationName } = params
+
+    const whereClauseParts = [where, filterString]
+
+    if (objectIds.length) {
+      delete pageParams.offset
+
+      whereClauseParts.push(`(objectId IN ('${objectIds.join("', '")}'))`)
+    }
 
     const queryParams = {
-      offset,
+      ...pageParams,
       includemetadata,
       categories: category,
-      pagesize  : pageSize
+      where     : SQL.combine(...whereClauseParts)
     }
 
-    if (where || filterString) {
-      queryParams.where = (filterString && where)
-        ? `${filterString} AND (${where})`
-        : filterString || where
-    }
-
-    if (mapDriven) {
+    if (mapDriven && !relationTableName) {
       if (radiusDriven) {
         queryParams.lat = radiusCenter.lat
         queryParams.lon = radiusCenter.lng
@@ -133,12 +164,48 @@ export default req => {
       }
     }
 
-    const nonRadiusMapDrivenSearch = mapDriven && !radiusDriven
+    const nonRadiusMapDrivenSearch = mapDriven && !radiusDriven && !relationTableName
     const url = nonRadiusMapDrivenSearch ? rectUrl(appId) : pointsUrl(appId)
 
-    const dataReq = req.get(url)
+    return req.get(url)
       .query(queryParams)
       .cacheTags(GEO_CATEGORY(category))
+  }
+
+  const loadPointsAsRelations = (appId, params, pageParams) => {
+    const { offset = 0, pageSize = 15, includemetadata = true, where, filterString } = params
+    const { mapBounds, mapDriven, mapZoom, mapWidth, clustering } = params
+    const { radiusDriven, radiusCenter, radius, radiusUnits } = params
+    const { relationTableName, relationObjectId, relationName, relatedRelations } = params
+
+    const whereClauseParts = [where, filterString]
+
+    if (mapDriven && radiusDriven) {
+      // TODO: waiting for complete http://bugs.backendless.com/browse/BKNDLSS-13803
+      // const DISTANCE_UNITS = {
+      //   miles     : 'mi',
+      //   yards     : 'yd',
+      //   kilometers: 'km',
+      //   meters    : 'km'
+      // }
+      //
+      // const { lat, lng } = radiusCenter
+      // const unit = DISTANCE_UNITS[radiusUnits]
+      // const r = radiusUnits === 'meters' ? radius * 1000 : radius
+      //
+      // whereClauseParts.push(
+      //   `distance(${lat}, ${lng}, locations.latitude, locations.longitude) < ${unit}(${radius})`
+      // )
+    }
+
+    const queryParams = {
+      ...pageParams,
+      where  : SQL.combine(...whereClauseParts),
+      related: relatedRelations
+    }
+
+    const dataReq = req.get(`${urls.dataRecord(appId, relationTableName, relationObjectId)}/${relationName}`)
+      .query(queryParams)
 
     return totalRows(req).getWithData(dataReq)
   }
@@ -160,6 +227,14 @@ export default req => {
 
   const setPointMeta = (appId, pointId, meta) => {
     return req.put(`${urls.geo(appId)}/${pointId}/meta`, meta)
+  }
+
+  const addPointMetaRelations = (appId, pointId, meta) => {
+    return req.patch(`${urls.geo(appId)}/${pointId}/meta`, meta)
+  }
+
+  const removePointMetaRelations = (appId, pointId, meta) => {
+    return req.delete(`${urls.geo(appId)}/${pointId}/meta`, meta)
   }
 
   const reset = appId => {
@@ -192,6 +267,8 @@ export default req => {
     copyPoints,
     sampleSetup,
     setPointMeta,
+    addPointMetaRelations,
+    removePointMetaRelations,
     reset
   }
 }

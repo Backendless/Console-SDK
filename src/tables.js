@@ -10,6 +10,7 @@ import {
 
 import urls from './urls'
 import totalRows from './utils/total-rows'
+import SQL from './utils/sql-builder'
 import { TABLE_DATA } from './utils/cache-tags'
 
 const sqlLike = part => `like '%${part}%'`
@@ -200,11 +201,7 @@ const buildRecordsSearch = (table, sql, searchString, filterString) => {
 
   const searchSQL = (sql || !searchString) ? searchString : searchStringToSQLFormat(table, searchString)
 
-  if (filterString && searchSQL) {
-    return `${filterString} AND (${searchSQL})`
-  }
-
-  return filterString || searchSQL
+  return SQL.combine(filterString, searchSQL)
 }
 
 const searchStringToSQLFormat = (table, searchValue) => {
