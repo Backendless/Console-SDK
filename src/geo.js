@@ -2,6 +2,7 @@ import urls from './urls'
 import totalRows from './utils/total-rows'
 import SQL from './utils/sql-builder'
 import { GEO_CATEGORY } from './utils/cache-tags'
+import { toQueryString } from './utils/path'
 
 const toServerFence = ({ objectId, name, qualCriteria, type, nodes }) => ({
   name,
@@ -90,7 +91,7 @@ export default req => {
     return req.delete(fenceUrl(appId, fenceId))
   }
 
-  const activateFence = (appId, fenceId, applyOnStay) => {
+  const activateFence = (appId, fenceId, applyOnStay = false) => {
     return req.put(`${fenceUrl(appId, fenceId)}/activate`, { applyOnStay })
   }
 
@@ -98,7 +99,7 @@ export default req => {
     return req.put(`${fenceUrl(appId, fenceId)}/deactivate`)
   }
 
-  const getPoints = (appId, category, params) => {
+  const getPoints = (appId, category, params = {}) => {
     const { offset = 0, pageSize = 15, relationTableName } = params
 
     const pageParams = {
@@ -212,12 +213,17 @@ export default req => {
 
   const getFencePoints = (appId, fenceId) => {
     return req.get(`${fenceUrl(appId, fenceId)}/geopoints`)
+      .then(data => ({ data: data, totalPoints: data.length }))
   }
 
   const deletePoints = (appId, category, pointsIds) => {
     return req
       .delete(categoryPointsUrl(appId, category), pointsIds)
       .cacheTags(GEO_CATEGORY(category))
+  }
+
+  const addPoint = (appId, lat, lon) => {
+    return req.put(pointsUrl(appId) + '?' + toQueryString({ lat, lon }))
   }
 
   const copyPoints = (appId, pointsIds, targetCategory) => {
@@ -263,6 +269,7 @@ export default req => {
     deleteFence,
     activateFence,
     deactivateFence,
+    addPoint,
     deletePoints,
     copyPoints,
     sampleSetup,

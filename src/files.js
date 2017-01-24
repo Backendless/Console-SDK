@@ -58,7 +58,7 @@ export default req => ({
 
   createFile(appId, filePath, fileContent) {
     return req
-      .post(urls.fileCreate(appId, filePath), fileContent)
+      .post(urls.fileCreate(appId, filePath), { file: fileContent })
       .set('Accept', '*/*') //workarround for BKNDLSS-13702
       .cacheTags(FOLDER(getFileFolder(filePath)))
   },
