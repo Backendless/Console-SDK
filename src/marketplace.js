@@ -561,7 +561,7 @@ const dummyCategories = [
         "docs"            : null,
         "componentGroup"  : "SUPPORT_OPTION",
         "componentId"     : null,
-        "category"        : "Professional Support",
+        "category"        : "Support Packs",
         "refundable"      : false,
         "pricing"         : {
           "objectId"         : "95D1B0CD-4819-53A1-FFC5-6612B2633000",
@@ -905,7 +905,7 @@ const dummyCategories = [
         "docs"            : null,
         "componentGroup"  : "SUPPORT_OPTION",
         "componentId"     : null,
-        "category"        : "Professional Support",
+        "category"        : "Support Packs",
         "refundable"      : false,
         "pricing"         : {
           "objectId"         : "95D1B0CD-4819-53A1-FFC5-6612B2633000",
@@ -1974,6 +1974,11 @@ export default req => ({
 
   activateProduct(appId, productId, params) {
     return Promise.resolve(true)
-    //return req.post(`${ urls.marketplace(appId) }/activate/${ productId }`, params)
+    //return req.post(`${ urls.marketplace(appId) }/${ productId }/activate`, params)
+  },
+
+  deactivateProduct(appId, productId) {
+    return Promise.resolve(true)
+    //return req.delete(`${ urls.marketplace(appId) }/${ productId }/deactivate`, params)
   }
 })
