@@ -51,10 +51,15 @@ class Context {
 const contextifyRequest = (context, serverUrl) => {
   const result = {}
 
-  serverUrl = serverUrl || ''
+  const addServerUrl = path => {
+    return (serverUrl && !path.startsWith(serverUrl))
+      ? serverUrl + path
+      : path
+  }
 
   methods.forEach(method => {
-    result[method] = (path, body) => context.apply(new Request(serverUrl + path, method, body))
+    result[method] = (path, body) =>
+      context.apply(new Request(addServerUrl(path), method, body))
   })
 
   return result

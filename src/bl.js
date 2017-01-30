@@ -135,7 +135,7 @@ export default req => ({
   },
 
   getDraftFileContent(appId, fileId, language) {
-    return req.get(`${ urls.blDraft(appId, language) }/${ encodeURIComponent(fileId) }`)
+    return req.get(`${ urls.blDraft(appId, language) }/${ fileId }`)
   },
 
   getLanguages() {

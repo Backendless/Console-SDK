@@ -42,7 +42,7 @@ export default (req, context) => ({
   },
 
   suicide() {
-    return req.delete('console/developer-suicide').send()
+    return req.delete('/console/developer-suicide').send()
   },
 
   checkForCaptchaRequirement() {
