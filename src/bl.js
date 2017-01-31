@@ -22,18 +22,6 @@ const normalizeService = service => {
   return service
 }
 
-// TODO: remove this transformation when the format of config will be changed
-const toServerServiceConfig = config => _map(config, (value, name) => ({ name, value }))
-
-// TODO: remove this transformation when the format of config will be changed
-const fromServerServiceConfig = config => {
-  return config.reduce((memo, config) => {
-    memo[config.name] = config.value
-
-    return memo
-  }, {})
-}
-
 // TODO: remove this transformation when the format of config will be changes
 const normalizeServiceConfigDescription = configDescription => {
   for (const key in configDescription) {
@@ -107,19 +95,15 @@ export default req => ({
   },
 
   loadServiceConfig(appId, serviceId) {
-    // TODO: remove this transformation when the format of config will be changed
     return req.get(hostedServiceConfig(appId, serviceId))
-      .then(fromServerServiceConfig)
   },
 
   setServiceConfig(appId, serviceId, config) {
-    // TODO: remove this transformation when the format of config will be changed
-    return req.post(hostedServiceConfig(appId, serviceId), toServerServiceConfig(config))
+    return req.post(hostedServiceConfig(appId, serviceId), config)
   },
 
   testServiceConfig(appId, serviceId, config) {
-    // TODO: remove this transformation when the format of config will be changed
-    return req.post(hostedServiceConfig(appId, `test/${serviceId}`), toServerServiceConfig(config))
+    return req.post(hostedServiceConfig(appId, `test/${serviceId}`), config)
   },
 
   getDraftFiles(appId, language) {
