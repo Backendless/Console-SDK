@@ -1,4 +1,3 @@
-import _map from 'lodash/map'
 import _each from 'lodash/each'
 
 import urls from './urls'
