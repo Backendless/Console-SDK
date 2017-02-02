@@ -1,3 +1,14 @@
+const UNITS_CONVERTERS = {
+  miles     : 'mi',
+  yards     : 'yd',
+  kilometers: 'km',
+  meters    : 'km'
+}
+
+const RADIUS_CONVERTERS = {
+  meters: value => value / 1000
+}
+
 const SQL = {
   and: (...tokens) => {
     const result = tokens.reduce((memo, token) => {
@@ -17,8 +28,11 @@ const SQL = {
     return items.length ? `(${name} IN (${tokens.join(', ')}))` : undefined
   },
 
-  distance: (lat, lng, unit, radius, latName = 'latitude', lngName = ' longitude') => {
-    return `distance(${lat}, ${lng}, ${latName}, ${lngName}) < ${unit}(${radius})`
+  distance: (lat, lng, unit, radius) => {
+    const u = UNITS_CONVERTERS[unit]
+    const r = RADIUS_CONVERTERS[unit] ? RADIUS_CONVERTERS[unit](radius) : radius
+
+    return `distance(${lat}, ${lng}, latitude, longitude) < ${u}(${r})`
   }
 }
 

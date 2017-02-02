@@ -4,13 +4,6 @@ import SQL from './utils/sql-builder'
 import { GEO_CATEGORY } from './utils/cache-tags'
 import { toQueryString } from './utils/path'
 
-const UNITS_ALIASES = {
-  miles     : 'mi',
-  yards     : 'yd',
-  kilometers: 'km',
-  meters    : 'm'
-}
-
 const toServerFence = ({ objectId, name, qualCriteria, type, nodes }) => ({
   name,
   objectId,
@@ -168,9 +161,8 @@ export default req => {
 
     if (mapDriven && radiusDriven) {
       const { lat, lng } = radiusCenter
-      const unit = UNITS_ALIASES[radiusUnits]
 
-      whereClauseParts.push(SQL.distance(lat, lng, unit, radius))
+      whereClauseParts.push(SQL.distance(lat, lng, radiusUnits, radius))
     }
 
     const queryParams = {
