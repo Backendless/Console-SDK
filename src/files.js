@@ -53,7 +53,7 @@ export default req => ({
   },
 
   editFile(appId, filePath, fileContent) {
-    return req.post(urls.fileEdit(appId, filePath), fileContent)
+    return req.post(urls.fileEdit(appId, filePath), { file: fileContent })
   },
 
   createFile(appId, filePath, fileContent) {
