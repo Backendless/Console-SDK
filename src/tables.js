@@ -201,7 +201,7 @@ const buildRecordsSearch = (table, sql, searchString, filterString) => {
 
   const searchSQL = (sql || !searchString) ? searchString : searchStringToSQLFormat(table, searchString)
 
-  return SQL.combine(filterString, searchSQL)
+  return SQL.and(filterString, searchSQL)
 }
 
 const searchStringToSQLFormat = (table, searchValue) => {

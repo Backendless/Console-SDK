@@ -4,6 +4,13 @@ import SQL from './utils/sql-builder'
 import { GEO_CATEGORY } from './utils/cache-tags'
 import { toQueryString } from './utils/path'
 
+const UNITS_ALIASES = {
+  miles     : 'mi',
+  yards     : 'yd',
+  kilometers: 'km',
+  meters    : 'm'
+}
+
 const toServerFence = ({ objectId, name, qualCriteria, type, nodes }) => ({
   name,
   objectId,
@@ -108,45 +115,25 @@ export default req => {
     }
 
     if (relationsParams) {
-      return loadPointsAsRelations(appId, params, pageParams).then(({ totalRows, data }) => {
-        const objectIds = data.map(point => point.objectId)
-
-        return loadPoints(appId, category, params, pageParams, objectIds).then(points => {
-          const sortedPoints = []
-
-          points.forEach(point => {
-            sortedPoints[objectIds.indexOf(point.objectId)] = point
-          })
-
-          return { totalRows, data: sortedPoints }
-        })
-      })
+      return loadPointsAsRelations(appId, params, pageParams)
     }
 
     return totalRows(req).getWithData(loadPoints(appId, category, params, pageParams))
   }
 
-  const loadPoints = (appId, category, params, pageParams, objectIds = []) => {
-    const { where, includemetadata = true, filterString, relationsParams } = params
+  const loadPoints = (appId, category, params, pageParams) => {
+    const { where, includemetadata = true, filterString } = params
     const { mapBounds, mapDriven, mapZoom, mapWidth, clustering } = params
     const { radiusDriven, radiusCenter, radius, radiusUnits } = params
-
-    const whereClauseParts = [where, filterString]
-
-    if (objectIds.length) {
-      delete pageParams.offset
-
-      whereClauseParts.push(`(objectId IN ('${objectIds.join("', '")}'))`)
-    }
 
     const queryParams = {
       ...pageParams,
       includemetadata,
       categories: category,
-      where     : SQL.combine(...whereClauseParts)
+      where     : SQL.and(where, filterString)
     }
 
-    if (mapDriven && !relationsParams) {
+    if (mapDriven) {
       if (radiusDriven) {
         queryParams.lat = radiusCenter.lat
         queryParams.lon = radiusCenter.lng
@@ -164,7 +151,7 @@ export default req => {
       }
     }
 
-    const nonRadiusMapDrivenSearch = mapDriven && !radiusDriven && !relationsParams
+    const nonRadiusMapDrivenSearch = mapDriven && !radiusDriven
     const url = nonRadiusMapDrivenSearch ? rectUrl(appId) : pointsUrl(appId)
 
     return req.get(url)
@@ -180,31 +167,43 @@ export default req => {
     const whereClauseParts = [where, filterString]
 
     if (mapDriven && radiusDriven) {
-      const DISTANCE_UNITS = {
-        miles     : 'mi',
-        yards     : 'yd',
-        kilometers: 'km',
-        meters    : 'km'
-      }
-
       const { lat, lng } = radiusCenter
-      const unit = DISTANCE_UNITS[radiusUnits]
-      const r = radiusUnits === 'meters' ? radius * 1000 : radius
+      const unit = UNITS_ALIASES[radiusUnits]
 
-      whereClauseParts.push(
-        `distance(${lat}, ${lng}, latitude, longitude) < ${unit}(${r})`
-      )
+      whereClauseParts.push(SQL.distance(lat, lng, unit, radius))
     }
 
     const queryParams = {
       ...pageParams,
-      where  : SQL.combine(...whereClauseParts),
+      where: SQL.and(...whereClauseParts),
       related
     }
 
     const dataReq = req.get(`${urls.dataRecord(appId, tableName, objectId)}/${name}`).query(queryParams)
 
-    return totalRows(req).getWithData(dataReq)
+    return totalRows(req).getWithData(dataReq).then(({ totalRows, data }) => {
+      const objectIds = data.map(point => point.objectId)
+
+      return loadPointsByIds(appId, objectIds, params.includemetadata).then(points => {
+        const sortedPoints = []
+
+        points.forEach(point => {
+          sortedPoints[objectIds.indexOf(point.objectId)] = point
+        })
+
+        return { totalRows, data: sortedPoints }
+      })
+    })
+  }
+
+  const loadPointsByIds = (appId, objectIds = [], includemetadata = true) => {
+    const queryParams = {
+      pagesize: objectIds.length,
+      includemetadata,
+      where   : SQL.in('objectId', objectIds)
+    }
+
+    return req.get(pointsUrl(appId)).query(queryParams).cacheTags(GEO_CATEGORY())
   }
 
   const getFencePoints = (appId, fenceId) => {
