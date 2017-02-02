@@ -100,14 +100,14 @@ export default req => {
   }
 
   const getPoints = (appId, category, params = {}) => {
-    const { offset = 0, pageSize = 15, relationTableName } = params
+    const { offset = 0, pageSize = 15, relationsParams } = params
 
     const pageParams = {
       offset,
       pagesize: pageSize
     }
 
-    if (relationTableName) {
+    if (relationsParams) {
       return loadPointsAsRelations(appId, params, pageParams).then(({ totalRows, data }) => {
         const objectIds = data.map(point => point.objectId)
 
@@ -127,10 +127,9 @@ export default req => {
   }
 
   const loadPoints = (appId, category, params, pageParams, objectIds = []) => {
-    const { where, includemetadata = true, filterString } = params
+    const { where, includemetadata = true, filterString, relationsParams } = params
     const { mapBounds, mapDriven, mapZoom, mapWidth, clustering } = params
     const { radiusDriven, radiusCenter, radius, radiusUnits } = params
-    const { relationTableName, relationObjectId, relationName } = params
 
     const whereClauseParts = [where, filterString]
 
@@ -147,7 +146,7 @@ export default req => {
       where     : SQL.combine(...whereClauseParts)
     }
 
-    if (mapDriven && !relationTableName) {
+    if (mapDriven && !relationsParams) {
       if (radiusDriven) {
         queryParams.lat = radiusCenter.lat
         queryParams.lon = radiusCenter.lng
@@ -165,7 +164,7 @@ export default req => {
       }
     }
 
-    const nonRadiusMapDrivenSearch = mapDriven && !radiusDriven && !relationTableName
+    const nonRadiusMapDrivenSearch = mapDriven && !radiusDriven && !relationsParams
     const url = nonRadiusMapDrivenSearch ? rectUrl(appId) : pointsUrl(appId)
 
     return req.get(url)
@@ -174,39 +173,36 @@ export default req => {
   }
 
   const loadPointsAsRelations = (appId, params, pageParams) => {
-    const { offset = 0, pageSize = 15, includemetadata = true, where, filterString } = params
-    const { mapBounds, mapDriven, mapZoom, mapWidth, clustering } = params
-    const { radiusDriven, radiusCenter, radius, radiusUnits } = params
-    const { relationTableName, relationObjectId, relationName, relatedRelations } = params
+    const { where, filterString, relationsParams } = params
+    const { mapDriven, radiusDriven, radiusCenter, radius, radiusUnits } = params
+    const { tableName, objectId, name, related } = relationsParams
 
     const whereClauseParts = [where, filterString]
 
     if (mapDriven && radiusDriven) {
-      // TODO: waiting for complete http://bugs.backendless.com/browse/BKNDLSS-13803
-      // const DISTANCE_UNITS = {
-      //   miles     : 'mi',
-      //   yards     : 'yd',
-      //   kilometers: 'km',
-      //   meters    : 'km'
-      // }
-      //
-      // const { lat, lng } = radiusCenter
-      // const unit = DISTANCE_UNITS[radiusUnits]
-      // const r = radiusUnits === 'meters' ? radius * 1000 : radius
-      //
-      // whereClauseParts.push(
-      //   `distance(${lat}, ${lng}, locations.latitude, locations.longitude) < ${unit}(${radius})`
-      // )
+      const DISTANCE_UNITS = {
+        miles     : 'mi',
+        yards     : 'yd',
+        kilometers: 'km',
+        meters    : 'km'
+      }
+
+      const { lat, lng } = radiusCenter
+      const unit = DISTANCE_UNITS[radiusUnits]
+      const r = radiusUnits === 'meters' ? radius * 1000 : radius
+
+      whereClauseParts.push(
+        `distance(${lat}, ${lng}, latitude, longitude) < ${unit}(${r})`
+      )
     }
 
     const queryParams = {
       ...pageParams,
       where  : SQL.combine(...whereClauseParts),
-      related: relatedRelations
+      related
     }
 
-    const dataReq = req.get(`${urls.dataRecord(appId, relationTableName, relationObjectId)}/${relationName}`)
-      .query(queryParams)
+    const dataReq = req.get(`${urls.dataRecord(appId, tableName, objectId)}/${name}`).query(queryParams)
 
     return totalRows(req).getWithData(dataReq)
   }
