@@ -1,7 +1,7 @@
 {
   "name": "backendless-console-sdk",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.2",
+  "description": "Backendless Console SDK for Node.js and browser",
   "browser": "dist/backendless-console-sdk.js",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -21,19 +21,18 @@
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack src/index.js dist/backendless-console-sdk.js",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack src/index.js dist/backendless-console-sdk.min.js",
-    "build": "npm run build:commonjs && npm run build:es",
-    "build_backup": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
+    "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
     "prepublish": "npm run clean && npm run check && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.backendless.com:backendless/console-sdk.git"
+    "url": "git@github.com:Backendless/Console-SDK.git"
   },
   "keywords": [
     "backendless",
     "sdk"
   ],
-  "author": "",
+  "author": "info@backendless.com",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.18.0",

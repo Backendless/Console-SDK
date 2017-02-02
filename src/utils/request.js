@@ -1,4 +1,3 @@
-/* global fetch */
 import _isObject from 'lodash/isObject'
 
 import Cache from './cache'
@@ -92,27 +91,6 @@ const sendXmlHttpRequest = (path, method, headers, body) => {
     })
 
     request.send(body)
-  })
-}
-
-const sendFetchAPIRequest = (path, method, headers, body) => {
-  const options = { method, headers, body }
-
-  const responseHeadersToJSON = headers => {
-    const result = {}
-
-    for (const key of headers.keys()) {
-      result[key] = headers.get(key)
-    }
-
-    return result
-  }
-
-  return fetch(path, options).then(res => {
-    const { status, statusText } = res
-    const headers = responseHeadersToJSON(res.headers)
-
-    return res.text().then(body => ({ status, statusText, headers, body }))
   })
 }
 
