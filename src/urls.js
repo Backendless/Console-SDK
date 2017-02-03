@@ -28,8 +28,11 @@ export const fileDownload = (appId, authKey, filePath) =>
 export const fileUpload = (appId, filePath) =>
   `${appConsole(appId)}/files/upload/${filePath}/`
 
-export const createDir = (appId, path = '', folderName) =>
-  `${appConsole(appId)}/files/createdir/${path}/${folderName}/`
+export const createDir = (appId, path, folderName) => {
+  path = path ? `${path}/` : ''
+
+  return `${appConsole(appId)}/files/createdir/${path}${folderName}/`
+}
 
 export const fileView = (appId, authKey, filePath) =>
   `${appConsole(appId, authKey)}/files/view/${filePath}`
