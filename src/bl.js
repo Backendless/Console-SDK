@@ -85,6 +85,10 @@ export default req => ({
     // TODO: remove this transformation when the format of config will be changed
   },
 
+  createAWSService(appId, credentials) {
+    return req.post(`${ urls.blBasePath(appId) }/aws`, credentials)
+  },
+
   deleteService(appId, serviceId) {
     return req.delete(hostedServices(appId), [serviceId])
   },
