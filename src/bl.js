@@ -12,7 +12,7 @@ const CONFIG_NAMES_MAP = {
 }
 
 // TODO: remove this transformation when the format of config will be changed
-const normalizeService = service => {
+export const normalizeService = service => {
   if (service.configuration) {
     service.configDescriptions = service.configuration.map(normalizeServiceConfigDescription)
     delete service.configuration
@@ -83,10 +83,6 @@ export default req => ({
     return req.post(`${ urls.blBasePath(appId) }/generic`, formData)
       .then(services => services.map(normalizeService))
     // TODO: remove this transformation when the format of config will be changed
-  },
-
-  createAWSService(appId, credentials) {
-    return req.post(`${ urls.blBasePath(appId) }/aws`, credentials)
   },
 
   deleteService(appId, serviceId) {
