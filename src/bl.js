@@ -67,6 +67,10 @@ export default req => ({
     return req.get(`${ urls.blBasePath(appId) }/${ serviceId }/api-docs`).then(parseServiceSpec)
   },
 
+  getServiceMethods(appId, serviceId) {
+    return req.get(`${ urls.blBasePath(appId) }/${ serviceId }/methods`)
+  },
+
   importService(appId, data) {
     return req.post(`${ urls.blBasePath(appId) }/imported`, data)
   },
