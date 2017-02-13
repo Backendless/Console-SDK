@@ -67,6 +67,10 @@ export default req => ({
     return req.get(`${ urls.blBasePath(appId) }/${ serviceId }/api-docs`).then(parseServiceSpec)
   },
 
+  getServiceMethods(appId, serviceId) {
+    return req.get(`${ urls.blBasePath(appId) }/${ serviceId }/methods`)
+  },
+
   importService(appId, data) {
     return req.post(`${ urls.blBasePath(appId) }/imported`, data)
   },
@@ -83,6 +87,12 @@ export default req => ({
     return req.post(`${ urls.blBasePath(appId) }/generic`, formData)
       .then(services => services.map(normalizeService))
     // TODO: remove this transformation when the format of config will be changed [CONSOLE-599]
+  },
+
+  createAWSLambdaService(appId, credentials) {
+    return req.post(`${ urls.blBasePath(appId) }/aws-lambda`, { ...credentials, appId })
+      .then(services => services.map(normalizeService))
+    // TODO: remove this transformation when the format of config will be changed
   },
 
   deleteService(appId, serviceId) {
