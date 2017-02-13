@@ -12,7 +12,7 @@ const CONFIG_NAMES_MAP = {
 }
 
 // TODO: remove this transformation when the format of config will be changed
-export const normalizeService = service => {
+const normalizeService = service => {
   if (service.configuration) {
     service.configDescriptions = service.configuration.map(normalizeServiceConfigDescription)
     delete service.configuration
