@@ -1,3 +1,5 @@
+import urls from './urls'
+
 /**
  *
  * @param req
@@ -71,5 +73,9 @@ export default (req, context) => ({
 
   updateProfile(profile) {
     return req.put('/console/home/myaccount/', profile)
+  },
+
+  acceptInvite({ applicationId, ...userData }) {
+    return req.post(`${urls.appConsole(applicationId)}/activatedev`, userData)
   }
 })
