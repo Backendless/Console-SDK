@@ -76,6 +76,8 @@ export default (req, context) => ({
   },
 
   acceptInvite({ applicationId, ...userData }) {
-    return req.post(`${urls.appConsole(applicationId)}/activatedev`, userData)
+    return req.post(`${urls.appConsole(applicationId)}/activatedev`, userData).then(authKey => {
+      context.setAuthKey(authKey)
+    })
   }
 })
