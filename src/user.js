@@ -75,16 +75,15 @@ export default (req, context) => ({
     return req.put('/console/home/myaccount/', profile)
   },
 
-  acceptInvite({ applicationId, ...userData }, newUser) {
-    const endpoint = newUser ? 'activatedev' : `devconfirmation/${userData.developerId}`
-    const method = newUser ? 'post' : 'put'
-
-    return req[method](`${urls.appConsole(applicationId)}/${endpoint}`, userData).then(authKey => {
-      if (authKey)  {
-        context.setAuthKey(authKey)
-      }
+  joinTeam({ appId, ...userData }) {
+    return req.post(`${urls.appConsole(appId)}/activatedev`, userData).then(authKey => {
+      context.setAuthKey(authKey)
 
       return Promise.resolve(authKey)
     })
+  },
+
+  registerAndJoinTeam({ appId, ...userData }) {
+    return req.put(`${urls.appConsole(appId)}/devconfirmation/${userData.devId}`, userData)
   }
 })
