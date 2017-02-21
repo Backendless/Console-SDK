@@ -75,7 +75,7 @@ export default (req, context) => ({
     return req.put('/console/home/myaccount/', profile)
   },
 
-  joinTeam({ appId, ...userData }) {
+  registerAndJoinTeam({ appId, ...userData }) {
     return req.post(`${urls.appConsole(appId)}/activatedev`, userData).then(authKey => {
       context.setAuthKey(authKey)
 
@@ -83,7 +83,7 @@ export default (req, context) => ({
     })
   },
 
-  registerAndJoinTeam({ appId, ...userData }) {
+  joinTeam({ appId, ...userData }) {
     return req.put(`${urls.appConsole(appId)}/devconfirmation/${userData.devId}`, userData)
   }
 })
