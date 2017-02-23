@@ -1,4 +1,4 @@
-import { Request, methods } from './utils/request'
+import Request  from 'backendless-request'
 import * as CacheTags from './utils/cache-tags'
 import urls from './urls'
 
@@ -56,7 +56,7 @@ const contextifyRequest = (context, serverUrl) => {
       : path
   }
 
-  methods.forEach(method => {
+  Request.methods.forEach(method => {
     result[method] = (path, body) =>
       context.apply(new Request(addServerUrl(path), method, body))
   })
