@@ -50,7 +50,7 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
-    "backendless-request": "0.0.1",
+    "backendless-request": "^0.0.2",
     "lodash": "^4.17.2"
   }
 }
