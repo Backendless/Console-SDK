@@ -1,6 +1,6 @@
 {
   "name": "backendless-console-sdk",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Backendless Console SDK for Node.js and browser",
   "browser": "dist/backendless-console-sdk.js",
   "main": "lib/index.js",
@@ -36,7 +36,7 @@
     "name": "Backendless Corp",
     "email": "info@backendless.com"
   },
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
