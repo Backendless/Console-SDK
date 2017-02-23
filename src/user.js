@@ -1,3 +1,5 @@
+import urls from './urls'
+
 /**
  *
  * @param req
@@ -71,5 +73,17 @@ export default (req, context) => ({
 
   updateProfile(profile) {
     return req.put('/console/home/myaccount/', profile)
+  },
+
+  registerAndJoinTeam({ appId, ...userData }) {
+    return req.post(`${urls.appConsole(appId)}/activatedev`, userData).then(authKey => {
+      context.setAuthKey(authKey)
+
+      return authKey
+    })
+  },
+
+  joinTeam({ appId, ...userData }) {
+    return req.put(`${urls.appConsole(appId)}/devconfirmation/${userData.devId}`, userData)
   }
 })
