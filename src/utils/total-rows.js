@@ -1,9 +1,22 @@
 import _omit from 'lodash/omit'
 
-import { trimQueryParams } from './path'
-
 const NON_COUNTS_PARAMS = ['offset', 'pagesize', 'pageSize']
 const DEFAULT_CACHE_TTL = 30000
+
+const trimQueryParams = (path, paramsToTrim) => {
+  const pathTokens = path.split('?')
+  const url = pathTokens[0]
+  const params = pathTokens[1] || ''
+  const paramsTokens = params.split('&')
+
+  const filteredParams = paramsToTrim && paramsToTrim.length
+    ? paramsTokens.filter(param => paramsToTrim.indexOf(param.split('=')[0]) === -1)
+    : []
+
+  const filteredQuery = filteredParams.join('&')
+
+  return filteredQuery ? `${url}?${filteredQuery}` : url
+}
 
 const getCountPath = path => {
   path = trimQueryParams(path, NON_COUNTS_PARAMS)

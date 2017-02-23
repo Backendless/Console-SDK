@@ -2,7 +2,6 @@ import urls from './urls'
 import totalRows from './utils/total-rows'
 import SQL from './utils/sql-builder'
 import { GEO_CATEGORY } from './utils/cache-tags'
-import { toQueryString } from './utils/path'
 
 const toServerFence = ({ objectId, name, qualCriteria, type, nodes }) => ({
   name,
@@ -210,7 +209,7 @@ export default req => {
   }
 
   const addPoint = (appId, lat, lon) => {
-    return req.put(pointsUrl(appId) + '?' + toQueryString({ lat, lon }))
+    return req.put(pointsUrl(appId)).query({ lat, lon })
   }
 
   const copyPoints = (appId, pointsIds, targetCategory) => {

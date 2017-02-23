@@ -1,11 +1,12 @@
 export const ALL_OBJECTS = 'all'
 
 export const PermissionServices = {
-  DATA     : 'data',
-  MEDIA    : 'media',
-  MESSAGING: 'messaging',
-  GEO      : 'geo',
-  FILES    : 'files'
+  DATA        : 'data',
+  MEDIA       : 'media',
+  MESSAGING   : 'messaging',
+  GEO         : 'geo',
+  FILES       : 'files',
+  API_SERVICES: 'localservices'
 }
 
 export const PermissionPolicies = {
