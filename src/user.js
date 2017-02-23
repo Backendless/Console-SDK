@@ -79,7 +79,7 @@ export default (req, context) => ({
     return req.post(`${urls.appConsole(appId)}/activatedev`, userData).then(authKey => {
       context.setAuthKey(authKey)
 
-      return Promise.resolve(authKey)
+      return authKey
     })
   },
 
