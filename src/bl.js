@@ -6,12 +6,12 @@ const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
 
 const hostedServiceConfig = (appId, serviceId) => `${ hostedServices(appId) }/configure/${ serviceId }`
 
-// TODO: remove this transformation when the format of config will be changed [CONSOLE-599]
+// TODO: remove this transformation when the format of config will be changed
 const CONFIG_NAMES_MAP = {
   displayName: 'label'
 }
 
-// TODO: remove this transformation when the format of config will be changed [CONSOLE-599]
+// TODO: remove this transformation when the format of config will be changed
 const normalizeService = service => {
   if (service.configuration) {
     service.configDescriptions = service.configuration.map(normalizeServiceConfigDescription)
@@ -21,7 +21,7 @@ const normalizeService = service => {
   return service
 }
 
-// TODO: remove this transformation when the format of config will be changes [CONSOLE-599]
+// TODO: remove this transformation when the format of config will be changes
 const normalizeServiceConfigDescription = configDescription => {
   for (const key in configDescription) {
     const normalizeName = CONFIG_NAMES_MAP[key]
@@ -60,7 +60,7 @@ export default req => ({
   getServices(appId) {
     return req.get(urls.blBasePath(appId))
       .then(services => services.map(normalizeService))
-    // TODO: remove this transformation when the format of config will be changes [CONSOLE-599]
+    // TODO: remove this transformation when the format of config will be changes
   },
 
   getServiceSpec(appId, serviceId) {
@@ -84,6 +84,10 @@ export default req => ({
     return req.post(`${ urls.blBasePath(appId) }/import`, data)
   },
 
+  createNewService(appId, service) {
+    return req.post(`${ urls.blBasePath(appId) }/create`, { appId, service })
+  },
+
   createService(appId, data) {
     let formData = data
 
@@ -95,7 +99,7 @@ export default req => ({
 
     return req.post(`${ urls.blBasePath(appId) }/generic`, formData)
       .then(services => services.map(normalizeService))
-    // TODO: remove this transformation when the format of config will be changed [CONSOLE-599]
+    // TODO: remove this transformation when the format of config will be changed
   },
 
   createAWSLambdaService(appId, credentials) {
