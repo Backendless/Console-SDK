@@ -71,8 +71,17 @@ export default req => ({
     return req.get(`${ urls.blBasePath(appId) }/${ serviceId }/methods`)
   },
 
-  importService(appId, data) {
-    return req.post(`${ urls.blBasePath(appId) }/imported`, data)
+  importService(appId, { service, serviceURL, file }) {
+    let data
+
+    if (file) {
+      data = new FormData()
+      data.append('file', file)
+    } else {
+      data = service ? { appId, service } : { serviceURL }
+    }
+
+    return req.post(`${ urls.blBasePath(appId) }/import`, data)
   },
 
   createService(appId, data) {
