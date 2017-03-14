@@ -1,5 +1,4 @@
 import urls from './urls'
-import billingPlans from './billing-plans' // TODO: remove this import with file after server route will be ready
 
 export default req => ({
   getAppPurchases(appId) {
@@ -10,14 +9,14 @@ export default req => ({
     return req.get(`${urls.appConsole(appId)}/billing/accountinfo`)
   },
 
-  getBillingPlans(/*appId*/) {
-    return Promise.resolve(billingPlans)  // this.get(`/console/${appId}/billing/plans`)
+  getBillingPlans(appId) {
+    return this.get(`${urls.appConsole(appId)}/billing/plans`)
   },
 
-  switchToBillingPlan(appId, plan) {
+  switchToBillingPlan(appId, plan, purchases) {
     const params = { plan }
 
-    return req.post(`${urls.appConsole(appId)}/billing/switch`).query(params)
+    return req.post(`${urls.appConsole(appId)}/billing/switch`, purchases).query(params)
   },
 
   updateCreditCard(appId) {
