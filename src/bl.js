@@ -102,6 +102,10 @@ export default req => ({
     return req.post(`${ urls.blBasePath(appId) }/aws-lambda`, { ...credentials, appId })
   },
 
+  createCodelessService(appId, name) {
+    return req.post(`${ urls.blBasePath(appId) }/codeless`, { name })
+  },
+
   deleteService(appId, serviceId) {
     return req.delete(hostedServices(appId), [serviceId])
   },
