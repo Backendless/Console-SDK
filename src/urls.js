@@ -70,9 +70,16 @@ export const messagingChannel = (appId, channelId) =>
 export const mobileSettings = appId =>
   `${appConsole(appId)}/mobilesettings`
 
+export const billing = appId =>
+  `${appConsole(appId)}/billing`
+
+export const marketplace = appId =>
+  `${appConsole(appId)}/marketplace`
+
 export default {
   console,
   appConsole,
+  billing,
   mailSettings,
   security,
   securityRoles,
@@ -97,6 +104,7 @@ export default {
   blProd,
   blDraftsProjectDownload,
   blServicesClientDownload,
+  marketplace,
   messaging,
   messagingChannels,
   messagingChannel,

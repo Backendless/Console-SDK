@@ -2,25 +2,27 @@ import urls from './urls'
 
 export default req => ({
   getAppPurchases(appId) {
-    return req.get(`${urls.appConsole(appId)}/marketplace/products/ordered`)
+    return req.get(`${urls.marketplace(appId)}/products/ordered`)
   },
 
   getBillingInfo(appId) {
-    return req.get(`${urls.appConsole(appId)}/billing/accountinfo`)
+    return req.get(`${urls.billing(appId)}/accountinfo`)
   },
 
-  getBillingPlans(appId) {
-    return this.get(`${urls.appConsole(appId)}/billing/plans`)
+  getPlans(appId) {
+    return req.get(`${urls.billing(appId)}/plans`)
   },
 
-  switchToBillingPlan(appId, plan, purchases) {
-    const params = { plan }
+  getPlanComponentsData(appId, planId) {
+    return req.get(`${urls.billing(appId)}/plans/${planId}/components`)
+  },
 
-    return req.post(`${urls.appConsole(appId)}/billing/switch`, purchases).query(params)
+  switchToPlan(appId, planId) {
+    return req.post(`${urls.billing(appId)}/subscriptions/${planId}`)
   },
 
   updateCreditCard(appId) {
-    return req.get(`${urls.appConsole(appId)}/billing/updatecreditcard`)
+    return req.get(`${urls.billing(appId)}/updatecreditcard`)
   },
 
   deletePurchasedItem(appId, itemId) {
@@ -28,18 +30,14 @@ export default req => ({
   },
 
   addCreditCard(appId, cardInfo) {
-    return req.post(`${urls.appConsole(appId)}/billing/creditcard`, cardInfo)
-  },
-
-  setMarketplaceCredentials(appId, credentials) {
-    return req.post(`${urls.appConsole(appId)}/billing/marketplaceaccess`, credentials)
+    return req.post(`${urls.billing(appId)}/creditcard`, cardInfo)
   },
 
   getProductDetails(appId, productId) {
-    return req.get(`${urls.appConsole(appId)}/marketplace/products/ordered/${productId}`)
+    return req.get(`${urls.marketplace(appId)}/products/ordered/${productId}`)
   },
 
   updateProductDetails(appId, productId, productDetails) {
-    return req.put(`${urls.appConsole(appId)}/marketplace/activate/${productId}`, productDetails)
+    return req.put(`${urls.marketplace(appId)}/activate/${productId}`, productDetails)
   }
 })
