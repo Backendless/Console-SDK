@@ -30,7 +30,7 @@ export default req => {
           if (!child.size) {
             return loadDirectory(appId, authKey, child.url).then(children => {
               const icon = children.find(({ name }) => IMAGE_FILE.test(name))
-              const readme = children.find(({ name }) => name === 'readme.txt')
+              const readme = children.find(({ name }) => name === 'README.md')
 
               if (icon) {
                 child.icon = icon.publicUrl
