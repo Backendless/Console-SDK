@@ -106,6 +106,7 @@ const enrichEntities = result => {
  * For owner the response is 'GRANT_INHERIT'
  * for roles acl the response is complete GET response
  * for all other types the response is array of objects with two fields {operation, access}
+ * possibly wrapped into 'permissions' field..  ︻デ═一
  *
  * We want to cast all these responses to the following structure
  *
@@ -145,6 +146,10 @@ const alignModifyResponseShape = (appId, policy, policyItemId, service, serviceI
     })
 
   } else {
+    if (response.permissions) {
+      response = response.permissions
+    }
+
     const permissions = result[policyItemId] = {}
 
     response.forEach(permission => permissions[permission.operation] = permission.access)
@@ -215,7 +220,8 @@ export default req => {
       ? permission
       : { permissions: [permission] }
 
-    const url = buildPutUrl(appId, policy, service, serviceItemId, serviceItemName, objectId, policyItemId)
+    const url = buildPutUrl(appId, policy, service, serviceItemId, serviceItemName,
+      objectId, policyItemId, permission)
 
     return req.put(url, body)
       .then(alignModifyResponseShape(

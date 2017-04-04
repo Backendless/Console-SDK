@@ -5,7 +5,7 @@
  */
 
 import urls from './urls'
-import { toQueryString } from './utils/path'
+import * as qs from 'backendless-request/lib/qs'
 import { PermissionPolicies, PermissionServices, ALL_OBJECTS } from './constants/security'
 
 const baseUrl = appId => urls.security(appId)
@@ -45,7 +45,7 @@ export const buildGetUrl = (appId, policy, service, serviceItemId, serviceItemNa
     stickingPoint = `${service}/${serviceItemName}/objectAcl/${objectId}/${policy}`
   }
 
-  return `${baseUrl(appId)}/${stickingPoint}?${toQueryString(filterParams)}`
+  return `${baseUrl(appId)}/${stickingPoint}?${qs.stringify(filterParams)}`
 }
 
 /**
@@ -56,15 +56,18 @@ export const buildGetUrl = (appId, policy, service, serviceItemId, serviceItemNa
  * service=file & policy=users  : 'security/:policy/:policyItemId/file/:serviceItemId'
  * service=file & policy=roles  : 'security/:policy/:policyItemId/files/:serviceItemId'
  * objectId!=all                : 'security/:service/:serviceItemName/objectAcl/:objectID/users/:policyItemId'
+ * service=api & operation=all  : 'security/:service/:serviceItemId/:policy/:policyItemId/:access'
  *
  * @returns {string}
  */
-export const buildPutUrl = (appId, policy, service, serviceItemId, serviceItemName, objectId, policyItemId) => {
+export const buildPutUrl = (appId, policy, service, serviceItemId, serviceItemName, objectId,
+                            policyItemId, permission) => {
   const { OWNER, USERS, ROLES } = PermissionPolicies
   const isOwnerPolicy = policy === OWNER
   const isUserPolicy = policy === USERS
   const isRolesPolicy = policy === ROLES
   const isFilesService = service === PermissionServices.FILES
+  const isApiService = service === PermissionServices.API_SERVICES
   const isObjectACL = objectId !== ALL_OBJECTS
 
   let stickingPoint = `${service}/${serviceItemId}/${policy}/${policyItemId}`
@@ -79,18 +82,23 @@ export const buildPutUrl = (appId, policy, service, serviceItemId, serviceItemNa
     } else if (isRolesPolicy) {
       stickingPoint = `${policy}/${policyItemId}/files/${serviceItemId}`
     }
+  } else if (isApiService && permission.operation === 'all') {
+    stickingPoint += '/access/' + permission.access
   }
+
+
 
   return `${baseUrl(appId)}/${stickingPoint}`
 }
 
 /**
- * Returns calculated PUT url according to rules :
+ * Returns calculated DELETE url according to rules :
  *
- * policy=owner                 : :service/ownerpolicy/:serviceItemId/:operation
- * objectId!=all & policy=roles : :service/:serviceItemName/objectAcl/:objectId/:policy/:operation
- * objectId!=all & policy=users : :service/:serviceItemName/objectAcl/:objectId/:policy/:policyItemId
- * service=files                : :policy/:policyItemId/:service/:serviceItemId
+ * default                      : security/:service/:serviceItemId/:policy/:policyItemId:(/:operation)
+ * policy=owner                 : security/:service/ownerpolicy/:serviceItemId/:operation
+ * objectId!=all & policy=roles : security/:service/:serviceItemName/objectAcl/:objectId/:policy/:operation
+ * objectId!=all & policy=users : security/:service/:serviceItemName/objectAcl/:objectId/:policy/:policyItemId
+ * service=files                : security/:policy/:policyItemId/:service/:serviceItemId
  *
  * @returns {string}
  */
@@ -123,5 +131,11 @@ export const buildDeleteUrl = (appId, policy, policyItemId, service, serviceItem
     return `${baseUrl(appId)}/${service}/${policy}/${policyItemId}/${serviceItemId}`
   }
 
-  return `${baseUrl(appId)}/${service}/${serviceItemId}/${policy}/${policyItemId}`
+  let result = `${baseUrl(appId)}/${service}/${serviceItemId}/${policy}/${policyItemId}`
+
+  if (operation && operation !== 'all') {
+    result += '/' + operation
+  }
+
+  return result
 }

@@ -1,4 +1,3 @@
-import _map from 'lodash/map'
 import _each from 'lodash/each'
 
 import urls from './urls'
@@ -7,12 +6,12 @@ const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
 
 const hostedServiceConfig = (appId, serviceId) => `${ hostedServices(appId) }/configure/${ serviceId }`
 
-// TODO: remove this transformation when the format of config will be changed
+// TODO: remove this transformation when the format of config will be changed [CONSOLE-599]
 const CONFIG_NAMES_MAP = {
   displayName: 'label'
 }
 
-// TODO: remove this transformation when the format of config will be changed
+// TODO: remove this transformation when the format of config will be changed [CONSOLE-599]
 const normalizeService = service => {
   if (service.configuration) {
     service.configDescriptions = service.configuration.map(normalizeServiceConfigDescription)
@@ -22,19 +21,7 @@ const normalizeService = service => {
   return service
 }
 
-// TODO: remove this transformation when the format of config will be changed
-const toServerServiceConfig = config => _map(config, (value, name) => ({ name, value }))
-
-// TODO: remove this transformation when the format of config will be changed
-const fromServerServiceConfig = config => {
-  return config.reduce((memo, config) => {
-    memo[config.name] = config.value
-
-    return memo
-  }, {})
-}
-
-// TODO: remove this transformation when the format of config will be changes
+// TODO: remove this transformation when the format of config will be changes [CONSOLE-599]
 const normalizeServiceConfigDescription = configDescription => {
   for (const key in configDescription) {
     const normalizeName = CONFIG_NAMES_MAP[key]
@@ -73,15 +60,28 @@ export default req => ({
   getServices(appId) {
     return req.get(urls.blBasePath(appId))
       .then(services => services.map(normalizeService))
-    // TODO: remove this transformation when the format of config will be changes
+    // TODO: remove this transformation when the format of config will be changes [CONSOLE-599]
   },
 
   getServiceSpec(appId, serviceId) {
     return req.get(`${ urls.blBasePath(appId) }/${ serviceId }/api-docs`).then(parseServiceSpec)
   },
 
-  importService(appId, data) {
-    return req.post(`${ urls.blBasePath(appId) }/imported`, data)
+  getServiceMethods(appId, serviceId) {
+    return req.get(`${ urls.blBasePath(appId) }/${ serviceId }/methods`)
+  },
+
+  importService(appId, { service, serviceURL, file }) {
+    let data
+
+    if (file) {
+      data = new FormData()
+      data.append('file', file)
+    } else {
+      data = service ? { appId, service } : { serviceURL }
+    }
+
+    return req.post(`${ urls.blBasePath(appId) }/import`, data)
   },
 
   createService(appId, data) {
@@ -95,7 +95,11 @@ export default req => ({
 
     return req.post(`${ urls.blBasePath(appId) }/generic`, formData)
       .then(services => services.map(normalizeService))
-    // TODO: remove this transformation when the format of config will be changed
+    // TODO: remove this transformation when the format of config will be changed [CONSOLE-599]
+  },
+
+  createAWSLambdaService(appId, credentials) {
+    return req.post(`${ urls.blBasePath(appId) }/aws-lambda`, { ...credentials, appId })
   },
 
   deleteService(appId, serviceId) {
@@ -107,19 +111,15 @@ export default req => ({
   },
 
   loadServiceConfig(appId, serviceId) {
-    // TODO: remove this transformation when the format of config will be changed
     return req.get(hostedServiceConfig(appId, serviceId))
-      .then(fromServerServiceConfig)
   },
 
   setServiceConfig(appId, serviceId, config) {
-    // TODO: remove this transformation when the format of config will be changed
-    return req.post(hostedServiceConfig(appId, serviceId), toServerServiceConfig(config))
+    return req.post(hostedServiceConfig(appId, serviceId), config)
   },
 
   testServiceConfig(appId, serviceId, config) {
-    // TODO: remove this transformation when the format of config will be changed
-    return req.post(hostedServiceConfig(appId, `test/${serviceId}`), toServerServiceConfig(config))
+    return req.post(hostedServiceConfig(appId, `test/${serviceId}`), config)
   },
 
   getDraftFiles(appId, language) {

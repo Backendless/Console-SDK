@@ -1,45 +1,41 @@
 'use strict';
 
-var webpack = require('webpack')
+const webpack = require('webpack')
+const isProd = process.env.NODE_ENV === 'production'
 
-var env = process.env.NODE_ENV
-var config = {
-  target : 'node',
-  module : {
-    loaders: [
-      { test: /\.js$/, loaders: ['babel'], exclude: /node_modules/ }
+const uglify = new webpack.optimize.UglifyJsPlugin({
+  compressor: {
+    pure_getters: true,
+    unsafe: true,
+    unsafe_comps: true,
+    warnings: false,
+    screw_ie8: false
+  },
+  mangle: {
+    screw_ie8: false
+  },
+  output: {
+    screw_ie8: false
+  }
+})
+
+module.exports = {
+  target: 'node',
+
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      }
     ]
   },
-  output : {
-    library      : 'BackendlessConsoleSDK',
+
+  output: {
+    library: 'BackendlessRequest',
     libraryTarget: 'umd'
   },
-  plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env)
-    })
-  ]
-};
 
-if (env === 'production') {
-  config.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        pure_getters: true,
-        unsafe      : true,
-        unsafe_comps: true,
-        warnings    : false,
-        screw_ie8   : false
-      },
-      mangle    : {
-        screw_ie8: false
-      },
-      output    : {
-        screw_ie8: false
-      }
-    })
-  )
+  plugins: isProd ? [uglify] : []
 }
-
-module.exports = config

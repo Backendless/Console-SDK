@@ -1,7 +1,7 @@
 import urls from './urls'
 import totalRows from './utils/total-rows'
+import SQL from './utils/sql-builder'
 import { GEO_CATEGORY } from './utils/cache-tags'
-import { toQueryString } from './utils/path'
 
 const toServerFence = ({ objectId, name, qualCriteria, type, nodes }) => ({
   name,
@@ -99,23 +99,30 @@ export default req => {
   }
 
   const getPoints = (appId, category, params = {}) => {
-    const { where, offset = 0, pageSize = 15, includemetadata = true, objectIds = [] } = params
+    const { offset = 0, pageSize = 15, relationsParams } = params
+
+    const pageParams = {
+      offset,
+      pagesize: pageSize
+    }
+
+    if (relationsParams) {
+      return loadPointsAsRelations(appId, params, pageParams)
+    }
+
+    return totalRows(req).getWithData(loadPoints(appId, category, params, pageParams))
+  }
+
+  const loadPoints = (appId, category, params, pageParams) => {
+    const { where, includemetadata = true, filterString } = params
     const { mapBounds, mapDriven, mapZoom, mapWidth, clustering } = params
     const { radiusDriven, radiusCenter, radius, radiusUnits } = params
 
     const queryParams = {
-      offset,
+      ...pageParams,
       includemetadata,
       categories: category,
-      pagesize  : pageSize
-    }
-
-    if (where || objectIds.length) {
-      const byIdsSQL = objectIds.length ? `objectId IN ('${objectIds.join("', '")}')` : ''
-
-      queryParams.where = (byIdsSQL && where)
-        ? `${byIdsSQL} AND (${where})`
-        : byIdsSQL || where
+      where     : SQL.and(where, filterString)
     }
 
     if (mapDriven) {
@@ -139,11 +146,55 @@ export default req => {
     const nonRadiusMapDrivenSearch = mapDriven && !radiusDriven
     const url = nonRadiusMapDrivenSearch ? rectUrl(appId) : pointsUrl(appId)
 
-    const dataReq = req.get(url)
+    return req.get(url)
       .query(queryParams)
       .cacheTags(GEO_CATEGORY(category))
+  }
 
-    return totalRows(req).getWithData(dataReq)
+  const loadPointsAsRelations = (appId, params, pageParams) => {
+    const { where, filterString, relationsParams } = params
+    const { mapDriven, radiusDriven, radiusCenter, radius, radiusUnits } = params
+    const { tableName, objectId, name, related } = relationsParams
+
+    const whereClauseParts = [where, filterString]
+
+    if (mapDriven && radiusDriven) {
+      const { lat, lng } = radiusCenter
+
+      whereClauseParts.push(SQL.distance(lat, lng, radiusUnits, radius))
+    }
+
+    const queryParams = {
+      ...pageParams,
+      where: SQL.and(...whereClauseParts),
+      related
+    }
+
+    const dataReq = req.get(`${urls.dataRecord(appId, tableName, objectId)}/${name}`).query(queryParams)
+
+    return totalRows(req).getWithData(dataReq).then(({ totalRows, data }) => {
+      const objectIds = data.map(point => point.objectId)
+
+      return loadPointsByIds(appId, objectIds, params.includemetadata).then(points => {
+        const sortedPoints = []
+
+        points.forEach(point => {
+          sortedPoints[objectIds.indexOf(point.objectId)] = point
+        })
+
+        return { totalRows, data: sortedPoints }
+      })
+    })
+  }
+
+  const loadPointsByIds = (appId, objectIds = [], includemetadata = true) => {
+    const queryParams = {
+      pagesize: objectIds.length,
+      includemetadata,
+      where   : SQL.in('objectId', objectIds)
+    }
+
+    return req.get(pointsUrl(appId)).query(queryParams).cacheTags(GEO_CATEGORY())
   }
 
   const getFencePoints = (appId, fenceId) => {
@@ -158,7 +209,7 @@ export default req => {
   }
 
   const addPoint = (appId, lat, lon) => {
-    return req.put(pointsUrl(appId) + '?' + toQueryString({ lat, lon }))
+    return req.put(pointsUrl(appId)).query({ lat, lon })
   }
 
   const copyPoints = (appId, pointsIds, targetCategory) => {
@@ -168,6 +219,14 @@ export default req => {
 
   const setPointMeta = (appId, pointId, meta) => {
     return req.put(`${urls.geo(appId)}/${pointId}/meta`, meta)
+  }
+
+  const addPointMetaRelations = (appId, pointId, meta) => {
+    return req.patch(`${urls.geo(appId)}/${pointId}/meta`, meta)
+  }
+
+  const removePointMetaRelations = (appId, pointId, meta) => {
+    return req.delete(`${urls.geo(appId)}/${pointId}/meta`, meta)
   }
 
   const reset = appId => {
@@ -201,6 +260,8 @@ export default req => {
     copyPoints,
     sampleSetup,
     setPointMeta,
+    addPointMetaRelations,
+    removePointMetaRelations,
     reset
   }
 }
