@@ -106,6 +106,10 @@ export default req => ({
     return req.post(`${ urls.blBasePath(appId) }/codeless`, service)
   },
 
+  createCodelessMethod(appId, serviceId, method) {
+    return req.post(`${ urls.blBasePath(appId) }/codeless/${ serviceId }/`, method)
+  },
+
   deleteService(appId, serviceId) {
     return req.delete(hostedServices(appId), [serviceId])
   },
