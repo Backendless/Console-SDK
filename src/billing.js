@@ -21,16 +21,12 @@ export default req => ({
     return req.post(`${urls.billing(appId)}/subscriptions/${planId}`)
   },
 
-  updateCreditCard(appId) {
-    return req.get(`${urls.billing(appId)}/updatecreditcard`)
+  getCreditCard(appId) {
+    return req.get(`${urls.billing(appId)}/creditcard`)
   },
 
   deletePurchasedItem(appId, itemId) {
     return req.delete(`/console/marketplace/${itemId}`)
-  },
-
-  addCreditCard(appId, cardInfo) {
-    return req.post(`${urls.billing(appId)}/creditcard`, cardInfo)
   },
 
   getProductDetails(appId, productId) {
