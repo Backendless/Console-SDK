@@ -100,8 +100,6 @@ export default req => ({
 
   createAWSLambdaService(appId, credentials) {
     return req.post(`${ urls.blBasePath(appId) }/aws-lambda`, { ...credentials, appId })
-      .then(services => services.map(normalizeService))
-    // TODO: remove this transformation when the format of config will be changed
   },
 
   deleteService(appId, serviceId) {
