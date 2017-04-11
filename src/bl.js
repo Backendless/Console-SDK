@@ -3,6 +3,7 @@ import _each from 'lodash/each'
 import urls from './urls'
 
 const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
+const codelessServices = appId => `${ urls.blBasePath(appId) }/codeless`
 
 const hostedServiceConfig = (appId, serviceId) => `${ hostedServices(appId) }/configure/${ serviceId }`
 
@@ -103,11 +104,19 @@ export default req => ({
   },
 
   createCodelessService(appId, service) {
-    return req.post(`${ urls.blBasePath(appId) }/codeless`, service)
+    return req.post(codelessServices(appId), service)
   },
 
-  createCodelessMethod(appId, serviceId, method) {
-    return req.post(`${ urls.blBasePath(appId) }/codeless/${ serviceId }/`, method)
+  deleteCodelessService(appId, serviceName) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceName }`)
+  },
+
+  createCodelessMethod(appId, serviceName, method) {
+    return req.post(`${ codelessServices(appId) }/${ serviceName }/`, method)
+  },
+
+  deleteCodelessMethod(appId, serviceName, methodId) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceName }/${ methodId }`)
   },
 
   deleteService(appId, serviceId) {
