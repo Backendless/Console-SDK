@@ -2,6 +2,7 @@ import urls from './urls'
 import totalRows from './utils/total-rows'
 import SQL from './utils/sql-builder'
 import { GEO_CATEGORY } from './utils/cache-tags'
+import _sortBy from 'lodash/sortBy'
 
 const toServerFence = ({ objectId, name, qualCriteria, type, nodes }) => ({
   name,
@@ -176,11 +177,7 @@ export default req => {
       const objectIds = data.map(point => point.objectId)
 
       return loadPointsByIds(appId, objectIds, params.includemetadata).then(points => {
-        const sortedPoints = []
-
-        points.forEach(point => {
-          sortedPoints[objectIds.indexOf(point.objectId)] = point
-        })
+        const sortedPoints = _sortBy(points, 'objectId')
 
         return { totalRows, data: sortedPoints }
       })
