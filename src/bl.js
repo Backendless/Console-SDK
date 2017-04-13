@@ -123,6 +123,10 @@ export default req => ({
     return req.get(`${ codelessServices(appId) }/${ serviceName }/${ methodId }/logic`)
   },
 
+  saveCodelessMethodLogic(appId, serviceName, methodId, logic) {
+    return req.put(`${ codelessServices(appId) }/${ serviceName }/${ methodId }/logic`, logic)
+  },
+
   deleteService(appId, serviceId) {
     return req.delete(hostedServices(appId), [serviceId])
   },
