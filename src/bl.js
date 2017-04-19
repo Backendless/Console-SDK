@@ -107,24 +107,24 @@ export default req => ({
     return req.post(codelessServices(appId), service)
   },
 
-  deleteCodelessService(appId, serviceName) {
-    return req.delete(`${ codelessServices(appId) }/${ serviceName }`)
+  deleteCodelessService(appId, serviceId, serviceName) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceId }`).query({ serviceName })
   },
 
-  createCodelessMethod(appId, serviceName, method) {
-    return req.post(`${ codelessServices(appId) }/${ serviceName }/`, method)
+  createCodelessMethod(appId, serviceId, serviceName, method) {
+    return req.post(`${ codelessServices(appId) }/${ serviceId }/`, method).query({ serviceName })
   },
 
-  deleteCodelessMethod(appId, serviceName, methodId) {
-    return req.delete(`${ codelessServices(appId) }/${ serviceName }/${ methodId }`)
+  deleteCodelessMethod(appId, serviceId, serviceName, methodId) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceId }/${ methodId }`).query({ serviceName })
   },
 
-  getCodelessMethodLogic(appId, serviceName, methodId) {
-    return req.get(`${ codelessServices(appId) }/${ serviceName }/${ methodId }/logic`)
+  getCodelessMethodLogic(appId, serviceId, serviceName, methodId) {
+    return req.get(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`).query({ serviceName })
   },
 
-  saveCodelessMethodLogic(appId, serviceName, methodId, logic) {
-    return req.put(`${ codelessServices(appId) }/${ serviceName }/${ methodId }/logic`, logic)
+  saveCodelessMethodLogic(appId, serviceId, serviceName, methodId, logic) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`, logic).query({ serviceName })
   },
 
   deleteService(appId, serviceId) {
