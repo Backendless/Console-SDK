@@ -30,20 +30,34 @@ export default req => {
           if (!child.size) {
             return loadDirectory(appId, authKey, child.url).then(children => {
               const icon = children.find(({ name }) => IMAGE_FILE.test(name))
+              const readme = children.find(({ name }) => name === 'README.md')
 
               if (icon) {
                 child.icon = icon.publicUrl
               }
 
-              const xslt = children.find(({ name }) => XSLT_FILE.test(name))
+              let chain = Promise.resolve()
 
-              if (xslt) {
-                child.xslt = xslt.url
-
-                return
+              if (readme) {
+                chain = chain
+                  .then(() => loadDirectory(appId, authKey, readme.url))
+                  .then(readmeContent => child.readme = readmeContent)
               }
 
-              child.children = children
+              chain = chain
+                .then(() => {
+                  const xslt = children.find(({ name }) => XSLT_FILE.test(name))
+
+                  if (xslt) {
+                    child.xslt = xslt.url
+
+                    return
+                  }
+
+                  child.children = children
+                })
+
+              return chain
             })
           }
         })
