@@ -14,6 +14,7 @@ import messaging from './messaging'
 import settings from './settings'
 import projectTemplate from './project-template'
 import billing from './billing'
+import marketplace from './marketplace'
 import analytics from './analytics'
 import apps from './apps'
 import users from './users'
@@ -70,7 +71,7 @@ const createClient = (serverUrl, authKey) => {
 
   const request = contextifyRequest(context, serverUrl)
 
-  return {
+  const client = {
     user           : user(request, context),
     users          : users(request, context),
     apps           : apps(request, context),
@@ -84,12 +85,17 @@ const createClient = (serverUrl, authKey) => {
     messaging      : messaging(request, context),
     settings       : settings(request, context),
     projectTemplate: projectTemplate(request, context),
-    billing        : billing(request, context),
+    marketplace    : marketplace(request, context),
     analytics      : analytics(request, context),
     status         : status(request, context),
     transfer       : transfer(request, context),
     marketplace    : marketplace(request, context)
   }
+
+  return client.status().then(status => ({
+    ...client,
+    billing: billing(contextifyRequest(context, status.billingURL), context)
+  }))
 }
 
 export {
