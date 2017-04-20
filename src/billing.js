@@ -23,17 +23,5 @@ export default req => ({
 
   getCreditCard(appId) {
     return req.get(`${urls.billing(appId)}/creditcard`)
-  },
-
-  deletePurchasedItem(appId, itemId) {
-    return req.delete(`/console/marketplace/${itemId}`)
-  },
-
-  getProductDetails(appId, productId) {
-    return req.get(`${urls.marketplace(appId)}/products/ordered/${productId}`)
-  },
-
-  updateProductDetails(appId, productId, productDetails) {
-    return req.put(`${urls.marketplace(appId)}/activate/${productId}`, productDetails)
   }
 })

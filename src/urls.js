@@ -73,9 +73,6 @@ export const mobileSettings = appId =>
 export const billing = appId =>
   `${appConsole(appId)}/billing`
 
-export const marketplace = appId =>
-  `${appConsole(appId)}/marketplace`
-
 export default {
   console,
   appConsole,
@@ -104,10 +101,8 @@ export default {
   blProd,
   blDraftsProjectDownload,
   blServicesClientDownload,
-  marketplace,
   messaging,
   messagingChannels,
   messagingChannel,
-  mobileSettings,
-  marketplace,
+  mobileSettings
 }

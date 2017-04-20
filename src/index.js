@@ -14,13 +14,14 @@ import messaging from './messaging'
 import settings from './settings'
 import projectTemplate from './project-template'
 import billing from './billing'
-import marketplace from './marketplace'
 import analytics from './analytics'
 import apps from './apps'
 import users from './users'
 import status from './status'
 import transfer from './transfer'
 import marketplace from './marketplace'
+
+const marketplaceURL = 'http://localhost:4000' // TODO: will be returned from GET /status request like billing url
 
 class Context {
 
@@ -85,16 +86,15 @@ const createClient = (serverUrl, authKey) => {
     messaging      : messaging(request, context),
     settings       : settings(request, context),
     projectTemplate: projectTemplate(request, context),
-    marketplace    : marketplace(request, context),
     analytics      : analytics(request, context),
     status         : status(request, context),
-    transfer       : transfer(request, context),
-    marketplace    : marketplace(request, context)
+    transfer       : transfer(request, context)
   }
 
   return client.status().then(status => ({
     ...client,
-    billing: billing(contextifyRequest(context, status.billingURL), context)
+    billing    : billing(contextifyRequest(context, status.billingURL), context),
+    marketplace: marketplace(contextifyRequest(context, marketplaceURL), context)
   }))
 }
 
