@@ -1,10 +1,6 @@
 import urls from './urls'
 
 export default req => ({
-  getAppPurchases(appId) {
-    return req.get(`${urls.marketplace(appId)}/products/ordered`)
-  },
-
   getBillingInfo(appId) {
     return req.get(`${urls.billing(appId)}/accountinfo`)
   },
