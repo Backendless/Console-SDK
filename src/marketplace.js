@@ -4,7 +4,11 @@ export default req => ({
   },
 
   getProducts(categoryId) {
-    return req.get('/products').query({ categoryId })
+    return req.get(`/products/category/${categoryId}`)
+  },
+
+  getProduct(id) {
+    return req.get(`/products/${id}`)
   },
 
   activateProduct(appId, productId, params) {
