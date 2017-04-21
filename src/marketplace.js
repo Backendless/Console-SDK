@@ -1,14 +1,14 @@
 export default req => ({
-  getCategories() {
-    return req.get('/categories')
+  getSectionsAndCategories(marketplaceName) {
+    return req.get(`/${marketplaceName}/sections`) // main mp
   },
 
-  getProducts(categoryId) {
-    return req.get(`/products/category/${categoryId}`)
+  getProducts(marketplaceName, categoryId) {
+    return req.get(`/${marketplaceName}/category/${categoryId}/products`)
   },
 
-  getProduct(id) {
-    return req.get(`/products/${id}`)
+  getProduct(marketplaceName, id) {
+    return req.get(`/${marketplaceName}/products/${id}`)
   },
 
   activateProduct(appId, productId, params) {
