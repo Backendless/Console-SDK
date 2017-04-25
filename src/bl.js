@@ -107,6 +107,10 @@ export default req => ({
     return req.post(codelessServices(appId), service)
   },
 
+  updateCodelessService(appId, serviceId, serviceName, updates) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }`, updates).query({ serviceName })
+  },
+
   deleteCodelessService(appId, serviceId, serviceName) {
     return req.delete(`${ codelessServices(appId) }/${ serviceId }`).query({ serviceName })
   },
