@@ -65,17 +65,17 @@ export default req => ({
 
   moveFile(appId, filePath, newFilePath) {
     return req.post(urls.fileMove(appId, filePath), newFilePath)
-      //.cacheTags(FOLDER(getFileFolder(filePath)))
+      .cacheTags(FOLDER(getFileFolder(filePath)))
   },
 
   copyFile(appId, filePath, newFilePath) {
     return req.post(urls.fileCopy(appId, filePath), newFilePath)
-      //.cacheTags(FOLDER(getFileFolder(filePath)))
+      .cacheTags(FOLDER(getFileFolder(filePath)))
   },
 
   renameFile(appId, filePath, newFileName) {
     return req.post(urls.fileRename(appId, filePath), newFileName)
-      //.cacheTags(FOLDER(getFileFolder(filePath)))
+      .cacheTags(FOLDER(getFileFolder(filePath)))
   },
 
   deleteFile(appId, filePath) {
