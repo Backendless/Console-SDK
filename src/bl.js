@@ -3,6 +3,7 @@ import _each from 'lodash/each'
 import urls from './urls'
 
 const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
+const codelessServices = appId => `${ urls.blBasePath(appId) }/codeless`
 
 const hostedServiceConfig = (appId, serviceId) => `${ hostedServices(appId) }/configure/${ serviceId }`
 
@@ -100,6 +101,34 @@ export default req => ({
 
   createAWSLambdaService(appId, credentials) {
     return req.post(`${ urls.blBasePath(appId) }/aws-lambda`, { ...credentials, appId })
+  },
+
+  createCodelessService(appId, service) {
+    return req.post(codelessServices(appId), service)
+  },
+
+  updateCodelessService(appId, serviceId, serviceName, updates) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }`, updates).query({ serviceName })
+  },
+
+  deleteCodelessService(appId, serviceId, serviceName) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceId }`).query({ serviceName })
+  },
+
+  createCodelessMethod(appId, serviceId, serviceName, method) {
+    return req.post(`${ codelessServices(appId) }/${ serviceId }/`, method).query({ serviceName })
+  },
+
+  deleteCodelessMethod(appId, serviceId, serviceName, methodId) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceId }/${ methodId }`).query({ serviceName })
+  },
+
+  getCodelessMethodLogic(appId, serviceId, serviceName, methodId) {
+    return req.get(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`).query({ serviceName })
+  },
+
+  saveCodelessMethodLogic(appId, serviceId, serviceName, methodId, logic) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`, logic).query({ serviceName })
   },
 
   deleteService(appId, serviceId) {
