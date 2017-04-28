@@ -63,6 +63,21 @@ export default req => ({
       .cacheTags(FOLDER(getFileFolder(filePath)))
   },
 
+  moveFile(appId, filePath, newFilePath) {
+    return req.post(urls.fileMove(appId, filePath), newFilePath)
+      //.cacheTags(FOLDER(getFileFolder(filePath)))
+  },
+
+  copyFile(appId, filePath, newFilePath) {
+    return req.post(urls.fileCopy(appId, filePath), newFilePath)
+      //.cacheTags(FOLDER(getFileFolder(filePath)))
+  },
+
+  renameFile(appId, filePath, newFileName) {
+    return req.post(urls.fileRename(appId, filePath), newFileName)
+      //.cacheTags(FOLDER(getFileFolder(filePath)))
+  },
+
   deleteFile(appId, filePath) {
     return req.delete(urls.fileDelete(appId, filePath))
       .cacheTags(FOLDER(getFileFolder(filePath)))

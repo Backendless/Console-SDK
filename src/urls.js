@@ -40,6 +40,15 @@ export const fileView = (appId, authKey, filePath) =>
 export const fileEdit = (appId, filePath) =>
   `${appConsole(appId)}/files/edit/${filePath}/`
 
+export const fileMove = (appId, filePath) =>
+  `${appConsole(appId)}/files/move/${filePath}/`
+
+export const fileCopy = (appId, filePath) =>
+  `${appConsole(appId)}/files/copy/${filePath}/`
+
+export const fileRename = (appId, filePath) =>
+  `${appConsole(appId)}/files/rename/${filePath}/`
+
 export const fileDelete = (appId, filePath) =>
   `${appConsole(appId)}/files/${filePath}/`
 
@@ -90,6 +99,9 @@ export default {
   fileUpload,
   fileView,
   fileEdit,
+  fileMove,
+  fileCopy,
+  fileRename,
   fileDelete,
   fileCreate,
   createDir,
