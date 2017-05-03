@@ -48,7 +48,7 @@ const removeRelationsUrl = (appId, table, columnName, recordId) => {
   return `${updateRelationsUrl(appId, table, columnName, recordId)}/relations`
 }
 
-const recordsReq = (req, appId, table, query = {}) => {
+const recordsReq = (req, appId, table, query = {}, resetCache) => {
   const { pageSize = 15, offset = 0, sqlSearch, where, sortField, sortDir, filterString } = query
 
   const params = { pageSize, offset }
@@ -65,6 +65,7 @@ const recordsReq = (req, appId, table, query = {}) => {
   return req.get(urls.dataTable(appId, table.name))
     .query(params)
     .cacheTags(TABLE_DATA(table.tableId))
+    .resetCache(resetCache)
 }
 
 const getRelationColumn = (table, columnName) => {
@@ -92,8 +93,8 @@ export default req => ({
     return totalRows(req).getWithData(recordsReq(req, appId, table, query))
   },
 
-  getRecordsCount(appId, table, query){
-    return totalRows(req).getFor(recordsReq(req, appId, table, query))
+  getRecordsCount(appId, table, query, resetCache){
+    return totalRows(req).getFor(recordsReq(req, appId, table, query, resetCache))
   },
 
   createRecord(appId, table, record) {
