@@ -173,16 +173,22 @@ export default req => {
     const dataReq = req.get(`${urls.dataRecord(appId, tableName, objectId)}/${name}`).query(queryParams)
 
     return totalRows(req).getWithData(dataReq).then(({ totalRows, data }) => {
-      const objectIds = data.map(point => point.objectId)
+      const objectIds = []
+
+      data.forEach(point => {
+        if (!objectIds.includes(point.objectId)) {
+          objectIds.push(point.objectId)
+        }
+      })
 
       return loadPointsByIds(appId, objectIds, params.includemetadata).then(points => {
-        const sortedPoints = []
+        const pointsMap = {}
 
-        points.forEach(point => {
-          sortedPoints[objectIds.indexOf(point.objectId)] = point
-        })
+        points.forEach(point => pointsMap[point.objectId] = point)
 
-        return { totalRows, data: sortedPoints }
+        const data = objectIds.map(pointId => pointsMap[pointId])
+
+        return { totalRows, data }
       })
     })
   }
