@@ -1,28 +1,21 @@
+import urls from './urls'
+
+const marketplace = (appId, name) => `${urls.marketplace(appId)}/${name}`
+
 export default req => ({
-  getCategories(marketplaceName) {
-    return req.get(`/${marketplaceName}/categories`) // main mp
+  getSections(appId, marketplaceName) {
+    return req.get(`${marketplace(appId, marketplaceName)}/sections`)
   },
 
-  getProducts(marketplaceName, categoryId) {
-    return req.get(`/${marketplaceName}/categories/${categoryId}/products`)
+  getProducts(appId, marketplaceName, categoryId) {
+    return req.get(`${marketplace(appId, marketplaceName)}/categories/${categoryId}/products`)
   },
 
-  getProduct(marketplaceName, id) {
-    return req.get(`/${marketplaceName}/products/${id}`)
+  getPurchases(appId) {
+    return req.get(`${urls.billing(appId)}/marketplace/purchases`)
   },
 
-  activateProduct(appId, productId, params) {
-    return Promise.resolve(true)
-    //return req.post(`${ urls.marketplace(appId) }/${ productId }/activate`, params)
-  },
-
-  deactivateProduct(appId, productId) {
-    return Promise.resolve(true)
-    //return req.delete(`${ urls.marketplace(appId) }/${ productId }/deactivate`, params)
-  },
-
-  getAppPurchases(appId) {
-    return Promise.resolve([])
-    // return req.get(`${urls.marketplace(appId)}/products/ordered`)
+  allocateProduct(appId, productId, options) {
+    return req.post(`${urls.billing(appId)}/marketplace/purchases/${productId}`, options)
   }
 })

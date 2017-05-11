@@ -9,6 +9,7 @@ export const serverCode = consoleSection('servercode')
 export const blBasePath = consoleSection('localservices')
 export const data = consoleSection('data')
 export const geo = consoleSection('geo')
+export const marketplace = consoleSection('marketplace')
 
 export const dataTables = appId => `${data(appId)}/tables`
 export const dataTable = (appId, tableName) => `${data(appId)}/${tableName}`
@@ -113,6 +114,7 @@ export default {
   blProd,
   blDraftsProjectDownload,
   blServicesClientDownload,
+  marketplace,
   messaging,
   messagingChannels,
   messagingChannel,
