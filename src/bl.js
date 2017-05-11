@@ -171,6 +171,10 @@ export default req => ({
     return req.get(`${ urls.console() }/servercode/languages`)
   },
 
+  getModels(appId, language) {
+    return req.get(`${ urls.serverCode(appId) }/models/${ language }`)
+  },
+
   createEventHandler(appId, handler) {
     const { category, mode, ...data } = handler
 
@@ -205,10 +209,10 @@ export default req => ({
   },
 
   getCategories(appId) {
-    return req.get(`${ urls.appConsole(appId) }/servercode/categories`)
+    return req.get(`${ urls.serverCode(appId) }/categories`)
   },
 
   getEvents(appId) {
-    return req.get(`${urls.appConsole(appId)}/servercode/events`)
+    return req.get(`${ urls.serverCode(appId) }/events`)
   }
 })
