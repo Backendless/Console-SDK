@@ -33,7 +33,7 @@ export default req => {
               const readme = children.find(({ name }) => name === 'README.md')
 
               if (icon) {
-                child.icon = icon.publicUrl
+                child.icon = urls.fileView(appId, authKey, icon.url)
               }
 
               let chain = Promise.resolve()

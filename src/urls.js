@@ -9,6 +9,7 @@ export const serverCode = consoleSection('servercode')
 export const blBasePath = consoleSection('localservices')
 export const data = consoleSection('data')
 export const geo = consoleSection('geo')
+export const files = consoleSection('files')
 export const marketplace = consoleSection('marketplace')
 
 export const dataTables = appId => `${data(appId)}/tables`
@@ -27,34 +28,34 @@ export const fileDownload = (appId, authKey, filePath) =>
   `${appConsole(appId, authKey)}/files/download/${filePath}`
 
 export const fileUpload = (appId, filePath) =>
-  `${appConsole(appId)}/files/upload/${filePath}/`
+  `${files(appId)}/upload/${filePath}/`
 
 export const createDir = (appId, path, folderName) => {
   path = path ? `${path}/` : ''
 
-  return `${appConsole(appId)}/files/createdir/${path}${folderName}/`
+  return `${files(appId)}/createdir/${path}${folderName}/`
 }
 
 export const fileView = (appId, authKey, filePath) =>
   `${appConsole(appId, authKey)}/files/view/${filePath}`
 
 export const fileEdit = (appId, filePath) =>
-  `${appConsole(appId)}/files/edit/${filePath}/`
+  `${files(appId)}/edit/${filePath}/`
 
 export const fileMove = (appId, filePath) =>
-  `${appConsole(appId)}/files/move/${filePath}/`
+  `${files(appId)}/move/${filePath}/`
 
 export const fileCopy = (appId, filePath) =>
-  `${appConsole(appId)}/files/copy/${filePath}/`
+  `${files(appId)}/copy/${filePath}/`
 
 export const fileRename = (appId, filePath) =>
-  `${appConsole(appId)}/files/rename/${filePath}/`
+  `${files(appId)}/rename/${filePath}/`
 
 export const fileDelete = (appId, filePath) =>
-  `${appConsole(appId)}/files/${filePath}/`
+  `${files(appId)}/${filePath}/`
 
 export const fileCreate = (appId, filePath) =>
-  `${appConsole(appId)}/files/create/${filePath}/`
+  `${files(appId)}/create/${filePath}/`
 
 export const blProd = (appId, language) =>
   `${serverCode(appId)}/production/${language}`
