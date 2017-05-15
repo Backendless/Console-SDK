@@ -18,6 +18,7 @@ import analytics from './analytics'
 import apps from './apps'
 import users from './users'
 import status from './status'
+import warning from './warning'
 import transfer from './transfer'
 import marketplace from './marketplace'
 
@@ -86,7 +87,8 @@ const createClient = (serverUrl, authKey) => {
     projectTemplate: projectTemplate(request, context),
     analytics      : analytics(request, context),
     status         : status(request, context),
-    transfer       : transfer(request, context)
+    transfer       : transfer(request, context),
+    warning        : warning(request, context),
   }
 
   return client.status().then(status => ({
