@@ -2,6 +2,8 @@ import _each from 'lodash/each'
 
 import urls from './urls'
 
+import { BL_MODELS } from './utils/cache-tags'
+
 const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
 const codelessServices = appId => `${ urls.blBasePath(appId) }/codeless`
 
@@ -104,7 +106,9 @@ export default req => ({
   },
 
   createCodelessService(appId, service) {
-    return req.post(codelessServices(appId), service)
+    return req
+      .post(codelessServices(appId), service)
+      .cacheTags(BL_MODELS(appId, 'CODELESS'))
   },
 
   updateCodelessService(appId, serviceId, serviceName, updates) {
@@ -172,13 +176,17 @@ export default req => ({
   },
 
   getModels(appId, language) {
-    return req.get(`${ urls.serverCode(appId) }/models/${ language }`)
+    return req
+      .get(`${ urls.serverCode(appId) }/models/${ language }`)
+      .cacheTags(BL_MODELS(appId, language))
   },
 
   createEventHandler(appId, handler) {
     const { category, mode, ...data } = handler
 
-    return req.post(urls.blHandlersCategory(appId, mode, category), data)
+    return req
+      .post(urls.blHandlersCategory(appId, mode, category), data)
+      .cacheTags(BL_MODELS(appId, handler.language))
   },
 
   updateEventHandler(appId, handler) {
