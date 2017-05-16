@@ -62,8 +62,8 @@ export const blProd = (appId, language) =>
 export const blDraft = (appId, language) =>
   `${serverCode(appId)}/draft/${language}`
 
-export const blDraftsProjectDownload = (appId, authKey, language) =>
-  `${appConsole(appId, authKey)}/servercode/draft/${language}/download`
+export const blDraftsProjectDownload = (appId, authKey, language, model) =>
+  `${appConsole(appId, authKey)}/servercode/${model}/draft/${language}/download`
 
 export const blServicesClientDownload = (appId, authKey, serviceId, language) =>
   `${appConsole(appId, authKey)}/localservices/${serviceId}/${language}/download`
