@@ -19,5 +19,9 @@ export default req => ({
 
   getCreditCard(appId) {
     return req.get(`${urls.billing(appId)}/creditcard`)
+  },
+
+  getComponentLimit(appId, componentId) {
+    return req.get(`/${appId}/billing/limits/${componentId}`)
   }
 })

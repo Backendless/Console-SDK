@@ -11,6 +11,10 @@ export default req => ({
     return req.get(`${marketplace(appId, marketplaceName)}/categories/${categoryId}/products`)
   },
 
+  getProduct(appId, marketplaceName, productId) {
+    return req.get(`${marketplace(appId, marketplaceName)}/products/${productId}`)
+  },
+
   getPurchases(appId) {
     return req.get(`${urls.billing(appId)}/marketplace/purchases`)
   },
