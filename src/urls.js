@@ -56,11 +56,11 @@ export const fileDelete = (appId, filePath) =>
 export const fileCreate = (appId, filePath) =>
   `${files(appId)}/create/${filePath}/`
 
-export const blProd = (appId, language) =>
-  `${serverCode(appId)}/production/${language}`
+export const blProd = (appId, language, model) =>
+  `${serverCode(appId)}/${model}/production/${language}`
 
-export const blDraft = (appId, language) =>
-  `${serverCode(appId)}/draft/${language}`
+export const blDraft = (appId, language, model) =>
+  `${serverCode(appId)}/${model}/draft/${language}`
 
 export const blDraftsProjectDownload = (appId, authKey, language, model) =>
   `${appConsole(appId, authKey)}/servercode/${model}/draft/${language}/download`

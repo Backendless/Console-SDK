@@ -155,20 +155,20 @@ export default req => ({
     return req.post(hostedServiceConfig(appId, `test/${serviceId}`), config)
   },
 
-  getDraftFiles(appId, language) {
-    return req.get(urls.blDraft(appId, language))
+  getDraftFiles(appId, language, model) {
+    return req.get(urls.blDraft(appId, language, model))
   },
 
-  saveDraftFiles(appId, language, files) {
-    return req.put(urls.blDraft(appId, language), files)
+  saveDraftFiles(appId, language, model, files) {
+    return req.put(urls.blDraft(appId, language, model), files)
   },
 
-  deployDraftFiles(appId, language, files) {
-    return req.put(urls.blProd(appId, language), files)
+  deployDraftFiles(appId, language, model, files) {
+    return req.put(urls.blProd(appId, language, model), files)
   },
 
-  getDraftFileContent(appId, fileId, language) {
-    return req.get(`${ urls.blDraft(appId, language) }/${ fileId }`)
+  getDraftFileContent(appId, language, model, fileId) {
+    return req.get(`${ urls.blDraft(appId, language, model) }/${ fileId }`)
   },
 
   getLanguages() {
