@@ -111,28 +111,30 @@ export default req => ({
       .cacheTags(BL_MODELS(appId, 'CODELESS'))
   },
 
-  updateCodelessService(appId, serviceId, serviceName, updates) {
-    return req.put(`${ codelessServices(appId) }/${ serviceId }`, updates).query({ serviceName })
+  updateCodelessService(appId, serviceId, serviceName, model, updates) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }`, updates).query({ serviceName, model })
   },
 
-  deleteCodelessService(appId, serviceId, serviceName) {
-    return req.delete(`${ codelessServices(appId) }/${ serviceId }`).query({ serviceName })
+  deleteCodelessService(appId, serviceId, serviceName, model) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceId }`).query({ serviceName, model })
   },
 
-  createCodelessMethod(appId, serviceId, serviceName, method) {
-    return req.post(`${ codelessServices(appId) }/${ serviceId }/`, method).query({ serviceName })
+  createCodelessMethod(appId, serviceId, serviceName, model, method) {
+    return req.post(`${ codelessServices(appId) }/${ serviceId }/`, method).query({ serviceName, model })
   },
 
-  deleteCodelessMethod(appId, serviceId, serviceName, methodId) {
-    return req.delete(`${ codelessServices(appId) }/${ serviceId }/${ methodId }`).query({ serviceName })
+  deleteCodelessMethod(appId, serviceId, serviceName, model, methodId) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceId }/${ methodId }`).query({ serviceName, model })
   },
 
-  getCodelessMethodLogic(appId, serviceId, serviceName, methodId) {
-    return req.get(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`).query({ serviceName })
+  getCodelessMethodLogic(appId, serviceId, serviceName, model, methodId) {
+    return req.get(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`).query({ serviceName, model })
   },
 
-  saveCodelessMethodLogic(appId, serviceId, serviceName, methodId, logic) {
-    return req.put(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`, logic).query({ serviceName })
+  saveCodelessMethodLogic(appId, serviceId, serviceName, model, methodId, logic) {
+    return req
+      .put(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`, logic)
+      .query({ serviceName, model })
   },
 
   deleteService(appId, serviceId) {
