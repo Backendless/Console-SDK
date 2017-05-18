@@ -94,6 +94,7 @@ export default req => ({
       formData = new FormData()
       formData.append('files', data.file)
       formData.append('createFromSample', false)
+      formData.append('model', data.model)
     }
 
     return req.post(`${ urls.blBasePath(appId) }/generic`, formData)
