@@ -21,6 +21,9 @@ import status from './status'
 import warning from './warning'
 import transfer from './transfer'
 import marketplace from './marketplace'
+import publishing from './publishing'
+
+const publishingUrl = 'http://localhost:4000' // TODO: will be returned from GET /status request like billing url
 
 class Context {
 
@@ -94,7 +97,8 @@ const createClient = (serverUrl, authKey) => {
   return client.status().then(status => ({
     ...client,
     billing    : billing(contextifyRequest(context, status.billingURL), context),
-    marketplace: marketplace(contextifyRequest(context, status.billingURL), context)
+    marketplace: marketplace(contextifyRequest(context, status.billingURL), context),
+    publishing : publishing(contextifyRequest(context, publishingUrl), context)
   }))
 }
 
