@@ -80,6 +80,10 @@ export const messagingChannel = (appId, channelId) =>
 export const mobileSettings = appId =>
   `${appConsole(appId)}/mobilesettings`
 
+export const codeless = appId => `${appConsole(appId)}/codeless`
+export const codelessFunctions = appId => `${codeless(appId)}/functions`
+export const codelessFunctionSource = (appId, name) => `${codelessFunctions(appId)}/${name}`
+
 export default {
   console,
   appConsole,
@@ -114,4 +118,6 @@ export default {
   messagingChannels,
   messagingChannel,
   mobileSettings,
+  codelessFunctions,
+  codelessFunctionSource
 }
