@@ -5,15 +5,19 @@ export default req => ({
     return req.get(urls.codelessFunctions(appId))
   },
 
-  loadFunctionSource(appId, name){
-    return req.get(urls.codelessFunctionSource(appId, name))
+  createFunctionSource(appId, xml, code, definition){
+    return req.post(urls.codelessFunctions(appId), { xml, code, definition })
   },
 
-  updateFunctionSource(appId, name, xml, code, definition){
-    return req.post(urls.codelessFunctionSource(appId, name), { xml, code, definition })
+  loadFunctionSource(appId, functionId){
+    return req.get(urls.codelessFunctionSource(appId, functionId))
   },
 
-  removeFunctionSource(appId, name){
-    return req.delete(urls.codelessFunctionSource(appId, name))
+  updateFunctionSource(appId, functionId, xml, code, definition){
+    return req.put(urls.codelessFunctionSource(appId, functionId), { xml, code, definition })
+  },
+
+  removeFunctionSource(appId, functionId){
+    return req.delete(urls.codelessFunctionSource(appId, functionId))
   }
 })
