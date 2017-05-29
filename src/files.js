@@ -36,6 +36,10 @@ export default req => ({
     return totalRows(req).getWithData(dataReq).then(result => enrichDirectoryParams(result, path))
   },
 
+  getDirectoryTotal(appId, authKey, path) {
+    return totalRows(req).get(urls.fileView(appId, authKey, path), FOLDER(path))
+  },
+
   createDir(appId, path, folderName) {
     return req.post(urls.createDir(appId, path, folderName)).cacheTags(FOLDER(path))
   },

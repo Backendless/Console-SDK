@@ -107,28 +107,28 @@ export default req => ({
     return req.post(codelessServices(appId), service)
   },
 
-  updateCodelessService(appId, serviceId, serviceName, updates) {
-    return req.put(`${ codelessServices(appId) }/${ serviceId }`, updates).query({ serviceName })
+  updateCodelessService(appId, serviceId, updates) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }`, updates)
   },
 
-  deleteCodelessService(appId, serviceId, serviceName) {
-    return req.delete(`${ codelessServices(appId) }/${ serviceId }`).query({ serviceName })
+  deleteCodelessService(appId, serviceId) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceId }`)
   },
 
-  createCodelessMethod(appId, serviceId, serviceName, method) {
-    return req.post(`${ codelessServices(appId) }/${ serviceId }/`, method).query({ serviceName })
+  createCodelessMethod(appId, serviceId, method) {
+    return req.post(`${ codelessServices(appId) }/${ serviceId }/`, method)
   },
 
-  deleteCodelessMethod(appId, serviceId, serviceName, methodId) {
-    return req.delete(`${ codelessServices(appId) }/${ serviceId }/${ methodId }`).query({ serviceName })
+  deleteCodelessMethod(appId, serviceId, methodId) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceId }/${ methodId }`)
   },
 
-  getCodelessMethodLogic(appId, serviceId, serviceName, methodId) {
-    return req.get(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`).query({ serviceName })
+  getCodelessMethodLogic(appId, serviceId, methodId) {
+    return req.get(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`)
   },
 
-  saveCodelessMethodLogic(appId, serviceId, serviceName, methodId, logic) {
-    return req.put(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`, logic).query({ serviceName })
+  deployCodelessMethodLogic(appId, serviceId, methodId, logic, params) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`, logic).query(params)
   },
 
   deleteService(appId, serviceId) {
