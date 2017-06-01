@@ -1,20 +1,9 @@
 import urls from './urls'
+import decorateRequest from './utils/decorate-request'
 
 const marketplaceUrl = (appId, name) => `${urls.marketplace(appId)}/${name}`
 
-const marketplace = reqPromise => {
-  return Object.keys(apiMethods).reduce((memo, methodName) => {
-    memo[methodName] = (...args) => reqPromise.then(req => {
-      const apiMethod = apiMethods[methodName](req)
-
-      return apiMethod.apply(null, args)
-    })
-
-    return memo
-  }, {})
-}
-
-const apiMethods = {
+export default decorateRequest({
   getSections: req => (appId, marketplaceName) => {
     return req.get(`${marketplaceUrl(appId, marketplaceName)}/sections`)
   },
@@ -34,6 +23,4 @@ const apiMethods = {
   allocateProduct: req => (appId, productId, options) => {
     return req.post(`${urls.billing(appId)}/marketplace/purchases/${productId}`, options)
   }
-}
-
-export default marketplace
+})

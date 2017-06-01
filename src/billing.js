@@ -1,18 +1,7 @@
 import urls from './urls'
+import decorateRequest from './utils/decorate-request'
 
-const billing = reqPromise => {
-  return Object.keys(apiMethods).reduce((memo, methodName) => {
-    memo[methodName] = (...args) => reqPromise.then(req => {
-      const apiMethod = apiMethods[methodName](req)
-
-      return apiMethod.apply(null, args)
-    })
-
-    return memo
-  }, {})
-}
-
-const apiMethods = {
+export default decorateRequest({
   getBillingInfo: req => appId => {
     return req.get(`${urls.billing(appId)}/accountinfo`)
   },
@@ -40,6 +29,4 @@ const apiMethods = {
   apiCallsBlocked: req => appId => {
     return req.get(`/${appId}/billing/apicalls/blocked`)
   }
-}
-
-export default billing
+})
