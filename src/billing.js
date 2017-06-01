@@ -23,5 +23,9 @@ export default req => ({
 
   getComponentLimit(appId, componentId) {
     return req.get(`/${appId}/billing/limits/${componentId}`)
+  },
+
+  apiCallsBlocked(appId) {
+    return req.get(`/${appId}/billing/apicalls/blocked`)
   }
 })
