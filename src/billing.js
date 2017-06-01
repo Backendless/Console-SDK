@@ -1,31 +1,45 @@
 import urls from './urls'
 
-export default req => ({
-  getBillingInfo(appId) {
+const billing = reqPromise => {
+  return Object.keys(apiMethods).reduce((memo, methodName) => {
+    memo[methodName] = (...args) => reqPromise.then(req => {
+      const apiMethod = apiMethods[methodName](req)
+
+      return apiMethod.apply(null, args)
+    })
+
+    return memo
+  }, {})
+}
+
+const apiMethods = {
+  getBillingInfo: req => appId => {
     return req.get(`${urls.billing(appId)}/accountinfo`)
   },
 
-  getPlans(appId) {
+  getPlans: req => appId => {
     return req.get(`${urls.billing(appId)}/plans`)
   },
 
-  getPlanComponentsData(appId, planId) {
+  getPlanComponentsData: req => (appId, planId) => {
     return req.get(`${urls.billing(appId)}/plans/${planId}/components`)
   },
 
-  switchToPlan(appId, planId) {
+  switchToPlan: req => (appId, planId) => {
     return req.post(`${urls.billing(appId)}/subscriptions/${planId}`)
   },
 
-  getCreditCard(appId) {
+  getCreditCard: req => appId => {
     return req.get(`${urls.billing(appId)}/creditcard`)
   },
 
-  getComponentLimit(appId, componentId) {
+  getComponentLimit: req => (appId, componentId) => {
     return req.get(`/${appId}/billing/limits/${componentId}`)
   },
 
-  apiCallsBlocked(appId) {
+  apiCallsBlocked: req => appId => {
     return req.get(`/${appId}/billing/apicalls/blocked`)
   }
-})
+}
+
+export default billing
