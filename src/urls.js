@@ -10,6 +10,7 @@ export const blBasePath = consoleSection('localservices')
 export const data = consoleSection('data')
 export const geo = consoleSection('geo')
 export const files = consoleSection('files')
+export const marketplace = consoleSection('marketplace')
 
 export const dataTables = appId => `${data(appId)}/tables`
 export const dataTable = (appId, tableName) => `${data(appId)}/${tableName}`
@@ -80,6 +81,9 @@ export const messagingChannel = (appId, channelId) =>
 export const mobileSettings = appId =>
   `${appConsole(appId)}/mobilesettings`
 
+export const billing = appId =>
+  `${appConsole(appId)}/billing`
+
 export const codeless = appId => `${appConsole(appId)}/codeless`
 export const codelessFunctions = appId => `${codeless(appId)}/functions`
 export const codelessFunctionSource = (appId, name) => `${codelessFunctions(appId)}/${name}`
@@ -87,6 +91,7 @@ export const codelessFunctionSource = (appId, name) => `${codelessFunctions(appI
 export default {
   console,
   appConsole,
+  billing,
   mailSettings,
   security,
   securityRoles,
@@ -114,6 +119,7 @@ export default {
   blProd,
   blDraftsProjectDownload,
   blServicesClientDownload,
+  marketplace,
   messaging,
   messagingChannels,
   messagingChannel,
