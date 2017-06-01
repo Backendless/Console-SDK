@@ -21,6 +21,7 @@ import status from './status'
 import warning from './warning'
 import transfer from './transfer'
 import marketplace from './marketplace'
+import codeless from './codeless'
 
 class Context {
 
@@ -89,6 +90,7 @@ const createClient = (serverUrl, authKey) => {
     status         : status(request, context),
     transfer       : transfer(request, context),
     warning        : warning(request, context),
+    codeless       : codeless(request, context)
   }
 
   return client.status().then(status => ({
