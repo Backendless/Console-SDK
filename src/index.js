@@ -50,7 +50,7 @@ class Context {
  * @param {Context} context
  * @param {String} serverUrl
  */
-export const contextifyRequest = (context, serverUrl) => {
+const contextifyRequest = (context, serverUrl) => {
   const result = {}
 
   const addServerUrl = path => {
