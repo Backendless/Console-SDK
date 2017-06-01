@@ -1,46 +1,31 @@
 import urls from './urls'
-import billingPlans from './billing-plans' // TODO: remove this import with file after server route will be ready
 
 export default req => ({
-  getAppPurchases(appId) {
-    return req.get(`${urls.appConsole(appId)}/marketplace/products/ordered`)
-  },
-
   getBillingInfo(appId) {
-    return req.get(`${urls.appConsole(appId)}/billing/accountinfo`)
+    return req.get(`${urls.billing(appId)}/accountinfo`)
   },
 
-  getBillingPlans(/*appId*/) {
-    return Promise.resolve(billingPlans)  // this.get(`/console/${appId}/billing/plans`)
+  getPlans(appId) {
+    return req.get(`${urls.billing(appId)}/plans`)
   },
 
-  switchToBillingPlan(appId, plan) {
-    const params = { plan }
-
-    return req.post(`${urls.appConsole(appId)}/billing/switch`).query(params)
+  getPlanComponentsData(appId, planId) {
+    return req.get(`${urls.billing(appId)}/plans/${planId}/components`)
   },
 
-  updateCreditCard(appId) {
-    return req.get(`${urls.appConsole(appId)}/billing/updatecreditcard`)
+  switchToPlan(appId, planId) {
+    return req.post(`${urls.billing(appId)}/subscriptions/${planId}`)
   },
 
-  deletePurchasedItem(appId, itemId) {
-    return req.delete(`/console/marketplace/${itemId}`)
+  getCreditCard(appId) {
+    return req.get(`${urls.billing(appId)}/creditcard`)
   },
 
-  addCreditCard(appId, cardInfo) {
-    return req.post(`${urls.appConsole(appId)}/billing/creditcard`, cardInfo)
+  getComponentLimit(appId, componentId) {
+    return req.get(`/${appId}/billing/limits/${componentId}`)
   },
 
-  setMarketplaceCredentials(appId, credentials) {
-    return req.post(`${urls.appConsole(appId)}/billing/marketplaceaccess`, credentials)
-  },
-
-  getProductDetails(appId, productId) {
-    return req.get(`${urls.appConsole(appId)}/marketplace/products/ordered/${productId}`)
-  },
-
-  updateProductDetails(appId, productId, productDetails) {
-    return req.put(`${urls.appConsole(appId)}/marketplace/activate/${productId}`, productDetails)
+  apiCallsBlocked(appId) {
+    return req.get(`/${appId}/billing/apicalls/blocked`)
   }
 })
