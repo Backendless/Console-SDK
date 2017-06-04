@@ -1,6 +1,11 @@
 import urls from './urls'
 
 export default req => ({
+
+  loadApiServices(appId) {
+    return req.get(urls.codelessApiServices(appId))
+  },
+
   loadFunctions(appId) {
     return req.get(urls.codelessFunctions(appId))
   },
