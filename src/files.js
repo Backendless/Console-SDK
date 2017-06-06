@@ -36,8 +36,9 @@ export default req => ({
     return totalRows(req).getWithData(dataReq).then(result => enrichDirectoryParams(result, path))
   },
 
-  getDirectoryTotal(appId, authKey, path) {
+  countFilesInPath(appId, authKey, path) {
     return totalRows(req).get(urls.fileView(appId, authKey, path), FOLDER(path))
+      .cacheTags(FOLDER(path))
   },
 
   createDir(appId, path, folderName) {
