@@ -18,7 +18,10 @@ import analytics from './analytics'
 import apps from './apps'
 import users from './users'
 import status from './status'
+import warning from './warning'
 import transfer from './transfer'
+import marketplace from './marketplace'
+import codeless from './codeless'
 
 class Context {
 
@@ -64,10 +67,21 @@ const contextifyRequest = (context, serverUrl) => {
   return result
 }
 
+const getBillingReq = (req, context) => {
+  if (!context.billingReq) {
+    context.billingReq = status(req)().then(({ billingURL }) =>
+      contextifyRequest(context, billingURL))
+  }
+
+  return context.billingReq
+}
+
 const createClient = (serverUrl, authKey) => {
   const context = new Context(authKey)
 
   const request = contextifyRequest(context, serverUrl)
+
+  const billingReq = getBillingReq(request, context)
 
   return {
     user           : user(request, context),
@@ -83,10 +97,13 @@ const createClient = (serverUrl, authKey) => {
     messaging      : messaging(request, context),
     settings       : settings(request, context),
     projectTemplate: projectTemplate(request, context),
-    billing        : billing(request, context),
     analytics      : analytics(request, context),
     status         : status(request, context),
-    transfer       : transfer(request, context)
+    transfer       : transfer(request, context),
+    warning        : warning(request, context),
+    codeless       : codeless(request, context),
+    marketplace    : marketplace(billingReq),
+    billing        : billing(billingReq)
   }
 }
 
