@@ -67,12 +67,23 @@ const contextifyRequest = (context, serverUrl) => {
   return result
 }
 
+const getBillingReq = (req, context) => {
+  if (!context.billingReq) {
+    context.billingReq = status(req)().then(({ billingURL }) =>
+      contextifyRequest(context, billingURL))
+  }
+
+  return context.billingReq
+}
+
 const createClient = (serverUrl, authKey) => {
   const context = new Context(authKey)
 
   const request = contextifyRequest(context, serverUrl)
 
-  const client = {
+  const billingReq = getBillingReq(request, context)
+
+  return {
     user           : user(request, context),
     users          : users(request, context),
     apps           : apps(request, context),
@@ -90,14 +101,10 @@ const createClient = (serverUrl, authKey) => {
     status         : status(request, context),
     transfer       : transfer(request, context),
     warning        : warning(request, context),
-    codeless       : codeless(request, context)
+    codeless       : codeless(request, context),
+    marketplace    : marketplace(billingReq),
+    billing        : billing(billingReq)
   }
-
-  return client.status().then(status => ({
-    ...client,
-    billing    : billing(contextifyRequest(context, status.billingURL), context),
-    marketplace: marketplace(contextifyRequest(context, status.billingURL), context)
-  }))
 }
 
 export {

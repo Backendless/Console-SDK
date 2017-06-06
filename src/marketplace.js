@@ -1,25 +1,26 @@
 import urls from './urls'
+import decorateRequest from './utils/decorate-request'
 
-const marketplace = (appId, name) => `${urls.marketplace(appId)}/${name}`
+const marketplaceUrl = (appId, name) => `${urls.marketplace(appId)}/${name}`
 
-export default req => ({
-  getSections(appId, marketplaceName) {
-    return req.get(`${marketplace(appId, marketplaceName)}/sections`)
+export default decorateRequest({
+  getSections: req => (appId, marketplaceName) => {
+    return req.get(`${marketplaceUrl(appId, marketplaceName)}/sections`)
   },
 
-  getProducts(appId, marketplaceName, categoryId) {
-    return req.get(`${marketplace(appId, marketplaceName)}/categories/${categoryId}/products`)
+  getProducts: req => (appId, marketplaceName, categoryId) => {
+    return req.get(`${marketplaceUrl(appId, marketplaceName)}/categories/${categoryId}/products`)
   },
 
-  getProduct(appId, marketplaceName, productId) {
-    return req.get(`${marketplace(appId, marketplaceName)}/products/${productId}`)
+  getProduct: req => (appId, marketplaceName, productId) => {
+    return req.get(`${marketplaceUrl(appId, marketplaceName)}/products/${productId}`)
   },
 
-  getPurchases(appId) {
+  getPurchases: req => appId => {
     return req.get(`${urls.billing(appId)}/marketplace/purchases`)
   },
 
-  allocateProduct(appId, productId, options) {
+  allocateProduct: req => (appId, productId, options) => {
     return req.post(`${urls.billing(appId)}/marketplace/purchases/${productId}`, options)
   }
 })
