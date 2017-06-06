@@ -68,15 +68,12 @@ const contextifyRequest = (context, serverUrl) => {
 }
 
 const getBillingReq = (req, context) => {
-  if (context.billingReq) {
-    return Promise.resolve(context.billingReq)
+  if (!context.billingReq) {
+    context.billingReq = status(req)().then(({ billingURL }) =>
+      contextifyRequest(context, billingURL))
   }
 
-  return status(req)().then(({ billingURL }) => {
-    context.billingReq = contextifyRequest(context, billingURL)
-
-    return context.billingReq
-  })
+  return context.billingReq
 }
 
 const createClient = (serverUrl, authKey) => {
@@ -84,7 +81,7 @@ const createClient = (serverUrl, authKey) => {
 
   const request = contextifyRequest(context, serverUrl)
 
-  const billingReq = getBillingReq(request, context).catch(err => Promise.reject(err))
+  const billingReq = getBillingReq(request, context)
 
   return {
     user           : user(request, context),
