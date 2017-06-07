@@ -212,6 +212,14 @@ export default req => ({
     return req.delete(url)
   },
 
+  getHandlerInvocationChain(appId, eventId, context) {
+    return req.get(urls.blHandlersChain(appId, eventId, context))
+  },
+
+  updateHandlerInvocationChain(appId, eventId, context, updates) {
+    return req.put(urls.blHandlersChain(appId, eventId, context), updates)
+  },
+
   invokeTimer(appId, timer) {
     const { timername, mode, category } = timer
 

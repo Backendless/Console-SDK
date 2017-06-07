@@ -24,6 +24,9 @@ const generalizeEventCategory = category => !category || category === 'TIMER' ? 
 export const blHandlersCategory = (appId, mode, category) =>
   `${ serverCode(appId) }/${ mode.toLowerCase() }/${ generalizeEventCategory(category) }`
 
+export const blHandlersChain = (appId, eventId, context) =>
+  `${ serverCode(appId) }/chain/${ eventId }/${ context }`
+
 export const fileDownload = (appId, authKey, filePath) =>
   `${appConsole(appId, authKey)}/files/download/${filePath}`
 
@@ -105,6 +108,7 @@ export default {
   dataConfigs,
   tableColumns,
   blHandlersCategory,
+  blHandlersChain,
   blBasePath,
   fileDownload,
   fileUpload,
