@@ -2,7 +2,7 @@ import _each from 'lodash/each'
 
 import urls from './urls'
 
-import { BL_MODELS } from './utils/cache-tags'
+import { BL_MODELS, BL_CHAIN } from './utils/cache-tags'
 
 const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
 const codelessServices = appId => `${ urls.blBasePath(appId) }/codeless`
@@ -214,10 +214,12 @@ export default req => ({
 
   getHandlerInvocationChain(appId, eventId, context) {
     return req.get(urls.blHandlersChain(appId, eventId, context))
+      .cacheTags(BL_CHAIN(appId, eventId, context))
   },
 
   updateHandlerInvocationChain(appId, eventId, context, updates) {
     return req.put(urls.blHandlersChain(appId, eventId, context), updates)
+      .cacheTags(BL_CHAIN(appId, eventId, context))
   },
 
   invokeTimer(appId, timer) {
