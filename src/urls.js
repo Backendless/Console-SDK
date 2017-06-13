@@ -24,6 +24,9 @@ const generalizeEventCategory = category => !category || category === 'TIMER' ? 
 export const blHandlersCategory = (appId, mode, category) =>
   `${ serverCode(appId) }/${ mode.toLowerCase() }/${ generalizeEventCategory(category) }`
 
+export const blHandlersChain = (appId, eventId, context) =>
+  `${ serverCode(appId) }/chain/${ eventId }/${ context }`
+
 export const fileDownload = (appId, authKey, filePath) =>
   `${appConsole(appId, authKey)}/files/download/${filePath}`
 
@@ -57,14 +60,14 @@ export const fileDelete = (appId, filePath) =>
 export const fileCreate = (appId, filePath) =>
   `${files(appId)}/create/${filePath}/`
 
-export const blProd = (appId, language) =>
-  `${serverCode(appId)}/production/${language}`
+export const blProd = (appId, language, model) =>
+  `${serverCode(appId)}/${model}/production/${language}`
 
-export const blDraft = (appId, language) =>
-  `${serverCode(appId)}/draft/${language}`
+export const blDraft = (appId, language, model) =>
+  `${serverCode(appId)}/${model}/draft/${language}`
 
-export const blDraftsProjectDownload = (appId, authKey, language) =>
-  `${appConsole(appId, authKey)}/servercode/draft/${language}/download`
+export const blDraftsProjectDownload = (appId, authKey, language, model) =>
+  `${appConsole(appId, authKey)}/servercode/${model}/draft/${language}/download`
 
 export const blServicesClientDownload = (appId, authKey, serviceId, language) =>
   `${appConsole(appId, authKey)}/localservices/${serviceId}/${language}/download`
@@ -105,6 +108,7 @@ export default {
   dataConfigs,
   tableColumns,
   blHandlersCategory,
+  blHandlersChain,
   blBasePath,
   fileDownload,
   fileUpload,
