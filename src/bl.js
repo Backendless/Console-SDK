@@ -112,30 +112,28 @@ export default req => ({
       .cacheTags(BL_MODELS(appId, 'CODELESS'))
   },
 
-  updateCodelessService(appId, serviceId, serviceName, model, updates) {
-    return req.put(`${ codelessServices(appId) }/${ serviceId }`, updates).query({ serviceName, model })
+  updateCodelessService(appId, serviceId, updates) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }`, updates)
   },
 
-  deleteCodelessService(appId, serviceId, serviceName, model) {
-    return req.delete(`${ codelessServices(appId) }/${ serviceId }`).query({ serviceName, model })
+  deleteCodelessService(appId, serviceId) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceId }`)
   },
 
-  createCodelessMethod(appId, serviceId, serviceName, model, method) {
-    return req.post(`${ codelessServices(appId) }/${ serviceId }/`, method).query({ serviceName, model })
+  createCodelessMethod(appId, serviceId, method) {
+    return req.post(`${ codelessServices(appId) }/${ serviceId }/`, method)
   },
 
-  deleteCodelessMethod(appId, serviceId, serviceName, model, methodId) {
-    return req.delete(`${ codelessServices(appId) }/${ serviceId }/${ methodId }`).query({ serviceName, model })
+  deleteCodelessMethod(appId, serviceId, methodId) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceId }/${ methodId }`)
   },
 
-  getCodelessMethodLogic(appId, serviceId, serviceName, model, methodId) {
-    return req.get(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`).query({ serviceName, model })
+  getCodelessMethodLogic(appId, serviceId, methodId) {
+    return req.get(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`)
   },
 
-  saveCodelessMethodLogic(appId, serviceId, serviceName, model, methodId, logic) {
-    return req
-      .put(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`, logic)
-      .query({ serviceName, model })
+  deployCodelessMethodLogic(appId, serviceId, methodId, logic, params) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`, logic).query(params)
   },
 
   deleteService(appId, serviceId) {
