@@ -124,6 +124,10 @@ export default req => ({
     return req.post(`${ codelessServices(appId) }/${ serviceId }/`, method)
   },
 
+  updateCodelessMethod(appId, serviceId, methodId, method) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }/${ methodId }`, method)
+  },
+
   deleteCodelessMethod(appId, serviceId, methodId) {
     return req.delete(`${ codelessServices(appId) }/${ serviceId }/${ methodId }`)
   },
