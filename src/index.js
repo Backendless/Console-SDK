@@ -68,9 +68,18 @@ const contextifyRequest = (context, serverUrl) => {
 }
 
 const getBillingReq = (req, context) => {
+  if (context.billingReqErr) {
+    return Promise.reject(context.billingReqErr)
+  }
+
   if (!context.billingReq) {
-    context.billingReq = status(req)().then(({ billingURL }) =>
-      contextifyRequest(context, billingURL))
+    context.billingReq = status(req)().then(
+      ({ billingURL }) => contextifyRequest(context, billingURL),
+      err => {
+        context.billingReqErr = err.message || err
+        console.warn('Unable to get server status. ' + context.billingReqErr)
+      }
+    )
   }
 
   return context.billingReq
