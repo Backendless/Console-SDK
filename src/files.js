@@ -52,7 +52,7 @@ export default req => ({
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
-  isFileExists(appId, filePath) {
+  fileExists(appId, filePath) {
     return req.get(urls.fileExists(appId, filePath))
   },
 
