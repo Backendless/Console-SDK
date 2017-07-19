@@ -52,6 +52,10 @@ export default req => ({
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
+  isFileExists(appId, filePath) {
+    return req.get(urls.fileExists(appId, filePath))
+  },
+
   editFile(appId, filePath, fileContent) {
     return req.post(urls.fileEdit(appId, filePath), { file: fileContent })
   },
