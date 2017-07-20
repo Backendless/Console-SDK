@@ -42,6 +42,9 @@ export const createDir = (appId, path, folderName) => {
 export const fileView = (appId, authKey, filePath) =>
   `${appConsole(appId, authKey)}/files/view/${filePath}`
 
+export const fileExists = (appId, filePath) =>
+  `${files(appId)}/files/exists/${filePath}`
+
 export const fileEdit = (appId, filePath) =>
   `${files(appId)}/edit/${filePath}/`
 
@@ -112,6 +115,7 @@ export default {
   blBasePath,
   fileDownload,
   fileUpload,
+  fileExists,
   fileView,
   fileEdit,
   fileMove,
