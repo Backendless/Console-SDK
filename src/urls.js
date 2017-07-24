@@ -90,6 +90,9 @@ export const mobileSettings = appId =>
 export const billing = appId =>
   `${appConsole(appId)}/billing`
 
+export const appInfo = appId =>
+  `${appConsole(appId)}/app-info`
+
 export const codeless = appId => `${appConsole(appId)}/codeless`
 export const codelessApiServices = appId => `${codeless(appId)}/api-services`
 export const codelessFunctions = appId => `${codeless(appId)}/functions`
@@ -98,6 +101,7 @@ export const codelessFunctionSource = (appId, name) => `${codelessFunctions(appI
 export default {
   console,
   appConsole,
+  appInfo,
   billing,
   mailSettings,
   security,
