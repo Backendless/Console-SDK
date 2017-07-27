@@ -60,6 +60,10 @@ export default req => ({
 
   updateSocialParams(appId, param) {
     return req.post(`${urls.appConsole(appId)}/socialparams`, param)
+  },
+
+  updateNotificationSettings(appId, settings) {
+    return req.put(`${urls.appConsole(appId)}/notifications/limits`, settings)
   }
 
 })
