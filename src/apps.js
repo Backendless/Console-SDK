@@ -31,6 +31,10 @@ export default req => ({
     return req.get(urls.appInfo(appId))
   },
 
+  loadAppsLogos(appId, appIds) {
+    return req.get(`${urls.appInfo(appId)}/logos`).query({ appIds })
+  },
+
   updateAppLogo(appId, logo) {
     return req.post(`${urls.appInfo(appId)}/logo`, logo)
   }
