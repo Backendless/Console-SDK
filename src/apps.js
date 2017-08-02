@@ -12,7 +12,7 @@ export default req => ({
   },
 
   getApps() {
-    return req.get('/console/applications').then(apps => apps.map(enrichApp))
+    return req.get('/console/applications')
   },
 
   resetApp(appId, resets) {
@@ -29,10 +29,6 @@ export default req => ({
 
   loadAppInfo(appId) {
     return req.get(urls.appInfo(appId))
-  },
-
-  loadAppsLogos(appId, appIds) {
-    return req.get(`${urls.appInfo(appId)}/logos`).query({ appIds })
   },
 
   updateAppLogo(appId, logo) {
