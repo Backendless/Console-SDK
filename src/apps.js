@@ -12,7 +12,7 @@ export default req => ({
   },
 
   getApps() {
-    return req.get('/console/applications').then(apps => apps.map(enrichApp))
+    return req.get('/console/applications')
   },
 
   resetApp(appId, resets) {
