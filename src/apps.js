@@ -32,6 +32,6 @@ export default req => ({
   },
 
   updateAppLogo(appId, logo) {
-    return req.post(`${urls.appInfo(appId)}/logo`, logo)
+    return req.post(`${urls.appInfo(appId)}/logoы`, logo)
   }
 })
