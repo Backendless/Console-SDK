@@ -1,6 +1,6 @@
 import _omit from 'lodash/omit'
 
-const NON_COUNTS_PARAMS = ['offset', 'pagesize', 'pageSize']
+const NON_COUNTS_PARAMS = ['offset', 'pagesize', 'pageSize', 'sortBy']
 const DEFAULT_CACHE_TTL = 30000
 
 const trimQueryParams = (path, paramsToTrim) => {

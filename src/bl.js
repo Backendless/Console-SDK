@@ -2,7 +2,10 @@ import _each from 'lodash/each'
 
 import urls from './urls'
 
+import { BL_MODELS, BL_CHAIN } from './utils/cache-tags'
+
 const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
+const codelessServices = appId => `${ urls.blBasePath(appId) }/codeless`
 
 const hostedServiceConfig = (appId, serviceId) => `${ hostedServices(appId) }/configure/${ serviceId }`
 
@@ -91,6 +94,7 @@ export default req => ({
       formData = new FormData()
       formData.append('files', data.file)
       formData.append('createFromSample', false)
+      formData.append('model', data.model)
     }
 
     return req.post(`${ urls.blBasePath(appId) }/generic`, formData)
@@ -100,6 +104,40 @@ export default req => ({
 
   createAWSLambdaService(appId, credentials) {
     return req.post(`${ urls.blBasePath(appId) }/aws-lambda`, { ...credentials, appId })
+  },
+
+  createCodelessService(appId, service) {
+    return req
+      .post(codelessServices(appId), service)
+      .cacheTags(BL_MODELS(appId, 'CODELESS'))
+  },
+
+  updateCodelessService(appId, serviceId, updates) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }`, updates)
+  },
+
+  deleteCodelessService(appId, serviceId) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceId }`)
+  },
+
+  createCodelessMethod(appId, serviceId, method) {
+    return req.post(`${ codelessServices(appId) }/${ serviceId }/`, method)
+  },
+
+  updateCodelessMethod(appId, serviceId, methodId, method) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }/${ methodId }`, method)
+  },
+
+  deleteCodelessMethod(appId, serviceId, methodId) {
+    return req.delete(`${ codelessServices(appId) }/${ serviceId }/${ methodId }`)
+  },
+
+  getCodelessMethodLogic(appId, serviceId, methodId) {
+    return req.get(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`)
+  },
+
+  deployCodelessMethodLogic(appId, serviceId, methodId, logic, params) {
+    return req.put(`${ codelessServices(appId) }/${ serviceId }/${ methodId }/logic`, logic).query(params)
   },
 
   deleteService(appId, serviceId) {
@@ -122,30 +160,38 @@ export default req => ({
     return req.post(hostedServiceConfig(appId, `test/${serviceId}`), config)
   },
 
-  getDraftFiles(appId, language) {
-    return req.get(urls.blDraft(appId, language))
+  getDraftFiles(appId, language, model) {
+    return req.get(urls.blDraft(appId, language, model))
   },
 
-  saveDraftFiles(appId, language, files) {
-    return req.put(urls.blDraft(appId, language), files)
+  saveDraftFiles(appId, language, model, files) {
+    return req.put(urls.blDraft(appId, language, model), files)
   },
 
-  deployDraftFiles(appId, language, files) {
-    return req.put(urls.blProd(appId, language), files)
+  deployDraftFiles(appId, language, model, files) {
+    return req.put(urls.blProd(appId, language, model), files)
   },
 
-  getDraftFileContent(appId, fileId, language) {
-    return req.get(`${ urls.blDraft(appId, language) }/${ fileId }`)
+  getDraftFileContent(appId, language, model, fileId) {
+    return req.get(`${ urls.blDraft(appId, language, model) }/${ fileId }`)
   },
 
   getLanguages() {
     return req.get(`${ urls.console() }/servercode/languages`)
   },
 
+  getModels(appId, language) {
+    return req
+      .get(`${ urls.serverCode(appId) }/models/${ language }`)
+      .cacheTags(BL_MODELS(appId, language))
+  },
+
   createEventHandler(appId, handler) {
     const { category, mode, ...data } = handler
 
-    return req.post(urls.blHandlersCategory(appId, mode, category), data)
+    return req
+      .post(urls.blHandlersCategory(appId, mode, category), data)
+      .cacheTags(BL_MODELS(appId, handler.language))
   },
 
   updateEventHandler(appId, handler) {
@@ -168,6 +214,16 @@ export default req => ({
     return req.delete(url)
   },
 
+  getHandlerInvocationChain(appId, eventId, context) {
+    return req.get(urls.blHandlersChain(appId, eventId, context))
+      .cacheTags(BL_CHAIN(appId, eventId, context))
+  },
+
+  updateHandlerInvocationChain(appId, eventId, context, updates) {
+    return req.put(urls.blHandlersChain(appId, eventId, context), updates)
+      .cacheTags(BL_CHAIN(appId, eventId, context))
+  },
+
   invokeTimer(appId, timer) {
     const { timername, mode, category } = timer
 
@@ -176,10 +232,10 @@ export default req => ({
   },
 
   getCategories(appId) {
-    return req.get(`${ urls.appConsole(appId) }/servercode/categories`)
+    return req.get(`${ urls.serverCode(appId) }/categories`)
   },
 
   getEvents(appId) {
-    return req.get(`${urls.appConsole(appId)}/servercode/events`)
+    return req.get(`${ urls.serverCode(appId) }/events`)
   }
 })

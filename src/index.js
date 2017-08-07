@@ -16,10 +16,10 @@ import projectTemplate from './project-template'
 import security from './security'
 import settings from './settings'
 import status from './status'
-import tables from './tables'
+import warning from './warning'
 import transfer from './transfer'
-import user from './user'
-import users from './users'
+import marketplace from './marketplace'
+import codeless from './codeless'
 
 class Context {
 
@@ -65,15 +65,35 @@ const contextifyRequest = (context, serverUrl) => {
   return result
 }
 
+const getBillingReq = (req, context) => {
+  if (context.billingReqErr) {
+    return Promise.reject(context.billingReqErr)
+  }
+
+  if (!context.billingReq) {
+    context.billingReq = status(req)().then(
+      ({ billingURL }) => contextifyRequest(context, billingURL),
+      err => {
+        context.billingReqErr = err.message || err
+        console.warn('Unable to get server status. ' + context.billingReqErr)
+      }
+    )
+  }
+
+  return context.billingReq
+}
+
 const createClient = (serverUrl, authKey) => {
   const context = new Context(authKey)
 
   const request = contextifyRequest(context, serverUrl)
 
+  const billingReq = getBillingReq(request, context)
+
   return {
     analytics      : analytics(request, context),
     apps           : apps(request, context),
-    billing        : billing(request, context),
+    billing        : billing(billingReq),
     bl             : bl(request, context),
     codegen        : codegen(request, context),
     email          : email(request, context),
@@ -85,8 +105,11 @@ const createClient = (serverUrl, authKey) => {
     security       : security(request, context),
     settings       : settings(request, context),
     status         : status(request, context),
-    tables         : tables(request, context),
     transfer       : transfer(request, context),
+    warning        : warning(request, context),
+    codeless       : codeless(request, context),
+    marketplace    : marketplace(billingReq),
+    tables         : tables(request, context),
     user           : user(request, context),
     users          : users(request, context)
   }

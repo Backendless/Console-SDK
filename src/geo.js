@@ -37,13 +37,13 @@ export default req => {
   const addCategory = (appId, name) => {
     return req
       .post(categoriesUrl(appId) + '/' + name, { name })
-      .cacheTags(GEO_CATEGORY(name))
+      .cacheTags(GEO_CATEGORY(appId, name))
   }
 
   const deleteCategory = (appId, name) => {
     return req
       .delete(categoriesUrl(appId) + '/' + name)
-      .cacheTags(GEO_CATEGORY(name))
+      .cacheTags(GEO_CATEGORY(appId, name))
   }
 
   const renameCategory = (appId, category, name) => {
@@ -148,7 +148,7 @@ export default req => {
 
     return req.get(url)
       .query(queryParams)
-      .cacheTags(GEO_CATEGORY(category))
+      .cacheTags(GEO_CATEGORY(appId, category))
   }
 
   const loadPointsAsRelations = (appId, params, pageParams) => {
@@ -173,16 +173,22 @@ export default req => {
     const dataReq = req.get(`${urls.dataRecord(appId, tableName, objectId)}/${name}`).query(queryParams)
 
     return totalRows(req).getWithData(dataReq).then(({ totalRows, data }) => {
-      const objectIds = data.map(point => point.objectId)
+      const objectIds = []
+
+      data.forEach(point => {
+        if (!objectIds.includes(point.objectId)) {
+          objectIds.push(point.objectId)
+        }
+      })
 
       return loadPointsByIds(appId, objectIds, params.includemetadata).then(points => {
-        const sortedPoints = []
+        const pointsMap = {}
 
-        points.forEach(point => {
-          sortedPoints[objectIds.indexOf(point.objectId)] = point
-        })
+        points.forEach(point => pointsMap[point.objectId] = point)
 
-        return { totalRows, data: sortedPoints }
+        const data = objectIds.map(pointId => pointsMap[pointId])
+
+        return { totalRows, data }
       })
     })
   }
@@ -194,7 +200,7 @@ export default req => {
       where   : SQL.in('objectId', objectIds)
     }
 
-    return req.get(pointsUrl(appId)).query(queryParams).cacheTags(GEO_CATEGORY())
+    return req.get(pointsUrl(appId)).query(queryParams).cacheTags(GEO_CATEGORY(appId))
   }
 
   const getFencePoints = (appId, fenceId) => {
@@ -205,7 +211,7 @@ export default req => {
   const deletePoints = (appId, category, pointsIds) => {
     return req
       .delete(categoryPointsUrl(appId, category), pointsIds)
-      .cacheTags(GEO_CATEGORY(category))
+      .cacheTags(GEO_CATEGORY(appId, category))
   }
 
   const addPoint = (appId, lat, lon) => {
@@ -214,7 +220,7 @@ export default req => {
 
   const copyPoints = (appId, pointsIds, targetCategory) => {
     return req.put(urls.geo(appId) + '/' + targetCategory, pointsIds)
-      .cacheTags(GEO_CATEGORY(targetCategory))
+      .cacheTags(GEO_CATEGORY(appId, targetCategory))
   }
 
   const setPointMeta = (appId, pointId, meta) => {
@@ -232,13 +238,13 @@ export default req => {
   const reset = appId => {
     return req
       .delete(urls.geo(appId))
-      .cacheTags(GEO_CATEGORY())
+      .cacheTags(GEO_CATEGORY(appId))
   }
 
   const sampleSetup = appId => {
     return req
       .post(urls.geo(appId) + '/samplesetup')
-      .cacheTags(GEO_CATEGORY())
+      .cacheTags(GEO_CATEGORY(appId))
   }
 
   return {
