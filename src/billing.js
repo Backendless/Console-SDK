@@ -15,7 +15,7 @@ export default decorateRequest({
   },
 
   switchToPlan: req => (appId, planId) => {
-    return req.post(`${urls.billing(appId)}/subscriptions/${planId}`)
+    return req.put(`${urls.billing(appId)}/subscriptions/${planId}`)
   },
 
   getCreditCard: req => appId => {
