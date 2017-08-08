@@ -1,4 +1,4 @@
-import Request  from 'backendless-request'
+import Request from 'backendless-request'
 import * as CacheTags from './utils/cache-tags'
 import urls from './urls'
 
@@ -20,6 +20,9 @@ import warning from './warning'
 import transfer from './transfer'
 import marketplace from './marketplace'
 import codeless from './codeless'
+import tables from './tables'
+import users from './users'
+import user from './user'
 
 class Context {
 
