@@ -2,27 +2,27 @@ import Request from 'backendless-request'
 import * as CacheTags from './utils/cache-tags'
 import urls from './urls'
 
+import security from './security'
+import geo from './geo'
+import tables from './tables'
+import codegen from './codegen'
+import files from './files'
+import bl from './bl'
+import email from './email'
+import user from './user'
+import messaging from './messaging'
+import settings from './settings'
+import projectTemplate from './project-template'
+import billing from './billing'
 import analytics from './analytics'
 import apps from './apps'
-import billing from './billing'
-import bl from './bl'
-import codegen from './codegen'
-import email from './email'
-import files from './files'
-import geo from './geo'
-import invites from './invites'
-import messaging from './messaging'
-import projectTemplate from './project-template'
-import security from './security'
-import settings from './settings'
+import users from './users'
 import status from './status'
 import warning from './warning'
 import transfer from './transfer'
 import marketplace from './marketplace'
 import codeless from './codeless'
-import tables from './tables'
-import users from './users'
-import user from './user'
+import invites from './invites'
 
 class Context {
 
@@ -94,27 +94,27 @@ const createClient = (serverUrl, authKey) => {
   const billingReq = getBillingReq(request, context)
 
   return {
-    analytics      : analytics(request, context),
+    user           : user(request, context),
+    users          : users(request, context),
     apps           : apps(request, context),
-    billing        : billing(billingReq),
-    bl             : bl(request, context),
-    codegen        : codegen(request, context),
-    email          : email(request, context),
-    files          : files(request, context),
-    geo            : geo(request, context),
-    invites        : invites(request, context),
-    messaging      : messaging(request, context),
-    projectTemplate: projectTemplate(request, context),
     security       : security(request, context),
+    geo            : geo(request, context),
+    tables         : tables(request, context),
+    files          : files(request, context),
+    codegen        : codegen(request, context),
+    bl             : bl(request, context),
+    email          : email(request, context),
+    messaging      : messaging(request, context),
     settings       : settings(request, context),
+    projectTemplate: projectTemplate(request, context),
+    analytics      : analytics(request, context),
     status         : status(request, context),
     transfer       : transfer(request, context),
     warning        : warning(request, context),
     codeless       : codeless(request, context),
     marketplace    : marketplace(billingReq),
-    tables         : tables(request, context),
-    user           : user(request, context),
-    users          : users(request, context)
+    billing        : billing(billingReq),
+    invites        : invites(request, context)
   }
 }
 

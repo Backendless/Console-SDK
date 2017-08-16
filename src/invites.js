@@ -1,4 +1,4 @@
-// import urls from './urls'
+import urls from './urls'
 
 // TODO: remove this and uncomment next lines when server-side will be ready to provide routes for invites
 const data = [{
@@ -15,15 +15,9 @@ const data = [{
   credit: '$10.00 (issued on 02/10/2017)'
 }]
 
-const code = 'ABCDEF123456'
-
-export default (/*req*/) => ({
+export default req => ({
   getInvitesStatus(/*appId*/) {
     return Promise.resolve(data) //req.get(`${urls.appConsole(appId)}/invites-status`)
-  },
-
-  getInviteCode(/*appId*/) {
-    return Promise.resolve(code) // req.get(`${urls.appConsole(appId)}/invite-code`)
   },
 
   sendInvite(/*appId, data*/) {
