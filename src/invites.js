@@ -5,7 +5,7 @@ export default req => ({
     return req.get(`${urls.appConsole(appId)}/referrals`)
   },
 
-  send(appId, data) {
-    return req.post(`${urls.appConsole(appId)}/referrals`, data)
+  invite(appId, data) {
+    return req.post(`${urls.appConsole(appId)}/referrals/invite`, data)
   }
 })
