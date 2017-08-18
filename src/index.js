@@ -1,4 +1,4 @@
-import Request  from 'backendless-request'
+import Request from 'backendless-request'
 import * as CacheTags from './utils/cache-tags'
 import urls from './urls'
 
@@ -22,6 +22,7 @@ import warning from './warning'
 import transfer from './transfer'
 import marketplace from './marketplace'
 import codeless from './codeless'
+import invites from './invites'
 
 class Context {
 
@@ -112,7 +113,8 @@ const createClient = (serverUrl, authKey) => {
     warning        : warning(request, context),
     codeless       : codeless(request, context),
     marketplace    : marketplace(billingReq),
-    billing        : billing(billingReq)
+    billing        : billing(billingReq),
+    invites        : invites(request, context)
   }
 }
 

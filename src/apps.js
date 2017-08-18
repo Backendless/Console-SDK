@@ -7,8 +7,8 @@ const enrichApp = ({ appId, appName, ...app }) => ({
 })
 
 export default req => ({
-  createApp(appName) {
-    return req.post('/console/applications', { appName }).then(enrichApp)
+  createApp({ appName, refCode }) {
+    return req.post('/console/applications', { appName, refCode }).then(enrichApp)
   },
 
   getApps() {

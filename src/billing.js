@@ -15,7 +15,7 @@ export default decorateRequest({
   },
 
   switchToPlan: req => (appId, planId) => {
-    return req.post(`${urls.billing(appId)}/subscriptions/${planId}`)
+    return req.put(`${urls.billing(appId)}/subscriptions/${planId}`)
   },
 
   getCreditCard: req => appId => {
@@ -28,5 +28,9 @@ export default decorateRequest({
 
   apiCallsBlocked: req => appId => {
     return req.get(`/${appId}/billing/apicalls/blocked`)
+  },
+
+  getInviteCode: req => appId => {
+    return req.get(`${urls.billing(appId)}/refcode`)
   }
 })
