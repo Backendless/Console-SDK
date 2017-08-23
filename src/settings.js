@@ -37,7 +37,6 @@ export default req => ({
     return req.get('/console/datavalidators')
   },
 
-
   getAppSettings(appId) {
     return req.get(`${urls.appConsole(appId)}/appsettings`)
   },
@@ -74,8 +73,8 @@ export default req => ({
     return req.put(`${urls.appConsole(appId)}/landing-page`, data)
   },
 
-  uploadLandingPageFile(appId, formData) {
-    return req.post(`${urls.appConsole(appId)}/landing-page/file`, formData)
+  uploadLandingPageFile(appId, formData, section, name) {
+    return req.post(`${urls.appConsole(appId)}/landing-page/file`, formData).query({ section, name })
   }
 
 })
