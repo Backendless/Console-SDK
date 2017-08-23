@@ -64,6 +64,18 @@ export default req => ({
 
   updateNotificationSettings(appId, settings) {
     return req.put(`${urls.appConsole(appId)}/notifications/limits`, settings)
+  },
+
+  getLandingPageData(appId) {
+    return req.get(`${urls.appConsole(appId)}/landing-page`)
+  },
+
+  updateLandingPageData(appId, data) {
+    return req.put(`${urls.appConsole(appId)}/landing-page`, data)
+  },
+
+  uploadLandingPageFile(appId, formData) {
+    return req.post(`${urls.appConsole(appId)}/landing-page/file`, formData)
   }
 
 })
