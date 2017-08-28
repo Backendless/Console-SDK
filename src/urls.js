@@ -97,6 +97,7 @@ export const codeless = appId => `${appConsole(appId)}/codeless`
 export const codelessApiServices = appId => `${codeless(appId)}/api-services`
 export const codelessFunctions = appId => `${codeless(appId)}/functions`
 export const codelessFunctionSource = (appId, name) => `${codelessFunctions(appId)}/${name}`
+export const codelessDeployModel = (appId, model) => `${codeless(appId)}/deploy/${model}`
 
 export default {
   console,
@@ -139,5 +140,6 @@ export default {
   mobileSettings,
   codelessApiServices,
   codelessFunctions,
-  codelessFunctionSource
+  codelessFunctionSource,
+  codelessDeployModel
 }
