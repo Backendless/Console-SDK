@@ -23,7 +23,7 @@ import transfer from './transfer'
 import marketplace from './marketplace'
 import codeless from './codeless'
 import invites from './invites'
-import licence from './licence'
+import license from './license'
 
 class Context {
 
@@ -116,7 +116,7 @@ const createClient = (serverUrl, authKey) => {
     marketplace    : marketplace(billingReq),
     billing        : billing(billingReq),
     invites        : invites(request, context),
-    licence        : licence(request, context),
+    license        : license(request, context),
   }
 }
 
