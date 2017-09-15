@@ -10,7 +10,6 @@ export const blBasePath = consoleSection('localservices')
 export const data = consoleSection('data')
 export const geo = consoleSection('geo')
 export const files = consoleSection('files')
-export const marketplace = consoleSection('marketplace')
 
 export const dataTables = appId => `${data(appId)}/tables`
 export const dataTable = (appId, tableName) => `${data(appId)}/${tableName}`
@@ -89,6 +88,8 @@ export const mobileSettings = appId =>
 
 export const billing = appId =>
   `${appConsole(appId)}/billing`
+
+export const marketplace = (appId, name) => `${appConsole(appId)}/marketplace/${name}`
 
 export const appInfo = appId =>
   `${appConsole(appId)}/app-info`
