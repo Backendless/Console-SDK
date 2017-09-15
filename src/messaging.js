@@ -64,4 +64,45 @@ export default req => ({
     return req.get(`${urls.messaging(appId)}/channels`)
   },
 
+  pushMessage(appId, templateData, scheduledPushId) {
+    const url = urls.pushMessageUrl(appId) + (scheduledPushId ? `/${scheduledPushId}` : '')
+
+    return req.post(url, templateData)
+  },
+
+  savePushTemplate(appId, templateData) {
+    return req.put(urls.pushMessageUrl(appId), templateData) // should return id
+  },
+
+  getPushTemplates(appId) {
+    return req.get(`${urls.pushMessageUrl(appId)}/templates`)
+  },
+
+  getScheduledPushes(appId) {
+    return req.get(`${urls.pushMessageUrl(appId)}/scheduled`)
+  },
+
+  getLayoutTemplates(appId, platform) {
+    return req.get(`${urls.messaging(appId)}/buttontemplates`).query({ platform })
+  },
+
+  saveLayoutTemplate(appId, templateData, platform) {
+    return req.put(`${urls.messaging(appId)}/buttontemplates`, templateData).query({ platform })
+  },
+
+  deleteLayoutTemplate(appId, templateName, platform) {
+    return req.delete(`${urls.messaging(appId)}/buttontemplates/${templateName}`).query({ platform })
+  },
+
+  deletePushTemplates(appId, templateIds) {
+    return req.delete(`${urls.messaging(appId)}/templates`).query({ id: templateIds.split(',') })
+  },
+
+  getEstimatedRecipients(appId, sendTo) {
+    return req.post(`${urls.pushMessageUrl(appId)}size`, sendTo)
+  },
+
+  deleteScheduledPushes(appId, pushIds) {
+    return req.delete(`${urls.messaging(appId)}/scheduled`).query({ id: pushIds.split(',') })
+  }
 })

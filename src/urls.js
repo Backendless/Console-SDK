@@ -81,6 +81,9 @@ export const messaging = appId =>
 export const messagingChannels = appId =>
   `${messaging(appId)}/channels`
 
+export const pushMessageUrl = appId =>
+  `${messaging(appId)}/push`
+
 export const messagingChannel = (appId, channelId) =>
   `${messagingChannels(appId)}/${channelId}`
 
@@ -139,6 +142,7 @@ export default {
   messaging,
   messagingChannel,
   messagingChannels,
+  pushMessageUrl,
   mobileSettings,
   proLicense,
   security,
