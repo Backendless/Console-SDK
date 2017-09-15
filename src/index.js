@@ -1,4 +1,4 @@
-import Request  from 'backendless-request'
+import Request from 'backendless-request'
 import * as CacheTags from './utils/cache-tags'
 import urls from './urls'
 
@@ -21,9 +21,10 @@ import status from './status'
 import warning from './warning'
 import transfer from './transfer'
 import marketplace from './marketplace'
+import codeless from './codeless'
+import invites from './invites'
+import license from './license'
 import publishing from './publishing'
-
-const publishingUrl = 'http://localhost:4000' // TODO: will be returned from GET /status request like billing url
 
 class Context {
 
@@ -69,12 +70,32 @@ const contextifyRequest = (context, serverUrl) => {
   return result
 }
 
+const getBillingReq = (req, context) => {
+  if (context.billingReqErr) {
+    return Promise.reject(context.billingReqErr)
+  }
+
+  if (!context.billingReq) {
+    context.billingReq = status(req)().then(
+      ({ billingURL }) => contextifyRequest(context, billingURL),
+      err => {
+        context.billingReqErr = err.message || err
+        console.warn('Unable to get server status. ' + context.billingReqErr)
+      }
+    )
+  }
+
+  return context.billingReq
+}
+
 const createClient = (serverUrl, authKey) => {
   const context = new Context(authKey)
 
   const request = contextifyRequest(context, serverUrl)
 
-  const client = {
+  const billingReq = getBillingReq(request, context)
+
+  return {
     user           : user(request, context),
     users          : users(request, context),
     apps           : apps(request, context),
@@ -92,14 +113,13 @@ const createClient = (serverUrl, authKey) => {
     status         : status(request, context),
     transfer       : transfer(request, context),
     warning        : warning(request, context),
+    codeless       : codeless(request, context),
+    marketplace    : marketplace(billingReq),
+    billing        : billing(billingReq),
+    publishing     : publishing(billingReq),
+    invites        : invites(request, context),
+    license        : license(request, context),
   }
-
-  return client.status().then(status => ({
-    ...client,
-    billing    : billing(contextifyRequest(context, status.billingURL), context),
-    marketplace: marketplace(contextifyRequest(context, status.billingURL), context),
-    publishing : publishing(contextifyRequest(context, publishingUrl), context)
-  }))
 }
 
 export {

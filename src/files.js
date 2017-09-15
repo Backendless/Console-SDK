@@ -31,13 +31,13 @@ export default req => ({
     const params = { pageSize, offset, pattern }
 
     const dataReq = req.get(urls.fileView(appId, authKey, path)).query(params)
-      .cacheTags(FOLDER(path))
+      .cacheTags(FOLDER(appId, path))
 
     return totalRows(req).getWithData(dataReq).then(result => enrichDirectoryParams(result, path))
   },
 
   createDir(appId, path, folderName) {
-    return req.post(urls.createDir(appId, path, folderName)).cacheTags(FOLDER(path))
+    return req.post(urls.createDir(appId, path, folderName)).cacheTags(FOLDER(appId, path))
   },
 
   getFileContent(appId, authKey, filePath) {
@@ -49,7 +49,11 @@ export default req => ({
 
     return req.put(`${urls.appConsole(appId)}/files/${filePath}`)
       .query({ operation })
-      .cacheTags(FOLDER(getFileFolder(filePath)))
+      .cacheTags(FOLDER(appId, getFileFolder(filePath)))
+  },
+
+  fileExists(appId, filePath) {
+    return req.get(urls.fileExists(appId, filePath))
   },
 
   editFile(appId, filePath, fileContent) {
@@ -60,38 +64,38 @@ export default req => ({
     return req
       .post(urls.fileCreate(appId, filePath), { file: fileContent })
       .set('Accept', '*/*') //workarround for BKNDLSS-13702
-      .cacheTags(FOLDER(getFileFolder(filePath)))
+      .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
   moveFile(appId, filePath, newFilePath) {
     return req.post(urls.fileMove(appId, filePath), newFilePath)
-      .cacheTags(FOLDER(getFileFolder(filePath)))
+      .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
   copyFile(appId, filePath, newFilePath) {
     return req.post(urls.fileCopy(appId, filePath), newFilePath)
-      .cacheTags(FOLDER(getFileFolder(filePath)))
+      .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
   renameFile(appId, filePath, newFileName) {
     return req.post(urls.fileRename(appId, filePath), newFileName)
-      .cacheTags(FOLDER(getFileFolder(filePath)))
+      .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
   deleteFile(appId, filePath) {
     return req.delete(urls.fileDelete(appId, filePath))
-      .cacheTags(FOLDER(getFileFolder(filePath)))
+      .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
   uploadFile(appId, file, path, fileName) {
     return req.post(urls.fileUpload(appId, `${path}/${fileName}`), file)
-      .cacheTags(FOLDER(path))
+      .cacheTags(FOLDER(appId, path))
   },
 
   createConsoleFile(appId, path, content) {
     return req.post(`${urls.appConsole(appId)}/files/create/${path}`, content)
       .set('Accept', '*/*') //workarround for BKNDLSS-13702
-      .cacheTags(FOLDER(getFileFolder(path)))
+      .cacheTags(FOLDER(appId, getFileFolder(path)))
   },
 
   viewFiles(appId, authKey, path = '') {

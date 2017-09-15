@@ -24,6 +24,9 @@ const generalizeEventCategory = category => !category || category === 'TIMER' ? 
 export const blHandlersCategory = (appId, mode, category) =>
   `${ serverCode(appId) }/${ mode.toLowerCase() }/${ generalizeEventCategory(category) }`
 
+export const blHandlersChain = (appId, eventId, context) =>
+  `${ serverCode(appId) }/chain/${ eventId }/${ context }`
+
 export const fileDownload = (appId, authKey, filePath) =>
   `${appConsole(appId, authKey)}/files/download/${filePath}`
 
@@ -38,6 +41,9 @@ export const createDir = (appId, path, folderName) => {
 
 export const fileView = (appId, authKey, filePath) =>
   `${appConsole(appId, authKey)}/files/view/${filePath}`
+
+export const fileExists = (appId, filePath) =>
+  `${files(appId)}/files/exists/${filePath}`
 
 export const fileEdit = (appId, filePath) =>
   `${files(appId)}/edit/${filePath}/`
@@ -57,14 +63,14 @@ export const fileDelete = (appId, filePath) =>
 export const fileCreate = (appId, filePath) =>
   `${files(appId)}/create/${filePath}/`
 
-export const blProd = (appId, language) =>
-  `${serverCode(appId)}/production/${language}`
+export const blProd = (appId, language, model) =>
+  `${serverCode(appId)}/${model}/production/${language}`
 
-export const blDraft = (appId, language) =>
-  `${serverCode(appId)}/draft/${language}`
+export const blDraft = (appId, language, model) =>
+  `${serverCode(appId)}/${model}/draft/${language}`
 
-export const blDraftsProjectDownload = (appId, authKey, language) =>
-  `${appConsole(appId, authKey)}/servercode/draft/${language}/download`
+export const blDraftsProjectDownload = (appId, authKey, language, model) =>
+  `${appConsole(appId, authKey)}/servercode/${model}/draft/${language}/download`
 
 export const blServicesClientDownload = (appId, authKey, serviceId, language) =>
   `${appConsole(appId, authKey)}/localservices/${serviceId}/${language}/download`
@@ -84,40 +90,59 @@ export const mobileSettings = appId =>
 export const billing = appId =>
   `${appConsole(appId)}/billing`
 
+export const appInfo = appId =>
+  `${appConsole(appId)}/app-info`
+
+export const proLicense = () => '/console/license'
+
+export const codeless = appId => `${appConsole(appId)}/codeless`
+export const codelessApiServices = appId => `${codeless(appId)}/api-services`
+export const codelessFunctions = appId => `${codeless(appId)}/functions`
+export const codelessFunctionSource = (appId, name) => `${codelessFunctions(appId)}/${name}`
+export const codelessDeployModel = (appId, model) => `${codeless(appId)}/deploy/${model}`
+
 export default {
-  console,
   appConsole,
+  appInfo,
   billing,
+  blBasePath,
+  blDraft,
+  blDraftsProjectDownload,
+  blHandlersCategory,
+  blHandlersChain,
+  blProd,
+  blServicesClientDownload,
+  codelessApiServices,
+  codelessDeployModel,
+  codelessFunctionSource,
+  codelessFunctions,
+  console,
+  createDir,
+  data,
+  dataConfigs,
+  dataRecord,
+  dataTable,
+  dataTables,
+  fileCopy,
+  fileCreate,
+  fileDelete,
+  fileDownload,
+  fileEdit,
+  fileExists,
+  fileMove,
+  fileRename,
+  fileUpload,
+  fileView,
+  geo,
   mailSettings,
+  marketplace,
+  messaging,
+  messagingChannel,
+  messagingChannels,
+  mobileSettings,
+  proLicense,
   security,
   securityRoles,
   serverCode,
-  data,
-  geo,
-  dataTable,
-  dataRecord,
-  dataTables,
-  dataConfigs,
   tableColumns,
-  blHandlersCategory,
-  blBasePath,
-  fileDownload,
-  fileUpload,
-  fileView,
-  fileEdit,
-  fileMove,
-  fileCopy,
-  fileRename,
-  fileDelete,
-  fileCreate,
-  createDir,
-  blDraft,
-  blProd,
-  blDraftsProjectDownload,
-  blServicesClientDownload,
-  marketplace,
-  messaging,
-  messagingChannels,
-  messagingChannel,
-  mobileSettings
 }

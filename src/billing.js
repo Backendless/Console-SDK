@@ -1,27 +1,36 @@
 import urls from './urls'
+import decorateRequest from './utils/decorate-request'
 
-export default req => ({
-  getBillingInfo(appId) {
+export default decorateRequest({
+  getBillingInfo: req => appId => {
     return req.get(`${urls.billing(appId)}/accountinfo`)
   },
 
-  getPlans(appId) {
+  getPlans: req => appId => {
     return req.get(`${urls.billing(appId)}/plans`)
   },
 
-  getPlanComponentsData(appId, planId) {
+  getPlanComponentsData: req => (appId, planId) => {
     return req.get(`${urls.billing(appId)}/plans/${planId}/components`)
   },
 
-  switchToPlan(appId, planId) {
-    return req.post(`${urls.billing(appId)}/subscriptions/${planId}`)
+  switchToPlan: req => (appId, planId) => {
+    return req.put(`${urls.billing(appId)}/subscriptions/${planId}`)
   },
 
-  getCreditCard(appId) {
+  getCreditCard: req => appId => {
     return req.get(`${urls.billing(appId)}/creditcard`)
   },
 
-  getComponentLimit(appId, componentId) {
+  getComponentLimit: req => (appId, componentId) => {
     return req.get(`/${appId}/billing/limits/${componentId}`)
+  },
+
+  apiCallsBlocked: req => appId => {
+    return req.get(`/${appId}/billing/apicalls/blocked`)
+  },
+
+  getInviteCode: req => appId => {
+    return req.get(`${urls.billing(appId)}/refcode`)
   }
 })
