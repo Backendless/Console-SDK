@@ -9,6 +9,13 @@ const codelessServices = appId => `${ urls.blBasePath(appId) }/codeless`
 
 const hostedServiceConfig = (appId, serviceId) => `${ hostedServices(appId) }/configure/${ serviceId }`
 
+const MODES = {
+  MARKETPLACE: 'MARKETPLACE',
+  PROD       : 'PRODUCTION',
+  DEBUG      : 'DEBUG',
+  DRAFT      : 'DRAFT'
+}
+
 // TODO: remove this transformation when the format of config will be changed [CONSOLE-599]
 const CONFIG_NAMES_MAP = {
   displayName: 'label'
@@ -58,6 +65,17 @@ const parseServiceSpec = spec => {
 
   return { summary, methods }
 }
+
+const normalizeHandler = handler => {
+  if (handler.mode === MODES.MARKETPLACE) {
+    handler.mode = MODES.PROD
+    handler.fromMarketplace = true
+  }
+
+  return handler
+}
+
+const normalizeHandlers = handlers => handlers.map(normalizeHandler)
 
 export default req => ({
   getServices(appId) {
@@ -195,15 +213,19 @@ export default req => ({
   },
 
   updateEventHandler(appId, handler) {
-    const { id, category, mode } = handler
-    const url = `${ urls.blHandlersCategory(appId, mode, category) }/${ id }`
+    const { id, category, fromMarketplace } = handler
 
-    return req.put(url, handler)
-      .then(handler => ({ ...handler }))
+    if (fromMarketplace)  {
+      handler.mode = MODES.MARKETPLACE
+    }
+
+    const url = `${ urls.blHandlersCategory(appId, handler.mode, category) }/${ id }`
+
+    return req.put(url, handler).then(normalizeHandler)
   },
 
   getEventHandlers(appId, modes = []) {
-    return req.get(urls.serverCode(appId)).query({ mode: modes })
+    return req.get(urls.serverCode(appId)).query({ mode: modes }).then(normalizeHandlers)
   },
 
   deleteEventHandler(appId, handler) {
