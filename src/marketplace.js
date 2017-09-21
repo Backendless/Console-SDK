@@ -25,4 +25,12 @@ export default decorateRequest({
   publish: req => (appId, marketplaceName, product) => {
     return req.post(`${urls.marketplace(appId, marketplaceName)}/product`, product)
   },
+
+  approveProduct: req => (appId, marketplaceName, productId) => {
+    return req.put(`${urls.marketplace(appId, marketplaceName)}/product/apply/${productId}`)
+  },
+
+  rejectProduct: req => (appId, marketplaceName, productId, reason) => {
+    return req.put(`${urls.marketplace(appId, marketplaceName)}/product/reject/${productId}`, reason)
+  },
 })
