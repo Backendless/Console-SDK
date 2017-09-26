@@ -66,15 +66,21 @@ export default req => ({
   },
 
   getLandingPageData(appId) {
-    return req.get(`${urls.appConsole(appId)}/landing-page`)
+    return req.get(urls.landingPage(appId))
+  },
+
+  getLandingPageTemplates(appId) {
+    return req.get(`${urls.landingPage(appId)}/templates`)
   },
 
   updateLandingPageData(appId, data) {
-    return req.put(`${urls.appConsole(appId)}/landing-page`, data)
+    return req.put(urls.landingPage(appId), data)
   },
 
-  uploadLandingPageFile(appId, formData, section, name) {
-    return req.post(`${urls.appConsole(appId)}/landing-page/file`, formData).query({ section, name })
+  uploadLandingPageFile(appId, file, section, name) {
+    return req.post(`${urls.landingPage(appId)}/file`)
+      .query({ section, name })
+      .form({ file })
   }
 
 })

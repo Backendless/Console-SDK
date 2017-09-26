@@ -93,6 +93,9 @@ export const billing = appId =>
 export const appInfo = appId =>
   `${appConsole(appId)}/app-info`
 
+export const landingPage = appId =>
+  `${appConsole(appId)}/landing-page`
+
 export const codeless = appId => `${appConsole(appId)}/codeless`
 export const codelessApiServices = appId => `${codeless(appId)}/api-services`
 export const codelessFunctions = appId => `${codeless(appId)}/functions`
@@ -132,6 +135,7 @@ export default {
   blProd,
   blDraftsProjectDownload,
   blServicesClientDownload,
+  landingPage,
   marketplace,
   messaging,
   messagingChannels,
