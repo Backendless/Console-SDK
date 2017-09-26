@@ -10,19 +10,23 @@ export default req => ({
     return req.get(urls.codelessFunctions(appId))
   },
 
-  createFunctionSource(appId, xml, code, definition){
+  createFunctionSource(appId, xml, code, definition) {
     return req.post(urls.codelessFunctions(appId), { xml, code, definition })
   },
 
-  loadFunctionSource(appId, functionId){
+  loadFunctionSource(appId, functionId) {
     return req.get(urls.codelessFunctionSource(appId, functionId))
   },
 
-  updateFunctionSource(appId, functionId, xml, code, definition){
+  updateFunctionSource(appId, functionId, xml, code, definition) {
     return req.put(urls.codelessFunctionSource(appId, functionId), { xml, code, definition })
   },
 
-  removeFunctionSource(appId, functionId){
+  removeFunctionSource(appId, functionId) {
     return req.delete(urls.codelessFunctionSource(appId, functionId))
+  },
+
+  deployCodelessModel(appId, model, items) {
+    return req.post(urls.codelessDeployModel(appId, model), items)
   }
 })
