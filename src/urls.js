@@ -95,6 +95,9 @@ export const appInfo = appId =>
 
 export const proLicense = () => '/console/license'
 
+export const landingPage = appId =>
+  `${appConsole(appId)}/landing-page`
+
 export const codeless = appId => `${appConsole(appId)}/codeless`
 export const codelessApiServices = appId => `${codeless(appId)}/api-services`
 export const codelessFunctions = appId => `${codeless(appId)}/functions`
@@ -134,6 +137,7 @@ export default {
   fileUpload,
   fileView,
   geo,
+  landingPage,
   mailSettings,
   marketplace,
   messaging,
