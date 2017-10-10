@@ -93,7 +93,9 @@ export const billing = appId =>
 export const appInfo = appId =>
   `${appConsole(appId)}/app-info`
 
-export const proLicense = () => '/console/license'
+export const proLicense = () => `${console()}/license`
+
+export const blueprints = () => `${console()}/blueprints`
 
 export const landingPage = appId =>
   `${appConsole(appId)}/landing-page`
@@ -115,6 +117,7 @@ export default {
   blHandlersChain,
   blProd,
   blServicesClientDownload,
+  blueprints,
   codelessApiServices,
   codelessDeployModel,
   codelessFunctionSource,
