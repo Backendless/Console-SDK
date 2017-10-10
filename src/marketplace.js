@@ -33,4 +33,8 @@ export default decorateRequest({
   rejectProduct: req => (appId, marketplaceName, productId, reason) => {
     return req.put(`${urls.marketplace(appId, marketplaceName)}/product/reject/${productId}`, reason)
   },
+
+  removeProduct: req => (appId, marketplaceName, productId) => {
+    return req.delete(`${urls.marketplace(appId, marketplaceName)}/product/${productId}`)
+  },
 })
