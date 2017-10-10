@@ -24,6 +24,7 @@ import marketplace from './marketplace'
 import codeless from './codeless'
 import invites from './invites'
 import license from './license'
+import blueprints from './blueprints'
 
 class Context {
 
@@ -115,6 +116,7 @@ const createClient = (serverUrl, authKey) => {
     billing        : billing(billingReq),
     invites        : invites(request, context),
     license        : license(request, context),
+    blueprints     : blueprints(request, context),
   }
 }
 
