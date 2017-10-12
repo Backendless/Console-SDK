@@ -90,9 +90,7 @@ const getBillingReq = (req, context) => {
 
 const createClient = (serverUrl, authKey) => {
   const context = new Context(authKey)
-
   const request = contextifyRequest(context, serverUrl)
-
   const billingReq = getBillingReq(request, context)
 
   return {
