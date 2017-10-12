@@ -1,4 +1,6 @@
-export const console = authKey => `/console${authKey ? '/' + authKey : ''}`
+import { optional } from './utils/path'
+
+export const console = authKey => `/console${optional(authKey)}`
 export const appConsole = (appId, authKey) => `/${appId}${console(authKey)}`
 
 const consoleSection = section => appId => `${appConsole(appId)}/${section}`
@@ -95,7 +97,7 @@ export const appInfo = appId =>
 
 export const proLicense = () => `${console()}/license`
 
-export const blueprints = () => `${console()}/blueprints`
+export const blueprints = id => `${console()}/blueprints${optional(id)}`
 
 export const landingPage = appId =>
   `${appConsole(appId)}/landing-page`
