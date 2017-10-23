@@ -73,8 +73,12 @@ export default req => ({
     return req.get(`${urls.landingPage(appId)}/templates`)
   },
 
-  updateLandingPageData(appId, data) {
+  saveLandingPageData(appId, data) {
     return req.put(urls.landingPage(appId), data)
+  },
+  
+  publishLandingPageData(appId, data) {
+    return req.post(`${urls.landingPage(appId)}/publish`, data)
   },
 
   uploadLandingPageFile(appId, file, section, name) {
