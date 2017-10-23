@@ -78,9 +78,7 @@ export default req => ({
   },
   
   publishLandingPageData(appId, data) {
-    return req.post(`${urls.landingPage(appId)}/publish`, {
-      ...data
-    })
+    return req.post(`${urls.landingPage(appId)}/publish`, data)
   },
 
   uploadLandingPageFile(appId, file, section, name) {
