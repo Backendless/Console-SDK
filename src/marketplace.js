@@ -22,7 +22,7 @@ export default decorateRequest({
     return req.post(`${urls.billing(appId)}/marketplace/purchases/${productId}`, options)
   },
 
-  publish: req => (appId, marketplaceName, product) => {
+  publishProduct: req => (appId, marketplaceName, product) => {
     return req.post(`${urls.marketplace(appId, marketplaceName)}/product`, product)
   },
 
