@@ -6,8 +6,10 @@ import { BL_MODELS, BL_CHAIN } from './utils/cache-tags'
 
 const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
 const codelessServices = appId => `${ urls.blBasePath(appId) }/codeless`
+const marketplaceServices = appId => `${ urls.blBasePath(appId) }/marketplace`
 
 const hostedServiceConfig = (appId, serviceId) => `${ hostedServices(appId) }/configure/${ serviceId }`
+const marketplaceServiceConfig = (appId, serviceName) => `${ marketplaceServices(appId) }/configure/${ serviceName }`
 
 const MODES = {
   MARKETPLACE: 'MARKETPLACE',
@@ -172,6 +174,10 @@ export default req => ({
 
   setServiceConfig(appId, serviceId, config) {
     return req.post(hostedServiceConfig(appId, serviceId), config)
+  },
+
+  setMarketplaceServiceConfig(appId, serviceName, config) {
+    return req.post(marketplaceServiceConfig(appId, serviceName), config)
   },
 
   testServiceConfig(appId, serviceId, config) {

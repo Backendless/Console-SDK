@@ -14,6 +14,10 @@ export default decorateRequest({
     return req.get(`${urls.marketplace(appId, marketplaceName)}/products/${productId}`)
   },
 
+  getProductServicesConfigurations: req => (appId, marketplaceName, productId) => {
+    return req.get(`${urls.marketplace(appId, marketplaceName)}/product/${productId}/service-configurations`)
+  },
+
   getPurchases: req => appId => {
     return req.get(`${urls.billing(appId)}/marketplace/purchases`)
   },
