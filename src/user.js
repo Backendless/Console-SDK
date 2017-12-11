@@ -30,12 +30,11 @@ export default (req, context) => ({
       .unwrapBody(false)
       .send({ login, password })
       .then(res => {
-        const { name, email } = res.body
         const authKey = res.headers['auth-key']
 
         context.setAuthKey(authKey)
 
-        return { name, email, authKey }
+        return { ...res.body, authKey }
       })
   },
 

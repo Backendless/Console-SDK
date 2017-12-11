@@ -37,7 +37,6 @@ export default req => ({
     return req.get('/console/datavalidators')
   },
 
-
   getAppSettings(appId) {
     return req.get(`${urls.appConsole(appId)}/appsettings`)
   },
@@ -64,6 +63,28 @@ export default req => ({
 
   updateNotificationSettings(appId, settings) {
     return req.put(`${urls.appConsole(appId)}/notifications/limits`, settings)
+  },
+
+  getLandingPageData(appId) {
+    return req.get(urls.landingPage(appId))
+  },
+
+  getLandingPageTemplates(appId) {
+    return req.get(`${urls.landingPage(appId)}/templates`)
+  },
+
+  saveLandingPageData(appId, data) {
+    return req.put(urls.landingPage(appId), data)
+  },
+  
+  publishLandingPageData(appId, data) {
+    return req.post(`${urls.landingPage(appId)}/publish`, data)
+  },
+
+  uploadLandingPageFile(appId, file, section, name) {
+    return req.post(`${urls.landingPage(appId)}/file`)
+      .query({ section, name })
+      .form({ file })
   }
 
 })

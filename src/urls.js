@@ -1,4 +1,6 @@
-export const console = authKey => `/console${authKey ? '/' + authKey : ''}`
+import { optional } from './utils/path'
+
+export const console = authKey => `/console${optional(authKey)}`
 export const appConsole = (appId, authKey) => `/${appId}${console(authKey)}`
 
 const consoleSection = section => appId => `${appConsole(appId)}/${section}`
@@ -10,7 +12,6 @@ export const blBasePath = consoleSection('localservices')
 export const data = consoleSection('data')
 export const geo = consoleSection('geo')
 export const files = consoleSection('files')
-export const marketplace = consoleSection('marketplace')
 
 export const dataTables = appId => `${data(appId)}/tables`
 export const dataTable = (appId, tableName) => `${data(appId)}/${tableName}`
@@ -93,10 +94,17 @@ export const mobileSettings = appId =>
 export const billing = appId =>
   `${appConsole(appId)}/billing`
 
+export const marketplace = (appId, name) => `${appConsole(appId)}/marketplace/${name}`
+
 export const appInfo = appId =>
   `${appConsole(appId)}/app-info`
 
-export const proLicense = () => '/console/license'
+export const proLicense = () => `${console()}/license`
+
+export const blueprints = id => `${console()}/blueprints${optional(id)}`
+
+export const landingPage = appId =>
+  `${appConsole(appId)}/landing-page`
 
 export const codeless = appId => `${appConsole(appId)}/codeless`
 export const codelessApiServices = appId => `${codeless(appId)}/api-services`
@@ -115,6 +123,7 @@ export default {
   blHandlersChain,
   blProd,
   blServicesClientDownload,
+  blueprints,
   codelessApiServices,
   codelessDeployModel,
   codelessFunctionSource,
@@ -137,6 +146,7 @@ export default {
   fileUpload,
   fileView,
   geo,
+  landingPage,
   mailSettings,
   marketplace,
   messaging,

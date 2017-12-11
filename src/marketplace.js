@@ -1,19 +1,21 @@
 import urls from './urls'
 import decorateRequest from './utils/decorate-request'
 
-const marketplaceUrl = (appId, name) => `${urls.marketplace(appId)}/${name}`
-
 export default decorateRequest({
   getSections: req => (appId, marketplaceName) => {
-    return req.get(`${marketplaceUrl(appId, marketplaceName)}/sections`)
+    return req.get(`${urls.marketplace(appId, marketplaceName)}/sections`)
   },
 
   getProducts: req => (appId, marketplaceName, categoryId) => {
-    return req.get(`${marketplaceUrl(appId, marketplaceName)}/categories/${categoryId}/products`)
+    return req.get(`${urls.marketplace(appId, marketplaceName)}/categories/${categoryId}/products`)
   },
 
   getProduct: req => (appId, marketplaceName, productId) => {
-    return req.get(`${marketplaceUrl(appId, marketplaceName)}/products/${productId}`)
+    return req.get(`${urls.marketplace(appId, marketplaceName)}/products/${productId}`)
+  },
+
+  getProductServicesConfigurations: req => (appId, marketplaceName, productId) => {
+    return req.get(`${urls.marketplace(appId, marketplaceName)}/product/${productId}/service-configurations`)
   },
 
   getPurchases: req => appId => {
@@ -22,5 +24,21 @@ export default decorateRequest({
 
   allocateProduct: req => (appId, productId, options) => {
     return req.post(`${urls.billing(appId)}/marketplace/purchases/${productId}`, options)
-  }
+  },
+
+  publishProduct: req => (appId, marketplaceName, product) => {
+    return req.post(`${urls.marketplace(appId, marketplaceName)}/product`, product)
+  },
+
+  approveProduct: req => (appId, marketplaceName, productId) => {
+    return req.put(`${urls.marketplace(appId, marketplaceName)}/product/apply/${productId}`)
+  },
+
+  rejectProduct: req => (appId, marketplaceName, productId, reason) => {
+    return req.put(`${urls.marketplace(appId, marketplaceName)}/product/reject/${productId}`, reason)
+  },
+
+  removeProduct: req => (appId, marketplaceName, productId, reason) => {
+    return req.delete(`${urls.marketplace(appId, marketplaceName)}/product/${productId}`, reason)
+  },
 })
