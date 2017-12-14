@@ -64,10 +64,12 @@ export default req => ({
     return req.get(`${urls.messaging(appId)}/channels`)
   },
 
-  pushMessage(appId, templateData, scheduledPushId) {
-    const url = urls.pushMessageUrl(appId) + (scheduledPushId ? `/${scheduledPushId}` : '')
+  sendPushMessage(appId, templateData) {
+    return req.post(urls.pushMessageUrl(appId), templateData)
+  },
 
-    return req.post(url, templateData)
+  editPushMessage(appId, templateData, templateName) {
+    return req.put(`${urls.pushMessageUrl(appId)}/${templateName}`, templateData)
   },
 
   getPushTemplates(appId) {
