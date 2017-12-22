@@ -82,8 +82,12 @@ export const messaging = appId =>
 export const messagingChannels = appId =>
   `${messaging(appId)}/channels`
 
-export const pushMessageUrl = appId =>
-  `${messaging(appId)}/push`
+export const messagingPush = appId => `${messaging(appId)}/push`
+export const messagingPushRecipientsCount = appId => `${messaging(appId)}/pushsize`
+export const messagingPushTemplates = appId => `${messagingPush(appId)}/templates`
+export const messagingPushTemplate = (appId, name) => `${messagingPushTemplates(appId)}/${name}`
+export const messagingScheduledPushes = appId => `${messagingPush(appId)}/scheduled`
+export const messagingScheduledPush = (appId, name) => `${messagingScheduledPushes(appId)}/${name}`
 
 export const messagingChannel = (appId, channelId) =>
   `${messagingChannels(appId)}/${channelId}`
@@ -152,7 +156,12 @@ export default {
   messaging,
   messagingChannel,
   messagingChannels,
-  pushMessageUrl,
+  messagingPush,
+  messagingPushRecipientsCount,
+  messagingPushTemplates,
+  messagingPushTemplate,
+  messagingScheduledPushes,
+  messagingScheduledPush,
   mobileSettings,
   proLicense,
   security,
