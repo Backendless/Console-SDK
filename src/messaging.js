@@ -96,12 +96,28 @@ export default req => ({
     return req.put(urls.messagingScheduledPush(appId, scheduledPushName), scheduledPush)
   },
 
-  getScheduledPush(appId, scheduledPushName) {
-    return req.get(urls.messagingScheduledPush(appId, scheduledPushName))
-  },
-
   deleteScheduledPushes(appId, scheduledPushNames) {
     return req.delete(urls.messagingScheduledPushes(appId)).query({ names: scheduledPushNames })
+  },
+
+  createPushSchedule(appId, scheduledPush) {
+    return req.post(urls.messagingPushSchedules(appId), scheduledPush)
+  },
+
+  updatePushSchedule(appId, scheduledPushName, scheduledPush) {
+    return req.put(urls.messagingPushSchedule(appId, scheduledPushName), scheduledPush)
+  },
+
+  restorePushSchedule(appId, scheduledPushName) {
+    return req.post(urls.messagingPushSchedule(appId, scheduledPushName))
+  },
+
+  deletePushSchedules(appId, scheduledPushNames) {
+    return req.delete(urls.messagingPushSchedules(appId), { names: scheduledPushNames })
+  },
+
+  getScheduledPush(appId, scheduledPushName) {
+    return req.get(urls.messagingScheduledPush(appId, scheduledPushName))
   },
 
   getPushRecipientsCount(appId, where) {
