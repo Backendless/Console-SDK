@@ -23,6 +23,10 @@ export default req => ({
     return req.delete(`${urls.appConsole(appId)}/application`).query({ payment })
   },
 
+  cloneApp(appId, newAppName) {
+    return req.post(`${urls.appConsole(appId)}/cloneApp`).query({ newAppName })
+  },
+
   updateAppInfo(appId, info) {
     return req.post(urls.appInfo(appId), info)
   },
