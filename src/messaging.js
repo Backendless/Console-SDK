@@ -81,7 +81,7 @@ export default req => ({
   },
 
   deletePushTemplates(appId, pushTemplateNames) {
-    return req.delete(urls.messagingPushTemplates(appId)).query({ names: pushTemplateNames })
+    return req.delete(urls.messagingPushTemplates(appId)).query({ names: pushTemplateNames.join(',') })
   },
 
   getScheduledPushes(appId) {
@@ -97,7 +97,7 @@ export default req => ({
   },
 
   deleteScheduledPushes(appId, scheduledPushNames) {
-    return req.delete(urls.messagingScheduledPushes(appId)).query({ names: scheduledPushNames })
+    return req.delete(urls.messagingScheduledPushes(appId)).query({ names: scheduledPushNames.join(',') })
   },
 
   createPushSchedule(appId, scheduledPush) {
