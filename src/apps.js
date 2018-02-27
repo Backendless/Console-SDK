@@ -19,8 +19,8 @@ export default req => ({
     return req.post(`${urls.appConsole(appId)}/appreset`, resets)
   },
 
-  deleteApp(appId, payment = false) {
-    return req.delete(`${urls.appConsole(appId)}/application`).query({ payment })
+  deleteApp(appId) {
+    return req.delete(`${urls.appConsole(appId)}/application`)
   },
 
   cloneApp(appId, newAppName) {
