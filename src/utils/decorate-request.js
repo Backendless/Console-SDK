@@ -1,10 +1,10 @@
-export default apiMethods => reqPromise => {
+export default apiMethods => middleware => {
   return Object.keys(apiMethods).reduce((memo, methodName) => {
-    memo[methodName] = (...args) => reqPromise.then(req => {
-      const apiMethod = apiMethods[methodName](req)
-
-      return apiMethod.apply(null, args)
-    })
+    memo[methodName] = (...args) => {
+      return middleware().then(req => {
+        return apiMethods[methodName](req).apply(null, args)
+      })
+    }
 
     return memo
   }, {})
