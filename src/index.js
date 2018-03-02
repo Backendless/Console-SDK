@@ -80,10 +80,6 @@ const createClient = (serverUrl, authKey) => {
 
     return status(request)()
       .then(({ billingURL }) => {
-        // TODO: do we need to reset this cache ???
-        // setTimeout(() => delete context.cachedBillingRequest, 60 * 1000)
-
-        // TODO: or maybe we should not cache billingRequest?
         return context.cachedBillingRequest = contextifyRequest(context, billingURL)
       })
   }
