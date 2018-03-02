@@ -63,46 +63,51 @@ const contextifyRequest = (context, serverUrl) => {
   }
 
   Request.methods.forEach(method => {
-    result[method] = (path, body) =>
-      context.apply(new Request(addServerUrl(path), method, body))
+    result[method] = (path, body) => context.apply(new Request(addServerUrl(path), method, body))
   })
 
   return result
 }
 
-const getBillingReq = (req, context) => {
-  return status(req)().then(({ billingURL }) => contextifyRequest(context, billingURL))
-}
-
 const createClient = (serverUrl, authKey) => {
   const context = new Context(authKey)
   const request = contextifyRequest(context, serverUrl)
-  const billingReq = getBillingReq(request, context)
+
+  const billingMiddleware = () => {
+    if (context.cachedBillingRequest) {
+      return Promise.resolve(context.cachedBillingRequest)
+    }
+
+    return status(request)()
+      .then(({ billingURL }) => {
+        return context.cachedBillingRequest = contextifyRequest(context, billingURL)
+      })
+  }
 
   return {
     user           : user(request, context),
-    users          : users(request, context),
-    apps           : apps(request, context),
-    security       : security(request, context),
-    geo            : geo(request, context),
-    tables         : tables(request, context),
-    files          : files(request, context),
-    codegen        : codegen(request, context),
-    bl             : bl(request, context),
-    email          : email(request, context),
-    messaging      : messaging(request, context),
-    settings       : settings(request, context),
-    projectTemplate: projectTemplate(request, context),
-    analytics      : analytics(request, context),
-    status         : status(request, context),
-    transfer       : transfer(request, context),
-    warning        : warning(request, context),
-    codeless       : codeless(request, context),
-    marketplace    : marketplace(billingReq),
-    billing        : billing(billingReq),
-    invites        : invites(request, context),
-    license        : license(request, context),
-    blueprints     : blueprints(request, context),
+    users          : users(request),
+    apps           : apps(request),
+    security       : security(request),
+    geo            : geo(request),
+    tables         : tables(request),
+    files          : files(request),
+    codegen        : codegen(request),
+    bl             : bl(request),
+    email          : email(request),
+    messaging      : messaging(request),
+    settings       : settings(request),
+    projectTemplate: projectTemplate(request),
+    analytics      : analytics(request),
+    status         : status(request),
+    transfer       : transfer(request),
+    warning        : warning(request),
+    codeless       : codeless(request),
+    marketplace    : marketplace(billingMiddleware),
+    billing        : billing(billingMiddleware),
+    invites        : invites(request),
+    license        : license(request),
+    blueprints     : blueprints(request),
   }
 }
 
