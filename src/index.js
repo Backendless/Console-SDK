@@ -5,6 +5,7 @@ import urls from './urls'
 import security from './security'
 import geo from './geo'
 import tables from './tables'
+import dataConnectors from './data-connectors'
 import codegen from './codegen'
 import files from './files'
 import bl from './bl'
@@ -91,6 +92,7 @@ const createClient = (serverUrl, authKey) => {
     security       : security(request),
     geo            : geo(request),
     tables         : tables(request),
+    dataConnectors : dataConnectors(request),
     files          : files(request),
     codegen        : codegen(request),
     bl             : bl(request),
