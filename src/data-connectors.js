@@ -18,6 +18,10 @@ export default req => ({
     return req.delete(urls.dataConnector(appId, connectorId))
   },
 
+  updateConnector(appId, connector) {
+    return req.put(urls.dataConnector(appId, connector.id), connector)
+  },
+
   getConnectorTables(appId, connectorId) {
     return req.get(urls.dataConnectorTables(appId, connectorId))
   },
@@ -31,7 +35,7 @@ export default req => ({
   },
 
   runConnectorStoreProcedure(appId, connectorId, procedureId) {
-    return req.get(urls.dataConnectorStoredProcedure(appId, connectorId, procedureId))
+    return req.post(urls.dataConnectorStoredProcedure(appId, connectorId, procedureId))
   },
 
   getConnectorView(appId, connectorId, viewId) {
