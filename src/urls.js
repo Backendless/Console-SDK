@@ -112,13 +112,12 @@ export const codelessFunctionSource = (appId, name) => `${codelessFunctions(appI
 export const codelessDeployModel = (appId, model) => `${codeless(appId)}/deploy/${model}`
 
 export const dataConnectors = appId => `${appConsole(appId)}/dataconnectors`
-export const dataConnectorsTemplates = appId => `${dataConnectors(appId)}/templates`
+export const dataConnectorTemplates = appId => `${dataConnectors(appId)}/templates`
 export const dataConnector = (appId, connectorId) => `${dataConnectors(appId)}/${connectorId}`
 export const dataConnectorTables = (appId, connectorId) => `${dataConnector(appId, connectorId)}/tables`
 export const dataConnectorTableEntries = (appId, connectorId, tableName) => `${dataConnectorTables(appId, connectorId)}/${tableName}/entries`
 export const dataConnectorStoredProcedures = (appId, connectorId) => `${dataConnector(appId, connectorId)}/storedprocs`
-export const dataConnectorStoredProcedure = (appId, connectorId, procedureId) => `${dataConnectorStoredProcedures(appId, connectorId)}/${procedureId}`
-export const dataConnectorView = (appId, connectorId, viewId) => `${dataConnector(appId, connectorId)}/views/${viewId}`
+export const dataConnectorStoredProcedureExecution = (appId, connectorId, procedureId) => `${dataConnectorStoredProcedures(appId, connectorId)}/${procedureId}/execution`
 
 export default {
   appConsole,
@@ -167,11 +166,10 @@ export default {
   serverCode,
   tableColumns,
   dataConnectors,
-  dataConnectorsTemplates,
+  dataConnectorTemplates,
   dataConnector,
   dataConnectorTables,
   dataConnectorTableEntries,
   dataConnectorStoredProcedures,
-  dataConnectorStoredProcedure,
-  dataConnectorView,
+  dataConnectorStoredProcedureExecution,
 }

@@ -11,7 +11,7 @@ const recordsReq = (req, appId, connectorId, table, query, resetCache) => {
 export default req => ({
 
   getTemplates(appId) {
-    return req.get(urls.dataConnectorsTemplates(appId))
+    return req.get(urls.dataConnectorTemplates(appId))
   },
 
   getConnectors(appId) {
@@ -42,16 +42,12 @@ export default req => ({
     return totalRows(req).getFor(recordsReq(req, appId, connectorId, table, query, resetCache))
   },
 
-  getConnectorStoreProcedures(appId, connectorId) {
+  getConnectorStoredProcedures(appId, connectorId) {
     return req.get(urls.dataConnectorStoredProcedures(appId, connectorId))
   },
 
-  runConnectorStoreProcedure(appId, connectorId, procedureId) {
-    return req.post(urls.dataConnectorStoredProcedure(appId, connectorId, procedureId))
-  },
-
-  getConnectorView(appId, connectorId, viewId) {
-    return req.get(urls.dataConnectorView(appId, connectorId, viewId))
+  executeConnectorStoredProcedure(appId, connectorId, procedureId, params) {
+    return req.post(urls.dataConnectorStoredProcedureExecution(appId, connectorId, procedureId), params)
   },
 
 })
