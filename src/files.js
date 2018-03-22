@@ -26,11 +26,14 @@ const enrichDirectoryParams = (directory, path) => {
 }
 
 export default req => ({
-  loadDirectory(appId, authKey, path, pattern, sub, pageSize = 15, offset = 0) {
-    path = path || '/'
-    const params = { pageSize, offset, pattern, sub }
 
-    const dataReq = req.get(urls.fileView(appId, authKey, path)).query(params)
+  loadDirectory(appId, authKey, path, params) {
+    path = path || '/'
+
+    const { pattern, sub, sortBy, sortDirection, pageSize = 15, offset = 0 } = params || {}
+
+    const dataReq = req.get(urls.fileView(appId, authKey, path))
+      .query({ pattern, sub, sortBy, sortDirection, pageSize, offset })
       .cacheTags(FOLDER(appId, path))
 
     return totalRows(req).getWithData(dataReq).then(result => enrichDirectoryParams(result, path))
