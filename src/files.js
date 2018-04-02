@@ -30,7 +30,7 @@ export default req => ({
   loadDirectory(appId, authKey, path, params) {
     path = path || '/'
 
-    const { pattern, sub, sortBy, sortDirection, pageSize = 15, offset = 0 } = params || {}
+    const { pattern, sub, sortBy, sortDirection, pageSize, offset } = params || {}
 
     const dataReq = req.get(urls.fileView(appId, authKey, path))
       .query({ pattern, sub, sortBy, sortDirection, pageSize, offset })
