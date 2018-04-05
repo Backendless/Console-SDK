@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import { optional } from './utils/path'
 
 export const console = authKey => `/console${optional(authKey)}`
@@ -116,6 +118,14 @@ export const codelessFunctions = appId => `${codeless(appId)}/functions`
 export const codelessFunctionSource = (appId, name) => `${codelessFunctions(appId)}/${name}`
 export const codelessDeployModel = (appId, model) => `${codeless(appId)}/deploy/${model}`
 
+export const dataConnectors = appId => `${appConsole(appId)}/dataconnectors`
+export const dataConnectorTemplates = appId => `${dataConnectors(appId)}/templates`
+export const dataConnector = (appId, connectorId) => `${dataConnectors(appId)}/${connectorId}`
+export const dataConnectorTables = (appId, connectorId) => `${dataConnector(appId, connectorId)}/tables`
+export const dataConnectorTableEntries = (appId, connectorId, tableName) => `${dataConnectorTables(appId, connectorId)}/${tableName}/entries`
+export const dataConnectorStoredProcedures = (appId, connectorId) => `${dataConnector(appId, connectorId)}/storedprocs`
+export const dataConnectorStoredProcedureExecution = (appId, connectorId, procedureId) => `${dataConnectorStoredProcedures(appId, connectorId)}/${procedureId}/execution`
+
 export default {
   appConsole,
   appInfo,
@@ -170,4 +180,11 @@ export default {
   securityRoles,
   serverCode,
   tableColumns,
+  dataConnectors,
+  dataConnectorTemplates,
+  dataConnector,
+  dataConnectorTables,
+  dataConnectorTableEntries,
+  dataConnectorStoredProcedures,
+  dataConnectorStoredProcedureExecution,
 }

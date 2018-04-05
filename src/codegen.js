@@ -40,7 +40,11 @@ export default req => {
 
   const getGenerators = (appId, authKey) => {
     const listGenerators = (appId, authKey) => {
-      return files(req).loadDirectory(appId, authKey, GENERATORS_PATH, JSON_PATTERN, false, PAGE_SIZE)
+      return files(req).loadDirectory(appId, authKey, GENERATORS_PATH, {
+        pattern : JSON_PATTERN,
+        sub     : false,
+        pageSize: PAGE_SIZE
+      })
     }
 
     const getFeatureFile = file => loadItem(appId, authKey, file.url)
