@@ -26,6 +26,7 @@ import codeless from './codeless'
 import invites from './invites'
 import license from './license'
 import blueprints from './blueprints'
+import apiDocs from './api-docs'
 
 class Context {
 
@@ -110,6 +111,7 @@ const createClient = (serverUrl, authKey) => {
     invites        : invites(request),
     license        : license(request),
     blueprints     : blueprints(request),
+    apiDocs        : apiDocs(request),
   }
 }
 

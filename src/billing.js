@@ -32,5 +32,9 @@ export default decorateRequest({
 
   getInviteCode: req => appId => {
     return req.get(`${urls.billing(appId)}/refcode`)
+  },
+
+  getCurrentBillingPeriodEnd: req => appId => {
+    return req.get(`${urls.billing(appId)}/period/end`)
   }
 })

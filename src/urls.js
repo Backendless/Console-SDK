@@ -126,6 +126,10 @@ export const dataConnectorTableEntries = (appId, connectorId, tableName) => `${d
 export const dataConnectorStoredProcedures = (appId, connectorId) => `${dataConnector(appId, connectorId)}/storedprocs`
 export const dataConnectorStoredProcedureExecution = (appId, connectorId, procedureId) => `${dataConnectorStoredProcedures(appId, connectorId)}/${procedureId}/execution`
 
+export const apiDocs = appId => `${appConsole(appId)}/api-docs`
+export const apiDocsData = appId => `${apiDocs(appId)}/data`
+export const apiDocsDataTable = (appId, tableName) => `${apiDocsData(appId)}/table/${tableName}`
+
 export default {
   appConsole,
   appInfo,
@@ -187,4 +191,6 @@ export default {
   dataConnectorTableEntries,
   dataConnectorStoredProcedures,
   dataConnectorStoredProcedureExecution,
+  apiDocsData,
+  apiDocsDataTable,
 }
