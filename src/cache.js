@@ -1,7 +1,7 @@
 import urls from './urls'
 
 export default req => ({
-  get(appId, pagesize, offset) {
+  get(appId, { pagesize, offset }) {
     return req.get(urls.cache(appId)).query({ pagesize, offset })
   },
 
