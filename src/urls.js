@@ -123,6 +123,8 @@ export const apiDocs = appId => `${appConsole(appId)}/api-docs`
 export const apiDocsData = appId => `${apiDocs(appId)}/data`
 export const apiDocsDataTable = (appId, tableName) => `${apiDocsData(appId)}/table/${tableName}`
 
+export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
+
 export default {
   appConsole,
   appInfo,
@@ -135,6 +137,7 @@ export default {
   blProd,
   blServicesClientDownload,
   blueprints,
+  cache,
   codelessApiServices,
   codelessDeployModel,
   codelessFunctionSource,
