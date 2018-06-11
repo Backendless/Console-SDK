@@ -122,6 +122,8 @@ export const dataConnectorStoredProcedureExecution = (appId, connectorId, proced
 export const apiDocs = appId => `${appConsole(appId)}/api-docs`
 export const apiDocsData = appId => `${apiDocs(appId)}/data`
 export const apiDocsDataTable = (appId, tableName) => `${apiDocsData(appId)}/table/${tableName}`
+export const apiDocsMessagingChannel = (appId, channelName) => `${apiDocs(appId)}/messaging/channel/${channelName}`
+export const apiDocsFiles = appId => `${apiDocs(appId)}/files`
 
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
 
@@ -179,6 +181,7 @@ export default {
   dataConnectorTableEntries,
   dataConnectorStoredProcedures,
   dataConnectorStoredProcedureExecution,
-  apiDocsData,
   apiDocsDataTable,
+  apiDocsMessagingChannel,
+  apiDocsFiles,
 }
