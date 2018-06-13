@@ -18,9 +18,6 @@ export const files = consoleSection('files')
 
 export const dataTables = appId => `${data(appId)}/tables`
 export const dataTable = (appId, tableName) => `${data(appId)}/${tableName}`
-export const systemDataTables = appId => `${systemData(appId)}/tables`
-export const systemDataTable = (appId, tableId) => `${systemData(appId)}/${tableId}`
-export const systemDataRecord = (appId, tableName, recordId) => `${systemDataTable(appId, tableName)}/${recordId}`
 export const dataRecord = (appId, tableName, recordId) => `${dataTable(appId, tableName)}/${recordId}`
 export const dataConfigs = appId => `${data(appId)}/config`
 export const tableColumns = (appId, tableName) => `${dataTables(appId)}/${tableName}/columns`
@@ -128,6 +125,7 @@ export const apiDocsData = appId => `${apiDocs(appId)}/data`
 export const apiDocsDataTable = (appId, tableName) => `${apiDocsData(appId)}/table/${tableName}`
 
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
+export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
 
 export default {
   appConsole,
@@ -142,6 +140,7 @@ export default {
   blServicesClientDownload,
   blueprints,
   cache,
+  counters,
   codelessApiServices,
   codelessDeployModel,
   codelessFunctionSource,
@@ -152,9 +151,6 @@ export default {
   dataConfigs,
   dataRecord,
   dataTable,
-  systemDataTables,
-  systemDataTable,
-  systemDataRecord,
   dataTables,
   fileCopy,
   fileCreate,

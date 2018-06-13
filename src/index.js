@@ -28,7 +28,7 @@ import invites from './invites'
 import license from './license'
 import blueprints from './blueprints'
 import apiDocs from './api-docs'
-import systemData from './system-data'
+import counters from './counters'
 
 class Context {
 
@@ -115,7 +115,7 @@ const createClient = (serverUrl, authKey) => {
     license        : license(request),
     blueprints     : blueprints(request),
     apiDocs        : apiDocs(request),
-    systemData     : systemData(request),
+    counters       : counters(request),
   }
 }
 
