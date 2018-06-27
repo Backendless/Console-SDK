@@ -14,6 +14,10 @@ export default decorateRequest({
     return req.get(`${urls.billing(appId)}/plans/${planId}/components`)
   },
 
+  getCurrentPlanComponentData: req => appId => {
+    return req.get(`${urls.billing(appId)}/plans/current/components`)
+  },
+
   switchToPlan: req => (appId, planId) => {
     return req.put(`${urls.billing(appId)}/subscriptions/${planId}`)
   },
@@ -32,6 +36,10 @@ export default decorateRequest({
 
   getInviteCode: req => appId => {
     return req.get(`${urls.billing(appId)}/refcode`)
+  },
+
+  getCurrentBillingPeriodStart: req => appId => {
+    return req.get(`${urls.billing(appId)}/period/start`)
   },
 
   getCurrentBillingPeriodEnd: req => appId => {
