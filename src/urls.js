@@ -15,6 +15,7 @@ export const data = consoleSection('data')
 export const systemData = consoleSection('system/data')
 export const geo = consoleSection('geo')
 export const files = consoleSection('files')
+export const messaging = consoleSection('messaging')
 
 export const dataTables = appId => `${data(appId)}/tables`
 export const dataTable = (appId, tableName) => `${data(appId)}/${tableName}`
@@ -79,11 +80,17 @@ export const blDraftsProjectDownload = (appId, authKey, language, model) =>
 export const blServicesClientDownload = (appId, authKey, serviceId, language) =>
   `${appConsole(appId, authKey)}/localservices/${serviceId}/${language}/download`
 
-export const messaging = appId =>
-  `${appConsole(appId)}/messaging`
-
 export const messagingChannels = appId =>
   `${messaging(appId)}/channels`
+
+export const messagingPush = appId => `${messaging(appId)}/push`
+export const messagingPushRecipientsCount = appId => `${messaging(appId)}/pushsize`
+export const messagingPushTemplates = appId => `${messagingPush(appId)}/templates`
+export const messagingPushTemplate = (appId, name) => `${messagingPushTemplates(appId)}/${name}`
+export const messagingScheduledPushes = appId => `${messagingPush(appId)}/scheduled`
+export const messagingScheduledPush = (appId, name) => `${messagingScheduledPushes(appId)}/${name}`
+export const messagingPushSchedules = appId => `${messagingPush(appId)}/schedules`
+export const messagingPushSchedule = (appId, name) => `${messagingPushSchedules(appId)}/${name}`
 
 export const messagingChannel = (appId, channelId) =>
   `${messagingChannels(appId)}/${channelId}`
@@ -171,6 +178,14 @@ export default {
   messaging,
   messagingChannel,
   messagingChannels,
+  messagingPush,
+  messagingPushRecipientsCount,
+  messagingPushTemplates,
+  messagingPushTemplate,
+  messagingScheduledPushes,
+  messagingScheduledPush,
+  messagingPushSchedules,
+  messagingPushSchedule,
   mobileSettings,
   proLicense,
   security,
