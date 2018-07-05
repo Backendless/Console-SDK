@@ -12,6 +12,7 @@ export const security = consoleSection('security')
 export const serverCode = consoleSection('servercode')
 export const blBasePath = consoleSection('localservices')
 export const data = consoleSection('data')
+export const systemData = consoleSection('system/data')
 export const geo = consoleSection('geo')
 export const files = consoleSection('files')
 export const messaging = consoleSection('messaging')
@@ -129,6 +130,11 @@ export const dataConnectorStoredProcedureExecution = (appId, connectorId, proced
 export const apiDocs = appId => `${appConsole(appId)}/api-docs`
 export const apiDocsData = appId => `${apiDocs(appId)}/data`
 export const apiDocsDataTable = (appId, tableName) => `${apiDocsData(appId)}/table/${tableName}`
+export const apiDocsMessagingChannel = (appId, channelName) => `${apiDocs(appId)}/messaging/channel/${channelName}`
+export const apiDocsFiles = appId => `${apiDocs(appId)}/files`
+
+export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
+export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
 
 export default {
   appConsole,
@@ -142,6 +148,8 @@ export default {
   blProd,
   blServicesClientDownload,
   blueprints,
+  cache,
+  counters,
   codelessApiServices,
   codelessDeployModel,
   codelessFunctionSource,
@@ -191,6 +199,7 @@ export default {
   dataConnectorTableEntries,
   dataConnectorStoredProcedures,
   dataConnectorStoredProcedureExecution,
-  apiDocsData,
   apiDocsDataTable,
+  apiDocsMessagingChannel,
+  apiDocsFiles,
 }

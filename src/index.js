@@ -6,6 +6,7 @@ import security from './security'
 import geo from './geo'
 import tables from './tables'
 import dataConnectors from './data-connectors'
+import cache from './cache'
 import codegen from './codegen'
 import files from './files'
 import bl from './bl'
@@ -27,6 +28,7 @@ import invites from './invites'
 import license from './license'
 import blueprints from './blueprints'
 import apiDocs from './api-docs'
+import counters from './counters'
 
 class Context {
 
@@ -95,6 +97,7 @@ const createClient = (serverUrl, authKey) => {
     tables         : tables(request),
     dataConnectors : dataConnectors(request),
     files          : files(request),
+    cache          : cache(request),
     codegen        : codegen(request),
     bl             : bl(request),
     email          : email(request),
@@ -112,6 +115,7 @@ const createClient = (serverUrl, authKey) => {
     license        : license(request),
     blueprints     : blueprints(request),
     apiDocs        : apiDocs(request),
+    counters       : counters(request),
   }
 }
 
