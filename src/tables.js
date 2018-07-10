@@ -54,8 +54,14 @@ export default req => ({
     return req.delete(tableUrl(appId, table))
   },
 
-  loadRecords(appId, table, query) {
-    return totalRows(req).getWithData(recordsReq(req, appId, table, query))
+  loadRecords(appId, table, query, ignoreCounter) {
+    const request = recordsReq(req, appId, table, query)
+
+    if (ignoreCounter) {
+      return request
+    }
+
+    return totalRows(req).getWithData(request)
   },
 
   getRecordsCount(appId, table, query, resetCache) {
