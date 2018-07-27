@@ -84,5 +84,9 @@ export default (req, context) => ({
 
   joinTeam({ appId, ...userData }) {
     return req.put(`${urls.appConsole(appId)}/devconfirmation/${userData.devId}`, userData)
+  },
+
+  loginToDiscourse(user, sig, sso) {
+    return req.post('/console/discourse/sso', { user, sig, sso })
   }
 })
