@@ -108,10 +108,6 @@ export default req => ({
     return req.put(urls.messagingPushSchedule(appId, scheduledPushName), scheduledPush)
   },
 
-  restorePushSchedule(appId, scheduledPushName) {
-    return req.post(urls.messagingPushSchedule(appId, scheduledPushName))
-  },
-
   deletePushSchedules(appId, scheduledPushNames) {
     return req.delete(urls.messagingPushSchedules(appId), { names: scheduledPushNames })
   },
