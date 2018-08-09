@@ -84,22 +84,6 @@ export default req => ({
     return req.delete(urls.messagingPushTemplates(appId)).query({ names: pushTemplateNames.join(',') })
   },
 
-  getScheduledPushes(appId) {
-    return req.get(urls.messagingScheduledPushes(appId))
-  },
-
-  createScheduledPush(appId, scheduledPush) {
-    return req.post(urls.messagingScheduledPushes(appId), scheduledPush)
-  },
-
-  updateScheduledPush(appId, scheduledPushName, scheduledPush) {
-    return req.put(urls.messagingScheduledPush(appId, scheduledPushName), scheduledPush)
-  },
-
-  deleteScheduledPushes(appId, scheduledPushNames) {
-    return req.delete(urls.messagingScheduledPushes(appId)).query({ names: scheduledPushNames.join(',') })
-  },
-
   createPushSchedule(appId, scheduledPush) {
     return req.post(urls.messagingPushSchedules(appId), scheduledPush)
   },
@@ -112,10 +96,6 @@ export default req => ({
     return req.delete(urls.messagingPushSchedules(appId), { names: scheduledPushNames })
   },
 
-  getScheduledPush(appId, scheduledPushName) {
-    return req.get(urls.messagingScheduledPush(appId, scheduledPushName))
-  },
-
   getPushRecipientsCount(appId, where) {
     return req.get(urls.messagingPushRecipientsCount(appId)).query({ where })
   },
@@ -124,16 +104,28 @@ export default req => ({
     return req.post(urls.messagingPush(appId), push)
   },
 
-  getLayoutTemplates(appId, platform) {
-    return req.get(`${urls.messaging(appId)}/buttontemplates`).query({ platform })
+  getPushButtonTemplates(appId, platform) {
+    return req.get(urls.messagingPushButtonTemplates(appId)).query({ platform })
   },
 
-  saveLayoutTemplate(appId, templateData, platform) {
-    return req.put(`${urls.messaging(appId)}/buttontemplates`, templateData).query({ platform })
+  savePushButtonTemplate(appId, templateData, platform) {
+    return req.put(urls.messagingPushButtonTemplates(appId), templateData).query({ platform })
   },
 
-  deleteLayoutTemplate(appId, templateName, platform) {
-    return req.delete(`${urls.messaging(appId)}/buttontemplates/${templateName}`).query({ platform })
+  deletePushButtonTemplate(appId, templateName, platform) {
+    return req.delete(urls.messagingPushButtonTemplate(appId, templateName)).query({ platform })
+  },
+
+  getPushChannelTemplates(appId, platform) {
+    return req.get(urls.messagingPushChannelTemplates(appId)).query({ platform })
+  },
+
+  savePushChannelTemplate(appId, templateData, platform) {
+    return req.put(urls.messagingPushChannelTemplates(appId), templateData).query({ platform })
+  },
+
+  deletePushChannelTemplate(appId, templateName, platform) {
+    return req.delete(urls.messagingPushChannelTemplate(appId, templateName)).query({ platform })
   },
 
 })

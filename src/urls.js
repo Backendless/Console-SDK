@@ -87,8 +87,10 @@ export const messagingPush = appId => `${messaging(appId)}/push`
 export const messagingPushRecipientsCount = appId => `${messaging(appId)}/pushsize`
 export const messagingPushTemplates = appId => `${messagingPush(appId)}/templates`
 export const messagingPushTemplate = (appId, name) => `${messagingPushTemplates(appId)}/${name}`
-export const messagingScheduledPushes = appId => `${messagingPush(appId)}/scheduled`
-export const messagingScheduledPush = (appId, name) => `${messagingScheduledPushes(appId)}/${name}`
+export const messagingPushButtonTemplates = appId => `${messaging(appId)}/button-templates`
+export const messagingPushButtonTemplate = (appId, name) => `${messagingPushButtonTemplate(appId)}/${name}`
+export const messagingPushChannelTemplates = appId => `${messaging(appId)}/channel-templates`
+export const messagingPushChannelTemplate = (appId, name) => `${messagingPushChannelTemplates(appId)}/${name}`
 export const messagingPushSchedules = appId => `${messagingPush(appId)}/schedules`
 export const messagingPushSchedule = (appId, name) => `${messagingPushSchedules(appId)}/${name}`
 
@@ -182,8 +184,10 @@ export default {
   messagingPushRecipientsCount,
   messagingPushTemplates,
   messagingPushTemplate,
-  messagingScheduledPushes,
-  messagingScheduledPush,
+  messagingPushButtonTemplates,
+  messagingPushButtonTemplate,
+  messagingPushChannelTemplates,
+  messagingPushChannelTemplate,
   messagingPushSchedules,
   messagingPushSchedule,
   mobileSettings,
