@@ -88,11 +88,9 @@ export const messagingPushRecipientsCount = appId => `${messaging(appId)}/pushsi
 export const messagingPushTemplates = appId => `${messagingPush(appId)}/templates`
 export const messagingPushTemplate = (appId, name) => `${messagingPushTemplates(appId)}/${name}`
 export const messagingPushButtonTemplates = appId => `${messaging(appId)}/button-templates`
-export const messagingPushButtonTemplate = (appId, name) => `${messagingPushButtonTemplate(appId)}/${name}`
+export const messagingPushButtonTemplate = (appId, name) => `${messagingPushButtonTemplates(appId)}/${name}`
 export const messagingPushChannelTemplates = appId => `${messaging(appId)}/channel-templates`
 export const messagingPushChannelTemplate = (appId, name) => `${messagingPushChannelTemplates(appId)}/${name}`
-export const messagingPushSchedules = appId => `${messagingPush(appId)}/schedules`
-export const messagingPushSchedule = (appId, name) => `${messagingPushSchedules(appId)}/${name}`
 
 export const messagingChannel = (appId, channelId) =>
   `${messagingChannels(appId)}/${channelId}`
@@ -188,8 +186,6 @@ export default {
   messagingPushButtonTemplate,
   messagingPushChannelTemplates,
   messagingPushChannelTemplate,
-  messagingPushSchedules,
-  messagingPushSchedule,
   mobileSettings,
   proLicense,
   security,
