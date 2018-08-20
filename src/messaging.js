@@ -96,8 +96,12 @@ export default req => ({
     return req.get(urls.messagingPushButtonTemplates(appId)).query({ platform })
   },
 
-  savePushButtonTemplate(appId, templateData, platform) {
+  createPushButtonTemplate(appId, templateData, platform) {
     return req.put(urls.messagingPushButtonTemplates(appId), templateData).query({ platform })
+  },
+
+  updatePushButtonTemplate(appId, templateName, templateData, platform) {
+    return req.put(urls.messagingPushButtonTemplate(appId, templateName), templateData).query({ platform })
   },
 
   deletePushButtonTemplate(appId, templateName, platform) {
@@ -108,8 +112,12 @@ export default req => ({
     return req.get(urls.messagingPushChannelTemplates(appId)).query({ platform })
   },
 
-  savePushChannelTemplate(appId, templateData, platform) {
+  createPushChannelTemplate(appId, templateData, platform) {
     return req.put(urls.messagingPushChannelTemplates(appId), templateData).query({ platform })
+  },
+
+  updatePushChannelTemplate(appId, templateName, templateData, platform) {
+    return req.put(urls.messagingPushChannelTemplate(appId, templateName), templateData).query({ platform })
   },
 
   deletePushChannelTemplate(appId, templateName, platform) {
