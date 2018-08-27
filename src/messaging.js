@@ -97,7 +97,7 @@ export default req => ({
   },
 
   createPushButtonTemplate(appId, templateData, platform) {
-    return req.put(urls.messagingPushButtonTemplates(appId), templateData).query({ platform })
+    return req.post(urls.messagingPushButtonTemplates(appId), templateData).query({ platform })
   },
 
   updatePushButtonTemplate(appId, templateName, templateData, platform) {
@@ -113,7 +113,7 @@ export default req => ({
   },
 
   createPushChannelTemplate(appId, templateData, platform) {
-    return req.put(urls.messagingPushChannelTemplates(appId), templateData).query({ platform })
+    return req.post(urls.messagingPushChannelTemplates(appId), templateData).query({ platform })
   },
 
   updatePushChannelTemplate(appId, templateName, templateData, platform) {
