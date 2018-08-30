@@ -12,4 +12,8 @@ export default req => ({
   generateFilesApi(appId, options) {
     return req.post(urls.apiDocsFiles(appId), options)
   },
+
+  generateServiceApi(appId, serviceId, options) {
+    return req.post(urls.apiDocsService(appId, serviceId), options)
+  },
 })

@@ -132,6 +132,8 @@ export const apiDocsData = appId => `${apiDocs(appId)}/data`
 export const apiDocsDataTable = (appId, tableName) => `${apiDocsData(appId)}/table/${tableName}`
 export const apiDocsMessagingChannel = (appId, channelName) => `${apiDocs(appId)}/messaging/channel/${channelName}`
 export const apiDocsFiles = appId => `${apiDocs(appId)}/files`
+export const apiDocsServices = appId => `${apiDocs(appId)}/services`
+export const apiDocsService = (appId, serviceId) => `${apiDocsServices(appId)}/${serviceId}`
 
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
 export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
@@ -202,4 +204,5 @@ export default {
   apiDocsDataTable,
   apiDocsMessagingChannel,
   apiDocsFiles,
+  apiDocsService,
 }
