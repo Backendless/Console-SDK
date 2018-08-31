@@ -86,8 +86,14 @@ export default req => ({
     // TODO: remove this transformation when the format of config will be changes [CONSOLE-599]
   },
 
-  getServiceSpec(appId, serviceId) {
-    return req.get(`${ urls.blBasePath(appId) }/${ serviceId }/api-docs`).then(parseServiceSpec)
+  getServiceSpec(appId, serviceId, transformSpec = true) {
+    const result = req.get(`${ urls.blBasePath(appId) }/${ serviceId }/api-docs`)
+
+    if (transformSpec) {
+      return result.then(parseServiceSpec)
+    }
+
+    return result
   },
 
   getServiceMethods(appId, serviceId) {
