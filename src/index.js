@@ -29,6 +29,7 @@ import license from './license'
 import blueprints from './blueprints'
 import apiDocs from './api-docs'
 import counters from './counters'
+import formBuilder from './form-builder'
 
 class Context {
 
@@ -116,6 +117,7 @@ const createClient = (serverUrl, authKey) => {
     blueprints     : blueprints(request),
     apiDocs        : apiDocs(request),
     counters       : counters(request),
+    formBuilder    : formBuilder(request),
   }
 }
 

@@ -138,6 +138,9 @@ export const apiDocsService = (appId, serviceId) => `${apiDocsServices(appId)}/$
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
 export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
 
+export const formBuilder = appId => `${appConsole(appId)}/form-builder`
+export const formBuilderInit = appId => `${formBuilder(appId)}/init`
+
 export default {
   appConsole,
   appInfo,
@@ -205,4 +208,5 @@ export default {
   apiDocsMessagingChannel,
   apiDocsFiles,
   apiDocsService,
+  formBuilderInit,
 }
