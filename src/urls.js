@@ -44,8 +44,9 @@ export const createDir = (appId, path, folderName) => {
   return `${files(appId)}/createdir/${path}${folderName}/`
 }
 
-export const fileView = (appId, authKey, filePath) =>
-  `${appConsole(appId, authKey)}/files/view/${filePath}`
+export const fileView = (appId, authKey, filePath, options = {}) => {
+  return `${options.host || ''}${appConsole(appId, authKey)}/files/view/${filePath}`
+}
 
 export const fileExists = (appId, filePath) =>
   `${files(appId)}/files/exists/${filePath}`
