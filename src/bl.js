@@ -194,8 +194,8 @@ export default req => ({
     return req.get(urls.blDraft(appId, language, model))
   },
 
-  saveDraftFiles(appId, language, model, files) {
-    return req.put(urls.blDraft(appId, language, model), files)
+  saveDraftFiles(appId, language, model, files, sync = true) {
+    return req.put(urls.blDraft(appId, language, model), files).query({ sync })
   },
 
   deployDraftFiles(appId, language, model, files, sync = true) {
