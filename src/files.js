@@ -45,7 +45,7 @@ export default decorateRequest({
   },
 
   getFileContent: req => (appId, authKey, filePath) => {
-    return req.get(urls.fileDownload(appId, authKey, filePath))
+    return req.get(urls.fileDownload(appId, authKey, filePath, { host: req.fileDownloadURL }))
   },
 
   performOperation: req => (appId, filePath, operation) => {

@@ -32,8 +32,8 @@ export const blHandlersCategory = (appId, mode, category) =>
 export const blHandlersChain = (appId, eventId, context) =>
   `${ serverCode(appId) }/chain/${ eventId }/${ context }`
 
-export const fileDownload = (appId, authKey, filePath) =>
-  `${appConsole(appId, authKey)}/files/download/${filePath}`
+export const fileDownload = (appId, authKey, filePath, options = {}) =>
+  `${options.host || ''}${appConsole(appId, authKey)}/files/download/${filePath}`
 
 export const fileUpload = (appId, filePath) =>
   `${files(appId)}/upload/${filePath}/`
