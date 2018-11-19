@@ -61,7 +61,7 @@ const contextifyRequest = (context, serverUrl) => {
   const result = {}
 
   const addServerUrl = path => {
-    return (serverUrl && !path.startsWith(serverUrl))
+    return (serverUrl && !path.startsWith('http'))
       ? serverUrl + path
       : path
   }
