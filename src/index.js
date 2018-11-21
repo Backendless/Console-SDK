@@ -32,8 +32,9 @@ import counters from './counters'
 
 class Context {
 
-  constructor(authKey) {
+  constructor(authKey, middleware) {
     this.authKey = authKey
+    this.middleware = middleware
   }
 
   setAuthKey(authKey) {
@@ -47,6 +48,10 @@ class Context {
   apply(req) {
     if (this.authKey) {
       req.set('auth-key', this.authKey)
+    }
+
+    if (this.middleware) {
+      this.middleware(req)
     }
 
     return req
@@ -78,10 +83,10 @@ const DEFAULT_OPTIONS = {
 }
 
 const createClient = (serverUrl, authKey, options) => {
-  const context = new Context(authKey)
-  const request = contextifyRequest(context, serverUrl)
-
   options = Object.assign(DEFAULT_OPTIONS, options)
+
+  const context = new Context(authKey, options.middleware)
+  const request = contextifyRequest(context, serverUrl)
 
   const statusMiddleware = () => {
     if (!context.statusRequest) {
