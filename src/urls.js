@@ -133,7 +133,7 @@ export const apiDocsDataTable = (appId, tableName) => `${apiDocs(appId)}/data/ta
 export const apiDocsMessagingChannel = (appId, channelName) => `${apiDocs(appId)}/messaging/channel/${channelName}`
 export const apiDocsFiles = appId => `${apiDocs(appId)}/files`
 export const apiDocsService = (appId, serviceId) => `${apiDocs(appId)}/services/${serviceId}`
-export const apiDocsGeo = (appId, categoryName) => `${apiDocs(appId)}/geo/${categoryName}`
+export const apiDocsGeo = appId => `${apiDocs(appId)}/geo`
 
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
 export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
