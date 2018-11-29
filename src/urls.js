@@ -129,12 +129,11 @@ export const dataConnectorStoredProcedures = (appId, connectorId) => `${dataConn
 export const dataConnectorStoredProcedureExecution = (appId, connectorId, procedureId) => `${dataConnectorStoredProcedures(appId, connectorId)}/${procedureId}/execution`
 
 export const apiDocs = appId => `${appConsole(appId)}/api-docs`
-export const apiDocsData = appId => `${apiDocs(appId)}/data`
-export const apiDocsDataTable = (appId, tableName) => `${apiDocsData(appId)}/table/${tableName}`
+export const apiDocsDataTable = (appId, tableName) => `${apiDocs(appId)}/data/table/${tableName}`
 export const apiDocsMessagingChannel = (appId, channelName) => `${apiDocs(appId)}/messaging/channel/${channelName}`
 export const apiDocsFiles = appId => `${apiDocs(appId)}/files`
-export const apiDocsServices = appId => `${apiDocs(appId)}/services`
-export const apiDocsService = (appId, serviceId) => `${apiDocsServices(appId)}/${serviceId}`
+export const apiDocsService = (appId, serviceId) => `${apiDocs(appId)}/services/${serviceId}`
+export const apiDocsGeo = (appId, categoryName) => `${apiDocs(appId)}/geo/${categoryName}`
 
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
 export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
@@ -206,4 +205,5 @@ export default {
   apiDocsMessagingChannel,
   apiDocsFiles,
   apiDocsService,
+  apiDocsGeo,
 }
