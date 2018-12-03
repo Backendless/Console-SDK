@@ -96,12 +96,12 @@ export default req => ({
     return req.get(urls.messagingPushButtonTemplates(appId)).query({ platform })
   },
 
-  createPushButtonTemplate(appId, templateData, platform) {
-    return req.post(urls.messagingPushButtonTemplates(appId), templateData).query({ platform })
+  createPushButtonTemplate(appId, templateData) {
+    return req.post(urls.messagingPushButtonTemplates(appId), templateData)
   },
 
-  updatePushButtonTemplate(appId, templateName, templateData, platform) {
-    return req.put(urls.messagingPushButtonTemplate(appId, templateName), templateData).query({ platform })
+  updatePushButtonTemplate(appId, templateName, templateData) {
+    return req.put(urls.messagingPushButtonTemplate(appId, templateName), templateData)
   },
 
   deletePushButtonTemplate(appId, templateName, platform) {
