@@ -33,8 +33,9 @@ import formBuilder from './form-builder'
 
 class Context {
 
-  constructor(authKey) {
+  constructor(authKey, middleware) {
     this.authKey = authKey
+    this.middleware = middleware
   }
 
   setAuthKey(authKey) {
@@ -50,6 +51,10 @@ class Context {
       req.set('auth-key', this.authKey)
     }
 
+    if (this.middleware) {
+      this.middleware(req)
+    }
+
     return req
   }
 }
@@ -62,7 +67,7 @@ const contextifyRequest = (context, serverUrl) => {
   const result = {}
 
   const addServerUrl = path => {
-    return (serverUrl && !path.startsWith(serverUrl))
+    return (serverUrl && !path.startsWith('http'))
       ? serverUrl + path
       : path
   }
@@ -74,22 +79,50 @@ const contextifyRequest = (context, serverUrl) => {
   return result
 }
 
-const createClient = (serverUrl, authKey) => {
-  const context = new Context(authKey)
+const DEFAULT_OPTIONS = {
+  useFileDownloadURL: true,
+}
+
+const createClient = (serverUrl, authKey, options) => {
+  options = Object.assign(DEFAULT_OPTIONS, options)
+
+  const context = new Context(authKey, options.middleware)
   const request = contextifyRequest(context, serverUrl)
+
+  const statusMiddleware = () => {
+    if (!context.statusRequest) {
+      context.statusRequest = status(request)()
+        .then(apiStatus => {
+          request.apiStatus = apiStatus
+
+          if (options.useFileDownloadURL) {
+            request.fileDownloadURL = apiStatus.fileDownloadURL
+          }
+
+          return request
+        })
+        .catch(e => {
+          delete context.statusRequest
+
+          throw e
+        })
+    }
+
+    return context.statusRequest
+  }
 
   const billingMiddleware = () => {
     if (context.cachedBillingRequest) {
       return Promise.resolve(context.cachedBillingRequest)
     }
 
-    return status(request)()
-      .then(({ billingURL }) => {
-        return context.cachedBillingRequest = contextifyRequest(context, billingURL)
+    return statusMiddleware()
+      .then(({ apiStatus }) => {
+        return context.cachedBillingRequest = contextifyRequest(context, apiStatus.billingURL)
       })
   }
 
-  return {
+  return request.api = {
     user           : user(request, context),
     users          : users(request),
     apps           : apps(request),
@@ -97,14 +130,14 @@ const createClient = (serverUrl, authKey) => {
     geo            : geo(request),
     tables         : tables(request),
     dataConnectors : dataConnectors(request),
-    files          : files(request),
+    files          : files(statusMiddleware),
     cache          : cache(request),
-    codegen        : codegen(request),
+    codegen        : codegen(statusMiddleware),
     bl             : bl(request),
     email          : email(request),
     messaging      : messaging(request),
     settings       : settings(request),
-    projectTemplate: projectTemplate(request),
+    projectTemplate: projectTemplate(statusMiddleware),
     analytics      : analytics(request),
     status         : status(request),
     transfer       : transfer(request),

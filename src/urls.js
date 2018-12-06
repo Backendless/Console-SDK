@@ -32,8 +32,8 @@ export const blHandlersCategory = (appId, mode, category) =>
 export const blHandlersChain = (appId, eventId, context) =>
   `${ serverCode(appId) }/chain/${ eventId }/${ context }`
 
-export const fileDownload = (appId, authKey, filePath) =>
-  `${appConsole(appId, authKey)}/files/download/${filePath}`
+export const fileDownload = (appId, authKey, filePath, options = {}) =>
+  `${options.host || ''}${appConsole(appId, authKey)}/files/download/${filePath}`
 
 export const fileUpload = (appId, filePath) =>
   `${files(appId)}/upload/${filePath}/`
@@ -44,8 +44,9 @@ export const createDir = (appId, path, folderName) => {
   return `${files(appId)}/createdir/${path}${folderName}/`
 }
 
-export const fileView = (appId, authKey, filePath) =>
-  `${appConsole(appId, authKey)}/files/view/${filePath}`
+export const fileView = (appId, authKey, filePath, options = {}) => {
+  return `${options.host || ''}${appConsole(appId, authKey)}/files/view/${filePath}`
+}
 
 export const fileExists = (appId, filePath) =>
   `${files(appId)}/files/exists/${filePath}`
@@ -128,12 +129,11 @@ export const dataConnectorStoredProcedures = (appId, connectorId) => `${dataConn
 export const dataConnectorStoredProcedureExecution = (appId, connectorId, procedureId) => `${dataConnectorStoredProcedures(appId, connectorId)}/${procedureId}/execution`
 
 export const apiDocs = appId => `${appConsole(appId)}/api-docs`
-export const apiDocsData = appId => `${apiDocs(appId)}/data`
-export const apiDocsDataTable = (appId, tableName) => `${apiDocsData(appId)}/table/${tableName}`
+export const apiDocsDataTable = (appId, tableName) => `${apiDocs(appId)}/data/table/${tableName}`
 export const apiDocsMessagingChannel = (appId, channelName) => `${apiDocs(appId)}/messaging/channel/${channelName}`
 export const apiDocsFiles = appId => `${apiDocs(appId)}/files`
-export const apiDocsServices = appId => `${apiDocs(appId)}/services`
-export const apiDocsService = (appId, serviceId) => `${apiDocsServices(appId)}/${serviceId}`
+export const apiDocsService = (appId, serviceId) => `${apiDocs(appId)}/services/${serviceId}`
+export const apiDocsGeo = appId => `${apiDocs(appId)}/geo`
 
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
 export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
@@ -208,5 +208,6 @@ export default {
   apiDocsMessagingChannel,
   apiDocsFiles,
   apiDocsService,
+  apiDocsGeo,
   formBuilderInit,
 }

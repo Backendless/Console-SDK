@@ -16,4 +16,8 @@ export default req => ({
   generateServiceApi(appId, serviceId, options) {
     return req.post(urls.apiDocsService(appId, serviceId), options)
   },
+
+  generateGeoApi(appId, options) {
+    return req.post(urls.apiDocsGeo(appId), options)
+  },
 })

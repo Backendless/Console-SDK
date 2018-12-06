@@ -1,7 +1,7 @@
 import _isObject from 'lodash/isObject'
 
 import urls from './urls'
-import files from './files'
+import decorateRequest from './utils/decorate-request'
 
 const GENERATORS_PATH = 'codegen/features/generators'
 const JSON_PATTERN = '*.json'
@@ -33,49 +33,45 @@ const normalizeOption = option => {
   return option
 }
 
-export default req => {
-  const loadItem = (appId, authKey, endpoint) => {
-    return req.get(`${urls.fileView(appId, authKey, endpoint)}`)
-  }
+export default decorateRequest({
+  getGeneratedProject: req => (appId, codegenData) => {
+    return req.post(`${urls.appConsole(appId)}/codegen`, codegenData)
+  },
 
-  const getGenerators = (appId, authKey) => {
+  getGenerators: req => (appId, authKey) => {
     const listGenerators = (appId, authKey) => {
-      return files(req).loadDirectory(appId, authKey, GENERATORS_PATH, {
+      return req.api.files.loadDirectory(appId, authKey, GENERATORS_PATH, {
         pattern : JSON_PATTERN,
         sub     : false,
         pageSize: PAGE_SIZE
       })
     }
 
-    const getFeatureFile = file => loadItem(appId, authKey, file.url)
-      .then(feature => {
-        if (_isObject(feature) && !Array.isArray(feature)) {
-          if (feature.icon) {
-            feature.icon = `//${document.location.host}${urls.fileView(appId, authKey, feature.icon)}`
-          } else {
-            feature.icon = feature.icon = '//placehold.it/205'
-          }
-          // TODO: remove this transformation when the format of options will be changes
-          feature.options = normalizeOptions(feature.options)
+    const getFeatureFile = file => {
+      return req.get(`${urls.fileView(appId, authKey, file.url, { host: req.fileDownloadURL })}`)
+        .then(feature => {
+          if (_isObject(feature) && !Array.isArray(feature)) {
+            if (feature.icon) {
+              const host = req.fileDownloadURL || ('//' + document.location.host)
 
-          return feature
-        } else {
-          return { error: file.name }
-        }
-      })
+              feature.icon = urls.fileView(appId, authKey, feature.icon, { host })
+            } else {
+              feature.icon = feature.icon = '//placehold.it/205'
+            }
+            // TODO: remove this transformation when the format of options will be changes
+            feature.options = normalizeOptions(feature.options)
+
+            return feature
+          } else {
+            return { error: file.name }
+          }
+        })
+    }
 
     return listGenerators(appId, authKey).then(({ data }) => Promise.all(data.map(getFeatureFile)))
-  }
+  },
 
-  const getCache = (appId, authKey) => req.get(urls.fileView(appId, authKey, CACHE_PATH))
-
-  const getGeneratedProject = (appId, codegenData) => {
-    return req.post(`${urls.appConsole(appId)}/codegen`, codegenData)
-  }
-
-  return {
-    getGeneratedProject,
-    getGenerators,
-    getCache
-  }
-}
+  getCache: req => (appId, authKey) => {
+    return req.get(urls.fileView(appId, authKey, CACHE_PATH, { host: req.fileDownloadURL }))
+  },
+})

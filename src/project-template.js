@@ -1,4 +1,5 @@
 import urls from './urls'
+import decorateRequest from './utils/decorate-request'
 
 export const IMAGE_FILE = /(\jpg|\jpeg|\png|\gif|\ico)$/
 export const XSLT_FILE = /(\.xsl|\.xslt)$/
@@ -9,26 +10,24 @@ const DEFAULT_PROMPT = 'Make a selection'
 
 const getFolders = folders => folders.filter(({ size }) => !size)
 
-export default req => {
-  const loadDirectory = (appId, authKey, path) => req.get(urls.fileView(appId, authKey, path))
-
-  const loadTemplates = (appId, authKey, path = '') => {
+export default decorateRequest({
+  loadTemplates: req => (appId, authKey, path = '') => {
     const result = {}
 
-    return loadDirectory(appId, authKey, `${PROJECT_TEMPLATES_PATH}/${path}`)
+    return loadDirectory(req, appId, authKey, `${PROJECT_TEMPLATES_PATH}/${path}`)
       .then(children => {
         result.children = getFolders(children)
 
         const map = children.map(child => {
           if (child.name === PROMPT_FILE_NAME) {
-            return loadDirectory(appId, authKey, child.url)
+            return loadDirectory(req, appId, authKey, child.url)
               .then(({ prompt }) => result.prompt = prompt)
           } else {
             result.prompt = DEFAULT_PROMPT
           }
 
           if (!child.size) {
-            return loadDirectory(appId, authKey, child.url).then(children => {
+            return loadDirectory(req, appId, authKey, child.url).then(children => {
               const icon = children.find(({ name }) => IMAGE_FILE.test(name))
               const readme = children.find(({ name }) => name === 'README.md')
 
@@ -40,7 +39,7 @@ export default req => {
 
               if (readme) {
                 chain = chain
-                  .then(() => loadDirectory(appId, authKey, readme.url))
+                  .then(() => loadDirectory(req, appId, authKey, readme.url))
                   .then(readmeContent => child.readme = readmeContent)
               }
 
@@ -64,14 +63,13 @@ export default req => {
 
         return Promise.all(map).then(() => result)
       })
-  }
+  },
 
-  const generateProject = (appId, xsl) => {
+  generateProject: req => (appId, xsl) => {
     return req.post(`${urls.appConsole(appId)}/codegen`, { xsl })
   }
+})
 
-  return {
-    loadTemplates,
-    generateProject
-  }
+function loadDirectory(req, appId, authKey, path) {
+  return req.get(urls.fileView(appId, authKey, path, { host: req.fileDownloadURL }))
 }
