@@ -38,8 +38,12 @@ const getRelationColumn = (table, columnName) => {
 }
 
 export default req => ({
-  get(appId) {
-    return req.get(urls.dataTables(appId)).then(resp => ({ ...resp, tables: resp.tables.map(normalizeTable) }))
+  get(appId, query) {
+    return req.get(urls.dataTables(appId)).query(query)
+      .then(resp => ({
+        ...resp,
+        tables: resp.tables.map(normalizeTable)
+      }))
   },
 
   create(appId, table) {

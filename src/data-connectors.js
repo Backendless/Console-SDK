@@ -30,8 +30,8 @@ export default req => ({
     return req.put(urls.dataConnector(appId, connector.id), connector)
   },
 
-  getConnectorTables(appId, connectorId) {
-    return req.get(urls.dataConnectorTables(appId, connectorId))
+  getConnectorTables(appId, connectorId, query) {
+    return req.get(urls.dataConnectorTables(appId, connectorId)).query(query)
   },
 
   getConnectorTableEntries(appId, connectorId, table, query) {
