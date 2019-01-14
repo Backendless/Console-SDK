@@ -151,7 +151,7 @@ const createClient = (serverUrl, authKey, options) => {
     blueprints     : blueprints(request),
     apiDocs        : apiDocs(request),
     counters       : counters(request),
-    navigator      : navigator(request)
+    navigator      : navigator(request),
     formBuilder    : formBuilder(request),
   }
 }
