@@ -138,8 +138,11 @@ export const apiDocsGeo = appId => `${apiDocs(appId)}/geo`
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
 export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
 
-export const formBuilder = appId => `${appConsole(appId)}/form-builder`
-export const formBuilderInit = appId => `${formBuilder(appId)}/init`
+export const pageBuilder = appId => `${appConsole(appId)}/page-builder`
+export const pageBuilderInit = appId => `${pageBuilder(appId)}/init`
+export const pageBuilderPages = appId => `${pageBuilder(appId)}/pages`
+export const pageBuilderPage = (appId, pageName) => `${pageBuilderPages(appId)}/${pageName}`
+export const pageBuilderPageLogic = (appId, pageName, logicKey) => `${pageBuilderPage(appId, pageName)}/logic/${logicKey}`
 
 export default {
   appConsole,
@@ -209,5 +212,8 @@ export default {
   apiDocsFiles,
   apiDocsService,
   apiDocsGeo,
-  formBuilderInit,
+  pageBuilderInit,
+  pageBuilderPages,
+  pageBuilderPage,
+  pageBuilderPageLogic,
 }

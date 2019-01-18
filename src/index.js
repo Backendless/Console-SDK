@@ -30,7 +30,7 @@ import blueprints from './blueprints'
 import apiDocs from './api-docs'
 import counters from './counters'
 import navigator from './navigator'
-import formBuilder from './form-builder'
+import pageBuilder from './page-builder'
 
 class Context {
 
@@ -152,7 +152,7 @@ const createClient = (serverUrl, authKey, options) => {
     apiDocs        : apiDocs(request),
     counters       : counters(request),
     navigator      : navigator(request),
-    formBuilder    : formBuilder(request),
+    pageBuilder    : pageBuilder(request),
   }
 }
 
