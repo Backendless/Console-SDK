@@ -3,7 +3,7 @@ export default req => ({
     return req.get('/console/navigator')
   },
 
-  logNotFoundedEntry(searchEntry) {
-    return req.post('/console/navigator/log', { searchEntry })
+  log({ query, hasResult }) {
+    return req.post('/console/navigator/log', { query, hasResult })
   }
 })
