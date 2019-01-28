@@ -143,6 +143,7 @@ export const pageBuilderInit = appId => `${pageBuilder(appId)}/init`
 export const pageBuilderPages = appId => `${pageBuilder(appId)}/pages`
 export const pageBuilderPage = (appId, pageName) => `${pageBuilderPages(appId)}/${pageName}`
 export const pageBuilderPageLogic = (appId, pageName, logicKey) => `${pageBuilderPage(appId, pageName)}/logic/${logicKey}`
+export const pageBuilderPageUnusedLogic = (appId, pageName) => `${pageBuilderPage(appId, pageName)}/unused-logic`
 
 export default {
   appConsole,
@@ -216,4 +217,5 @@ export default {
   pageBuilderPages,
   pageBuilderPage,
   pageBuilderPageLogic,
+  pageBuilderPageUnusedLogic,
 }

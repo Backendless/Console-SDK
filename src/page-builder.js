@@ -29,7 +29,20 @@ export default req => ({
     return req.get(urls.pageBuilderPageLogic(appId, pageName, logicKey))
   },
 
+  createPageLogic(appId, pageName, logicKey) {
+    return req.post(urls.pageBuilderPageLogic(appId, pageName, logicKey))
+  },
+
   updatePageLogic(appId, pageName, logicKey, xml, code) {
     return req.put(urls.pageBuilderPageLogic(appId, pageName, logicKey), { xml, code })
   },
+
+  deletePageLogic(appId, pageName, logicKey) {
+    return req.delete(urls.pageBuilderPageLogic(appId, pageName, logicKey))
+  },
+
+  removeUnusedLogic(appId, pageName, componentIds) {
+    return req.delete(urls.pageBuilderPageUnusedLogic(appId, pageName), { componentIds })
+  },
+
 })
