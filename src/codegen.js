@@ -48,16 +48,9 @@ export default decorateRequest({
     }
 
     const getFeatureFile = file => {
-      return req.get(`${urls.fileView(appId, authKey, file.url, { host: req.fileDownloadURL })}`)
+      return req.get(urls.fileView(appId, authKey, file.url))
         .then(feature => {
           if (_isObject(feature) && !Array.isArray(feature)) {
-            if (feature.icon) {
-              const host = req.fileDownloadURL || ('//' + document.location.host)
-
-              feature.icon = urls.fileView(appId, authKey, feature.icon, { host })
-            } else {
-              feature.icon = feature.icon = '//placehold.it/205'
-            }
             // TODO: remove this transformation when the format of options will be changes
             feature.options = normalizeOptions(feature.options)
 
@@ -72,6 +65,6 @@ export default decorateRequest({
   },
 
   getCache: req => (appId, authKey) => {
-    return req.get(urls.fileView(appId, authKey, CACHE_PATH, { host: req.fileDownloadURL }))
+    return req.get(urls.fileView(appId, authKey, CACHE_PATH))
   },
 })
