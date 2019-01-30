@@ -48,7 +48,7 @@ export default decorateRequest({
     }
 
     const getFeatureFile = file => {
-      return req.get(`${urls.fileView(appId, authKey, file.url)}`)
+      return req.get(urls.fileView(appId, authKey, file.url))
         .then(feature => {
           if (_isObject(feature) && !Array.isArray(feature)) {
             // TODO: remove this transformation when the format of options will be changes
