@@ -45,4 +45,28 @@ export default req => ({
     return req.delete(urls.pageBuilderPageUnusedLogic(appId, pageName), { componentIds })
   },
 
+  getSharedFunctions(appId) {
+    return req.get(urls.pageBuilderSharedFunctions(appId))
+  },
+
+  getSharedFunctionLogic(appId, id) {
+    return req.get(urls.pageBuilderSharedFunctionLogic(appId, id))
+  },
+
+  updateSharedFunctionLogic(appId, id, data) {
+    return req.put(urls.pageBuilderSharedFunctionLogic(appId, id), data)
+  },
+
+  createSharedFunction(appId, name) {
+    return req.post(urls.pageBuilderSharedFunctions(appId), { name })
+  },
+
+  updateSharedFunction(appId, id, data) {
+    return req.put(urls.pageBuilderSharedFunction(appId, id), data)
+  },
+
+  deleteSharedFunction(appId, id) {
+    return req.delete(urls.pageBuilderSharedFunction(appId, id))
+  },
+
 })

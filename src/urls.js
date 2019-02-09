@@ -140,6 +140,9 @@ export const counters = (appId, key) => `${systemData(appId)}/counters${optional
 
 export const pageBuilder = appId => `${appConsole(appId)}/page-builder`
 export const pageBuilderInit = appId => `${pageBuilder(appId)}/init`
+export const pageBuilderSharedFunctions = appId => `${pageBuilder(appId)}/functions`
+export const pageBuilderSharedFunction = (appId, id) => `${pageBuilderSharedFunctions(appId)}/${id}`
+export const pageBuilderSharedFunctionLogic = (appId, id) => `${pageBuilderSharedFunction(appId, id)}/logic`
 export const pageBuilderPages = appId => `${pageBuilder(appId)}/pages`
 export const pageBuilderPage = (appId, pageName) => `${pageBuilderPages(appId)}/${pageName}`
 export const pageBuilderPageLogic = (appId, pageName, logicKey) => `${pageBuilderPage(appId, pageName)}/logic/${logicKey}`
@@ -218,4 +221,7 @@ export default {
   pageBuilderPage,
   pageBuilderPageLogic,
   pageBuilderPageUnusedLogic,
+  pageBuilderSharedFunctions,
+  pageBuilderSharedFunction,
+  pageBuilderSharedFunctionLogic,
 }
