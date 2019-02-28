@@ -25,24 +25,24 @@ export default req => ({
     return req.get(urls.pageBuilderPage(appId, pageName))
   },
 
-  getPageLogic(appId, pageName, logicKey) {
-    return req.get(urls.pageBuilderPageLogic(appId, pageName, logicKey))
+  getPageLogic(appId, pageName, componentUid, eventName) {
+    return req.get(urls.pageBuilderPageLogic(appId, pageName, componentUid, eventName))
   },
 
-  createPageLogic(appId, pageName, logicKey) {
-    return req.post(urls.pageBuilderPageLogic(appId, pageName, logicKey))
+  createPageLogic(appId, pageName, componentUid, eventName) {
+    return req.post(urls.pageBuilderPageLogic(appId, pageName, componentUid, eventName))
   },
 
-  updatePageLogic(appId, pageName, logicKey, xml, code) {
-    return req.put(urls.pageBuilderPageLogic(appId, pageName, logicKey), { xml, code })
+  updatePageLogic(appId, pageName, componentUid, eventName, logic) {
+    return req.put(urls.pageBuilderPageLogic(appId, pageName, componentUid, eventName), logic)
   },
 
-  deletePageLogic(appId, pageName, logicKey) {
-    return req.delete(urls.pageBuilderPageLogic(appId, pageName, logicKey))
+  deletePageLogic(appId, pageName, componentUid, eventName) {
+    return req.delete(urls.pageBuilderPageLogic(appId, pageName, componentUid, eventName))
   },
 
-  removeUnusedLogic(appId, pageName, componentIds) {
-    return req.delete(urls.pageBuilderPageUnusedLogic(appId, pageName), { componentIds })
+  removeUnusedLogic(appId, pageName, componentUids) {
+    return req.delete(urls.pageBuilderPageUnusedLogic(appId, pageName), { componentUids })
   },
 
   getSharedFunctions(appId) {

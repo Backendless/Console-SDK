@@ -145,7 +145,7 @@ export const pageBuilderSharedFunction = (appId, id) => `${pageBuilderSharedFunc
 export const pageBuilderSharedFunctionLogic = (appId, id) => `${pageBuilderSharedFunction(appId, id)}/logic`
 export const pageBuilderPages = appId => `${pageBuilder(appId)}/pages`
 export const pageBuilderPage = (appId, pageName) => `${pageBuilderPages(appId)}/${pageName}`
-export const pageBuilderPageLogic = (appId, pageName, logicKey) => `${pageBuilderPage(appId, pageName)}/logic/${logicKey}`
+export const pageBuilderPageLogic = (appId, pageName, componentUid, eventName) => `${pageBuilderPage(appId, pageName)}/logic/${componentUid}/${eventName}`
 export const pageBuilderPageUnusedLogic = (appId, pageName) => `${pageBuilderPage(appId, pageName)}/unused-logic`
 
 export default {
