@@ -16,12 +16,16 @@ const getFileFolder = file => {
 }
 
 const SERVER_CODE_FOLDER = /^servercode/
+const EMAIL_TEMPLATES_FOLDER = /^email_templates/
 const isServerCodeFolder = folderName => SERVER_CODE_FOLDER.test(folderName)
+const isEmailTemplateFolder = folderName => EMAIL_TEMPLATES_FOLDER.test(folderName)
 
 const enrichDirectoryParams = (directory, path) => {
   const readOnly = isServerCodeFolder(path)
+  const editOnly = isEmailTemplateFolder(path)
 
   directory.readOnly = readOnly
+  directory.editOnly = editOnly
 
   return directory
 }
