@@ -138,16 +138,6 @@ export const apiDocsGeo = appId => `${apiDocs(appId)}/geo`
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
 export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
 
-export const pageBuilder = appId => `${appConsole(appId)}/page-builder`
-export const pageBuilderInit = appId => `${pageBuilder(appId)}/init`
-export const pageBuilderSharedFunctions = appId => `${pageBuilder(appId)}/functions`
-export const pageBuilderSharedFunction = (appId, id) => `${pageBuilderSharedFunctions(appId)}/${id}`
-export const pageBuilderSharedFunctionLogic = (appId, id) => `${pageBuilderSharedFunction(appId, id)}/logic`
-export const pageBuilderPages = appId => `${pageBuilder(appId)}/pages`
-export const pageBuilderPage = (appId, pageName) => `${pageBuilderPages(appId)}/${pageName}`
-export const pageBuilderPageLogic = (appId, pageName, componentUid, eventName) => `${pageBuilderPage(appId, pageName)}/logic/${componentUid}/${eventName}`
-export const pageBuilderPageUnusedLogic = (appId, pageName) => `${pageBuilderPage(appId, pageName)}/unused-logic`
-
 export default {
   appConsole,
   appInfo,
@@ -216,12 +206,4 @@ export default {
   apiDocsFiles,
   apiDocsService,
   apiDocsGeo,
-  pageBuilderInit,
-  pageBuilderPages,
-  pageBuilderPage,
-  pageBuilderPageLogic,
-  pageBuilderPageUnusedLogic,
-  pageBuilderSharedFunctions,
-  pageBuilderSharedFunction,
-  pageBuilderSharedFunctionLogic,
 }
