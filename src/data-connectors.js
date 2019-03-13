@@ -42,8 +42,8 @@ export default req => ({
     return totalRows(req).getFor(recordsReq(req, appId, connectorId, table, query, resetCache))
   },
 
-  getConnectorStoredProcedures(appId, connectorId) {
-    return req.get(urls.dataConnectorStoredProcedures(appId, connectorId))
+  getConnectorStoredProcedures(appId, connectorId, options = {}) {
+    return req.get(urls.dataConnectorStoredProcedures(appId, connectorId)).query({ forceRefresh: options.forceRefresh })
   },
 
   executeConnectorStoredProcedure(appId, connectorId, procedureId, params) {

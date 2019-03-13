@@ -1,14 +1,8 @@
 import urls from './urls'
 
-const enrichApp = ({ appId, appName, ...app }) => ({
-  ...app,
-  id  : appId,
-  name: appName
-})
-
 export default req => ({
   createApp({ appName, refCode, blueprintId }) {
-    return req.post('/console/applications', { appName, refCode }).query({ blueprintId }).then(enrichApp)
+    return req.post('/console/applications', { appName, refCode }).query({ blueprintId })
   },
 
   getApps() {

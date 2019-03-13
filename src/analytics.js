@@ -107,5 +107,9 @@ export default req => ({
     }
 
     return req.get(`${urls.appConsole(appId)}/userstats`).query(params)
+  },
+
+  workers(appId, query) {
+    return req.get(`${urls.appConsole(appId)}/workers`).query(query)
   }
 })
