@@ -2,6 +2,11 @@ import urls from './urls'
 
 const routes = {
   init                    : 'page-builder/init',
+  localComponents         : 'page-builder/library/components/local',
+  remoteComponents        : 'page-builder/library/components/remote',
+  importComponent         : 'page-builder/library/components/import',
+  exportComponent         : 'page-builder/library/components/export',
+
   containers              : 'page-builder/containers',
   container               : 'page-builder/containers/:containerName',
   containerPages          : 'page-builder/containers/:containerName/pages',
@@ -9,6 +14,7 @@ const routes = {
   containerPageUI         : 'page-builder/containers/:containerName/pages/:pageName/ui',
   containerPageLogic      : 'page-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:eventName',
   containerPageUnusedLogic: 'page-builder/containers/:containerName/pages/:pageName/unused-logic',
+
   containerFunctions      : 'page-builder/containers/:containerName/functions',
   containerFunction       : 'page-builder/containers/:containerName/functions/:functionId',
   containerFunctionLogic  : 'page-builder/containers/:containerName/functions/:functionId/logic',
@@ -40,6 +46,22 @@ export default req => ({
   init(appId) {
     return req.post(routes.init(appId))
   },
+
+  //-- LIBRARY -----//
+
+  getLocalComponents(appId) {
+    return req.get(routes.localComponents(appId))
+  },
+
+  getRemoteComponents(appId) {
+    return req.get(routes.remoteComponents(appId))
+  },
+
+  importComponent(appId, componentId) {
+    return req.post(routes.importComponent(appId), { componentId })
+  },
+
+  //-- LIBRARY -----//
 
   createContainer(appId, container) {
     return req.post(routes.containers(appId), container)
@@ -77,8 +99,8 @@ export default req => ({
     return req.post(routes.containerPageLogic(appId, containerName, pageName, componentUid, eventName))
   },
 
-  updatePageLogic(appId, containerName, pageName, componentUid, eventName, logic) {
-    return req.put(routes.containerPageLogic(appId, containerName, pageName, componentUid, eventName), logic)
+  updatePageLogic(appId, containerName, pageName, componentUid, data) {
+    return req.put(routes.containerPageLogic(appId, containerName, pageName, componentUid), data)
   },
 
   deletePageLogic(appId, containerName, pageName, componentUid, eventName) {
