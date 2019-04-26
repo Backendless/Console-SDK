@@ -2,34 +2,34 @@ import Request from 'backendless-request'
 import * as CacheTags from './utils/cache-tags'
 import urls from './urls'
 
-import security from './security'
-import geo from './geo'
-import tables from './tables'
-import dataConnectors from './data-connectors'
+import analytics from './analytics'
+import apiDocs from './api-docs'
+import apps from './apps'
+import billing from './billing'
+import bl from './bl'
+import blueprints from './blueprints'
 import cache from './cache'
 import codegen from './codegen'
-import files from './files'
-import bl from './bl'
-import email from './email'
-import user from './user'
-import messaging from './messaging'
-import settings from './settings'
-import projectTemplate from './project-template'
-import billing from './billing'
-import analytics from './analytics'
-import apps from './apps'
-import users from './users'
-import status from './status'
-import warning from './warning'
-import transfer from './transfer'
-import marketplace from './marketplace'
 import codeless from './codeless'
+import counters from './counters'
+import dataConnectors from './data-connectors'
+import email from './email'
+import files from './files'
+import geo from './geo'
 import invites from './invites'
 import license from './license'
-import blueprints from './blueprints'
-import apiDocs from './api-docs'
-import counters from './counters'
+import marketplace from './marketplace'
+import messaging from './messaging'
 import navigator from './navigator'
+import projectTemplate from './project-template'
+import security from './security'
+import settings from './settings'
+import status from './status'
+import tables from './tables'
+import transfer from './transfer'
+import user from './user'
+import users from './users'
+import warning from './warning'
 
 class Context {
 
@@ -123,34 +123,34 @@ const createClient = (serverUrl, authKey, options) => {
   }
 
   return request.api = {
-    user           : user(request, context),
-    users          : users(request),
+    analytics      : analytics(request),
+    apiDocs        : apiDocs(request),
     apps           : apps(request),
-    security       : security(request),
-    geo            : geo(request),
-    tables         : tables(request),
-    dataConnectors : dataConnectors(request),
-    files          : files(statusMiddleware),
+    billing        : billing(billingMiddleware),
+    bl             : bl(request),
+    blueprints     : blueprints(request),
     cache          : cache(request),
     codegen        : codegen(statusMiddleware),
-    bl             : bl(request),
-    email          : email(request),
-    messaging      : messaging(request),
-    settings       : settings(request),
-    projectTemplate: projectTemplate(statusMiddleware),
-    analytics      : analytics(request),
-    status         : status(request),
-    transfer       : transfer(request),
-    warning        : warning(request),
     codeless       : codeless(request),
-    marketplace    : marketplace(billingMiddleware),
-    billing        : billing(billingMiddleware),
+    counters       : counters(request),
+    dataConnectors : dataConnectors(request),
+    email          : email(request),
+    files          : files(statusMiddleware),
+    geo            : geo(request),
     invites        : invites(request),
     license        : license(request),
-    blueprints     : blueprints(request),
-    apiDocs        : apiDocs(request),
-    counters       : counters(request),
-    navigator      : navigator(request)
+    marketplace    : marketplace(billingMiddleware),
+    messaging      : messaging(request),
+    navigator      : navigator(request),
+    projectTemplate: projectTemplate(statusMiddleware),
+    security       : security(request),
+    settings       : settings(request),
+    status         : status(request),
+    tables         : tables(request),
+    transfer       : transfer(request),
+    user           : user(request, context),
+    users          : users(request),
+    warning        : warning(request),
   }
 }
 
