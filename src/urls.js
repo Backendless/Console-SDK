@@ -128,6 +128,8 @@ export const dataConnectorTableEntries = (appId, connectorId, tableName) => `${d
 export const dataConnectorStoredProcedures = (appId, connectorId) => `${dataConnector(appId, connectorId)}/storedprocs`
 export const dataConnectorStoredProcedureExecution = (appId, connectorId, procedureId) => `${dataConnectorStoredProcedures(appId, connectorId)}/${procedureId}/execution`
 
+export const emailTemplates = (appId, templateName) => `${appConsole(appId)}/emailtemplate${optional(templateName)}`
+
 export const apiDocs = appId => `${appConsole(appId)}/api-docs`
 export const apiDocsDataTable = (appId, tableName) => `${apiDocs(appId)}/data/table/${tableName}`
 export const apiDocsMessagingChannel = (appId, channelName) => `${apiDocs(appId)}/messaging/channel/${channelName}`
@@ -163,6 +165,7 @@ export default {
   dataRecord,
   dataTable,
   dataTables,
+  emailTemplates,
   fileCopy,
   fileCreate,
   fileDelete,
