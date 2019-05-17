@@ -15,6 +15,7 @@ import counters from './counters'
 import dataConnectors from './data-connectors'
 import email from './email'
 import files from './files'
+import gamification from './gamification'
 import geo from './geo'
 import invites from './invites'
 import license from './license'
@@ -137,6 +138,7 @@ const createClient = (serverUrl, authKey, options) => {
     dataConnectors : dataConnectors(request),
     email          : email(request),
     files          : files(statusMiddleware),
+    gamification   : gamification(request),
     geo            : geo(request),
     invites        : invites(request),
     license        : license(request),
