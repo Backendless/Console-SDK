@@ -12,7 +12,7 @@ const routes = {
   containerPages          : 'page-builder/containers/:containerName/pages',
   containerPage           : 'page-builder/containers/:containerName/pages/:pageName',
   containerPageUI         : 'page-builder/containers/:containerName/pages/:pageName/ui',
-  containerPageLogic      : 'page-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:eventName',
+  containerPageLogic      : 'page-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
   containerPageUnusedLogic: 'page-builder/containers/:containerName/pages/:pageName/unused-logic',
 
   containerFunctions      : 'page-builder/containers/:containerName/functions',
@@ -91,20 +91,20 @@ export default req => ({
     return req.get(routes.containerPageUI(appId, containerName, pageName))
   },
 
-  getPageLogic(appId, containerName, pageName, componentUid, eventName) {
-    return req.get(routes.containerPageLogic(appId, containerName, pageName, componentUid, eventName))
+  getPageLogic(appId, containerName, pageName, componentUid, handlerName) {
+    return req.get(routes.containerPageLogic(appId, containerName, pageName, componentUid, handlerName))
   },
 
-  createPageLogic(appId, containerName, pageName, componentUid, eventName) {
-    return req.post(routes.containerPageLogic(appId, containerName, pageName, componentUid, eventName))
+  createPageLogic(appId, containerName, pageName, componentUid, handlerName) {
+    return req.post(routes.containerPageLogic(appId, containerName, pageName, componentUid, handlerName))
   },
 
   updatePageLogic(appId, containerName, pageName, componentUid, data) {
     return req.put(routes.containerPageLogic(appId, containerName, pageName, componentUid), data)
   },
 
-  deletePageLogic(appId, containerName, pageName, componentUid, eventName) {
-    return req.delete(routes.containerPageLogic(appId, containerName, pageName, componentUid, eventName))
+  deletePageLogic(appId, containerName, pageName, componentUid, handlerName) {
+    return req.delete(routes.containerPageLogic(appId, containerName, pageName, componentUid, handlerName))
   },
 
   removeUnusedLogic(appId, containerName, pageName, componentUids) {
