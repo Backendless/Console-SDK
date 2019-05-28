@@ -43,7 +43,7 @@ export const tableRecordsReq = (req, url, table, query = {}, resetCache) => {
     .resetCache(resetCache)
 }
 
-const buildRecordsSearch = (table, sql, searchString, filterString) => {
+export const buildRecordsSearch = (table, sql, searchString, filterString) => {
   searchString = searchString ? searchString.trim() : ''
 
   const searchSQL = (sql || !searchString) ? searchString : searchStringToSQLFormat(table, searchString)
