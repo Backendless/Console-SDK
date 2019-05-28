@@ -50,7 +50,16 @@ export default req => ({
   },
 
   setAppLogging(appId, logging) {
-    return req.post(`${urls.appConsole(appId)}/logging/config`, logging)
+    console.warn('"ApiClient.settings.setAppLogging" is deprecated method, will be removed when fixed BKNDLSS-18585')
+    return this.setAppLoggingConfig(appId, logging)
+  },
+
+  setAppLoggingConfig(appId, config) {
+    return req.post(`${urls.appConsole(appId)}/logging/config`, config)
+  },
+
+  setAppLoggingIntegration(appId, integration) {
+    return req.post(`${urls.appConsole(appId)}/logging/integration`, integration)
   },
 
   clearLoggers(appId) {
