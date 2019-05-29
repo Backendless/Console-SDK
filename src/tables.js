@@ -4,7 +4,7 @@ import { DataTypes } from './constants/data'
 import urls from './urls'
 import totalRows from './utils/total-rows'
 import { TABLE_DATA } from './utils/cache-tags'
-import { tableRecordsReq } from './utils/table'
+import { tableRecordsReq, buildRecordsSearch } from './utils/table'
 
 const RELATION_URL_SUFFIX = 'relation'
 const GEO_RELATION_URL_SUFFIX = 'georelation'
@@ -66,6 +66,30 @@ export default req => ({
     }
 
     return totalRows(req).getWithData(request)
+  },
+
+  exportRecords(appId, connectorId, table, query) {
+    const { sqlSearch, where, filterString, sortField, sortDir, props } = query
+
+    const tableName = connectorId ? `${connectorId}.${table.name}` : table.name
+
+    const search = buildRecordsSearch(table, sqlSearch, where, filterString)
+
+    const params = {}
+
+    if (search) {
+      params.where = search
+    }
+
+    if (sortField && sortDir) {
+      params.sortBy = `${sortField} ${sortDir}`
+    }
+
+    if (props && props.length) {
+      params.props = props.join(',')
+    }
+
+    return req.post(`${urls.dataTable(appId, tableName)}/csv`, params)
   },
 
   getRecordsCount(appId, table, query, resetCache) {
