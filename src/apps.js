@@ -13,6 +13,10 @@ export default req => ({
     return req.post(`${urls.appConsole(appId)}/appreset`, resets)
   },
 
+  renameApp(appId, appName) {
+    return req.put(`${urls.appConsole(appId)}/application`, { appName })
+  },
+
   deleteApp(appId) {
     return req.delete(`${urls.appConsole(appId)}/application`)
   },
