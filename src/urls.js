@@ -142,6 +142,8 @@ export const counters = (appId, key) => `${systemData(appId)}/counters${optional
 
 export const gamification = appId => `${appConsole(appId)}/gamification`
 
+export const userActivity = appId => `${appConsole(appId)}/user-activity`
+
 export default {
   appConsole,
   appInfo,
@@ -200,6 +202,7 @@ export default {
   securityRoles,
   serverCode,
   tableColumns,
+  userActivity,
   dataConnectors,
   dataConnectorTemplates,
   dataConnector,

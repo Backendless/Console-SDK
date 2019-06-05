@@ -2,6 +2,7 @@ import Request from 'backendless-request'
 import * as CacheTags from './utils/cache-tags'
 import urls from './urls'
 
+import activityManager from './activity-manager'
 import analytics from './analytics'
 import apiDocs from './api-docs'
 import apps from './apps'
@@ -125,6 +126,7 @@ const createClient = (serverUrl, authKey, options) => {
   }
 
   return request.api = {
+    activityManager: activityManager(request),
     analytics      : analytics(request),
     apiDocs        : apiDocs(request),
     apps           : apps(request),
