@@ -1,8 +1,16 @@
 import urls from './urls'
 
 export default req => ({
+  loadEmailTemplates(appId) {
+    return this.loadTemplates(appId)
+  },
+
   loadTemplates(appId) {
     return req.get(`${urls.appConsole(appId)}/email`)
+  },
+
+  saveEmailTemplate(appId, template) {
+    return this.saveTemplate(appId, template)
   },
 
   saveTemplate(appId, template) {
