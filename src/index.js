@@ -33,6 +33,7 @@ import user from './user'
 import users from './users'
 import warning from './warning'
 import pageBuilder from './page-builder'
+import chartBuilder from './chart-builder'
 
 class Context {
 
@@ -157,6 +158,7 @@ const createClient = (serverUrl, authKey, options) => {
     users          : users(request),
     warning        : warning(request),
     pageBuilder    : pageBuilder(request),
+    chartBuilder   : chartBuilder(request),
   }
 }
 
