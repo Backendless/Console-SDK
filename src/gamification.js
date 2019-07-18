@@ -31,5 +31,17 @@ export default req => ({
 
   loadTutorial(url) {
     return req.get(url)
+  },
+
+  loadTrivia(appId) {
+    return req.get(`${urls.gamification(appId)}/trivia`)
+  },
+
+  checkTriviaAnswer(appId, triviaId, answerId, taskId) {
+    return req.post(`${urls.gamification(appId)}/trivia`, { triviaId, answerId, taskId })
+  },
+
+  rememberChestWinBonus(appId, taskId, bonus) {
+    return req.post(`${urls.gamification(appId)}/bonus`, { taskId, bonus })
   }
 })
