@@ -43,5 +43,9 @@ export default req => ({
 
   rememberChestWinBonus(appId, taskId, bonus) {
     return req.post(`${urls.gamification(appId)}/bonus`, { taskId, bonus })
+  },
+
+  loadBadges(appId) {
+    return req.get(`${urls.gamification(appId)}/badges`)
   }
 })
