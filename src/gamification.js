@@ -41,11 +41,15 @@ export default req => ({
     return req.post(`${urls.gamification(appId)}/trivia`, { triviaId, answerId, taskId })
   },
 
-  rememberChestWinBonus(appId, taskId, bonus) {
-    return req.post(`${urls.gamification(appId)}/bonus`, { taskId, bonus })
+  submitSocialSharing(appId, data) {
+    return req.post(`${urls.gamification(appId)}/bonus`, data)
   },
 
   loadBadges(appId) {
     return req.get(`${urls.gamification(appId)}/badges`)
+  },
+
+  reportSocialActivity(appId, data) {
+    return req.post(`${urls.gamification(appId)}/social-activity-link`, data)
   }
 })
