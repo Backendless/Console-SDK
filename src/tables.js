@@ -75,18 +75,29 @@ export default req => ({
 
     const search = buildRecordsSearch(table, sqlSearch, where, filterString)
 
-    const params = {}
+    const params = {
+      sortBy,
+      props,
+    }
 
     if (search) {
       params.where = search
     }
 
-    if (sortBy) {
-      params.sortBy = sortBy
+    if (Array.isArray(params.sortBy)) {
+      params.sortBy = params.sortBy.join(',')
     }
 
-    if (props && props.length) {
-      params.props = props.join(',')
+    if (Array.isArray(params.props)) {
+      params.props = params.props.join(',')
+    }
+
+    if (!params.sortBy) {
+      delete params.sortBy
+    }
+
+    if (!params.props) {
+      delete params.props
     }
 
     return req.post(`${urls.dataTable(appId, tableName)}/csv`, params)
