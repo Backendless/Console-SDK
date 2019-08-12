@@ -69,7 +69,7 @@ export default req => ({
   },
 
   exportRecords(appId, connectorId, table, query) {
-    const { sqlSearch, where, filterString, sortField, sortDir, props } = query
+    const { sqlSearch, where, filterString, sortBy, props } = query
 
     const tableName = connectorId ? `${connectorId}.${table.name}` : table.name
 
@@ -81,8 +81,8 @@ export default req => ({
       params.where = search
     }
 
-    if (sortField && sortDir) {
-      params.sortBy = `${sortField} ${sortDir}`
+    if (sortBy) {
+      params.sortBy = sortBy
     }
 
     if (props && props.length) {
