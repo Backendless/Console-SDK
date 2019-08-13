@@ -28,5 +28,6 @@ export const SYSTEM_ROLES = [
   'AuthenticatedUser',
   'RestUser',
   'ServerCodeUser',
-  'JSUser'
+  'JSUser',
+  'GuestUser',
 ]

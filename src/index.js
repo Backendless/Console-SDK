@@ -25,6 +25,7 @@ import messaging from './messaging'
 import navigator from './navigator'
 import projectTemplate from './project-template'
 import security from './security'
+import devPermissions, { DevPermissions } from './dev-permissions'
 import settings from './settings'
 import status from './status'
 import tables from './tables'
@@ -150,6 +151,7 @@ const createClient = (serverUrl, authKey, options) => {
     navigator      : navigator(request),
     projectTemplate: projectTemplate(statusMiddleware),
     security       : security(request),
+    devPermissions : devPermissions(request),
     settings       : settings(request),
     status         : status(request),
     tables         : tables(request),
@@ -166,5 +168,6 @@ export {
   createClient,
   CacheTags,
   Request,
-  urls
+  urls,
+  DevPermissions,
 }
