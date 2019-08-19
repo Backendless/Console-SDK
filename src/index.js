@@ -33,7 +33,7 @@ import transfer from './transfer'
 import user from './user'
 import users from './users'
 import warning from './warning'
-import pageBuilder from './page-builder'
+import uiBuilder from './ui-builder'
 import chartBuilder from './chart-builder'
 
 class Context {
@@ -159,7 +159,7 @@ const createClient = (serverUrl, authKey, options) => {
     user           : user(request, context),
     users          : users(request),
     warning        : warning(request),
-    pageBuilder    : pageBuilder(request),
+    uiBuilder      : uiBuilder(request),
     chartBuilder   : chartBuilder(request),
   }
 }

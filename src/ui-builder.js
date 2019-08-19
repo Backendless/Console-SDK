@@ -1,23 +1,23 @@
 import urls from './urls'
 
 const routes = {
-  init                    : 'page-builder/init',
-  localComponents         : 'page-builder/library/components/local',
-  remoteComponents        : 'page-builder/library/components/remote',
-  importComponent         : 'page-builder/library/components/import',
-  exportComponent         : 'page-builder/library/components/export',
+  init                    : 'ui-builder/init',
+  localComponents         : 'ui-builder/library/components/local',
+  remoteComponents        : 'ui-builder/library/components/remote',
+  importComponent         : 'ui-builder/library/components/import',
+  exportComponent         : 'ui-builder/library/components/export',
 
-  containers              : 'page-builder/containers',
-  container               : 'page-builder/containers/:containerName',
-  containerPages          : 'page-builder/containers/:containerName/pages',
-  containerPage           : 'page-builder/containers/:containerName/pages/:pageName',
-  containerPageUI         : 'page-builder/containers/:containerName/pages/:pageName/ui',
-  containerPageLogic      : 'page-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
-  containerPageUnusedLogic: 'page-builder/containers/:containerName/pages/:pageName/unused-logic',
+  containers              : 'ui-builder/containers',
+  container               : 'ui-builder/containers/:containerName',
+  containerPages          : 'ui-builder/containers/:containerName/pages',
+  containerPage           : 'ui-builder/containers/:containerName/pages/:pageName',
+  containerPageUI         : 'ui-builder/containers/:containerName/pages/:pageName/ui',
+  containerPageLogic      : 'ui-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
+  containerPageUnusedLogic: 'ui-builder/containers/:containerName/pages/:pageName/unused-logic',
 
-  containerFunctions      : 'page-builder/containers/:containerName/functions',
-  containerFunction       : 'page-builder/containers/:containerName/functions/:functionId',
-  containerFunctionLogic  : 'page-builder/containers/:containerName/functions/:functionId/logic',
+  containerFunctions      : 'ui-builder/containers/:containerName/functions',
+  containerFunction       : 'ui-builder/containers/:containerName/functions/:functionId',
+  containerFunctionLogic  : 'ui-builder/containers/:containerName/functions/:functionId/logic',
 }
 
 Object.keys(routes).forEach(key => {
