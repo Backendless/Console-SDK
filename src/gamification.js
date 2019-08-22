@@ -51,5 +51,9 @@ export default req => ({
 
   reportSocialActivity(appId, data) {
     return req.post(`${urls.gamification(appId)}/social-activity-link`, data)
+  },
+
+  getLastUpdates(appId) {
+    return req.get(`${urls.gamification(appId)}/updates`)
   }
 })
