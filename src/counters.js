@@ -19,6 +19,6 @@ export default req => ({
   },
 
   remove(appId, key) {
-    return req.delete(urls.counters(appId, key))
+    return req.post(`${urls.counters(appId)}/delete`, { key })
   }
 })
