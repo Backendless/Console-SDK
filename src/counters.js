@@ -15,7 +15,7 @@ export default req => ({
   },
 
   update(appId, value, objectId) {
-    return req.put(urls.counters(appId, encodeURIComponent(objectId)), { value }).type('application/json')
+    return req.put(urls.counters(appId, encodeURIComponent(objectId)), { value })
   },
 
   remove(appId, key) {
