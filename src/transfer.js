@@ -15,5 +15,9 @@ export default req => ({
 
   importDataServiceFiles(appId, data, step) {
     return req.post(`${urls.appConsole(appId)}/import/data/${step}`, data)
+  },
+
+  importFirebaseUsers(appId, data) {
+    return req.post(`${urls.appConsole(appId)}/import/firebase/users`, data)
   }
 })
