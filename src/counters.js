@@ -14,11 +14,11 @@ export default req => ({
     return req.post(urls.counters(appId), { name, value })
   },
 
-  update(appId, name, value, objectId) {
-    return req.put(urls.counters(appId, objectId), { name, value }).type('application/json')
+  update(appId, value, objectId) {
+    return req.put(urls.counters(appId, encodeURIComponent(objectId)), { value })
   },
 
   remove(appId, key) {
-    return req.delete(urls.counters(appId, key))
+    return req.delete(urls.counters(appId, encodeURIComponent(key)))
   }
 })
