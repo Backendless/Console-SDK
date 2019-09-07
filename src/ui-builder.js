@@ -9,6 +9,7 @@ const routes = {
 
   containers              : 'ui-builder/containers',
   container               : 'ui-builder/containers/:containerName',
+  containerIcons          : 'ui-builder/containers/:containerName/icons',
   containerPages          : 'ui-builder/containers/:containerName/pages',
   containerPage           : 'ui-builder/containers/:containerName/pages/:pageName',
   containerPageUI         : 'ui-builder/containers/:containerName/pages/:pageName/ui',
@@ -65,6 +66,10 @@ export default req => ({
 
   createContainer(appId, container) {
     return req.post(routes.containers(appId), container)
+  },
+
+  getIcons(appId, containerName) {
+    return req.get(routes.containerIcons(appId, containerName))
   },
 
   getPages(appId, containerName) {
