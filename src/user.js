@@ -74,12 +74,14 @@ export default (req, context) => ({
     return req.put('/console/home/myaccount/', profile)
   },
 
-  registerAndJoinTeam({ appId, ...userData }) {
-    return req.post(`${urls.appConsole(appId)}/activatedev`, userData).then(authKey => {
-      context.setAuthKey(authKey)
+  registerAndJoinTeam({ appId, confirmationCode, ...userData }) {
+    return req.post(`${urls.appConsole(appId)}/activatedev`, userData)
+      .query({ 'confirmation-code': confirmationCode })
+      .then(authKey => {
+        context.setAuthKey(authKey)
 
-      return authKey
-    })
+        return authKey
+      })
   },
 
   joinTeam({ appId, ...userData }) {
