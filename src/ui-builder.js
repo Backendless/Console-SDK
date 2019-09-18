@@ -67,8 +67,8 @@ export default req => ({
     return req.post(routes.containers(appId), container)
   },
 
-  getPages(appId, containerName) {
-    return req.get(routes.containerPages(appId, containerName))
+  getContainer(appId, containerName) {
+    return req.get(routes.container(appId, containerName))
   },
 
   createPage(appId, containerName, data) {
