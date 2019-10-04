@@ -67,6 +67,14 @@ export default req => ({
     return req.post(routes.containers(appId), container)
   },
 
+  updateContainer(appId, containerName, container) {
+    return req.put(routes.container(appId, containerName), container)
+  },
+
+  deleteContainer(appId, containerName) {
+    return req.delete(routes.container(appId, containerName))
+  },
+
   getContainer(appId, containerName) {
     return req.get(routes.container(appId, containerName))
   },
@@ -75,20 +83,20 @@ export default req => ({
     return req.post(routes.containerPages(appId, containerName), data)
   },
 
-  renamePage(appId, containerName, pageName, newPageName) {
-    return req.put(routes.containerPage(appId, containerName, pageName), { name: newPageName })
+  updatePage(appId, containerName, pageName, page) {
+    return req.put(routes.containerPage(appId, containerName, pageName), page)
   },
 
-  removePage(appId, containerName, pageName) {
+  deletePage(appId, containerName, pageName) {
     return req.delete(routes.containerPage(appId, containerName, pageName))
-  },
-
-  updatePageUI(appId, containerName, pageName, data) {
-    return req.put(routes.containerPageUI(appId, containerName, pageName), data)
   },
 
   getPageUI(appId, containerName, pageName) {
     return req.get(routes.containerPageUI(appId, containerName, pageName))
+  },
+
+  updatePageUI(appId, containerName, pageName, data) {
+    return req.put(routes.containerPageUI(appId, containerName, pageName), data)
   },
 
   getPageLogic(appId, containerName, pageName, componentUid, handlerName) {
@@ -107,7 +115,7 @@ export default req => ({
     return req.delete(routes.containerPageLogic(appId, containerName, pageName, componentUid, handlerName))
   },
 
-  removeUnusedLogic(appId, containerName, pageName, componentUids) {
+  deleteUnusedLogic(appId, containerName, pageName, componentUids) {
     return req.delete(routes.containerPageUnusedLogic(appId, containerName, pageName), { componentUids })
   },
 
