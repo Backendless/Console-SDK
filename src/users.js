@@ -33,10 +33,8 @@ export default req => ({
     return req.post(`${appUrl(appId)}/socialparams`, param)
   },
 
-  updateDevPermissions(appId, devId, operation, access) {
-    const permission = { operation, access }
-
-    return req.post(`${appUrl(appId)}/devteam/${devId}/permissions`, permission)
+  updateDevPermissions(appId, devId, rules) {
+    return req.post(`${appUrl(appId)}/devteam/${devId}/permissions`, rules)
   },
 
   removeDeveloper(appId, userId) {
