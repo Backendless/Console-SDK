@@ -85,7 +85,7 @@ const OperationsTypes = {
   CHANGE_DELETE_MESSAGING_CHANNEL_OPTIONS: 'Change/delete channel options',
   SEND_PUSH_BY_TEMPLATE                  : 'Send push notification with template',
   DELETE_DEVICES                         : 'Delete devices',
-  DELETE_MESSAGING_CHANNEL_PERMISSIONS   : 'Delete meddaging channel permissions',
+  DELETE_MESSAGING_CHANNEL_PERMISSIONS   : 'Delete messaging channel permissions',
   CREATE_GEO_CATEGORY                    : 'Create geo category',
   RENAME_DELETE_GEO_CATEGORY             : 'Rename/delete geo category',
   SETUP_SAMPLE_GEO_DATA                  : 'Setup sample data',
