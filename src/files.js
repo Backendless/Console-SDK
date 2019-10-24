@@ -33,7 +33,7 @@ export default decorateRequest({
 
     const { pattern, sub, sortBy, sortDirection, pageSize, offset } = params || {}
 
-    const dataReq = req.get(urls.fileView(appId, authKey, path))
+    const dataReq = req.get(urls.directoryView(appId, authKey, path))
       .query({ pattern, sub, sortBy, sortDirection, pageSize, offset })
       .cacheTags(FOLDER(appId, path))
 

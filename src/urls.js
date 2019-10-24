@@ -48,6 +48,10 @@ export const fileView = (appId, authKey, filePath, options = {}) => {
   return `${options.host || ''}${appConsole(appId, authKey)}/files/view/${filePath}`
 }
 
+export const directoryView = (appId, authKey, filePath, options = {}) => {
+  return `${options.host || ''}${appConsole(appId, authKey)}/files/directory/view${filePath}`
+}
+
 export const fileExists = (appId, filePath) =>
   `${files(appId)}/files/exists/${filePath}`
 
@@ -176,6 +180,7 @@ export default {
   fileRename,
   fileUpload,
   fileView,
+  directoryView,
   geo,
   landingPage,
   mailSettings,
