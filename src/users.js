@@ -13,6 +13,10 @@ export default req => ({
     return req.get(`${appUrl(appId)}/userlogin`)
   },
 
+  logoutAllUsers(appId) {
+    return req.post(`${appUrl(appId)}/userlogin/logout/all`)
+  },
+
   getUserSocialLogin(provider) {
     return req.get(`/console/social/oauth/${provider}/request_url`)
   },
