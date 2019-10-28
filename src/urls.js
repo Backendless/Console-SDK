@@ -45,10 +45,18 @@ export const createDir = (appId, path, folderName) => {
 }
 
 export const fileView = (appId, authKey, filePath, options = {}) => {
+  if (filePath && filePath.startsWith('/')) {
+    filePath = filePath.slice(1)
+  }
+
   return `${options.host || ''}${appConsole(appId, authKey)}/files/view/${filePath}`
 }
 
 export const directoryView = (appId, authKey, filePath, options = {}) => {
+  if (filePath && filePath.startsWith('/')) {
+    filePath = filePath.slice(1)
+  }
+
   return `${options.host || ''}${appConsole(appId, authKey)}/files/directory/view/${filePath}`
 }
 

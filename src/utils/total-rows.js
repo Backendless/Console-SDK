@@ -23,6 +23,10 @@ const getCountPath = path => {
 
   const pathTokens = path.split('?')
 
+  if (pathTokens[0] && pathTokens[0].endsWith('/')) {
+    pathTokens[0] = pathTokens[0].slice(0, -1)
+  }
+
   return `${pathTokens[0]}/count${pathTokens[1] ? '?' + pathTokens[1] : ''}`
 }
 
@@ -33,8 +37,14 @@ export default req => ({
   },
 
   getFor(dataReq, cacheTTL = DEFAULT_CACHE_TTL) {
+    let url = dataReq.path
+
+    if (url && url.endsWith('/')) {
+      url = url.slice(0, -1)
+    }
+
     return req
-      .get(dataReq.path + '/count')
+      .get(url + '/count')
       .useCache(cacheTTL)
       .cacheTags(...(dataReq.tags || []))
       .query(_omit(dataReq.queryParams, NON_COUNTS_PARAMS))
