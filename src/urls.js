@@ -49,7 +49,7 @@ export const fileView = (appId, authKey, filePath, options = {}) => {
 }
 
 export const directoryView = (appId, authKey, filePath, options = {}) => {
-  return `${options.host || ''}${appConsole(appId, authKey)}/files/directory/view${filePath}`
+  return `${options.host || ''}${appConsole(appId, authKey)}/files/directory/view/${filePath}`
 }
 
 export const fileExists = (appId, filePath) =>
