@@ -27,12 +27,14 @@ const OperationsTypes = {
   SET_GOOGLE_KEY            : 'Set Google service account private key',
 
   /** Billing */
+  BILLING_SECTION            : 'Billing section',
   ADD_UPDATE_CREDIT_CARD     : 'Add/update credit card',
   CHANGE_BILLING_PLAN        : 'Change billing plan',
   MARKETPLACE_DELETE_PURCHASE: 'Delete Marketplace purchases',
   MARKETPLACE_PURCHASE       : 'Purchase from the Marketplace',
 
   /** Business Logic */
+  BUSINESS_LOGIC_SECTION          : 'Business Logic section',
   CREATE_MARKETPLACE_CONFIGURATION: 'Create marketplace configuration',
   DELETE_FROM_MARKETPLACE         : 'Delete from marketplace',
   INVOKE_EVENT_WITH_MODEL         : 'Invoke event with model',
@@ -41,10 +43,12 @@ const OperationsTypes = {
   RUN_TIMER                       : 'Run timer',
 
   /** Cache */
+  CACHE_SECTION : 'Cache section',
   ADD_CHANGE_KEY: 'Add/change key',
   DELETE_KEY    : 'Delete key',
 
   /** Data Service */
+  DATA_SERVICE_SECTION            : 'Data Service section',
   CHANGE_DYNAMIC_SCHEMA_DEFINITION: 'Change "Dynamic Schema Definition" configuration',
   CHANGE_OBJECT_ACL_PERMISSIONS   : 'Change ACL permissions for objects',
   CHANGE_DATA_RELATIONSHIP        : 'Change data relationship',
@@ -64,18 +68,21 @@ const OperationsTypes = {
   RENAME_DELETE_TABLE             : 'Rename/delete tables',
 
   /** Data connector */
+  DATA_CONNECTOR_SECTION: 'Data Connector section',
   ACTIVATE_DATACONNECTOR: 'Activate data connector',
   STORED_PROCEDURE      : 'Call stored procedure',
   CHANGE_DATACONNECTOR  : 'Change data connector',
   DELETE_DATACONNECTOR  : 'Delete data connector',
 
   /** Email Templates */
-  CREATE_EMAIL_TEMPLATE: 'Create new email template',
-  DELETE_EMAIL_TEMPLATE: 'Delete email template',
-  MODIFY_EMAIL_TEMPLATE: 'Modify email templates',
-  SEND_TEST_EMAIL      : 'Send test email',
+  EMAIL_TEMPLATES_SECTION: 'Email Templates section',
+  CREATE_EMAIL_TEMPLATE  : 'Create new email template',
+  DELETE_EMAIL_TEMPLATE  : 'Delete email template',
+  MODIFY_EMAIL_TEMPLATE  : 'Modify email templates',
+  SEND_TEST_EMAIL        : 'Send test email',
 
   /** File Service */
+  FILES_SECTION                : 'Files section',
   CHANGE_FILE_PERMISSIONS      : 'Change directories/files permissions',
   COPY_FILE                    : 'Copy file',
   CREATE_DIRECTORY             : 'Create directories',
@@ -90,13 +97,13 @@ const OperationsTypes = {
   ZIP_DIRECTORY                : 'Zip directory',
 
   /** Geolocation */
+  GEOLOCATION_SECTION            : 'Geolocation section',
   ADD_CATEGORY                   : 'Add category',
   CHANGE_GEO_CATEGORY_PERMISSIONS: 'Change user/role permissions for geo category',
   COPY_GEO_POINTS                : 'Copy geo points',
   CREATE_GEOFENCE                : 'Create a geofence',
   CREATE_GEO_CATEGORY            : 'Create geo category',
   DELETE_GEO_CATEGORY_PERMISSIONS: 'Delete geo category permissions',
-  IMPORT_GEO_POINTS              : 'Import geo points',
   MODIFY_GEO_POINT_METADATA      : 'Modify geopoint metadata',
   MODIFY_DELETE_GEOFENCE         : 'Modify/delete a geofence',
   REMOVE_ALL_GEO_POINTS          : 'Remove all geo points',
@@ -105,22 +112,24 @@ const OperationsTypes = {
   SETUP_SAMPLE_GEO_DATA          : 'Setup sample data',
 
   /** Import/Export */
-  CLONE_APP     : 'Clone application',
-  EXPORT_APP    : 'Export app settings/app data',
-  IMPORT_ARCHIVE: 'Import app archive (zip)',
-  IMPORT_FROM_3X: 'Import from 3x',
-  IMPORT_FILE   : 'Import single file',
+  IMPORT_EXPORT_SECTION: 'Import/Export section',
+  CLONE_APP            : 'Clone application',
+  EXPORT_APP           : 'Export app settings/app data',
+  IMPORT               : 'Import',
 
   /** Landing Page */
+  LANDING_PAGE_SECTION: 'Landing Page section',
   MODIFY_LANDING_PAGE : 'Modify landing page',
   PUBLISH_LANDING_PAGE: 'Publish landing page',
 
   /** Log Management */
+  LOG_MANAGEMENT_SECTION : 'Log Management section',
   CHANGE_LOG_CONFIG      : 'Change logging configuration',
   CHANGE_LOG_INTEGRATIONS: 'Change logging integrations',
   DELETE_LOGGERS         : 'Delete log files',
 
   /** Messaging/Push Notifications */
+  MESSAGING_SECTION                      : 'Messaging section',
   CHANGE_MESSAGING_CHANNEL_PERMISSIONS   : 'Change user/role permissions for messaging channel',
   CHANGE_DELETE_PUSH_BUTTON_OPTIONS      : 'Change/delete button options',
   CHANGE_DELETE_MESSAGING_CHANNEL_OPTIONS: 'Change/delete channel options',
@@ -136,11 +145,13 @@ const OperationsTypes = {
   SEND_PUSH_BY_TEMPLATE                  : 'Send push notification with template',
 
   /** Security Roles */
+  SECURITY_ROLES_SECTION : 'Security Roles section',
   ADD_DELETE_ROLE        : 'Add/delete security role',
   ASSIGN_ROLE_PERMISSIONS: 'Map users to roles',
   MODIFY_ROLE_PERMISSIONS: 'Modify security role permissions',
 
   /** User Management */
+  USERS_SECTION                 : 'Users section',
   CHANGE_LOGIN_PROPS            : 'Change login properties',
   CHANGE_USER_REGISTRATION_PROPS: 'Change user registration properties',
 }
