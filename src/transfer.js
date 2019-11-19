@@ -9,8 +9,8 @@ export default req => ({
     return req.post(`${urls.appConsole(appId)}/export`, data)
   },
 
-  startImport(appId, data, type) {
-    return req.post(`${urls.appConsole(appId)}/import/${type}`, data)
+  startImport(appId, data, type, query) {
+    return req.post(`${urls.appConsole(appId)}/import/${type}`, data).query(query)
   },
 
   importDataServiceFiles(appId, data, step) {
