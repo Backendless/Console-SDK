@@ -13,55 +13,50 @@ const OperationsTypes = {
 
   /** App Settings */
   APP_RESET                 : 'Application reset',
-  CHANGE_CORS_DOMAIN_CONTROL: 'Change CORS/domain control',
-  CHANGE_CUSTOM_DOMAIN      : 'Change custom domain',
-  CHANGE_EMAIL_SETTINGS     : 'Change email settings',
-  CHANGE_LIMIT_NOTIFICATION : 'Change limit notification',
-  CHANGE_MOBILE_SETTINGS    : 'Change mobile settings',
-  CHANGE_SOCIAL_SETTINGS    : 'Change social settings',
-  CREATE_REPOSITORY         : 'Create repository',
+  MODIFY_CORS_DOMAIN_CONTROL: 'Modify CORS/domain control',
+  MODIFY_CUSTOM_DOMAIN      : 'Modify custom domain',
+  MODIFY_EMAIL_SETTINGS     : 'Modify email settings',
+  MODIFY_LIMIT_NOTIFICATION : 'Modify limit notification',
+  MODIFY_MOBILE_SETTINGS    : 'Modify mobile settings',
+  MODIFY_SOCIAL_SETTINGS    : 'Modify social settings',
   DELETE_APPLICATION        : 'Delete application',
   ENABLE_DISABLE_GIT        : 'Enable/disable git',
   INSTALL_LICENSE           : 'Install license',
   REGENERATE_API_KEYS       : 'Regenerate API keys',
-  SET_GOOGLE_KEY            : 'Set Google service account private key',
 
   /** Billing */
   BILLING_SECTION            : 'Billing section',
   ADD_UPDATE_CREDIT_CARD     : 'Add/update credit card',
-  CHANGE_BILLING_PLAN        : 'Change billing plan',
+  MODIFY_BILLING_PLAN        : 'Modify billing plan',
   MARKETPLACE_DELETE_PURCHASE: 'Delete Marketplace purchases',
   MARKETPLACE_PURCHASE       : 'Purchase from the Marketplace',
 
   /** Business Logic */
-  BUSINESS_LOGIC_SECTION          : 'Business Logic section',
-  CREATE_MARKETPLACE_CONFIGURATION: 'Create marketplace configuration',
-  DELETE_FROM_MARKETPLACE         : 'Delete from marketplace',
-  INVOKE_EVENT_WITH_MODEL         : 'Invoke event with model',
-  MODIFY_BL                       : 'Modify Business Logic',
-  PUBLISH_TO_MARKETPLACE          : 'Publish to Marketplace',
-  RUN_TIMER                       : 'Run timer',
+  BUSINESS_LOGIC_SECTION : 'Business Logic section',
+  DELETE_FROM_MARKETPLACE: 'Delete from marketplace',
+  INVOKE_EVENT_WITH_MODEL: 'Invoke event with model',
+  MODIFY_BL              : 'Modify Business Logic',
+  PUBLISH_TO_MARKETPLACE : 'Publish to Marketplace',
+  RUN_TIMER              : 'Run timer',
 
   /** Cache */
   CACHE_SECTION : 'Cache section',
-  ADD_CHANGE_KEY: 'Add/change key',
+  ADD_MODIFY_KEY: 'Add/change key',
   DELETE_KEY    : 'Delete key',
 
   /** Data Service */
   DATA_SERVICE_SECTION            : 'Data Service section',
-  CHANGE_DYNAMIC_SCHEMA_DEFINITION: 'Change "Dynamic Schema Definition" configuration',
-  CHANGE_OBJECT_ACL_PERMISSIONS   : 'Change ACL permissions for objects',
-  CHANGE_DATA_RELATIONSHIP        : 'Change data relationship',
-  CHANGE_GEO_RELATIONSHIP         : 'Change geo relationship',
-  CHANGE_GLOBAL_OWNER_PERMISSIONS : 'Change global owner permissions',
-  CHANGE_OWNER_PERMISSIONS        : 'Change owner permissions',
-  CHANGE_TABLE_PERMISSIONS        : 'Change user/role permissions for a table',
-  CHANGE_DELETE_TABLE_COLUMN      : 'Change/delete columns',
+  MODIFY_DYNAMIC_SCHEMA_DEFINITION: 'Modify "Dynamic Schema Definition" configuration',
+  MODIFY_OBJECT_ACL_PERMISSIONS   : 'Modify ACL permissions for objects',
+  MODIFY_GLOBAL_OWNER_PERMISSIONS : 'Modify global owner permissions',
+  MODIFY_OWNER_PERMISSIONS        : 'Modify owner permissions',
+  MODIFY_TABLE_PERMISSIONS        : 'Modify user/role permissions for a table',
+  MODIFY_DELETE_TABLE_COLUMN      : 'Modify/delete columns',
   CREATE_TABLE_COLUMN             : 'Create columns',
   CREATE_DATA_RELATIONSHIP        : 'Create data relationship',
   CREATE_GEO_RELATIONSHIP         : 'Create geo relationship',
   CREATE_TABLE                    : 'Create tables',
-  CREATE_DELETE_UPDATE_OBJECTS    : 'Create/delete/update objects in DATA BROWSER',
+  CREATE_DELETE_UPDATE_OBJECTS    : 'Create/delete/update objects',
   DELETE_OBJECT_ACL_PERMISSIONS   : 'Delete object acl permissions',
   DELETE_OWNER_PERMISSIONS        : 'Delete owner permissions',
   DELETE_TABLE_PERMISSIONS        : 'Delete table permissions',
@@ -71,7 +66,7 @@ const OperationsTypes = {
   DATA_CONNECTOR_SECTION: 'Data Connector section',
   ACTIVATE_DATACONNECTOR: 'Activate data connector',
   STORED_PROCEDURE      : 'Call stored procedure',
-  CHANGE_DATACONNECTOR  : 'Change data connector',
+  MODIFY_DATACONNECTOR  : 'Modify data connector',
   DELETE_DATACONNECTOR  : 'Delete data connector',
 
   /** Email Templates */
@@ -83,7 +78,7 @@ const OperationsTypes = {
 
   /** File Service */
   FILES_SECTION                : 'Files section',
-  CHANGE_FILE_PERMISSIONS      : 'Change directories/files permissions',
+  MODIFY_FILE_PERMISSIONS      : 'Modify directories/files permissions',
   COPY_FILE                    : 'Copy file',
   CREATE_DIRECTORY             : 'Create directories',
   DELETE_FILE_PERMISSIONS      : 'Delete file permissions',
@@ -99,17 +94,15 @@ const OperationsTypes = {
   /** Geolocation */
   GEOLOCATION_SECTION            : 'Geolocation section',
   ADD_CATEGORY                   : 'Add category',
-  CHANGE_GEO_CATEGORY_PERMISSIONS: 'Change user/role permissions for geo category',
+  MODIFY_GEO_CATEGORY_PERMISSIONS: 'Modify user/role permissions for geo category',
   COPY_GEO_POINTS                : 'Copy geo points',
   CREATE_GEOFENCE                : 'Create a geofence',
   CREATE_GEO_CATEGORY            : 'Create geo category',
   DELETE_GEO_CATEGORY_PERMISSIONS: 'Delete geo category permissions',
   MODIFY_GEO_POINT_METADATA      : 'Modify geopoint metadata',
   MODIFY_DELETE_GEOFENCE         : 'Modify/delete a geofence',
-  REMOVE_ALL_GEO_POINTS          : 'Remove all geo points',
   REMOVE_GEO_POINTS              : 'Remove geo points',
   RENAME_DELETE_GEO_CATEGORY     : 'Rename/delete geo category',
-  SETUP_SAMPLE_GEO_DATA          : 'Setup sample data',
 
   /** Import/Export */
   IMPORT_EXPORT_SECTION: 'Import/Export section',
@@ -124,21 +117,20 @@ const OperationsTypes = {
 
   /** Log Management */
   LOG_MANAGEMENT_SECTION : 'Log Management section',
-  CHANGE_LOG_CONFIG      : 'Change logging configuration',
-  CHANGE_LOG_INTEGRATIONS: 'Change logging integrations',
+  MODIFY_LOG_CONFIG      : 'Modify logging configuration',
+  MODIFY_LOG_INTEGRATIONS: 'Modify logging integrations',
   DELETE_LOGGERS         : 'Delete log files',
 
   /** Messaging/Push Notifications */
   MESSAGING_SECTION                      : 'Messaging section',
-  CHANGE_MESSAGING_CHANNEL_PERMISSIONS   : 'Change user/role permissions for messaging channel',
-  CHANGE_DELETE_PUSH_BUTTON_OPTIONS      : 'Change/delete button options',
-  CHANGE_DELETE_MESSAGING_CHANNEL_OPTIONS: 'Change/delete channel options',
-  CHANGE_DELETE_PUSH_TEMPLATE            : 'Change/delete push template',
+  MODIFY_MESSAGING_CHANNEL_PERMISSIONS   : 'Modify user/role permissions for messaging channel',
+  MODIFY_DELETE_PUSH_BUTTON_OPTIONS      : 'Modify/delete button options',
+  MODIFY_DELETE_MESSAGING_CHANNEL_OPTIONS: 'Modify/delete channel options',
+  MODIFY_DELETE_PUSH_TEMPLATE            : 'Modify/delete push template',
   CREATE_PUSH_BUTTON_OPTIONS             : 'Create button options',
   CREATE_MESSAGING_CHANNEL_OPTIONS       : 'Create channel options',
   CREATE_MESSAGING_CHANNEL               : 'Create messaging channel',
   CREATE_PUSH_TEMPLATE                   : 'Create push template',
-  DELETE_DEVICES                         : 'Delete devices',
   DELETE_MESSAGING_CHANNEL_PERMISSIONS   : 'Delete messaging channel permissions',
   RENAME_DELETE_MESSAGING_CHANNEL        : 'Rename/delete messaging channel',
   SEND_MESSAGE_TO_CHANNEL                : 'Send a message to a channel',
@@ -152,8 +144,8 @@ const OperationsTypes = {
 
   /** User Management */
   USERS_SECTION                 : 'Users section',
-  CHANGE_LOGIN_PROPS            : 'Change login properties',
-  CHANGE_USER_REGISTRATION_PROPS: 'Change user registration properties',
+  MODIFY_LOGIN_PROPS            : 'Modify login properties',
+  MODIFY_USER_REGISTRATION_PROPS: 'Modify user registration properties',
 }
 
 const OperationsLabels = {}

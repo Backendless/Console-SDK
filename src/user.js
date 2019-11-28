@@ -90,5 +90,9 @@ export default (req, context) => ({
 
   loginToDiscourse(user, sig, sso) {
     return req.post('/console/discourse/sso', { user, sig, sso })
+  },
+
+  getPermissions(appId) {
+    return req.get(`${urls.appConsole(appId)}/my-permissions`)
   }
 })
