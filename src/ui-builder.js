@@ -7,6 +7,10 @@ const routes = {
   importComponent         : 'ui-builder/library/components/import',
   exportComponent         : 'ui-builder/library/components/export',
 
+  customFunctions    : 'ui-builder/library/custom/functions',
+  customFunction     : 'ui-builder/library/custom/functions/:functionId',
+  customFunctionLogic: 'ui-builder/library/custom/functions/:functionId/logic',
+
   containers              : 'ui-builder/containers',
   container               : 'ui-builder/containers/:containerName',
   containerPages          : 'ui-builder/containers/:containerName/pages',
@@ -15,9 +19,6 @@ const routes = {
   containerPageLogic      : 'ui-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
   containerPageUnusedLogic: 'ui-builder/containers/:containerName/pages/:pageName/unused-logic',
 
-  containerFunctions      : 'ui-builder/containers/:containerName/functions',
-  containerFunction       : 'ui-builder/containers/:containerName/functions/:functionId',
-  containerFunctionLogic  : 'ui-builder/containers/:containerName/functions/:functionId/logic',
 }
 
 Object.keys(routes).forEach(key => {
@@ -119,28 +120,28 @@ export default req => ({
     return req.delete(routes.containerPageUnusedLogic(appId, containerName, pageName), { componentUids })
   },
 
-  getSharedFunctions(appId, containerName) {
-    return req.get(routes.containerFunctions(appId, containerName))
+  getCustomFunctions(appId) {
+    return req.get(routes.customFunctions(appId))
   },
 
-  createSharedFunction(appId, containerName, name) {
-    return req.post(routes.containerFunctions(appId, containerName), { name })
+  createCustomFunction(appId, name) {
+    return req.post(routes.customFunctions(appId), { name })
   },
 
-  updateSharedFunction(appId, containerName, id, definition) {
-    return req.put(routes.containerFunction(appId, containerName, id), definition)
+  updateCustomFunction(appId, id, definition) {
+    return req.put(routes.customFunction(appId, id), definition)
   },
 
-  getSharedFunctionLogic(appId, containerName, id) {
-    return req.get(routes.containerFunctionLogic(appId, containerName, id))
+  getCustomFunctionLogic(appId, id) {
+    return req.get(routes.customFunctionLogic(appId, id))
   },
 
-  updateSharedFunctionLogic(appId, containerName, id, data) {
-    return req.put(routes.containerFunctionLogic(appId, containerName, id), data)
+  updateCustomFunctionLogic(appId, id, data) {
+    return req.put(routes.customFunctionLogic(appId, id), data)
   },
 
-  deleteSharedFunction(appId, containerName, id) {
-    return req.delete(routes.containerFunction(appId, containerName, id))
+  deleteCustomFunction(appId, id) {
+    return req.delete(routes.customFunction(appId, id))
   },
 
 })
