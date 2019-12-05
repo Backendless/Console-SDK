@@ -45,15 +45,15 @@ export default req => ({
     return req.post(`${urls.gamification(appId)}/bonus`, data)
   },
 
-  loadBadges(appId) {
-    return req.get(`${urls.gamification(appId)}/badges`)
+  loadBadges(appId, devId) {
+    return req.get(`${urls.gamification(appId)}/badges`).query({ devId })
   },
 
   reportSocialActivity(appId, data) {
     return req.post(`${urls.gamification(appId)}/social-activity-link`, data)
   },
 
-  getLastUpdates(appId) {
-    return req.get(`${urls.gamification(appId)}/updates`)
+  getLastUpdates(appId, devId) {
+    return req.get(`${urls.gamification(appId)}/updates`).query({ devId })
   }
 })
