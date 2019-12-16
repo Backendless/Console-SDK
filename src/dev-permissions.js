@@ -7,9 +7,8 @@ const AccessTypes = {
 
 const OperationsTypes = {
   /** App Access Security */
-  INVITE_TEAM_MEMBER           : 'Add developer',
+  INVITE_OR_REMOVE_TEAM_MEMBER : 'Add/remove developer',
   ASSIGN_TEAM_MEMBER_PERMISSION: 'Modify permission',
-  REMOVE_TEAM_MEMBER           : 'Remove developer',
 
   /** App Settings */
   APP_RESET                 : 'Application reset',
@@ -40,69 +39,42 @@ const OperationsTypes = {
   RUN_TIMER              : 'Run timer',
 
   /** Cache */
-  CACHE_SECTION : 'Cache section',
-  ADD_MODIFY_KEY: 'Add/change key',
-  DELETE_KEY    : 'Delete key',
+  CACHE_SECTION           : 'Cache section',
+  CREATE_MODIFY_DELETE_KEY: 'Create/Modify/Delete cache keys',
 
   /** Data Service */
-  DATA_SERVICE_SECTION            : 'Data Service section',
-  MODIFY_DYNAMIC_SCHEMA_DEFINITION: 'Modify "Dynamic Schema Definition" configuration',
-  MODIFY_OBJECT_ACL_PERMISSIONS   : 'Modify ACL permissions for objects',
-  MODIFY_GLOBAL_OWNER_PERMISSIONS : 'Modify global owner permissions',
-  MODIFY_OWNER_PERMISSIONS        : 'Modify owner permissions',
-  MODIFY_TABLE_PERMISSIONS        : 'Modify user/role permissions for a table',
-  MODIFY_DELETE_TABLE_COLUMN      : 'Modify/delete columns',
-  CREATE_TABLE_COLUMN             : 'Create columns',
-  CREATE_DATA_RELATIONSHIP        : 'Create data relationship',
-  CREATE_GEO_RELATIONSHIP         : 'Create geo relationship',
-  CREATE_TABLE                    : 'Create tables',
-  CREATE_DELETE_UPDATE_OBJECTS    : 'Create/delete/update objects',
-  DELETE_OBJECT_ACL_PERMISSIONS   : 'Delete object acl permissions',
-  DELETE_OWNER_PERMISSIONS        : 'Delete owner permissions',
-  DELETE_TABLE_PERMISSIONS        : 'Delete table permissions',
-  RENAME_DELETE_TABLE             : 'Rename/delete tables',
+  DATA_SERVICE_SECTION                  : 'Data Service section',
+  MODIFY_DYNAMIC_SCHEMA_DEFINITION      : 'Modify "Dynamic Schema Definition" configuration',
+  CREATE_MODIFY_DELETE_COLUMN           : 'Create/Rename/Delete columns',
+  CREATE_MODIFY_DELETE_TABLE            : 'Create/Rename/Delete tables',
+  CREATE_DELETE_UPDATE_OBJECTS          : 'Create/delete/update objects',
+  CREATE_MODIFY_DELETE_TABLE_PERMISSIONS: 'Manage permissions for tables (including ACL)',
+  CREATE_MODIFY_DELETE_OWNER_PERMISSIONS: 'Delete owner permissions',
 
   /** Data connector */
-  DATA_CONNECTOR_SECTION: 'Data Connector section',
-  ACTIVATE_DATACONNECTOR: 'Activate data connector',
-  STORED_PROCEDURE      : 'Call stored procedure',
-  MODIFY_DATACONNECTOR  : 'Modify data connector',
-  DELETE_DATACONNECTOR  : 'Delete data connector',
+  DATA_CONNECTOR_SECTION             : 'Data Connector section',
+  CREATE_MODIFY_DELETE_DATA_CONNECTOR: 'Manage data connectors',
+  STORED_PROCEDURE                   : 'Call stored procedure',
 
   /** Email Templates */
-  EMAIL_TEMPLATES_SECTION: 'Email Templates section',
-  CREATE_EMAIL_TEMPLATE  : 'Create new email template',
-  DELETE_EMAIL_TEMPLATE  : 'Delete email template',
-  MODIFY_EMAIL_TEMPLATE  : 'Modify email templates',
-  SEND_TEST_EMAIL        : 'Send test email',
+  EMAIL_TEMPLATES_SECTION      : 'Email Templates section',
+  CREATE_MODIFY_DELETE_TEMPLATE: 'Manage email templates. Send test email',
 
   /** File Service */
-  FILES_SECTION                : 'Files section',
-  MODIFY_FILE_PERMISSIONS      : 'Modify directories/files permissions',
-  COPY_FILE                    : 'Copy file',
-  CREATE_DIRECTORY             : 'Create directories',
-  DELETE_FILE_PERMISSIONS      : 'Delete file permissions',
-  DOWNLOAD_FILE                : 'Download file',
-  EDIT_FILE                    : 'Edit file',
-  MOVE_FILE                    : 'Move file',
-  RENAME_DELETE_DIRECTORY_FILES: 'Rename/delete directories/files',
-  UNZIP_FILE                   : 'Unzip file',
-  UPLOAD_CREATE_FILES          : 'Upload/create files',
-  VIEW_DIRECTORY_CONTENT       : 'View directory content',
-  ZIP_DIRECTORY                : 'Zip directory',
+  FILES_SECTION               : 'Files section',
+  MODIFY_FILE_PERMISSIONS     : 'Modify directories/files permissions',
+  MANAGE_DIRECTORIES_AND_FILES: 'Manage directories and files',
+  DOWNLOAD_FILE               : 'Download file',
+  UPLOAD_CREATE_FILES         : 'Upload/create files',
+  VIEW_DIRECTORY_CONTENT      : 'View directory content',
 
   /** Geolocation */
-  GEOLOCATION_SECTION            : 'Geolocation section',
-  ADD_CATEGORY                   : 'Add category',
-  MODIFY_GEO_CATEGORY_PERMISSIONS: 'Modify user/role permissions for geo category',
-  COPY_GEO_POINTS                : 'Copy geo points',
-  CREATE_GEOFENCE                : 'Create a geofence',
-  CREATE_GEO_CATEGORY            : 'Create geo category',
-  DELETE_GEO_CATEGORY_PERMISSIONS: 'Delete geo category permissions',
-  MODIFY_GEO_POINT_METADATA      : 'Modify geopoint metadata',
-  MODIFY_DELETE_GEOFENCE         : 'Modify/delete a geofence',
-  REMOVE_GEO_POINTS              : 'Remove geo points',
-  RENAME_DELETE_GEO_CATEGORY     : 'Rename/delete geo category',
+  GEOLOCATION_SECTION              : 'Geolocation section',
+  MODIFY_GEO_CATEGORY_PERMISSIONS  : 'Manage user/role permissions for geo category',
+  CREATE_MODIFY_DELETE_GEOFENCE    : 'Create/Rename/Delete geofences',
+  MODIFY_GEO_POINT_METADATA        : 'Modify geopoint metadata',
+  CREATE_MODIFY_DELETE_GEO_CATEGORY: 'Create/Rename/Delete geo category',
+  CREATE_MODIFY_DELETE_GEO_POINT   : 'Create/Modify/Delete/Copy geo points',
 
   /** Import/Export */
   IMPORT_EXPORT_SECTION: 'Import/Export section',
@@ -122,25 +94,20 @@ const OperationsTypes = {
   DELETE_LOGGERS         : 'Delete log files',
 
   /** Messaging/Push Notifications */
-  MESSAGING_SECTION                      : 'Messaging section',
-  MODIFY_MESSAGING_CHANNEL_PERMISSIONS   : 'Modify user/role permissions for messaging channel',
-  MODIFY_DELETE_PUSH_BUTTON_OPTIONS      : 'Modify/delete button options',
-  MODIFY_DELETE_MESSAGING_CHANNEL_OPTIONS: 'Modify/delete channel options',
-  MODIFY_DELETE_PUSH_TEMPLATE            : 'Modify/delete push template',
-  CREATE_PUSH_BUTTON_OPTIONS             : 'Create button options',
-  CREATE_MESSAGING_CHANNEL_OPTIONS       : 'Create channel options',
-  CREATE_MESSAGING_CHANNEL               : 'Create messaging channel',
-  CREATE_PUSH_TEMPLATE                   : 'Create push template',
-  DELETE_MESSAGING_CHANNEL_PERMISSIONS   : 'Delete messaging channel permissions',
-  RENAME_DELETE_MESSAGING_CHANNEL        : 'Rename/delete messaging channel',
-  SEND_MESSAGE_TO_CHANNEL                : 'Send a message to a channel',
-  SEND_PUSH_BY_TEMPLATE                  : 'Send push notification with template',
+  MESSAGING_SECTION                   : 'Messaging section',
+  MODIFY_MESSAGING_CHANNEL_PERMISSIONS: 'Manage user/role permissions for messaging channel',
+  CREATE_MODIFY_DELETE_BUTTON         : 'Create/Rename/Delete button options',
+  CREATE_MODIFY_DELETE_CHANEL_OPTIONS : 'Create/Rename/Delete channel options',
+  CREATE_MODIFY_DELETE_CHANEL         : 'Create/Rename/Delete messaging channels',
+  CREATE_MODIFY_DELETE_PUSH_TEMPLATE  : 'Create/Rename/Delete push template',
+  DELETE_MESSAGING_CHANNEL_PERMISSIONS: 'Delete messaging channel permissions',
+  SEND_MESSAGE_TO_CHANNEL             : 'Send a message to a channel',
+  SEND_PUSH_BY_TEMPLATE               : 'Send push notification with template',
 
   /** Security Roles */
   SECURITY_ROLES_SECTION : 'Security Roles section',
-  ADD_DELETE_ROLE        : 'Add/delete security role',
+  ADD_MODIFY_ASSIGN_ROLE : 'Manage security roles',
   ASSIGN_ROLE_PERMISSIONS: 'Map users to roles',
-  MODIFY_ROLE_PERMISSIONS: 'Modify security role permissions',
 
   /** User Management */
   USERS_SECTION                 : 'Users section',
