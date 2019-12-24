@@ -152,6 +152,8 @@ export const apiDocsGeo = appId => `${apiDocs(appId)}/geo`
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
 export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
 
+export const devTeam = (appId, devId) => `${appConsole(appId)}/devteam${optional(devId)}`
+
 export default {
   appConsole,
   appInfo,
@@ -177,6 +179,7 @@ export default {
   dataRecord,
   dataTable,
   dataTables,
+  devTeam,
   emailTemplates,
   fileCopy,
   fileCreate,
