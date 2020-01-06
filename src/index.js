@@ -14,6 +14,7 @@ import codegen from './codegen'
 import codeless from './codeless'
 import counters from './counters'
 import dataConnectors from './data-connectors'
+import devTeam from './dev-team'
 import email from './email'
 import files from './files'
 import gamification from './gamification'
@@ -140,6 +141,7 @@ const createClient = (serverUrl, authKey, options) => {
     codeless       : codeless(request),
     counters       : counters(request),
     dataConnectors : dataConnectors(request),
+    devTeam        : devTeam(request),
     email          : email(request),
     files          : files(statusMiddleware),
     gamification   : gamification(request),

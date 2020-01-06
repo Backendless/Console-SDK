@@ -70,10 +70,6 @@ export default req => ({
     return req.post(`${urls.appConsole(appId)}/socialparams`, param)
   },
 
-  updateNotificationSettings(appId, settings) {
-    return req.put(`${urls.appConsole(appId)}/notifications/limits`, settings)
-  },
-
   getLandingPageData(appId) {
     return req.get(urls.landingPage(appId))
   },
@@ -85,7 +81,7 @@ export default req => ({
   saveLandingPageData(appId, data) {
     return req.put(urls.landingPage(appId), data)
   },
-  
+
   publishLandingPageData(appId, data) {
     return req.post(`${urls.landingPage(appId)}/publish`, data)
   },
@@ -94,6 +90,5 @@ export default req => ({
     return req.post(`${urls.landingPage(appId)}/file`)
       .query({ section, name })
       .form({ file })
-  }
-
+  },
 })

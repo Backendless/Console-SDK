@@ -1,4 +1,4 @@
-import { appConsole as appUrl } from './urls'
+import { appConsole as appUrl, devTeam } from './urls'
 
 export default req => ({
   getUsersRegs(appId) {
@@ -35,17 +35,5 @@ export default req => ({
 
   updateSocialParams(appId, param) {
     return req.post(`${appUrl(appId)}/socialparams`, param)
-  },
-
-  updateDevPermissions(appId, devId, rules) {
-    return req.post(`${appUrl(appId)}/devteam/${devId}/permissions`, rules)
-  },
-
-  removeDeveloper(appId, userId) {
-    return req.delete(`${appUrl(appId)}/devteam//${userId}`)
-  },
-
-  inviteDeveloper(appId, email) {
-    return req.post(`${appUrl(appId)}/devteam`, email)
   }
 })

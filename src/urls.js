@@ -156,6 +156,8 @@ export const gamification = appId => `${appConsole(appId)}/gamification`
 
 export const userActivity = appId => `${appConsole(appId)}/user-activity`
 
+export const devTeam = (appId, devId) => `${appConsole(appId)}/devteam${optional(devId)}`
+
 export default {
   appConsole,
   appInfo,
@@ -181,6 +183,7 @@ export default {
   dataRecord,
   dataTable,
   dataTables,
+  devTeam,
   emailTemplates,
   fileCopy,
   fileCreate,
