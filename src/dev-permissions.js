@@ -62,7 +62,7 @@ const OperationsTypes = {
 
   /** File Service */
   FILES_SECTION               : 'Files section',
-  MODIFY_FILE_PERMISSIONS     : 'Modify directories/files permissions',
+  MODIFY_FILE_PERMISSIONS     : 'Manage directories/files permissions',
   MANAGE_DIRECTORIES_AND_FILES: 'Manage directories and files',
   UPLOAD_CREATE_FILES         : 'Upload/create files',
   VIEW_DIRECTORY_CONTENT      : 'View directory content',
