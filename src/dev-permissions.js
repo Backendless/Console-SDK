@@ -49,7 +49,7 @@ const OperationsTypes = {
   CREATE_MODIFY_DELETE_TABLE            : 'Create/Rename/Delete tables',
   CREATE_DELETE_UPDATE_OBJECTS          : 'Create/delete/update objects',
   CREATE_MODIFY_DELETE_TABLE_PERMISSIONS: 'Manage permissions for tables (including ACL)',
-  CREATE_MODIFY_DELETE_OWNER_PERMISSIONS: 'Delete owner permissions',
+  CREATE_MODIFY_DELETE_OWNER_PERMISSIONS: 'Manage global owner permissions',
 
   /** Data connector */
   DATA_CONNECTOR_SECTION             : 'Data Connector section',
