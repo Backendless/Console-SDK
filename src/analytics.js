@@ -9,6 +9,21 @@ const periods = { lastDay, year, month, sixmo }
 
 const transformPeriod = period => periods[period] || month
 
+const buildSegmentsQuery = (key, segments) => {
+  const result = {}
+
+  if (segments) {
+    segments.forEach(segment => {
+      result[`${key}[${segment}]`] = true
+    })
+  }
+
+  return result
+}
+
+const buildClientTypeSegmentsQuery = clientTypes => buildSegmentsQuery('apiKeyName', clientTypes)
+const buildMessagingTypeSegmentsQuery = messagingType => buildSegmentsQuery('messagingType', messagingType)
+
 export default req => ({
   getAppStats(appId, period) {
     return req.get(`${urls.appConsole(appId)}/application/stats`)
@@ -38,22 +53,16 @@ export default req => ({
   },
 
   apiCalls(appId, query) {
-    const { columns, excludeDevices, period, from, to } = query
+    const { clientTypes, columns = {}, period, from, to } = query
 
     const params = {
-      'deviceType[ALL]'     : !excludeDevices.ALL,
-      'deviceType[IOS]'     : !excludeDevices.IOS,
-      'deviceType[ANDROID]' : !excludeDevices.ANDROID,
-      'deviceType[WP]'      : !excludeDevices.WP,
-      'deviceType[AS]'      : !excludeDevices.AS,
-      'deviceType[JS]'      : !excludeDevices.JS,
-      'deviceType[REST]'    : !excludeDevices.REST,
-      'deviceType[BL]'      : !excludeDevices.BL,
+      ...buildClientTypeSegmentsQuery(clientTypes),
+
       'withServiceName'     : columns.services,
       'withMethodName'      : columns.methods,
       'withSuccessCallCount': true, //TODO: the server always return SuccessCallCount values
       'withErrorCount'      : true, //TODO: the server always return ErrorCount values
-      'period'              : period.toUpperCase()
+      'period'              : period.toUpperCase(),
     }
 
     if (period === 'custom') {
@@ -65,21 +74,13 @@ export default req => ({
   },
 
   messages(appId, query) {
-    const { excludeDevices, excludeMessages, period, from, to } = query
+    const { clientTypes, messagingTypes, period, from, to } = query
 
     const params = {
-      'deviceType[ALL]'       : !excludeDevices.ALL,
-      'deviceType[IOS]'       : !excludeDevices.IOS,
-      'deviceType[ANDROID]'   : !excludeDevices.ANDROID,
-      'deviceType[WP]'        : !excludeDevices.WP,
-      'deviceType[AS]'        : !excludeDevices.AS,
-      'deviceType[JS]'        : !excludeDevices.JS,
-      'deviceType[REST]'      : !excludeDevices.REST,
-      'deviceType[BL]'        : !excludeDevices.BL,
-      'messagingType[ALL]'    : !excludeMessages.ALL,
-      'messagingType[PUSH]'   : !excludeMessages.PUSH,
-      'messagingType[PUB_SUB]': !excludeMessages.PUB_SUB,
-      'period'                : period.toUpperCase()
+      ...buildClientTypeSegmentsQuery(clientTypes),
+      ...buildMessagingTypeSegmentsQuery(messagingTypes),
+
+      'period': period.toUpperCase(),
     }
 
     if (period === 'custom') {

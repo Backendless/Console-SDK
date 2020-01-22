@@ -42,7 +42,19 @@ export default req => ({
   },
 
   regenerateApiKey(appId, keyName) {
-    return req.post(`${urls.appConsole(appId)}/appsettings/${keyName}`)
+    return req.post(`${urls.appConsole(appId)}/apikey/regenerate//${keyName}`)
+  },
+
+  createApiKey(appId, apiKey) {
+    return req.post(`${urls.appConsole(appId)}/apikey`, apiKey)
+  },
+
+  updateApiKey(appId, apiKeyId, apiKey) {
+    return req.put(`${urls.appConsole(appId)}/apikey/${apiKeyId}`, apiKey)
+  },
+
+  deleteApiKey(appId, apiKeyId) {
+    return req.delete(`${urls.appConsole(appId)}/apikey/${apiKeyId}`)
   },
 
   getAppLogging(appId) {
