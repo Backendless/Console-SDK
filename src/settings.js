@@ -3,32 +3,32 @@ import urls from './urls'
 const SYSTEM_API_KEYS = ['IOS', 'ANDROID', 'JS', 'REST', 'WP', 'AS', 'BL']
 
 function normalizeAppSettings(result) {
-  const systemApiKeys = []
-  const customApiKeys = []
+  const systemAPIKeys = []
+  const customAPIKeys = []
 
   result.apiKeysMap = {}
 
   result.apiKeys.forEach(apiKey => {
     result.apiKeysMap[apiKey.name] = apiKey.apiKey
 
-    const systemApiKeyIndex = SYSTEM_API_KEYS.indexOf(apiKey.name)
+    const systemAPIKeyIndex = SYSTEM_API_KEYS.indexOf(apiKey.name)
 
-    if (systemApiKeyIndex >= 0) {
-      systemApiKeys[systemApiKeyIndex] = apiKey
+    if (systemAPIKeyIndex >= 0) {
+      systemAPIKeys[systemAPIKeyIndex] = apiKey
     } else {
-      customApiKeys.push(apiKey)
+      customAPIKeys.push(apiKey)
     }
   })
 
   result.apiKeys = []
 
-  systemApiKeys.forEach(apiKey => {
+  systemAPIKeys.forEach(apiKey => {
     if (apiKey) {
       result.apiKeys.push(apiKey)
     }
   })
 
-  result.apiKeys.push(...customApiKeys)
+  result.apiKeys.push(...customAPIKeys)
 
   return result
 }
