@@ -32,11 +32,11 @@ export default req => ({
       })
   },
 
-  performance(appId, query) {
+  performance(appId, { aggInterval, from, to }) {
     const params = {
-      aggregationPeriod: query.aggInterval.name,
-      startEpochSecond : (query.from) / 1000, //TODO: the server expects timestamp in seconds not in milliseconds
-      endEpochSecond   : (query.to) / 1000      //TODO: the server expects timestamp in seconds not in milliseconds
+      aggregationPeriod: aggInterval.name,
+      startEpochSecond : from / 1000, //TODO: the server expects timestamp in seconds not in milliseconds
+      endEpochSecond   : to / 1000      //TODO: the server expects timestamp in seconds not in milliseconds
     }
 
     return req.get(`${urls.appConsole(appId)}/performance`)
@@ -44,7 +44,7 @@ export default req => ({
       .then(points => {
         const result = {}
 
-        for (let i = query.from; i <= query.to; i += query.aggInterval.value) {
+        for (let i = from; i <= to; i += aggInterval.value) {
           result[i] = points[i / 1000] //TODO: the server return timestamp in seconds not in milliseconds
         }
 
@@ -52,8 +52,8 @@ export default req => ({
       })
   },
 
-  apiCalls(appId, query) {
-    const { clientTypes, columns = {}, period, from, to } = query
+  apiCalls(appId, { clientTypes, columns = {}, period, from, to }) {
+    period = period.toUpperCase()
 
     const params = {
       ...buildClientTypeSegmentsQuery(clientTypes),
@@ -62,10 +62,11 @@ export default req => ({
       'withMethodName'      : columns.methods,
       'withSuccessCallCount': true, //TODO: the server always return SuccessCallCount values
       'withErrorCount'      : true, //TODO: the server always return ErrorCount values
-      'period'              : period.toUpperCase(),
+
+      period,
     }
 
-    if (period === 'custom') {
+    if (period === 'CUSTOM') {
       params.dateFrom = from
       params.dateTo = to
     }
@@ -73,17 +74,17 @@ export default req => ({
     return req.get(`${urls.appConsole(appId)}/apicalls`).query(params)
   },
 
-  messages(appId, query) {
-    const { clientTypes, messagingTypes, period, from, to } = query
+  messages(appId, { clientTypes, messagingTypes, period, from, to }) {
+    period = period.toUpperCase()
 
     const params = {
       ...buildClientTypeSegmentsQuery(clientTypes),
       ...buildMessagingTypeSegmentsQuery(messagingTypes),
 
-      'period': period.toUpperCase(),
+      period,
     }
 
-    if (period === 'custom') {
+    if (period === 'CUSTOM') {
       params.dateFrom = from
       params.dateTo = to
     }
@@ -91,18 +92,19 @@ export default req => ({
     return req.get(`${urls.appConsole(appId)}/messaging`).query(params)
   },
 
-  users(appId, query) {
-    const { period, from, to } = query
+  users(appId, { period, from, to }) {
+    period = period.toUpperCase()
 
     const params = {
       withActiveUsers    : true, //TODO: the server always return ActiveUsers values
       withNewUsers       : true, //TODO: the server always return NewUsers values
       withRegisteredUsers: true, //TODO: the server always return RegisteredUsers values
       withReturningUsers : true, //TODO: the server always return ReturningUsers values
-      period             : period.toUpperCase()
+
+      period,
     }
 
-    if (period === 'custom') {
+    if (period === 'CUSTOM') {
       params.dateFrom = from
       params.dateTo = to
     }

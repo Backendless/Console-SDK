@@ -1,5 +1,38 @@
 import urls from './urls'
 
+const SYSTEM_API_KEYS = ['IOS', 'ANDROID', 'JS', 'REST', 'WP', 'AS', 'BL']
+
+function normalizeAppSettings(result) {
+  const systemApiKeys = []
+  const customApiKeys = []
+
+  result.apiKeysMap = {}
+
+  result.apiKeys.forEach(apiKey => {
+    result.apiKeysMap[apiKey.name] = apiKey.apiKey
+
+    const systemApiKeyIndex = SYSTEM_API_KEYS.indexOf(apiKey.name)
+
+    if (systemApiKeyIndex >= 0) {
+      systemApiKeys[systemApiKeyIndex] = apiKey
+    } else {
+      customApiKeys.push(apiKey)
+    }
+  })
+
+  result.apiKeys = []
+
+  systemApiKeys.forEach(apiKey => {
+    if (apiKey) {
+      result.apiKeys.push(apiKey)
+    }
+  })
+
+  result.apiKeys.push(...customApiKeys)
+
+  return result
+}
+
 export default req => ({
   updateAndroidMobileSettings(appId, settings) {
     return req.put(`${urls.mobileSettings(appId)}/android`, settings)
@@ -39,21 +72,22 @@ export default req => ({
 
   getAppSettings(appId) {
     return req.get(`${urls.appConsole(appId)}/appsettings`)
+      .then(normalizeAppSettings)
   },
 
-  regenerateApiKey(appId, keyName) {
-    return req.post(`${urls.appConsole(appId)}/apikey/regenerate//${keyName}`)
+  regenerateAPIKey(appId, keyName) {
+    return req.post(`${urls.appConsole(appId)}/apikey/regenerate/${keyName}`)
   },
 
-  createApiKey(appId, apiKey) {
+  createAPIKey(appId, apiKey) {
     return req.post(`${urls.appConsole(appId)}/apikey`, apiKey)
   },
 
-  updateApiKey(appId, apiKeyId, apiKey) {
+  updateAPIKey(appId, apiKeyId, apiKey) {
     return req.put(`${urls.appConsole(appId)}/apikey/${apiKeyId}`, apiKey)
   },
 
-  deleteApiKey(appId, apiKeyId) {
+  deleteAPIKey(appId, apiKeyId) {
     return req.delete(`${urls.appConsole(appId)}/apikey/${apiKeyId}`)
   },
 
