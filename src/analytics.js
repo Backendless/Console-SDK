@@ -9,6 +9,21 @@ const periods = { lastDay, year, month, sixmo }
 
 const transformPeriod = period => periods[period] || month
 
+const buildSegmentsQuery = (key, segments) => {
+  const result = {}
+
+  if (segments) {
+    segments.forEach(segment => {
+      result[`${key}[${segment}]`] = true
+    })
+  }
+
+  return result
+}
+
+const buildClientTypeSegmentsQuery = clientTypes => buildSegmentsQuery('apiKeyName', clientTypes)
+const buildMessagingTypeSegmentsQuery = messagingType => buildSegmentsQuery('messagingType', messagingType)
+
 export default req => ({
   getAppStats(appId, period) {
     return req.get(`${urls.appConsole(appId)}/application/stats`)
@@ -17,11 +32,11 @@ export default req => ({
       })
   },
 
-  performance(appId, query) {
+  performance(appId, { aggInterval, from, to }) {
     const params = {
-      aggregationPeriod: query.aggInterval.name,
-      startEpochSecond : (query.from) / 1000, //TODO: the server expects timestamp in seconds not in milliseconds
-      endEpochSecond   : (query.to) / 1000      //TODO: the server expects timestamp in seconds not in milliseconds
+      aggregationPeriod: aggInterval.name,
+      startEpochSecond : from / 1000, //TODO: the server expects timestamp in seconds not in milliseconds
+      endEpochSecond   : to / 1000      //TODO: the server expects timestamp in seconds not in milliseconds
     }
 
     return req.get(`${urls.appConsole(appId)}/performance`)
@@ -29,7 +44,7 @@ export default req => ({
       .then(points => {
         const result = {}
 
-        for (let i = query.from; i <= query.to; i += query.aggInterval.value) {
+        for (let i = from; i <= to; i += aggInterval.value) {
           result[i] = points[i / 1000] //TODO: the server return timestamp in seconds not in milliseconds
         }
 
@@ -37,26 +52,21 @@ export default req => ({
       })
   },
 
-  apiCalls(appId, query) {
-    const { columns, excludeDevices, period, from, to } = query
+  apiCalls(appId, { clientTypes, columns = {}, period, from, to }) {
+    period = period.toUpperCase()
 
     const params = {
-      'deviceType[ALL]'     : !excludeDevices.ALL,
-      'deviceType[IOS]'     : !excludeDevices.IOS,
-      'deviceType[ANDROID]' : !excludeDevices.ANDROID,
-      'deviceType[WP]'      : !excludeDevices.WP,
-      'deviceType[AS]'      : !excludeDevices.AS,
-      'deviceType[JS]'      : !excludeDevices.JS,
-      'deviceType[REST]'    : !excludeDevices.REST,
-      'deviceType[BL]'      : !excludeDevices.BL,
+      ...buildClientTypeSegmentsQuery(clientTypes),
+
       'withServiceName'     : columns.services,
       'withMethodName'      : columns.methods,
       'withSuccessCallCount': true, //TODO: the server always return SuccessCallCount values
       'withErrorCount'      : true, //TODO: the server always return ErrorCount values
-      'period'              : period.toUpperCase()
+
+      period,
     }
 
-    if (period === 'custom') {
+    if (period === 'CUSTOM') {
       params.dateFrom = from
       params.dateTo = to
     }
@@ -64,25 +74,17 @@ export default req => ({
     return req.get(`${urls.appConsole(appId)}/apicalls`).query(params)
   },
 
-  messages(appId, query) {
-    const { excludeDevices, excludeMessages, period, from, to } = query
+  messages(appId, { clientTypes, messagingTypes, period, from, to }) {
+    period = period.toUpperCase()
 
     const params = {
-      'deviceType[ALL]'       : !excludeDevices.ALL,
-      'deviceType[IOS]'       : !excludeDevices.IOS,
-      'deviceType[ANDROID]'   : !excludeDevices.ANDROID,
-      'deviceType[WP]'        : !excludeDevices.WP,
-      'deviceType[AS]'        : !excludeDevices.AS,
-      'deviceType[JS]'        : !excludeDevices.JS,
-      'deviceType[REST]'      : !excludeDevices.REST,
-      'deviceType[BL]'        : !excludeDevices.BL,
-      'messagingType[ALL]'    : !excludeMessages.ALL,
-      'messagingType[PUSH]'   : !excludeMessages.PUSH,
-      'messagingType[PUB_SUB]': !excludeMessages.PUB_SUB,
-      'period'                : period.toUpperCase()
+      ...buildClientTypeSegmentsQuery(clientTypes),
+      ...buildMessagingTypeSegmentsQuery(messagingTypes),
+
+      period,
     }
 
-    if (period === 'custom') {
+    if (period === 'CUSTOM') {
       params.dateFrom = from
       params.dateTo = to
     }
@@ -90,18 +92,19 @@ export default req => ({
     return req.get(`${urls.appConsole(appId)}/messaging`).query(params)
   },
 
-  users(appId, query) {
-    const { period, from, to } = query
+  users(appId, { period, from, to }) {
+    period = period.toUpperCase()
 
     const params = {
       withActiveUsers    : true, //TODO: the server always return ActiveUsers values
       withNewUsers       : true, //TODO: the server always return NewUsers values
       withRegisteredUsers: true, //TODO: the server always return RegisteredUsers values
       withReturningUsers : true, //TODO: the server always return ReturningUsers values
-      period             : period.toUpperCase()
+
+      period,
     }
 
-    if (period === 'custom') {
+    if (period === 'CUSTOM') {
       params.dateFrom = from
       params.dateTo = to
     }

@@ -21,7 +21,7 @@ const OperationsTypes = {
   DELETE_APPLICATION        : 'Delete application',
   ENABLE_DISABLE_GIT        : 'Enable/disable git',
   INSTALL_LICENSE           : 'Install license',
-  REGENERATE_API_KEYS       : 'Regenerate API keys',
+  MANAGE_API_KEYS           : 'Manage API keys',
 
   /** Billing */
   BILLING_SECTION            : 'Billing section',
