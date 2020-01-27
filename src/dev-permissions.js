@@ -21,7 +21,7 @@ const OperationsTypes = {
   DELETE_APPLICATION        : 'Delete application',
   ENABLE_DISABLE_GIT        : 'Enable/disable git',
   INSTALL_LICENSE           : 'Install license',
-  REGENERATE_API_KEYS       : 'Regenerate API keys',
+  MANAGE_API_KEYS           : 'Manage API keys',
 
   /** Billing */
   BILLING_SECTION            : 'Billing section',
@@ -49,7 +49,7 @@ const OperationsTypes = {
   CREATE_MODIFY_DELETE_TABLE            : 'Create/Rename/Delete tables',
   CREATE_DELETE_UPDATE_OBJECTS          : 'Create/delete/update objects',
   CREATE_MODIFY_DELETE_TABLE_PERMISSIONS: 'Manage permissions for tables (including ACL)',
-  CREATE_MODIFY_DELETE_OWNER_PERMISSIONS: 'Delete owner permissions',
+  CREATE_MODIFY_DELETE_OWNER_PERMISSIONS: 'Manage global owner permissions',
 
   /** Data connector */
   DATA_CONNECTOR_SECTION             : 'Data Connector section',
@@ -62,7 +62,7 @@ const OperationsTypes = {
 
   /** File Service */
   FILES_SECTION               : 'Files section',
-  MODIFY_FILE_PERMISSIONS     : 'Modify directories/files permissions',
+  MODIFY_FILE_PERMISSIONS     : 'Manage directories/files permissions',
   MANAGE_DIRECTORIES_AND_FILES: 'Manage directories and files',
   UPLOAD_CREATE_FILES         : 'Upload/create files',
   VIEW_DIRECTORY_CONTENT      : 'View directory content',

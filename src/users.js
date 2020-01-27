@@ -1,4 +1,4 @@
-import { appConsole as appUrl, devTeam } from './urls'
+import { appConsole as appUrl } from './urls'
 
 export default req => ({
   getUsersRegs(appId) {
