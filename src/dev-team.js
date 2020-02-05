@@ -23,5 +23,9 @@ export default req => ({
 
   updateNotificationSettings(appId, settings) {
     return req.put(`${urls.appConsole(appId)}/notifications/limits`, settings)
+  },
+
+  transferOwnership(appId, developerId) {
+    return req.put(`${devTeam(appId, 'owner')}`, { developerId })
   }
 })
