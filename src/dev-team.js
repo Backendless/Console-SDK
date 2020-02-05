@@ -26,6 +26,8 @@ export default req => ({
   },
 
   transferOwnership(appId, devId) {
-    return req.put(`${devTeam(appId, 'owner')}`, devId)
+    return req.put(`${devTeam(appId, 'owner')}`, {
+      'developerId': devId
+    })
   }
 })
