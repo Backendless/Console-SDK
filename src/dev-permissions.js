@@ -22,6 +22,7 @@ const OperationsTypes = {
   ENABLE_DISABLE_GIT        : 'Enable/disable git',
   INSTALL_LICENSE           : 'Install license',
   MANAGE_API_KEYS           : 'Manage API keys',
+  PROMOTE_APPLICATION       : 'Promote schema from one of your applications to another',
 
   /** Billing */
   BILLING_SECTION            : 'Billing section',
