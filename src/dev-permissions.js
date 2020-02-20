@@ -38,10 +38,6 @@ const OperationsTypes = {
   PUBLISH_TO_MARKETPLACE : 'Publish to Marketplace',
   RUN_TIMER              : 'Run timer',
 
-  /** Cache */
-  CACHE_SECTION           : 'Cache section',
-  CREATE_MODIFY_DELETE_KEY: 'Create/Modify/Delete cache keys',
-
   /** Data Service */
   DATA_SERVICE_SECTION                  : 'Data Service section',
   MODIFY_DYNAMIC_SCHEMA_DEFINITION      : 'Modify "Dynamic Schema Definition" configuration',
@@ -112,6 +108,7 @@ const OperationsTypes = {
   USERS_SECTION                 : 'Users section',
   MODIFY_LOGIN_PROPS            : 'Modify login properties',
   MODIFY_USER_REGISTRATION_PROPS: 'Modify user registration properties',
+  LOGOUT_ALL_USERS              : 'Logout all users',
 }
 
 const OperationsLabels = {}
