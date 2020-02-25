@@ -91,6 +91,10 @@ export default req => ({
     return req.delete(`${urls.appConsole(appId)}/apikey/${apiKeyId}`)
   },
 
+  updateAPIKeyValue(appId, apiKeyId, apiKey) {
+    return req.put(`${urls.appConsole(appId)}/apikey/${apiKeyId}/apiKey`, apiKey)
+  },
+
   getAppLogging(appId) {
     return req.get(`${urls.appConsole(appId)}/logging/config`)
   },
