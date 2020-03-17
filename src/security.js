@@ -21,6 +21,7 @@ const transformOwnerResponse = response => ({
 })
 
 const transformRolesResponse = response => ({ data: response })
+const transformUsersResponse = response => ({ data: response })
 
 /**
  * Transforms
@@ -79,10 +80,12 @@ const alignGetResponseShape = response => {
   const empty = !response.length
   const rolesResponse = !empty && !!response[0].permissions
   const aclRolesResponse = !empty && !!response[0].operationId
+  const usersResponse = !empty && !!response[0].userId
 
-  return (empty && emptyResponse)
+  return (empty && emptyResponse)//
     || (rolesResponse && transformRolesResponse(response))
     || (aclRolesResponse && transformAclRolesResponse(response))
+    || (usersResponse && transformUsersResponse(response))
     || transformOwnerResponse(response)
 }
 
@@ -170,9 +173,11 @@ const alignModifyResponseShape = (appId, policy, policyItemId, service, serviceI
 const toPermissionsMap = permissions => {
   const map = {}
 
-  permissions.forEach(permission => {
-    map[permission.operation] = permission.access
-  })
+  if(permissions) {
+    permissions.forEach(permission => {
+      map[permission.operation] = permission.access
+    })
+  }
 
   return map
 }
