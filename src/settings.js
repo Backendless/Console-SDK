@@ -1,6 +1,6 @@
 import urls from './urls'
 
-const SYSTEM_API_KEYS = ['IOS', 'ANDROID', 'JS', 'REST', 'WP', 'AS', 'BL']
+const SYSTEM_API_KEYS = ['ANDROID', 'IOS', 'JS', 'REST', 'WP', 'AS', 'BL']
 
 function normalizeAppSettings(result) {
   const systemAPIKeys = []
