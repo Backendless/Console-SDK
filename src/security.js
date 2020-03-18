@@ -82,7 +82,7 @@ const alignGetResponseShape = response => {
   const aclRolesResponse = !empty && !!response[0].operationId
   const usersResponse = !empty && !!response[0].userId
 
-  return (empty && emptyResponse)//
+  return (empty && emptyResponse)
     || (rolesResponse && transformRolesResponse(response))
     || (aclRolesResponse && transformAclRolesResponse(response))
     || (usersResponse && transformUsersResponse(response))
