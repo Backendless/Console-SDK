@@ -128,6 +128,14 @@ const createClient = (serverUrl, authKey, options) => {
       })
   }
 
+  const destroy = () => {
+    context.middleware = req => {
+      req.send = () => Promise.reject(new Error('Client has been destroyed'))
+
+      return req
+    }
+  }
+
   return request.api = {
     activityManager: activityManager(request),
     analytics      : analytics(request),
@@ -141,6 +149,7 @@ const createClient = (serverUrl, authKey, options) => {
     codeless       : codeless(request),
     counters       : counters(request),
     dataConnectors : dataConnectors(request),
+    destroy,
     devTeam        : devTeam(request),
     email          : email(request),
     files          : files(statusMiddleware),
