@@ -158,6 +158,8 @@ export const userActivity = appId => `${appConsole(appId)}/user-activity`
 
 export const devTeam = (appId, devId) => `${appConsole(appId)}/devteam${optional(devId)}`
 
+export const developerPage = () => `${console()}/developer-page`
+
 export default {
   appConsole,
   appInfo,
@@ -183,6 +185,7 @@ export default {
   dataRecord,
   dataTable,
   dataTables,
+  developerPage,
   devTeam,
   emailTemplates,
   fileCopy,
