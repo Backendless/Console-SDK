@@ -2,6 +2,7 @@ import Request from 'backendless-request'
 import * as CacheTags from './utils/cache-tags'
 import urls from './urls'
 
+import activityManager from './activity-manager'
 import analytics from './analytics'
 import apiDocs from './api-docs'
 import apps from './apps'
@@ -13,9 +14,11 @@ import codegen from './codegen'
 import codeless from './codeless'
 import counters from './counters'
 import dataConnectors from './data-connectors'
+import developerProfile from './developer-profile'
 import devTeam from './dev-team'
 import email from './email'
 import files from './files'
+import gamification from './gamification'
 import geo from './geo'
 import invites from './invites'
 import license from './license'
@@ -32,6 +35,8 @@ import transfer from './transfer'
 import user from './user'
 import users from './users'
 import warning from './warning'
+import uiBuilder from './ui-builder'
+import chartBuilder from './chart-builder'
 
 class Context {
 
@@ -133,37 +138,42 @@ const createClient = (serverUrl, authKey, options) => {
   }
 
   return request.api = {
-    analytics      : analytics(request),
-    apiDocs        : apiDocs(request),
-    apps           : apps(request),
-    billing        : billing(billingMiddleware),
-    bl             : bl(request),
-    blueprints     : blueprints(request),
-    cache          : cache(request),
-    codegen        : codegen(statusMiddleware),
-    codeless       : codeless(request),
-    counters       : counters(request),
-    dataConnectors : dataConnectors(request),
+    activityManager : activityManager(request),
+    analytics       : analytics(request),
+    apiDocs         : apiDocs(request),
+    apps            : apps(request),
+    billing         : billing(billingMiddleware),
+    bl              : bl(request),
+    blueprints      : blueprints(request),
+    cache           : cache(request),
+    codegen         : codegen(statusMiddleware),
+    codeless        : codeless(request),
+    counters        : counters(request),
+    dataConnectors  : dataConnectors(request),
     destroy,
-    devTeam        : devTeam(request),
-    email          : email(request),
-    files          : files(statusMiddleware),
-    geo            : geo(request),
-    invites        : invites(request),
-    license        : license(request),
-    marketplace    : marketplace(billingMiddleware),
-    messaging      : messaging(request),
-    navigator      : navigator(request),
-    projectTemplate: projectTemplate(statusMiddleware),
-    security       : security(request),
-    devPermissions : devPermissions(request),
-    settings       : settings(request),
-    status         : status(request),
-    tables         : tables(request),
-    transfer       : transfer(request),
-    user           : user(request, context),
-    users          : users(request),
-    warning        : warning(request),
+    developerProfile: developerProfile(request),
+    devTeam         : devTeam(request),
+    email           : email(request),
+    files           : files(statusMiddleware),
+    gamification    : gamification(request),
+    geo             : geo(request),
+    invites         : invites(request),
+    license         : license(request),
+    marketplace     : marketplace(billingMiddleware),
+    messaging       : messaging(request),
+    navigator       : navigator(request),
+    projectTemplate : projectTemplate(statusMiddleware),
+    security        : security(request),
+    devPermissions  : devPermissions(request),
+    settings        : settings(request),
+    status          : status(request),
+    tables          : tables(request),
+    transfer        : transfer(request),
+    user            : user(request, context),
+    users           : users(request),
+    warning         : warning(request),
+    uiBuilder       : uiBuilder(request),
+    chartBuilder    : chartBuilder(request),
   }
 }
 

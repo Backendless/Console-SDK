@@ -152,7 +152,13 @@ export const apiDocsGeo = appId => `${apiDocs(appId)}/geo`
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
 export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
 
+export const gamification = appId => `${appConsole(appId)}/gamification`
+
+export const userActivity = appId => `${appConsole(appId)}/user-activity`
+
 export const devTeam = (appId, devId) => `${appConsole(appId)}/devteam${optional(devId)}`
+
+export const developerPage = () => `${console()}/developer-page`
 
 export default {
   appConsole,
@@ -179,6 +185,7 @@ export default {
   dataRecord,
   dataTable,
   dataTables,
+  developerPage,
   devTeam,
   emailTemplates,
   fileCopy,
@@ -191,6 +198,7 @@ export default {
   fileRename,
   fileUpload,
   fileView,
+  gamification,
   directoryView,
   geo,
   landingPage,
@@ -213,6 +221,7 @@ export default {
   securityRoles,
   serverCode,
   tableColumns,
+  userActivity,
   dataConnectors,
   dataConnectorTemplates,
   dataConnector,
