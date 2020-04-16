@@ -13,20 +13,20 @@ export default req => ({
     return req.get(`${urls.gamification(appId)}/missions`)
   },
 
-  loadTotalPoints(appId) {
-    return req.get(`${urls.gamification(appId)}/total-points`)
+  loadTotalBB(appId) {
+    return req.get(`${urls.gamification(appId)}/total-bb`)
   },
 
-  loadEarnPointsItems(appId) {
-    return req.get(`${urls.gamification(appId)}/earn-points`)
+  loadEarnBBItems(appId) {
+    return req.get(`${urls.gamification(appId)}/earn-bb`)
   },
 
-  loadRedeemPointsItems(appId) {
-    return req.get(`${urls.gamification(appId)}/redeem-points`)
+  loadRedeemBBItems(appId) {
+    return req.get(`${urls.gamification(appId)}/redeem-bb`)
   },
 
-  loadPointsActivity(appId) {
-    return req.get(`${urls.gamification(appId)}/points-activity`)
+  loadActivityHistory(appId) {
+    return req.get(`${urls.gamification(appId)}/activity-history`)
   },
 
   loadTutorial(url) {
