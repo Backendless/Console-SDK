@@ -19,5 +19,9 @@ export default req => ({
 
   updateProfilePhoto(profilePhoto) {
     return req.post(`${developerPage()}/profile-photo`, profilePhoto)
+  },
+
+  updateProfileAppIcon(appId, appIcon) {
+    return req.post(`${developerPage()}/app-icon/${appId}`, appIcon)
   }
 })
