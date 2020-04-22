@@ -1,28 +1,32 @@
 import urls from './urls'
 
 export default req => ({
-  loadTracks(appId) {
-    return req.get(`${urls.gamification(appId)}/tracks`)
+  loadTracks() {
+    return req.get(`${urls.console()}/gamification/tracks`)
   },
 
-  loadMilestones(appId) {
-    return req.get(`${urls.gamification(appId)}/milestones`)
+  loadMilestones() {
+    return req.get(`${urls.console()}/gamification/milestones`)
+  },
+
+  loadLevels() {
+    return req.get(`${urls.console()}/gamification/levels`)
+  },
+
+  loadEarnBBItems() {
+    return req.get(`${urls.console()}/gamification/earn`)
+  },
+
+  loadRedeemBBItems() {
+    return req.get(`${urls.console()}/gamification/redeem`)
   },
 
   loadMissions(appId) {
     return req.get(`${urls.gamification(appId)}/missions`)
   },
 
-  loadTotalBB(appId) {
-    return req.get(`${urls.gamification(appId)}/total-bb`)
-  },
-
-  loadEarnBBItems(appId) {
-    return req.get(`${urls.gamification(appId)}/earn-bb`)
-  },
-
-  loadRedeemBBItems(appId) {
-    return req.get(`${urls.gamification(appId)}/redeem-bb`)
+  loadBalance(appId) {
+    return req.get(`${urls.gamification(appId)}/balance`)
   },
 
   loadActivityHistory(appId) {
