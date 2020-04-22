@@ -2,23 +2,23 @@ import urls from './urls'
 
 export default req => ({
   loadTracks() {
-    return req.get(`${urls.console()}/gamification/tracks`)
+    return req.get(`${urls.gamification()}/tracks`)
   },
 
   loadMilestones() {
-    return req.get(`${urls.console()}/gamification/milestones`)
+    return req.get(`${urls.gamification()}/milestones`)
   },
 
   loadLevels() {
-    return req.get(`${urls.console()}/gamification/levels`)
+    return req.get(`${urls.gamification()}/levels`)
   },
 
   loadEarnBBItems() {
-    return req.get(`${urls.console()}/gamification/earn`)
+    return req.get(`${urls.gamification()}/earn`)
   },
 
   loadRedeemBBItems() {
-    return req.get(`${urls.console()}/gamification/redeem`)
+    return req.get(`${urls.gamification()}/redeem`)
   },
 
   loadMissions(appId) {
