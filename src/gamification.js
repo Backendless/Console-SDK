@@ -21,43 +21,43 @@ export default req => ({
     return req.get(`${urls.gamification()}/redeem`)
   },
 
-  loadMissions(appId) {
-    return req.get(`${urls.gamification(appId)}/missions`)
+  loadMissions() {
+    return req.get(`${urls.gamification()}/missions`)
   },
 
-  loadBalance(appId) {
-    return req.get(`${urls.gamification(appId)}/balance`)
+  loadBalance() {
+    return req.get(`${urls.gamification()}/balance`)
   },
 
-  loadActivityHistory(appId) {
-    return req.get(`${urls.gamification(appId)}/activity-history`)
+  loadActivityHistory() {
+    return req.get(`${urls.gamification()}/activity-history`)
   },
 
   loadTutorial(url) {
     return req.get(url)
   },
 
-  loadTrivia(appId) {
-    return req.get(`${urls.gamification(appId)}/trivia`)
+  loadTrivia() {
+    return req.get(`${urls.gamification()}/trivia`)
   },
 
-  checkTriviaAnswer(appId, triviaId, answerId, taskId) {
-    return req.post(`${urls.gamification(appId)}/trivia`, { triviaId, answerId, taskId })
+  checkTriviaAnswer(triviaId, answerId, taskId) {
+    return req.post(`${urls.gamification()}/trivia`, { triviaId, answerId, taskId })
   },
 
-  submitSocialSharing(appId, data) {
-    return req.post(`${urls.gamification(appId)}/bonus`, data)
+  submitSocialSharing(data) {
+    return req.post(`${urls.gamification()}/bonus`, data)
   },
 
-  loadBadges(appId, devId) {
-    return req.get(`${urls.gamification(appId)}/badges`).query({ devId })
+  loadBadges() {
+    return req.get(`${urls.gamification()}/badges`)
   },
 
   reportSocialActivity(appId, data) {
-    return req.post(`${urls.gamification(appId)}/social-activity-link`, data)
+    return req.post(`${urls.gamification()}/social-activity-link`, data)
   },
 
-  getLastUpdates(appId, devId) {
-    return req.get(`${urls.gamification(appId)}/updates`).query({ devId })
+  getLastUpdates() {
+    return req.get(`${urls.gamification()}/updates`)
   }
 })
