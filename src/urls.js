@@ -152,7 +152,7 @@ export const apiDocsGeo = appId => `${apiDocs(appId)}/geo`
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
 export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
 
-export const gamification = appId => `${appId ? appConsole(appId) : console()}/gamification`
+export const gamification = () => `${console()}/gamification`
 
 export const userActivity = appId => `${appConsole(appId)}/user-activity`
 
