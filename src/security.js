@@ -14,6 +14,8 @@ const sortEntitiesByName = response => {
   return response
 }
 
+const castArray = items => Array.isArray(items) ? items : [items]
+
 const transformOwnerResponse = response => ({
   data: [{
     permissions: response
@@ -227,9 +229,7 @@ export default req => {
       body = permission
     } else {
       body = {
-        permissions: Array.isArray(permission)
-          ? permission
-          : [permission]
+        permissions: castArray(permission)
       }
     }
 
@@ -246,14 +246,6 @@ export default req => {
     const url = buildDeleteUrl(...args)
 
     return req.delete(url).then(alignModifyResponseShape(...args))
-  }
-
-  const setMultiplePermissions = (appId, policy, policyItemIds, service, serviceItemId, serviceItemName,
-                                  objectId, policyItemIdsPermissionMap) => {
-    return Promise.all(policyItemIds.map(
-      policyItemId => setPermission(appId, policy, policyItemId, service, serviceItemId,
-        serviceItemName, objectId, policyItemIdsPermissionMap[policyItemId])
-    ))
   }
 
   const searchDataACLUsers = (appId, tableName, objectID, query) => {
@@ -288,7 +280,6 @@ export default req => {
     setRolePermission,
     setPermission,
     dropPermissions,
-    setMultiplePermissions,
     searchDataACLUsers
   }
 }
