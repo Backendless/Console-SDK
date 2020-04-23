@@ -116,7 +116,7 @@ const enrichEntities = result => {
  * {
  *  [policyItemId]: {
  *      [operation] : {access},
-  *      ...
+ *      ...
  *  },
  *  ...
  * }
@@ -221,9 +221,17 @@ export default req => {
     //for owner and object acl the body should contain just {access, permission} object
     //for all other cases it must be wrapped into an array and object :
     //{ permissions: [{access,permission}, ...] }
-    const body = (isOwnerPolicy || isObjectACL)
-      ? permission
-      : { permissions: [permission] }
+    let body
+
+    if (isOwnerPolicy || isObjectACL) {
+      body = permission
+    } else {
+      body = {
+        permissions: Array.isArray(permission)
+          ? permission
+          : [permission]
+      }
+    }
 
     const url = buildPutUrl(appId, policy, service, serviceItemId, serviceItemName,
       objectId, policyItemId, permission)
@@ -238,6 +246,14 @@ export default req => {
     const url = buildDeleteUrl(...args)
 
     return req.delete(url).then(alignModifyResponseShape(...args))
+  }
+
+  const setMultiplePermissions = (appId, policy, policyItemIds, service, serviceItemId, serviceItemName,
+                                  objectId, policyItemIdsPermissionMap) => {
+    return Promise.all(policyItemIds.map(
+      policyItemId => setPermission(appId, policy, policyItemId, service, serviceItemId,
+        serviceItemName, objectId, policyItemIdsPermissionMap[policyItemId])
+    ))
   }
 
   const searchDataACLUsers = (appId, tableName, objectID, query) => {
@@ -272,6 +288,7 @@ export default req => {
     setRolePermission,
     setPermission,
     dropPermissions,
+    setMultiplePermissions,
     searchDataACLUsers
   }
 }
