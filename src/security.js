@@ -14,6 +14,8 @@ const sortEntitiesByName = response => {
   return response
 }
 
+const castArray = items => Array.isArray(items) ? items : [items]
+
 const transformOwnerResponse = response => ({
   data: [{
     permissions: response
@@ -116,7 +118,7 @@ const enrichEntities = result => {
  * {
  *  [policyItemId]: {
  *      [operation] : {access},
-  *      ...
+ *      ...
  *  },
  *  ...
  * }
@@ -173,7 +175,7 @@ const alignModifyResponseShape = (appId, policy, policyItemId, service, serviceI
 const toPermissionsMap = permissions => {
   const map = {}
 
-  if(permissions) {
+  if (permissions) {
     permissions.forEach(permission => {
       map[permission.operation] = permission.access
     })
@@ -223,7 +225,7 @@ export default req => {
     //{ permissions: [{access,permission}, ...] }
     const body = (isOwnerPolicy || isObjectACL)
       ? permission
-      : { permissions: [permission] }
+      : { permissions: castArray(permission) }
 
     const url = buildPutUrl(appId, policy, service, serviceItemId, serviceItemName,
       objectId, policyItemId, permission)
