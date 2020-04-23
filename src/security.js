@@ -175,7 +175,7 @@ const alignModifyResponseShape = (appId, policy, policyItemId, service, serviceI
 const toPermissionsMap = permissions => {
   const map = {}
 
-  if(permissions) {
+  if (permissions) {
     permissions.forEach(permission => {
       map[permission.operation] = permission.access
     })
@@ -223,15 +223,9 @@ export default req => {
     //for owner and object acl the body should contain just {access, permission} object
     //for all other cases it must be wrapped into an array and object :
     //{ permissions: [{access,permission}, ...] }
-    let body
-
-    if (isOwnerPolicy || isObjectACL) {
-      body = permission
-    } else {
-      body = {
-        permissions: castArray(permission)
-      }
-    }
+    const body = (isOwnerPolicy || isObjectACL)
+      ? permission
+      : { permissions: castArray(permission) }
 
     const url = buildPutUrl(appId, policy, service, serviceItemId, serviceItemName,
       objectId, policyItemId, permission)
