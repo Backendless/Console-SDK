@@ -40,9 +40,10 @@ import chartBuilder from './chart-builder'
 
 class Context {
 
-  constructor(authKey, middleware) {
+  constructor(authKey, options) {
+    this.options = options
     this.authKey = authKey
-    this.middleware = middleware
+    this.middleware = options.middleware
   }
 
   setAuthKey(authKey) {
@@ -53,13 +54,17 @@ class Context {
    * @param {Request} req
    * @returns {Request}
    */
-  apply(req) {
+  apply(req, middleware) {
     if (this.authKey) {
       req.set('auth-key', this.authKey)
     }
 
     if (this.middleware) {
       this.middleware(req)
+    }
+
+    if (middleware) {
+      middleware(req)
     }
 
     return req
@@ -70,8 +75,10 @@ class Context {
  * @param {Context} context
  * @param {String} serverUrl
  */
-const contextifyRequest = (context, serverUrl) => {
-  const result = {}
+const contextifyRequest = (context, serverUrl, middleware) => {
+  const result = {
+    context
+  }
 
   const addServerUrl = path => {
     return (serverUrl && !path.startsWith('http'))
@@ -80,53 +87,37 @@ const contextifyRequest = (context, serverUrl) => {
   }
 
   Request.methods.forEach(method => {
-    result[method] = (path, body) => context.apply(new Request(addServerUrl(path), method, body))
+    result[method] = (path, body) => context.apply(new Request(addServerUrl(path), method, body), middleware)
   })
 
   return result
 }
 
 const DEFAULT_OPTIONS = {
+  billingURL        : null,
+  billingAuth       : null,
+  fileDownloadURL   : null,
   useFileDownloadURL: true,
 }
 
 const createClient = (serverUrl, authKey, options) => {
-  options = Object.assign(DEFAULT_OPTIONS, options)
+  options = { ...DEFAULT_OPTIONS, ...options }
 
-  const context = new Context(authKey, options.middleware)
+  const context = new Context(authKey, options)
   const request = contextifyRequest(context, serverUrl)
 
-  const statusMiddleware = () => {
-    if (!context.statusRequest) {
-      context.statusRequest = status(request)()
-        .then(apiStatus => {
-          request.apiStatus = apiStatus
-
-          if (options.useFileDownloadURL) {
-            request.fileDownloadURL = apiStatus.fileDownloadURL
-          }
-
-          return request
-        })
-        .catch(e => {
-          delete context.statusRequest
-
-          throw e
-        })
-    }
-
-    return context.statusRequest
+  if (options.billingURL) {
+    request.billing = contextifyRequest(context, options.billingURL, req => {
+      if (options.billingAuth) {
+        req.set({ 'Authorization': `Basic ${options.billingAuth}` })
+      }
+    })
+  } else {
+    request.billing = request
   }
 
-  const billingMiddleware = () => {
-    if (context.cachedBillingRequest) {
-      return Promise.resolve(context.cachedBillingRequest)
-    }
-
-    return statusMiddleware()
-      .then(({ apiStatus }) => {
-        return context.cachedBillingRequest = contextifyRequest(context, apiStatus.billingURL)
-      })
+  const statusMiddleware = () => {
+    return status(request)()
   }
 
   const destroy = () => {
@@ -138,11 +129,13 @@ const createClient = (serverUrl, authKey, options) => {
   }
 
   return request.api = {
+    destroy,
+
     activityManager : activityManager(request),
     analytics       : analytics(request),
     apiDocs         : apiDocs(request),
     apps            : apps(request),
-    billing         : billing(billingMiddleware),
+    billing         : billing(request),
     bl              : bl(request),
     blueprints      : blueprints(request),
     cache           : cache(request),
@@ -150,7 +143,6 @@ const createClient = (serverUrl, authKey, options) => {
     codeless        : codeless(request),
     counters        : counters(request),
     dataConnectors  : dataConnectors(request),
-    destroy,
     developerProfile: developerProfile(request),
     devTeam         : devTeam(request),
     email           : email(request),
@@ -159,7 +151,7 @@ const createClient = (serverUrl, authKey, options) => {
     geo             : geo(request),
     invites         : invites(request),
     license         : license(request),
-    marketplace     : marketplace(billingMiddleware),
+    marketplace     : marketplace(request),
     messaging       : messaging(request),
     navigator       : navigator(request),
     projectTemplate : projectTemplate(statusMiddleware),
