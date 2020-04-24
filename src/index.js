@@ -96,7 +96,6 @@ const contextifyRequest = (context, serverUrl, middleware) => {
 const DEFAULT_OPTIONS = {
   billingURL        : null,
   billingAuth       : null,
-  fileDownloadURL   : null,
   useFileDownloadURL: true,
 }
 
@@ -116,8 +115,20 @@ const createClient = (serverUrl, authKey, options) => {
     request.billing = request
   }
 
-  const statusMiddleware = () => {
-    return status(request)()
+  request.getFileDownloadURL = async () => {
+    if (!options.useFileDownloadURL) {
+      return null
+    }
+
+    //TODO: get rid of this method
+
+    if (!request.fileDownloadURL) {
+      const consoleStatus = await status(request)()
+
+      request.fileDownloadURL = consoleStatus.fileDownloadURL
+    }
+
+    return request.fileDownloadURL
   }
 
   const destroy = () => {
@@ -139,14 +150,14 @@ const createClient = (serverUrl, authKey, options) => {
     bl              : bl(request),
     blueprints      : blueprints(request),
     cache           : cache(request),
-    codegen         : codegen(statusMiddleware),
+    codegen         : codegen(request),
     codeless        : codeless(request),
     counters        : counters(request),
     dataConnectors  : dataConnectors(request),
     developerProfile: developerProfile(request),
     devTeam         : devTeam(request),
     email           : email(request),
-    files           : files(statusMiddleware),
+    files           : files(request),
     gamification    : gamification(request),
     geo             : geo(request),
     invites         : invites(request),
@@ -154,7 +165,7 @@ const createClient = (serverUrl, authKey, options) => {
     marketplace     : marketplace(request),
     messaging       : messaging(request),
     navigator       : navigator(request),
-    projectTemplate : projectTemplate(statusMiddleware),
+    projectTemplate : projectTemplate(request),
     security        : security(request),
     devPermissions  : devPermissions(request),
     settings        : settings(request),

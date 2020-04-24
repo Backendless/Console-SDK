@@ -1,7 +1,6 @@
 import _isObject from 'lodash/isObject'
 
 import urls from './urls'
-import decorateRequest from './utils/decorate-request'
 
 const GENERATORS_PATH = 'codegen/features/generators'
 const JSON_PATTERN = '*.json'
@@ -33,12 +32,12 @@ const normalizeOption = option => {
   return option
 }
 
-export default decorateRequest({
-  getGeneratedProject: req => (appId, codegenData) => {
+export default req => ({
+  getGeneratedProject(appId, codegenData) {
     return req.post(`${urls.appConsole(appId)}/codegen`, codegenData)
   },
 
-  getGenerators: req => (appId, authKey) => {
+  getGenerators(appId, authKey) {
     const listGenerators = (appId, authKey) => {
       return req.api.files.loadDirectory(appId, authKey, GENERATORS_PATH, {
         pattern : JSON_PATTERN,
@@ -64,7 +63,7 @@ export default decorateRequest({
     return listGenerators(appId, authKey).then(({ data }) => Promise.all(data.map(getFeatureFile)))
   },
 
-  getCache: req => (appId, authKey) => {
+  getCache(appId, authKey) {
     return req.get(urls.fileView(appId, authKey, CACHE_PATH))
   },
 })
