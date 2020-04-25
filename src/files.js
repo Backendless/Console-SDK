@@ -1,7 +1,6 @@
 import urls from './urls'
 import totalRows from './utils/total-rows'
 import { FOLDER } from './utils/cache-tags'
-import decorateRequest from './utils/decorate-request'
 
 const getFileFolder = file => {
   const tokens = file.split('/')
@@ -26,9 +25,9 @@ const enrichDirectoryParams = (directory, path) => {
   return directory
 }
 
-export default decorateRequest({
+export default req => ({
 
-  loadDirectory: req => (appId, authKey, path, params) => {
+  loadDirectory(appId, authKey, path, params) {
     path = path || '/'
 
     const { pattern, sub, sortBy, sortDirection, pageSize, offset } = params || {}
@@ -40,15 +39,17 @@ export default decorateRequest({
     return totalRows(req).getWithData(dataReq).then(result => enrichDirectoryParams(result, path))
   },
 
-  createDir: req => (appId, path, folderName) => {
+  createDir(appId, path, folderName) {
     return req.post(urls.createDir(appId, path, folderName)).cacheTags(FOLDER(appId, path))
   },
 
-  getFileContent: req => (appId, authKey, filePath) => {
-    return req.get(urls.fileDownload(appId, authKey, filePath, { host: req.fileDownloadURL }))
+  async getFileContent(appId, authKey, filePath) {
+    const fileDownloadURL = await req.getFileDownloadURL()
+
+    return req.get(urls.fileDownload(appId, authKey, filePath, { host: fileDownloadURL }))
   },
 
-  performOperation: req => (appId, filePath, operation) => {
+  performOperation(appId, filePath, operation) {
     filePath = filePath || encodeURIComponent('/') //for root directory operations it has send '/' as path
 
     return req.put(`${urls.appConsole(appId)}/files/${filePath}`)
@@ -56,53 +57,53 @@ export default decorateRequest({
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
-  fileExists: req => (appId, filePath) => {
+  fileExists(appId, filePath) {
     return req.get(urls.fileExists(appId, filePath))
   },
 
-  editFile: req => (appId, filePath, fileContent) => {
+  editFile(appId, filePath, fileContent) {
     return req.post(urls.fileEdit(appId, filePath), { file: fileContent })
   },
 
-  createFile: req => (appId, filePath, fileContent) => {
+  createFile(appId, filePath, fileContent) {
     return req
       .post(urls.fileCreate(appId, filePath), { file: fileContent })
       .set('Accept', '*/*') //workarround for BKNDLSS-13702
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
-  moveFile: req => (appId, filePath, newFilePath) => {
+  moveFile(appId, filePath, newFilePath) {
     return req.post(urls.fileMove(appId, filePath), newFilePath)
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
-  copyFile: req => (appId, filePath, newFilePath) => {
+  copyFile(appId, filePath, newFilePath) {
     return req.post(urls.fileCopy(appId, filePath), newFilePath)
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
-  renameFile: req => (appId, filePath, newFileName) => {
+  renameFile(appId, filePath, newFileName) {
     return req.post(urls.fileRename(appId, filePath), newFileName)
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
-  deleteFile: req => (appId, filePath) => {
+  deleteFile(appId, filePath) {
     return req.delete(urls.fileDelete(appId, filePath))
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
-  uploadFile: req => (appId, file, path, fileName) => {
+  uploadFile(appId, file, path, fileName) {
     return req.post(urls.fileUpload(appId, `${path}/${fileName}`), file)
       .cacheTags(FOLDER(appId, path))
   },
 
-  createConsoleFile: req => (appId, path, content) => {
+  createConsoleFile(appId, path, content) {
     return req.post(`${urls.appConsole(appId)}/files/create/${path}`, content)
       .set('Accept', '*/*') //workarround for BKNDLSS-13702
       .cacheTags(FOLDER(appId, getFileFolder(path)))
   },
 
-  viewFiles: req => (appId, authKey, path = '') => {
-    return req.get(urls.fileView(appId, authKey, path, { host: req.fileDownloadURL }))
+  viewFiles(appId, authKey, path = '') {
+    return req.get(urls.fileView(appId, authKey, path))
   }
 })

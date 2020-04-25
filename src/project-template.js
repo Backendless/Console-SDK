@@ -1,5 +1,4 @@
 import urls from './urls'
-import decorateRequest from './utils/decorate-request'
 
 export const IMAGE_FILE = /(\jpg|\jpeg|\png|\gif|\ico)$/
 export const XSLT_FILE = /(\.xsl|\.xslt)$/
@@ -10,8 +9,8 @@ const DEFAULT_PROMPT = 'Make a selection'
 
 const getFolders = folders => folders.filter(({ size }) => !size)
 
-export default decorateRequest({
-  loadTemplates: req => (appId, authKey, path = '') => {
+export default req => ({
+  loadTemplates(appId, authKey, path = '') {
     const result = {}
 
     return loadDirectory(req, appId, authKey, `${PROJECT_TEMPLATES_PATH}/${path}`)
@@ -65,11 +64,11 @@ export default decorateRequest({
       })
   },
 
-  generateProject: req => (appId, xsl) => {
+  generateProject(appId, xsl) {
     return req.post(`${urls.appConsole(appId)}/codegen`, { xsl })
   }
 })
 
 function loadDirectory(req, appId, authKey, path) {
-  return req.get(urls.fileView(appId, authKey, path, { host: req.fileDownloadURL }))
+  return req.get(urls.fileView(appId, authKey, path))
 }
