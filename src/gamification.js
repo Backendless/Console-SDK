@@ -59,5 +59,9 @@ export default req => ({
 
   getLastUpdates() {
     return req.get(`${urls.gamification()}/updates`)
+  },
+
+  markEventPlayed(taskId) {
+    return req.put(`${urls.gamification()}/mark-event-played`, { taskId })
   }
 })
