@@ -53,7 +53,7 @@ export default req => ({
     return req.get(`${urls.gamification()}/badges`)
   },
 
-  reportSocialActivity(appId, data) {
+  reportSocialActivity(data) {
     return req.post(`${urls.gamification()}/social-activity-link`, data)
   },
 
