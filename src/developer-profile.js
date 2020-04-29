@@ -23,5 +23,13 @@ export default req => ({
 
   updateProfileAppIcon(appId, appIcon) {
     return req.post(`${developerPage()}/app-icon/${appId}`, appIcon)
-  }
+  },
+
+  checkUsernameAvailable(userName) {
+    return req.get(`${developerPage()}/username-available?username=${userName}`)
+  },
+
+  updateProfileBackground(background) {
+    return req.post(`${developerPage()}/background`, background)
+  },
 })
