@@ -1,8 +1,14 @@
 import urls from './urls'
 
 export default req => ({
-  createApp({ appName, refCode, blueprintId, region }) {
-    return req.post('/console/applications', { appName, refCode, region }).query({ blueprintId })
+  createApp({ appName, refCode, blueprintId, region }, domain) {
+    let url = '/console/applications'
+
+    if (domain) {
+      url = `${window.location.port}//${domain}${url}`
+    }
+
+    return req.post(url, { appName, refCode, region }).query({ blueprintId })
   },
 
   getApps() {
