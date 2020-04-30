@@ -5,7 +5,7 @@ export default req => ({
     let url = '/console/applications'
 
     if (domain) {
-      url = `${window.location.port}//${domain}${url}`
+      url = `${window.location.protocol}//${domain}${url}`
     }
 
     return req.post(url, { appName, refCode, region }).query({ blueprintId })
