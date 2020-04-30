@@ -1,4 +1,5 @@
 import urls from './urls'
+import { cookieEnabled, deleteCookie, getCookie } from './utils/cookie'
 
 /**
  *
@@ -30,7 +31,7 @@ export default (req, context) => ({
       .unwrapBody(false)
       .send({ login, password })
       .then(res => {
-        const authKey = res.headers['auth-key']
+        const authKey = (cookieEnabled() && getCookie('dev-auth-key')) || res.headers['auth-key']
 
         context.setAuthKey(authKey)
 
@@ -57,6 +58,10 @@ export default (req, context) => ({
   logout() {
     return req.delete('/console/home/logout').then(() => {
       context.setAuthKey(null)
+
+      if (cookieEnabled()) {
+        deleteCookie('dev-auth-key')
+      }
     })
   },
 
