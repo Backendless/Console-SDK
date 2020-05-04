@@ -63,5 +63,17 @@ export default req => ({
 
   markEventPlayed(taskId) {
     return req.put(`${urls.gamification()}/mark-event-played`, { taskId })
+  },
+
+  enableAPITracking() { // enable API monitoring for all developer's apps
+    return req.put(`${urls.gamification()}/enable`)
+  },
+
+  disableAPITracking() { // disable API monitoring for all developer's apps
+    return req.put(`${urls.gamification()}/disable`)
+  },
+
+  isAPITrackingEnabled() {
+    return req.get(`${urls.gamification()}/enabled`)
   }
 })
