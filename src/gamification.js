@@ -75,5 +75,9 @@ export default req => ({
 
   isAPITrackingEnabled() {
     return req.get(`${urls.gamification()}/enabled`)
+  },
+
+  unlockFreePlan(appId) {
+    return req.put(`${urls.gamification()}/plan/free/unlock`).query({ appId })
   }
 })
