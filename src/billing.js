@@ -43,5 +43,9 @@ export default req => ({
 
   getCurrentBillingPeriodEnd(appId) {
     return req.billing.get(`${urls.billing(appId)}/period/end`)
+  },
+
+  unlockFreePlan(appId) {
+    return req.put(`${urls.appConsole(appId)}/billing/plan/free/unlock`)
   }
 })
