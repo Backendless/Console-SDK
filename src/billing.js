@@ -46,6 +46,6 @@ export default req => ({
   },
 
   unlockFreePlan(appId) {
-    return req.put(`${urls.appConsole(appId)}/billing/plan/free/unlock`)
+    return req.put(`/${appId}/billing/plan/free/unlock`)
   }
 })
