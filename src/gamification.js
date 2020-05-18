@@ -83,5 +83,9 @@ export default req => ({
 
   getFreeMilestoneProgress() {
     return req.get(`${urls.gamification()}/free-plan-milestone-progress`)
+  },
+
+  getFreePlanStatus() {
+    return req.get(`${urls.gamification()}/free-plan-status`)
   }
 })
