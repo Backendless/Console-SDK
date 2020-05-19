@@ -22,7 +22,6 @@ const OperationsTypes = {
   ENABLE_DISABLE_GIT        : 10, //Enable/disable git
   INSTALL_LICENSE           : undefined, //TODO Install license
   MANAGE_API_KEYS           : 4, //Manage API keys
-  PROMOTE_APPLICATION       : undefined, //Promote schema from one of your applications to another
 
   /** Billing */
   BILLING_SECTION            : 'Billing section',
@@ -96,7 +95,6 @@ const OperationsTypes = {
   CREATE_MODIFY_DELETE_CHANEL_OPTIONS : 75, //Create/Rename/Delete channel options
   CREATE_MODIFY_DELETE_CHANEL         : 67, //Create/Rename/Delete messaging channels
   CREATE_MODIFY_DELETE_PUSH_TEMPLATE  : 71, //Create/Rename/Delete push template
-  DELETE_MESSAGING_CHANNEL_PERMISSIONS: undefined, //TODO Delete messaging channel permissions
   SEND_MESSAGE_TO_CHANNEL             : 39, //Send a message to a channel
   SEND_PUSH_BY_TEMPLATE               : 77, //Send push notification with template
 
