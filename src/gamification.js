@@ -79,5 +79,13 @@ export default req => ({
 
   unlockFreePlan(appId) {
     return req.put(`${urls.gamification()}/plan/free/unlock`).query({ appId })
+  },
+
+  getFreeMilestoneProgress() {
+    return req.get(`${urls.gamification()}/free-plan-milestone-progress`)
+  },
+
+  getFreePlanStatus() {
+    return req.get(`${urls.gamification()}/free-plan-status`)
   }
 })
