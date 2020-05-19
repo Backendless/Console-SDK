@@ -1,11 +1,12 @@
 import urls from './urls'
 
 const routes = {
-  init                    : 'ui-builder/init',
-  localComponents         : 'ui-builder/library/components/local',
-  remoteComponents        : 'ui-builder/library/components/remote',
-  importComponent         : 'ui-builder/library/components/import',
-  exportComponent         : 'ui-builder/library/components/export',
+  init: 'ui-builder/init',
+
+  localComponents : 'ui-builder/library/components/local',
+  remoteComponents: 'ui-builder/library/components/remote',
+  importComponent : 'ui-builder/library/components/import',
+  exportComponent : 'ui-builder/library/components/export',
 
   customFunctions    : 'ui-builder/library/custom/functions',
   customFunction     : 'ui-builder/library/custom/functions/:functionId',
@@ -13,12 +14,12 @@ const routes = {
 
   containers              : 'ui-builder/containers',
   container               : 'ui-builder/containers/:containerName',
+  containerAction         : 'ui-builder/containers/:containerName/:action',
   containerPages          : 'ui-builder/containers/:containerName/pages',
   containerPage           : 'ui-builder/containers/:containerName/pages/:pageName',
   containerPageUI         : 'ui-builder/containers/:containerName/pages/:pageName/ui',
   containerPageLogic      : 'ui-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
   containerPageUnusedLogic: 'ui-builder/containers/:containerName/pages/:pageName/unused-logic',
-
 }
 
 Object.keys(routes).forEach(key => {
@@ -64,6 +65,8 @@ export default req => ({
 
   //-- LIBRARY -----//
 
+  //-- CONTAINER -----//
+
   createContainer(appId, container) {
     return req.post(routes.containers(appId), container)
   },
@@ -79,6 +82,14 @@ export default req => ({
   getContainer(appId, containerName) {
     return req.get(routes.container(appId, containerName))
   },
+
+  publishContainer(appId, containerName) {
+    return req.post(routes.containerAction(appId, containerName, 'publish'))
+  },
+
+  //-- CONTAINER -----//
+
+  //-- PAGE -----//
 
   createPage(appId, containerName, data) {
     return req.post(routes.containerPages(appId, containerName), data)
@@ -120,6 +131,10 @@ export default req => ({
     return req.delete(routes.containerPageUnusedLogic(appId, containerName, pageName), { componentUids })
   },
 
+  //-- PAGE -----//
+
+  //-- FUNCTIONS -----//
+
   getCustomFunctions(appId) {
     return req.get(routes.customFunctions(appId))
   },
@@ -143,5 +158,7 @@ export default req => ({
   deleteCustomFunction(appId, id) {
     return req.delete(routes.customFunction(appId, id))
   },
+
+  //-- FUNCTIONS -----//
 
 })
