@@ -47,5 +47,10 @@ export default req => ({
 
   unlockFreePlan(appId) {
     return req.billing.put(`/${appId}/billing/plan/free/unlock`)
+  },
+
+  exchangeBBtoUSD(appId, bbAmount) {
+    return req.billing.post(`${urls.billing(appId)}/bb/exchange`, bbAmount)
+      .set({ 'Content-Type': 'application/json' })
   }
 })
