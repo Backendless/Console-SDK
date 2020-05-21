@@ -20,7 +20,6 @@ const OperationsTypes = {
   MODIFY_SOCIAL_SETTINGS    : 5, //Modify social settings
   DELETE_APPLICATION        : 11, //Delete application
   ENABLE_DISABLE_GIT        : 10, //Enable/disable git
-  //INSTALL_LICENSE           : undefined, //TODO Install license
   MANAGE_API_KEYS           : 4, //Manage API keys
 
   /** Billing */
