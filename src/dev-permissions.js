@@ -94,7 +94,7 @@ const OperationsTypes = {
   CREATE_MODIFY_DELETE_CHANEL_OPTIONS : 75, //Create/Rename/Delete channel options
   CREATE_MODIFY_DELETE_CHANEL         : 67, //Create/Rename/Delete messaging channels
   CREATE_MODIFY_DELETE_PUSH_TEMPLATE  : 71, //Create/Rename/Delete push template
-  SEND_MESSAGE_TO_CHANNEL             : 39, //Send a message to a channel
+  SEND_MESSAGE_TO_CHANNEL             : 69, //Send a message to a channel
   SEND_PUSH_BY_TEMPLATE               : 77, //Send push notification with template
 
   /** Security Roles */
