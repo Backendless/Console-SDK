@@ -1,4 +1,4 @@
-export const cookieEnabled = () => navigator && navigator.cookieEnabled
+export const cookieEnabled = () => typeof window !== 'undefined' && navigator && navigator.cookieEnabled
 
 export function getCookie(name) {
   const matches = document.cookie.match(new RegExp(
