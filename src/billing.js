@@ -45,8 +45,8 @@ export default req => ({
     return req.billing.get(`${urls.billing(appId)}/period/end`)
   },
 
-  unlockFreePlan(appId) {
-    return req.billing.put(`/${appId}/billing/plan/free/unlock`)
+  unlockPlan(appId, planId) {
+    return req.billing.put(`/${appId}/billing/plan/${planId}/unlock`)
   },
 
   exchangeBBtoUSD(appId, bbAmount) {
