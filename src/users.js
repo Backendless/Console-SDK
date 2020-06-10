@@ -1,4 +1,4 @@
-import { appConsole as appUrl } from './urls'
+import { appConsole as appUrl, users } from './urls'
 
 export default req => ({
   getUsersRegs(appId) {
@@ -35,5 +35,49 @@ export default req => ({
 
   updateSocialParams(appId, param) {
     return req.post(`${appUrl(appId)}/socialparams`, param)
-  }
+  },
+
+  getOAuth1ProviderTemplates(appId) {
+    return req.get(`${users(appId)}/oauth1-templates`)
+  },
+
+  getOAuth2ProviderTemplates(appId) {
+    return req.get(`${users(appId)}/oauth2-templates`)
+  },
+
+  getOAuth1Providers(appId) {
+    return req.get(`${users(appId)}/oauth1`)
+  },
+
+  getOAuth2Providers(appId) {
+    return req.get(`${users(appId)}/oauth2`)
+  },
+
+  createOAuth2Provider(appId, provider) {
+    return req.post(`${users(appId)}/oauth2`, provider)
+  },
+
+  updateOAuth1Provider(appId, provider) {
+    return req.put(`${users(appId)}/oauth1/${provider.id}`, provider)
+  },
+
+  updateOAuth2Provider(appId, provider) {
+    return req.put(`${users(appId)}/oauth2/${provider.id}`, provider)
+  },
+
+  createOAuth1ProviderFromTemplate(appId, data) {
+    return req.post(`${users(appId)}/oauth1/create-from-template`, data)
+  },
+
+  createOAuth2ProviderFromTemplate(appId, data) {
+    return req.post(`${users(appId)}/oauth2/create-from-template`, data)
+  },
+
+  removeOAuth1Provider(appId, providerId) {
+    return req.delete(`${users(appId)}/oauth1/${providerId}`)
+  },
+
+  removeOAuth2Provider(appId, providerId) {
+    return req.delete(`${users(appId)}/oauth2/${providerId}`)
+  },
 })

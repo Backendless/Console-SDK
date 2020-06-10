@@ -160,6 +160,8 @@ export const devTeam = (appId, devId) => `${appConsole(appId)}/devteam${optional
 
 export const developerPage = () => `${console()}/developer-page`
 
+export const users = appId => `${appConsole(appId)}/users`
+
 export default {
   appConsole,
   appInfo,
@@ -222,6 +224,7 @@ export default {
   serverCode,
   tableColumns,
   userActivity,
+  users,
   dataConnectors,
   dataConnectorTemplates,
   dataConnector,
