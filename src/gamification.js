@@ -87,5 +87,13 @@ export default req => ({
 
   getFreePlanStatus() {
     return req.get(`${urls.gamification()}/free-plan-status`)
+  },
+
+  isMissionsVisited() {
+    return req.get(`${urls.gamification()}/missions-visited`)
+  },
+
+  setMissionsVisited() {
+    return req.put(`${urls.gamification()}/missions-visited`)
   }
 })
