@@ -52,5 +52,9 @@ export default req => ({
   exchangeBBtoUSD(appId, bbAmount) {
     return req.billing.post(`${urls.billing(appId)}/bb/exchange`, bbAmount)
       .set({ 'Content-Type': 'application/json' })
-  }
+  },
+
+  reactivateSubscription(appId) {
+    return req.billing.put(`${urls.billing(appId)}/subscriptions/reactivate`)
+  },
 })
