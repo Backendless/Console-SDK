@@ -58,6 +58,7 @@ export default req => ({
             return { error: file.name }
           }
         })
+        .catch(() => ({ error: file.name }))
     }
 
     return listGenerators(appId, authKey).then(({ data }) => Promise.all(data.map(getFeatureFile)))
