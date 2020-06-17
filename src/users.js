@@ -53,16 +53,38 @@ export default req => ({
     return req.get(`${users(appId)}/oauth2`)
   },
 
+  getOAuth1Provider(appId, providerId) {
+    return req.get(`${users(appId)}/oauth1/${providerId}`)
+  },
+
+  getOAuth2Provider(appId, providerId) {
+    return req.get(`${users(appId)}/oauth2/${providerId}`)
+  },
+
   createOAuth2Provider(appId, provider) {
     return req.post(`${users(appId)}/oauth2`, provider)
   },
 
   updateOAuth1Provider(appId, provider) {
-    return req.put(`${users(appId)}/oauth1/${provider.id}`, provider)
+    const providerId = provider.id
+    const data = Object.assign({}, provider)
+
+    delete data.id
+    delete data.code
+    delete data.callbackUrl
+
+    return req.put(`${users(appId)}/oauth1/${providerId}`, data)
   },
 
   updateOAuth2Provider(appId, provider) {
-    return req.put(`${users(appId)}/oauth2/${provider.id}`, provider)
+    const providerId = provider.id
+    const data = Object.assign({}, provider)
+
+    delete data.id
+    delete data.code
+    delete data.callbackUrl
+
+    return req.put(`${users(appId)}/oauth2/${providerId}`, data)
   },
 
   createOAuth1ProviderFromTemplate(appId, data) {
@@ -80,4 +102,12 @@ export default req => ({
   removeOAuth2Provider(appId, providerId) {
     return req.delete(`${users(appId)}/oauth2/${providerId}`)
   },
+
+  getOAuth1CallbackUrl(appId, providerCode) {
+    return req.get(`${users(appId)}/oauth1/${providerCode}/callback-url`)
+  },
+
+  getOAuth2CallbackUrl(appId, providerCode) {
+    return req.get(`${users(appId)}/oauth2/${providerCode}/callback-url`)
+  }
 })
