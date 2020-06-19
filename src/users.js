@@ -66,25 +66,11 @@ export default req => ({
   },
 
   updateOAuth1Provider(appId, provider) {
-    const providerId = provider.id
-    const data = Object.assign({}, provider)
-
-    delete data.id
-    delete data.code
-    delete data.callbackUrl
-
-    return req.put(`${users(appId)}/oauth1/${providerId}`, data)
+    return req.put(`${users(appId)}/oauth1/${provider.id}`, provider)
   },
 
   updateOAuth2Provider(appId, provider) {
-    const providerId = provider.id
-    const data = Object.assign({}, provider)
-
-    delete data.id
-    delete data.code
-    delete data.callbackUrl
-
-    return req.put(`${users(appId)}/oauth2/${providerId}`, data)
+    return req.put(`${users(appId)}/oauth2/${provider.id}`, provider)
   },
 
   createOAuth1ProviderFromTemplate(appId, data) {
