@@ -4,7 +4,6 @@
  * this class or some part of it
  */
 
-import _escape from 'lodash/escape'
 import urls from './urls'
 import * as qs from 'backendless-request/lib/qs'
 import { PermissionPolicies, PermissionServices, ALL_OBJECTS } from './constants/security'
@@ -108,7 +107,7 @@ export const buildDeleteUrl = (appId, policy, policyItemId, service, serviceItem
   const isRolesPolicy = policy === PermissionPolicies.ROLES
   const isObjectACL = objectId !== ALL_OBJECTS
 
-  const operationEscaped = _escape(operation).replace('/', '%2f')
+  const operationEscaped = encodeURIComponent(operation)
 
   if (isOwnerPolicy) {
     return `${baseUrl(appId)}/${service}/ownerpolicy/${serviceItemId}/${operationEscaped}`
