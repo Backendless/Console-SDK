@@ -114,7 +114,7 @@ export const buildDeleteUrl = (appId, policy, policyItemId, service, serviceItem
   }
 
   if (isObjectACL) {
-    const stickingPoint = encodeURIComponent(isRolesPolicy ? operationEscaped : policyItemId)
+    const stickingPoint = isRolesPolicy ? operationEscaped : encodeURIComponent(policyItemId)
 
     return `${baseUrl(appId)}/${service}/${serviceItemName}/objectAcl/${objectId}/${policy}/${stickingPoint}`
   }
