@@ -4,6 +4,7 @@
  * this class or some part of it
  */
 
+import _escape from 'lodash/escape'
 import urls from './urls'
 import * as qs from 'backendless-request/lib/qs'
 import { PermissionPolicies, PermissionServices, ALL_OBJECTS } from './constants/security'
@@ -86,8 +87,6 @@ export const buildPutUrl = (appId, policy, service, serviceItemId, serviceItemNa
     stickingPoint += '/access/' + permission.access
   }
 
-
-
   return `${baseUrl(appId)}/${stickingPoint}`
 }
 
@@ -109,18 +108,20 @@ export const buildDeleteUrl = (appId, policy, policyItemId, service, serviceItem
   const isRolesPolicy = policy === PermissionPolicies.ROLES
   const isObjectACL = objectId !== ALL_OBJECTS
 
+  const operationEscaped = _escape(operation).replace('/', '%2f')
+
   if (isOwnerPolicy) {
-    return `${baseUrl(appId)}/${service}/ownerpolicy/${serviceItemId}/${operation}`
+    return `${baseUrl(appId)}/${service}/ownerpolicy/${serviceItemId}/${operationEscaped}`
   }
 
   if (isObjectACL) {
-    const stickingPoint = encodeURIComponent(isRolesPolicy ? operation : policyItemId)
+    const stickingPoint = encodeURIComponent(isRolesPolicy ? operationEscaped : policyItemId)
 
     return `${baseUrl(appId)}/${service}/${serviceItemName}/objectAcl/${objectId}/${policy}/${stickingPoint}`
   }
 
   if (isObjectACL && isRolesPolicy) {
-    return `${baseUrl(appId)}/${service}/${serviceItemName}/ownerpolicy/${policyItemId}/${operation}`
+    return `${baseUrl(appId)}/${service}/${serviceItemName}/ownerpolicy/${policyItemId}/${operationEscaped}`
   }
 
   if (isFilesService) {
@@ -133,8 +134,8 @@ export const buildDeleteUrl = (appId, policy, policyItemId, service, serviceItem
 
   let result = `${baseUrl(appId)}/${service}/${serviceItemId}/${policy}/${policyItemId}`
 
-  if (operation && operation !== 'all') {
-    result += '/' + operation
+  if (operationEscaped && operationEscaped !== 'all') {
+    result += '/' + operationEscaped
   }
 
   return result
