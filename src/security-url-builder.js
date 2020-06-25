@@ -107,7 +107,7 @@ export const buildDeleteUrl = (appId, policy, policyItemId, service, serviceItem
   const isRolesPolicy = policy === PermissionPolicies.ROLES
   const isObjectACL = objectId !== ALL_OBJECTS
 
-  const operationEscaped = encodeURIComponent(operation)
+  const operationEscaped = operation && encodeURIComponent(operation)
 
   if (isOwnerPolicy) {
     return `${baseUrl(appId)}/${service}/ownerpolicy/${serviceItemId}/${operationEscaped}`
