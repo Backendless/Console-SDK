@@ -58,10 +58,11 @@ export default req => ({
             return { error: file.name }
           }
         })
-        .catch(() => ({ error: file.name }))
+        .catch(() => undefined)
     }
 
     return listGenerators(appId, authKey).then(({ data }) => Promise.all(data.map(getFeatureFile)))
+      .then(features => features.filter(feature => !!feature))
   },
 
   getCache(appId, authKey) {
