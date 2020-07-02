@@ -27,10 +27,10 @@ export const securityRoles = appId => `${security(appId)}/roles`
 const generalizeEventCategory = category => !category || category === 'TIMER' ? 'timers' : 'events'
 
 export const blHandlersCategory = (appId, mode, category) =>
-  `${ serverCode(appId) }/${ mode.toLowerCase() }/${ generalizeEventCategory(category) }`
+  `${serverCode(appId)}/${mode.toLowerCase()}/${generalizeEventCategory(category)}`
 
 export const blHandlersChain = (appId, eventId, context) =>
-  `${ serverCode(appId) }/chain/${ eventId }/${ context }`
+  `${serverCode(appId)}/chain/${eventId}/${context}`
 
 export const fileDownload = (appId, authKey, filePath, options = {}) =>
   `${options.host || ''}${appConsole(appId, authKey)}/files/download/${filePath}`
@@ -161,6 +161,8 @@ export const devTeam = (appId, devId) => `${appConsole(appId)}/devteam${optional
 export const developerPage = () => `${console()}/developer-page`
 
 export const users = appId => `${appConsole(appId)}/users`
+export const oauth1 = appId => `${users(appId)}/oauth1`
+export const oauth2 = appId => `${users(appId)}/oauth2`
 
 export default {
   appConsole,

@@ -1,4 +1,4 @@
-import { appConsole as appUrl, users } from './urls'
+import { appConsole as appUrl, users, oauth1, oauth2 } from './urls'
 
 export default req => ({
   getUsersRegs(appId) {
@@ -46,54 +46,54 @@ export default req => ({
   },
 
   getOAuth1Providers(appId) {
-    return req.get(`${users(appId)}/oauth1`)
+    return req.get(`${oauth1(appId)}`)
   },
 
   getOAuth2Providers(appId) {
-    return req.get(`${users(appId)}/oauth2`)
+    return req.get(`${oauth2(appId)}`)
   },
 
   getOAuth1Provider(appId, providerId) {
-    return req.get(`${users(appId)}/oauth1/${providerId}`)
+    return req.get(`${oauth1(appId)}/${providerId}`)
   },
 
   getOAuth2Provider(appId, providerId) {
-    return req.get(`${users(appId)}/oauth2/${providerId}`)
+    return req.get(`${oauth2(appId)}/${providerId}`)
   },
 
   createOAuth2Provider(appId, provider) {
-    return req.post(`${users(appId)}/oauth2`, provider)
+    return req.post(`${oauth2(appId)}`, provider)
   },
 
   updateOAuth1Provider(appId, provider) {
-    return req.put(`${users(appId)}/oauth1/${provider.id}`, provider)
+    return req.put(`${oauth1(appId)}/${provider.id}`, provider)
   },
 
   updateOAuth2Provider(appId, provider) {
-    return req.put(`${users(appId)}/oauth2/${provider.id}`, provider)
+    return req.put(`${oauth2(appId)}/${provider.id}`, provider)
   },
 
   createOAuth1ProviderFromTemplate(appId, data) {
-    return req.post(`${users(appId)}/oauth1/create-from-template`, data)
+    return req.post(`${oauth1(appId)}/create-from-template`, data)
   },
 
   createOAuth2ProviderFromTemplate(appId, data) {
-    return req.post(`${users(appId)}/oauth2/create-from-template`, data)
+    return req.post(`${oauth2(appId)}/create-from-template`, data)
   },
 
   removeOAuth1Provider(appId, providerId) {
-    return req.delete(`${users(appId)}/oauth1/${providerId}`)
+    return req.delete(`${oauth1(appId)}/${providerId}`)
   },
 
   removeOAuth2Provider(appId, providerId) {
-    return req.delete(`${users(appId)}/oauth2/${providerId}`)
+    return req.delete(`${oauth2(appId)}/${providerId}`)
   },
 
   getOAuth1CallbackUrl(appId, providerCode) {
-    return req.get(`${users(appId)}/oauth1/${providerCode}/callback-url`)
+    return req.get(`${oauth1(appId)}/${providerCode}/callback-url`)
   },
 
   getOAuth2CallbackUrl(appId, providerCode) {
-    return req.get(`${users(appId)}/oauth2/${providerCode}/callback-url`)
+    return req.get(`${oauth2(appId)}/${providerCode}/callback-url`)
   }
 })
