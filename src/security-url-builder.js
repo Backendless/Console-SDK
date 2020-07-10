@@ -6,6 +6,7 @@
 
 import urls from './urls'
 import * as qs from 'backendless-request/lib/qs'
+import _isEmpty from 'lodash/isEmpty'
 import { PermissionPolicies, PermissionServices, ALL_OBJECTS } from './constants/security'
 
 const baseUrl = appId => urls.security(appId)
@@ -45,7 +46,7 @@ export const buildGetUrl = (appId, policy, service, serviceItemId, serviceItemNa
     stickingPoint = `${service}/${serviceItemName}/objectAcl/${objectId}/${policy}`
   }
 
-  return `${baseUrl(appId)}/${stickingPoint}?${qs.stringify(filterParams)}`
+  return `${baseUrl(appId)}/${stickingPoint}${_isEmpty(filterParams) ? '' : `?${qs.stringify(filterParams)}`}`
 }
 
 /**
