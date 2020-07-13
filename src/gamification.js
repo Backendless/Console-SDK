@@ -95,5 +95,9 @@ export default req => ({
 
   setMissionsVisited() {
     return req.put(`${urls.gamification()}/missions-visited`)
+  },
+
+  getSocialPostsCollection() {
+    return req.get(`${urls.gamification()}/social-posts-collection`)
   }
 })
