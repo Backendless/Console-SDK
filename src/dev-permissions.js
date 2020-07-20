@@ -17,7 +17,7 @@ const OperationsTypes = {
   MODIFY_EMAIL_SETTINGS     : 7, //Modify email settings
   MODIFY_LIMIT_NOTIFICATION : 14, //Modify limit notification
   MODIFY_MOBILE_SETTINGS    : 6, //Modify mobile settings
-  MODIFY_SOCIAL_SETTINGS    : 5, //Modify social settings
+  MANAGE_OAUTH_PROVIDERS    : 5, //Manage OAuth2 providers
   DELETE_APPLICATION        : 11, //Delete application
   ENABLE_DISABLE_GIT        : 10, //Enable/disable git
   MANAGE_API_KEYS           : 4, //Manage API keys
