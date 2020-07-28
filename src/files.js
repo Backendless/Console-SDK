@@ -14,17 +14,6 @@ const getFileFolder = file => {
   return ''
 }
 
-const SERVER_CODE_FOLDER = /^servercode/
-const isServerCodeFolder = folderName => SERVER_CODE_FOLDER.test(folderName)
-
-const enrichDirectoryParams = (directory, path) => {
-  const readOnly = isServerCodeFolder(path)
-
-  directory.readOnly = readOnly
-
-  return directory
-}
-
 export default req => ({
 
   loadDirectory(appId, authKey, path, params) {
@@ -36,7 +25,7 @@ export default req => ({
       .query({ pattern, sub, sortBy, sortDirection, pageSize, offset })
       .cacheTags(FOLDER(appId, path))
 
-    return totalRows(req).getWithData(dataReq).then(result => enrichDirectoryParams(result, path))
+    return totalRows(req).getWithData(dataReq)
   },
 
   createDir(appId, path, folderName) {
