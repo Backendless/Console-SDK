@@ -89,11 +89,11 @@ export default req => ({
     return req.delete(`${oauth2(appId)}/${providerId}`)
   },
 
-  getOAuth1CallbackUrl(appId, providerCode) {
-    return req.get(`${oauth1(appId)}/${providerCode}/callback-url`)
+  getOAuth1CallbackUrls(appId, providerCode) {
+    return req.get(`${oauth1(appId)}/${providerCode}/callback-urls`)
   },
 
-  getOAuth2CallbackUrl(appId, providerCode) {
-    return req.get(`${oauth2(appId)}/${providerCode}/callback-url`)
+  getOAuth2CallbackUrls(appId, providerCode) {
+    return req.get(`${oauth2(appId)}/${providerCode}/callback-urls`)
   }
 })
