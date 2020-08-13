@@ -11,7 +11,7 @@ function normalizeAppSettings(result) {
   result.apiKeys.forEach(apiKey => {
     result.apiKeysMap[apiKey.name] = apiKey.apiKey
 
-    const systemAPIKeyIndex = SYSTEM_API_KEYS.indexOf(apiKey.name)
+    const systemAPIKeyIndex = SYSTEM_API_KEYS.indexOf(apiKey.deviceType)
 
     if (systemAPIKeyIndex >= 0) {
       systemAPIKeys[systemAPIKeyIndex] = apiKey
