@@ -6,6 +6,7 @@
 
 import urls from './urls'
 import * as qs from 'backendless-request/lib/qs'
+import _isEmpty from 'lodash/isEmpty'
 import { PermissionPolicies, PermissionServices, ALL_OBJECTS } from './constants/security'
 
 const baseUrl = appId => urls.security(appId)
@@ -45,7 +46,7 @@ export const buildGetUrl = (appId, policy, service, serviceItemId, serviceItemNa
     stickingPoint = `${service}/${serviceItemName}/objectAcl/${objectId}/${policy}`
   }
 
-  return `${baseUrl(appId)}/${stickingPoint}?${qs.stringify(filterParams)}`
+  return `${baseUrl(appId)}/${stickingPoint}${_isEmpty(filterParams) ? '' : `?${qs.stringify(filterParams)}`}`
 }
 
 /**
@@ -86,8 +87,6 @@ export const buildPutUrl = (appId, policy, service, serviceItemId, serviceItemNa
     stickingPoint += '/access/' + permission.access
   }
 
-
-
   return `${baseUrl(appId)}/${stickingPoint}`
 }
 
@@ -109,18 +108,20 @@ export const buildDeleteUrl = (appId, policy, policyItemId, service, serviceItem
   const isRolesPolicy = policy === PermissionPolicies.ROLES
   const isObjectACL = objectId !== ALL_OBJECTS
 
+  const operationEscaped = operation && encodeURIComponent(operation)
+
   if (isOwnerPolicy) {
-    return `${baseUrl(appId)}/${service}/ownerpolicy/${serviceItemId}/${operation}`
+    return `${baseUrl(appId)}/${service}/ownerpolicy/${serviceItemId}/${operationEscaped}`
   }
 
   if (isObjectACL) {
-    const stickingPoint = encodeURIComponent(isRolesPolicy ? operation : policyItemId)
+    const stickingPoint = isRolesPolicy ? operationEscaped : encodeURIComponent(policyItemId)
 
     return `${baseUrl(appId)}/${service}/${serviceItemName}/objectAcl/${objectId}/${policy}/${stickingPoint}`
   }
 
   if (isObjectACL && isRolesPolicy) {
-    return `${baseUrl(appId)}/${service}/${serviceItemName}/ownerpolicy/${policyItemId}/${operation}`
+    return `${baseUrl(appId)}/${service}/${serviceItemName}/ownerpolicy/${policyItemId}/${operationEscaped}`
   }
 
   if (isFilesService) {
@@ -133,8 +134,8 @@ export const buildDeleteUrl = (appId, policy, policyItemId, service, serviceItem
 
   let result = `${baseUrl(appId)}/${service}/${serviceItemId}/${policy}/${policyItemId}`
 
-  if (operation && operation !== 'all') {
-    result += '/' + operation
+  if (operationEscaped && operationEscaped !== 'all') {
+    result += '/' + operationEscaped
   }
 
   return result

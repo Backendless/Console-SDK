@@ -107,6 +107,10 @@ export default req => ({
     return totalRows(req).getFor(recordsReq(req, appId, table, query, resetCache))
   },
 
+  getRecordsCountForTables(appId, tables, resetCache) {
+    return req.post(`${urls.data(appId)}/tables-counters`, { tables, resetCache })
+  },
+
   createRecord(appId, table, record) {
     return req.post(urls.dataTable(appId, table.name), record).cacheTags(TABLE_DATA(table.tableId))
   },
@@ -142,12 +146,8 @@ export default req => ({
     const url = tableColumnsUrl(appId, table)
     const urlSuffix = COLUMNS_URL_SUFFIX[column.dataType]
 
-    if (isRelType(column.dataType)) {
-      column.columnName = column.name
-    }
-
     return req.post(url + (urlSuffix ? `/${urlSuffix}` : ''), column).then(resp => {
-      return { ...resp, name: resp.columnName || resp.name, dataType: column.dataType }
+      return { ...resp, dataType: column.dataType }
     })
   },
 
@@ -165,13 +165,8 @@ export default req => ({
     const urlSuffix = COLUMNS_URL_SUFFIX[prevColumn.dataType] || prevColumn.name
     const url = tableColumnsUrl(appId, table)
 
-    if (isRelType(column.dataType)) {
-      column.columnName = column.name
-    }
-
     return req.put(`${url}/${urlSuffix}`, column).then(resp => ({
       ...resp,
-      name    : resp.columnName || resp.name,
       dataType: resp.dataType || prevColumn.dataType
     }))
   },
@@ -199,10 +194,10 @@ const normalizeTable = table => ({
   geoRelations: table.geoRelations && table.geoRelations.map(normalizeGEORelationTableColumn) || []
 })
 
-const normalizeDataRelationTableColumn = ({ columnName, ...relation }) => {
-  return { ...relation, name: columnName, dataType: DataTypes.DATA_REF }
+const normalizeDataRelationTableColumn = relation => {
+  return { ...relation, dataType: DataTypes.DATA_REF }
 }
 
-const normalizeGEORelationTableColumn = ({ columnName, ...relation }) => {
-  return { ...relation, name: columnName, dataType: DataTypes.GEO_REF }
+const normalizeGEORelationTableColumn = relation => {
+  return { ...relation, dataType: DataTypes.GEO_REF }
 }

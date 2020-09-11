@@ -1,4 +1,4 @@
-import { appConsole as appUrl } from './urls'
+import { appConsole as appUrl, users, oauth1, oauth2 } from './urls'
 
 export default req => ({
   getUsersRegs(appId) {
@@ -35,5 +35,65 @@ export default req => ({
 
   updateSocialParams(appId, param) {
     return req.post(`${appUrl(appId)}/socialparams`, param)
+  },
+
+  getOAuth1ProviderTemplates(appId) {
+    return req.get(`${users(appId)}/oauth1-templates`)
+  },
+
+  getOAuth2ProviderTemplates(appId) {
+    return req.get(`${users(appId)}/oauth2-templates`)
+  },
+
+  getOAuth1Providers(appId) {
+    return req.get(`${oauth1(appId)}`)
+  },
+
+  getOAuth2Providers(appId) {
+    return req.get(`${oauth2(appId)}`)
+  },
+
+  getOAuth1Provider(appId, providerId) {
+    return req.get(`${oauth1(appId)}/${providerId}`)
+  },
+
+  getOAuth2Provider(appId, providerId) {
+    return req.get(`${oauth2(appId)}/${providerId}`)
+  },
+
+  createOAuth2Provider(appId, provider) {
+    return req.post(`${oauth2(appId)}`, provider)
+  },
+
+  updateOAuth1Provider(appId, provider) {
+    return req.put(`${oauth1(appId)}/${provider.id}`, provider)
+  },
+
+  updateOAuth2Provider(appId, provider) {
+    return req.put(`${oauth2(appId)}/${provider.id}`, provider)
+  },
+
+  createOAuth1ProviderFromTemplate(appId, data) {
+    return req.post(`${oauth1(appId)}/create-from-template`, data)
+  },
+
+  createOAuth2ProviderFromTemplate(appId, data) {
+    return req.post(`${oauth2(appId)}/create-from-template`, data)
+  },
+
+  removeOAuth1Provider(appId, providerId) {
+    return req.delete(`${oauth1(appId)}/${providerId}`)
+  },
+
+  removeOAuth2Provider(appId, providerId) {
+    return req.delete(`${oauth2(appId)}/${providerId}`)
+  },
+
+  getOAuth1CallbackUrls(appId, providerCode) {
+    return req.get(`${oauth1(appId)}/${providerCode}/callback-urls`)
+  },
+
+  getOAuth2CallbackUrls(appId, providerCode) {
+    return req.get(`${oauth2(appId)}/${providerCode}/callback-urls`)
   }
 })

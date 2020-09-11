@@ -1,6 +1,6 @@
 {
   "name": "backendless-console-sdk",
-  "version": "2.10.16",
+  "version": "2.10.26",
   "description": "Backendless Console SDK for Node.js and browser",
   "browser": "dist/backendless-console-sdk.js",
   "main": "lib/index.js",
@@ -46,6 +46,7 @@
     "@babel/preset-env": "^7.9.5",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
+    "babel-runtime": "^6.26.0",
     "cross-env": "^5.2.1",
     "eslint": "^6.8.0",
     "rimraf": "^3.0.2",
