@@ -83,8 +83,8 @@ export default req => ({
     return req.get(routes.container(appId, containerName))
   },
 
-  publishContainer(appId, containerName) {
-    return req.post(routes.containerAction(appId, containerName, 'publish'))
+  publishContainer(appId, containerName, targetPath) {
+    return req.post(routes.containerAction(appId, containerName, 'publish'), { targetPath })
   },
 
   //-- CONTAINER -----//
