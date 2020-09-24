@@ -15,6 +15,8 @@ const routes = {
   containers              : 'ui-builder/containers',
   container               : 'ui-builder/containers/:containerName',
   containerAction         : 'ui-builder/containers/:containerName/:action',
+  containerStyles         : 'ui-builder/containers/:containerName/styles',
+  containerStyle          : 'ui-builder/containers/:containerName/styles/:name',
   containerPages          : 'ui-builder/containers/:containerName/pages',
   containerPage           : 'ui-builder/containers/:containerName/pages/:pageName',
   containerPageUI         : 'ui-builder/containers/:containerName/pages/:pageName/ui',
@@ -88,6 +90,26 @@ export default req => ({
   },
 
   //-- CONTAINER -----//
+
+  //-- STYLES -----//
+
+  loadContainerStyles(appId, containerName) {
+    return req.get(routes.containerStyles(appId, containerName))
+  },
+
+  loadContainerStyle(appId, containerName, name) {
+    return req.get(routes.containerStyle(appId, containerName, name))
+  },
+
+  saveContainerStyle(appId, containerName, name, style) {
+    return req.put(routes.containerStyle(appId, containerName, name), style)
+  },
+
+  deleteContainerStyle(appId, containerName, name) {
+    return req.delete(routes.containerStyle(appId, containerName, name))
+  },
+
+  //-- STYLES -----//
 
   //-- PAGE -----//
 
