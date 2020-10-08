@@ -75,8 +75,12 @@ export default req => ({
       .then(normalizeAppSettings)
   },
 
-  regenerateAPIKey(appId, keyName) {
-    return req.post(`${urls.appConsole(appId)}/apikey/regenerate/${keyName}`)
+  regenerateAPIKey(appId, apiKeyId) {
+    return req.post(`${urls.appConsole(appId)}/apikey/${apiKeyId}/regenerate`)
+  },
+
+  getAPIKey(appId, apiKeyId) {
+    return req.get(`${urls.appConsole(appId)}/apikey/${apiKeyId}`)
   },
 
   createAPIKey(appId, apiKey) {
@@ -89,10 +93,6 @@ export default req => ({
 
   deleteAPIKey(appId, apiKeyId) {
     return req.delete(`${urls.appConsole(appId)}/apikey/${apiKeyId}`)
-  },
-
-  updateAPIKeyValue(appId, apiKeyId, apiKey) {
-    return req.put(`${urls.appConsole(appId)}/apikey/${apiKeyId}/apiKey`, apiKey)
   },
 
   getAppLogging(appId) {
