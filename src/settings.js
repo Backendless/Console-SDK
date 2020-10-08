@@ -14,7 +14,7 @@ function normalizeAppSettings(result) {
     if (systemAPIKeyIndex >= 0) {
       systemAPIKeys[systemAPIKeyIndex] = apiKey
 
-      result.apiKeysMap[apiKey.name] = apiKey.apiKey
+      result.apiKeysMap[apiKey.deviceType] = apiKey.apiKey
     } else {
       customAPIKeys.push(apiKey)
     }
