@@ -75,8 +75,12 @@ export default req => ({
       .then(normalizeAppSettings)
   },
 
-  regenerateAPIKey(appId, keyName) {
-    return req.post(`${urls.appConsole(appId)}/apikey/regenerate/${keyName}`)
+  regenerateAPIKey(appId, keyId) {
+    return req.post(`${urls.appConsole(appId)}/apikey/regenerate/${keyId}`)
+  },
+
+  getAPIKey(appId, apiKeyId) {
+    return req.get(`${urls.appConsole(appId)}/apikey/${apiKeyId}`)
   },
 
   createAPIKey(appId, apiKey) {
