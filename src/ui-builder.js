@@ -8,9 +8,9 @@ const routes = {
   importComponent : 'ui-builder/library/components/import',
   exportComponent : 'ui-builder/library/components/export',
 
-  customFunctions    : 'ui-builder/library/custom/functions',
-  customFunction     : 'ui-builder/library/custom/functions/:functionId',
-  customFunctionLogic: 'ui-builder/library/custom/functions/:functionId/logic',
+  customFunctions    : 'ui-builder/containers/:containerName/functions/custom',
+  customFunction     : 'ui-builder/containers/:containerName/functions/custom/:functionId',
+  customFunctionLogic: 'ui-builder/containers/:containerName/functions/custom/:functionId/logic',
 
   containers              : 'ui-builder/containers',
   container               : 'ui-builder/containers/:containerName',
@@ -157,28 +157,28 @@ export default req => ({
 
   //-- FUNCTIONS -----//
 
-  getCustomFunctions(appId) {
-    return req.get(routes.customFunctions(appId))
+  getCustomFunctions(appId, containerName) {
+    return req.get(routes.customFunctions(appId, containerName))
   },
 
-  createCustomFunction(appId, name) {
-    return req.post(routes.customFunctions(appId), { name })
+  createCustomFunction(appId, containerName, name) {
+    return req.post(routes.customFunctions(appId, containerName), { name })
   },
 
-  updateCustomFunction(appId, id, definition) {
-    return req.put(routes.customFunction(appId, id), definition)
+  updateCustomFunction(appId, containerName, id, definition) {
+    return req.put(routes.customFunction(appId, containerName, id), definition)
   },
 
-  getCustomFunctionLogic(appId, id) {
-    return req.get(routes.customFunctionLogic(appId, id))
+  getCustomFunctionLogic(appId, containerName, id) {
+    return req.get(routes.customFunctionLogic(appId, containerName, id))
   },
 
-  updateCustomFunctionLogic(appId, id, data) {
-    return req.put(routes.customFunctionLogic(appId, id), data)
+  updateCustomFunctionLogic(appId, containerName, id, data) {
+    return req.put(routes.customFunctionLogic(appId, containerName, id), data)
   },
 
-  deleteCustomFunction(appId, id) {
-    return req.delete(routes.customFunction(appId, id))
+  deleteCustomFunction(appId, containerName, id) {
+    return req.delete(routes.customFunction(appId, containerName, id))
   },
 
   //-- FUNCTIONS -----//
