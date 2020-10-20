@@ -8,9 +8,9 @@ const routes = {
   importComponent : 'ui-builder/library/components/import',
   exportComponent : 'ui-builder/library/components/export',
 
-  customFunctions    : 'ui-builder/containers/:containerName/functions/custom',
-  customFunction     : 'ui-builder/containers/:containerName/functions/custom/:functionId',
-  customFunctionLogic: 'ui-builder/containers/:containerName/functions/custom/:functionId/logic',
+  customFunctions    : 'ui-builder/containers/:containerName/functions',
+  customFunction     : 'ui-builder/containers/:containerName/functions/:functionId',
+  customFunctionLogic: 'ui-builder/containers/:containerName/functions/:functionId/logic',
 
   containers              : 'ui-builder/containers',
   container               : 'ui-builder/containers/:containerName',
