@@ -25,6 +25,10 @@ export default req => ({
     return req.post(`${urls.appConsole(appId)}/cloneApp`).query({ newAppName })
   },
 
+  getCloningAppStatus(appId, processId) {
+    return req.get(`${urls.appConsole(appId)}/cloneApp/${processId}`)
+  },
+
   updateAppInfo(appId, info) {
     return req.post(urls.appInfo(appId), info)
   },
