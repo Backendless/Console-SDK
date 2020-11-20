@@ -3,6 +3,12 @@ import urls from './urls'
 const routes = {
   init: 'ui-builder/init',
 
+  localThemes: 'ui-builder/library/local/themes',
+  localTheme : 'ui-builder/library/local/themes/:themeId',
+
+  remoteThemes: 'ui-builder/library/remote/themes',
+  remoteTheme : 'ui-builder/library/remote/themes/:themeId',
+
   localComponents : 'ui-builder/library/components/local',
   remoteComponents: 'ui-builder/library/components/remote',
   importComponent : 'ui-builder/library/components/import',
@@ -110,6 +116,34 @@ export default req => ({
   },
 
   //-- STYLES -----//
+
+  //-- THEMES -----//
+
+  loadRemoteThemes(appId) {
+    return req.get(routes.remoteThemes(appId))
+  },
+
+  loadLocalThemes(appId) {
+    return req.get(routes.localThemes(appId))
+  },
+
+  installTheme(appId, themeId) {
+    return req.post(routes.localTheme(appId, themeId))
+  },
+
+  uninstallTheme(appId, themeId) {
+    return req.delete(routes.localTheme(appId, themeId))
+  },
+
+  applyTheme(appId, containerName, themeId) {
+    return req.post(routes.containerAction(appId, containerName, 'apply-theme'), { themeId })
+  },
+
+  discardTheme(appId, containerName) {
+    return req.post(routes.containerAction(appId, containerName, 'discard-theme'))
+  },
+
+  //-- THEMES -----//
 
   //-- PAGE -----//
 
