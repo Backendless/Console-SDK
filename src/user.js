@@ -19,6 +19,11 @@ export default (req, context) => ({
     }
 
     return request.send()
+      .then(account => {
+        context.setAuthKey(account.authKey)
+
+        return account
+      })
   },
 
   /**
