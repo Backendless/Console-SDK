@@ -19,7 +19,6 @@ const OperationsTypes = {
   MODIFY_MOBILE_SETTINGS    : 6, //Modify mobile settings
   MANAGE_OAUTH_PROVIDERS    : 5, //Manage OAuth2 providers
   DELETE_APPLICATION        : 11, //Delete application
-  ENABLE_DISABLE_GIT        : 10, //Enable/disable git
   MANAGE_API_KEYS           : 4, //Manage API keys
 
   /** Billing */
