@@ -58,10 +58,6 @@ export default req => ({
     return req.put(`${urls.appConsole(appId)}/dnsmapping`, domainName)
   },
 
-  updateGitSupport(appId, enable) {
-    return req.put(`${urls.appConsole(appId)}/git`).query({ enable })
-  },
-
   updateIOSCert(appId, data) {
     return req.post(`${urls.appConsole(appId)}/ioscert`, data)
   },
