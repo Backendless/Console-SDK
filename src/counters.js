@@ -1,9 +1,11 @@
 import urls from './urls'
-import totalRows from './utils/total-rows'
 
 export default req => ({
   get(appId, { pageSize, offset, sortField, sortDir }) {
-    return totalRows(req).getWithData(req.get(urls.counters(appId)).query({ pageSize, offset, sortField, sortDir }))
+    return Promise.all([
+      req.get(urls.counters(appId)).query({ pageSize, offset, sortField, sortDir }),
+      this.count(appId)
+    ]).then(([data, totalRows]) => ({ data, totalRows }))
   },
 
   count(appId) {
