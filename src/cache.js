@@ -3,7 +3,7 @@ import urls from './urls'
 const normalizeValue = value => typeof value === 'string' ? value : JSON.stringify(value)
 
 const normalizeResponse = res => {
-  const data = Object.keys(res).map(key => {
+  return Object.keys(res).map(key => {
     const { expireAt, value } = res[key]
 
     return {
@@ -13,19 +13,17 @@ const normalizeResponse = res => {
       key
     }
   })
-
-  return {
-    data,
-    totalRows: data.length
-  }
 }
 
 export default req => ({
   get(appId, { pageSize, offset }) {
-    return req
-      .get(urls.cache(appId))
-      .query({ pagesize: pageSize, offset })
-      .then(normalizeResponse)
+    return Promise.all([
+      req
+        .get(urls.cache(appId))
+        .query({ pagesize: pageSize, offset })
+        .then(normalizeResponse),
+      this.count(appId)
+    ]).then(([data, totalRows]) => ({ data, totalRows }))
   },
 
   count(appId) {
