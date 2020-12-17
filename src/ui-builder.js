@@ -3,8 +3,12 @@ import urls from './urls'
 const routes = {
   init: 'ui-builder/init',
 
-  localThemes: 'ui-builder/library/local/themes',
-  localTheme : 'ui-builder/library/local/themes/:themeId',
+  sdkStyles: 'ui-builder/sdk/styles',
+
+  themes     : 'ui-builder/library/local/themes',
+  theme      : 'ui-builder/library/local/themes/:themeId',
+  themeStyle : 'ui-builder/library/local/themes/:themeId/style',
+  themeAction: 'ui-builder/library/local/themes/:themeId/:action',
 
   remoteThemes: 'ui-builder/library/remote/themes',
   remoteTheme : 'ui-builder/library/remote/themes/:themeId',
@@ -21,6 +25,7 @@ const routes = {
   containers              : 'ui-builder/containers',
   container               : 'ui-builder/containers/:containerName',
   containerAction         : 'ui-builder/containers/:containerName/:action',
+  containerTheme          : 'ui-builder/containers/:containerName/theme',
   containerStyles         : 'ui-builder/containers/:containerName/styles',
   containerStyle          : 'ui-builder/containers/:containerName/styles/:name',
   containerPages          : 'ui-builder/containers/:containerName/pages',
@@ -53,9 +58,18 @@ Object.keys(routes).forEach(key => {
 })
 
 export default req => ({
+
   init(appId) {
     return req.post(routes.init(appId))
   },
+
+  //-- SDK -----//
+
+  loadSDKStyles(appId) {
+    return req.get(routes.sdkStyles(appId))
+  },
+
+  //-- SDK -----//
 
   //-- LIBRARY -----//
 
@@ -87,7 +101,7 @@ export default req => ({
     return req.delete(routes.container(appId, containerName))
   },
 
-  getContainer(appId, containerName) {
+  loadContainer(appId, containerName) {
     return req.get(routes.container(appId, containerName))
   },
 
@@ -95,9 +109,9 @@ export default req => ({
     return req.post(routes.containerAction(appId, containerName, 'publish'), { targetPath })
   },
 
-  //-- CONTAINER -----//
-
-  //-- STYLES -----//
+  applyContainerTheme(appId, containerName, theme) {
+    return req.post(routes.containerAction(appId, containerName, 'apply-theme'), theme)
+  },
 
   loadContainerStyles(appId, containerName) {
     return req.get(routes.containerStyles(appId, containerName))
@@ -107,7 +121,7 @@ export default req => ({
     return req.get(routes.containerStyle(appId, containerName, name))
   },
 
-  saveContainerStyle(appId, containerName, name, style) {
+  updateContainerStyle(appId, containerName, name, style) {
     return req.put(routes.containerStyle(appId, containerName, name), style)
   },
 
@@ -115,7 +129,7 @@ export default req => ({
     return req.delete(routes.containerStyle(appId, containerName, name))
   },
 
-  //-- STYLES -----//
+  //-- CONTAINER -----//
 
   //-- THEMES -----//
 
@@ -123,24 +137,28 @@ export default req => ({
     return req.get(routes.remoteThemes(appId))
   },
 
-  loadLocalThemes(appId) {
-    return req.get(routes.localThemes(appId))
+  loadThemes(appId) {
+    return req.get(routes.themes(appId))
   },
 
-  installTheme(appId, themeId) {
-    return req.post(routes.localTheme(appId, themeId))
+  createTheme(appId, theme) {
+    return req.post(routes.themes(appId), theme)
   },
 
-  uninstallTheme(appId, themeId) {
-    return req.delete(routes.localTheme(appId, themeId))
+  updateTheme(appId, themeId, theme) {
+    return req.put(routes.theme(appId, themeId), theme)
   },
 
-  applyTheme(appId, containerName, themeId) {
-    return req.post(routes.containerAction(appId, containerName, 'apply-theme'), { themeId })
+  deleteTheme(appId, themeId) {
+    return req.delete(routes.theme(appId, themeId))
   },
 
-  discardTheme(appId, containerName) {
-    return req.post(routes.containerAction(appId, containerName, 'discard-theme'))
+  loadThemeStyle(appId, themeId) {
+    return req.get(routes.themeStyle(appId, themeId))
+  },
+
+  updateThemeStyle(appId, themeId, content) {
+    return req.put(routes.themeStyle(appId, themeId), { content })
   },
 
   //-- THEMES -----//
