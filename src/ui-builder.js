@@ -18,16 +18,15 @@ const routes = {
   importComponent : 'ui-builder/library/components/import',
   exportComponent : 'ui-builder/library/components/export',
 
-  customFunctions    : 'ui-builder/containers/:containerName/functions',
-  customFunction     : 'ui-builder/containers/:containerName/functions/:functionId',
-  customFunctionLogic: 'ui-builder/containers/:containerName/functions/:functionId/logic',
-
   containers              : 'ui-builder/containers',
   container               : 'ui-builder/containers/:containerName',
   containerAction         : 'ui-builder/containers/:containerName/:action',
   containerTheme          : 'ui-builder/containers/:containerName/theme',
   containerStyles         : 'ui-builder/containers/:containerName/styles',
   containerStyle          : 'ui-builder/containers/:containerName/styles/:name',
+  containerFunctions      : 'ui-builder/containers/:containerName/functions',
+  containerFunction       : 'ui-builder/containers/:containerName/functions/:functionId',
+  containerFunctionLogic  : 'ui-builder/containers/:containerName/functions/:functionId/logic',
   containerPages          : 'ui-builder/containers/:containerName/pages',
   containerPage           : 'ui-builder/containers/:containerName/pages/:pageName',
   containerPageUI         : 'ui-builder/containers/:containerName/pages/:pageName/ui',
@@ -133,7 +132,7 @@ export default req => ({
 
   //-- THEMES -----//
 
-  loadRemoteThemes(appId) {
+  searchThemes(appId) {
     return req.get(routes.remoteThemes(appId))
   },
 
@@ -209,28 +208,28 @@ export default req => ({
 
   //-- FUNCTIONS -----//
 
-  getCustomFunctions(appId, containerName) {
-    return req.get(routes.customFunctions(appId, containerName))
+  loadContainerFunctions(appId, containerName) {
+    return req.get(routes.containerFunctions(appId, containerName))
   },
 
-  createCustomFunction(appId, containerName, name) {
-    return req.post(routes.customFunctions(appId, containerName), { name })
+  createContainerFunction(appId, containerName, name) {
+    return req.post(routes.containerFunctions(appId, containerName), { name })
   },
 
-  updateCustomFunction(appId, containerName, id, definition) {
-    return req.put(routes.customFunction(appId, containerName, id), definition)
+  updateContainerFunction(appId, containerName, id, definition) {
+    return req.put(routes.containerFunction(appId, containerName, id), definition)
   },
 
-  getCustomFunctionLogic(appId, containerName, id) {
-    return req.get(routes.customFunctionLogic(appId, containerName, id))
+  deleteContainerFunction(appId, containerName, id) {
+    return req.delete(routes.containerFunction(appId, containerName, id))
   },
 
-  updateCustomFunctionLogic(appId, containerName, id, data) {
-    return req.put(routes.customFunctionLogic(appId, containerName, id), data)
+  loadContainerFunctionLogic(appId, containerName, id) {
+    return req.get(routes.containerFunctionLogic(appId, containerName, id))
   },
 
-  deleteCustomFunction(appId, containerName, id) {
-    return req.delete(routes.customFunction(appId, containerName, id))
+  updateContainerFunctionLogic(appId, containerName, id, data) {
+    return req.put(routes.containerFunctionLogic(appId, containerName, id), data)
   },
 
   //-- FUNCTIONS -----//
