@@ -132,6 +132,8 @@ export const codelessFunctions = appId => `${codeless(appId)}/functions`
 export const codelessFunctionSource = (appId, name) => `${codelessFunctions(appId)}/${name}`
 export const codelessDeployModel = (appId, model) => `${codeless(appId)}/deploy/${model}`
 
+export const dataViews = (appId, id) => `${appConsole(appId)}/data/views${optional(id)}`
+
 export const dataConnectors = appId => `${appConsole(appId)}/dataconnectors`
 export const dataConnectorTemplates = appId => `${dataConnectors(appId)}/templates`
 export const dataConnector = (appId, connectorId) => `${dataConnectors(appId)}/${connectorId}`
@@ -227,6 +229,7 @@ export default {
   tableColumns,
   userActivity,
   users,
+  dataViews,
   dataConnectors,
   dataConnectorTemplates,
   dataConnector,
