@@ -152,6 +152,10 @@ export default req => ({
     return req.delete(routes.theme(appId, themeId))
   },
 
+  publishTheme(appId, themeId, data) {
+    return req.post(routes.themeAction(appId, themeId, 'publish'), data)
+  },
+
   loadThemeStyle(appId, themeId) {
     return req.get(routes.themeStyle(appId, themeId))
   },
