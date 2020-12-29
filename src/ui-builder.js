@@ -3,20 +3,30 @@ import urls from './urls'
 const routes = {
   init: 'ui-builder/init',
 
+  sdkStyles: 'ui-builder/sdk/styles',
+
+  themes     : 'ui-builder/library/local/themes',
+  theme      : 'ui-builder/library/local/themes/:themeId',
+  themeStyle : 'ui-builder/library/local/themes/:themeId/style',
+  themeAction: 'ui-builder/library/local/themes/:themeId/:action',
+
+  remoteThemes: 'ui-builder/library/remote/themes',
+  remoteTheme : 'ui-builder/library/remote/themes/:themeId',
+
   localComponents : 'ui-builder/library/components/local',
   remoteComponents: 'ui-builder/library/components/remote',
   importComponent : 'ui-builder/library/components/import',
   exportComponent : 'ui-builder/library/components/export',
 
-  customFunctions    : 'ui-builder/library/custom/functions',
-  customFunction     : 'ui-builder/library/custom/functions/:functionId',
-  customFunctionLogic: 'ui-builder/library/custom/functions/:functionId/logic',
-
   containers              : 'ui-builder/containers',
   container               : 'ui-builder/containers/:containerName',
   containerAction         : 'ui-builder/containers/:containerName/:action',
+  containerTheme          : 'ui-builder/containers/:containerName/theme',
   containerStyles         : 'ui-builder/containers/:containerName/styles',
   containerStyle          : 'ui-builder/containers/:containerName/styles/:name',
+  containerFunctions      : 'ui-builder/containers/:containerName/functions',
+  containerFunction       : 'ui-builder/containers/:containerName/functions/:functionId',
+  containerFunctionLogic  : 'ui-builder/containers/:containerName/functions/:functionId/logic',
   containerPages          : 'ui-builder/containers/:containerName/pages',
   containerPage           : 'ui-builder/containers/:containerName/pages/:pageName',
   containerPageUI         : 'ui-builder/containers/:containerName/pages/:pageName/ui',
@@ -47,9 +57,18 @@ Object.keys(routes).forEach(key => {
 })
 
 export default req => ({
+
   init(appId) {
     return req.post(routes.init(appId))
   },
+
+  //-- SDK -----//
+
+  loadSDKStyles(appId) {
+    return req.get(routes.sdkStyles(appId))
+  },
+
+  //-- SDK -----//
 
   //-- LIBRARY -----//
 
@@ -81,7 +100,7 @@ export default req => ({
     return req.delete(routes.container(appId, containerName))
   },
 
-  getContainer(appId, containerName) {
+  loadContainer(appId, containerName) {
     return req.get(routes.container(appId, containerName))
   },
 
@@ -89,9 +108,9 @@ export default req => ({
     return req.post(routes.containerAction(appId, containerName, 'publish'), { targetPath })
   },
 
-  //-- CONTAINER -----//
-
-  //-- STYLES -----//
+  applyContainerTheme(appId, containerName, theme) {
+    return req.post(routes.containerAction(appId, containerName, 'apply-theme'), theme)
+  },
 
   loadContainerStyles(appId, containerName) {
     return req.get(routes.containerStyles(appId, containerName))
@@ -101,7 +120,7 @@ export default req => ({
     return req.get(routes.containerStyle(appId, containerName, name))
   },
 
-  saveContainerStyle(appId, containerName, name, style) {
+  updateContainerStyle(appId, containerName, name, style) {
     return req.put(routes.containerStyle(appId, containerName, name), style)
   },
 
@@ -109,7 +128,43 @@ export default req => ({
     return req.delete(routes.containerStyle(appId, containerName, name))
   },
 
-  //-- STYLES -----//
+  //-- CONTAINER -----//
+
+  //-- THEMES -----//
+
+  searchThemes(appId) {
+    return req.get(routes.remoteThemes(appId))
+  },
+
+  loadThemes(appId) {
+    return req.get(routes.themes(appId))
+  },
+
+  createTheme(appId, theme) {
+    return req.post(routes.themes(appId), theme)
+  },
+
+  updateTheme(appId, themeId, theme) {
+    return req.put(routes.theme(appId, themeId), theme)
+  },
+
+  deleteTheme(appId, themeId) {
+    return req.delete(routes.theme(appId, themeId))
+  },
+
+  publishTheme(appId, themeId, data) {
+    return req.post(routes.themeAction(appId, themeId, 'publish'), data)
+  },
+
+  loadThemeStyle(appId, themeId) {
+    return req.get(routes.themeStyle(appId, themeId))
+  },
+
+  updateThemeStyle(appId, themeId, content) {
+    return req.put(routes.themeStyle(appId, themeId), { content })
+  },
+
+  //-- THEMES -----//
 
   //-- PAGE -----//
 
@@ -157,28 +212,28 @@ export default req => ({
 
   //-- FUNCTIONS -----//
 
-  getCustomFunctions(appId) {
-    return req.get(routes.customFunctions(appId))
+  loadContainerFunctions(appId, containerName) {
+    return req.get(routes.containerFunctions(appId, containerName))
   },
 
-  createCustomFunction(appId, name) {
-    return req.post(routes.customFunctions(appId), { name })
+  createContainerFunction(appId, containerName, name) {
+    return req.post(routes.containerFunctions(appId, containerName), { name })
   },
 
-  updateCustomFunction(appId, id, definition) {
-    return req.put(routes.customFunction(appId, id), definition)
+  updateContainerFunction(appId, containerName, id, definition) {
+    return req.put(routes.containerFunction(appId, containerName, id), definition)
   },
 
-  getCustomFunctionLogic(appId, id) {
-    return req.get(routes.customFunctionLogic(appId, id))
+  deleteContainerFunction(appId, containerName, id) {
+    return req.delete(routes.containerFunction(appId, containerName, id))
   },
 
-  updateCustomFunctionLogic(appId, id, data) {
-    return req.put(routes.customFunctionLogic(appId, id), data)
+  loadContainerFunctionLogic(appId, containerName, id) {
+    return req.get(routes.containerFunctionLogic(appId, containerName, id))
   },
 
-  deleteCustomFunction(appId, id) {
-    return req.delete(routes.customFunction(appId, id))
+  updateContainerFunctionLogic(appId, containerName, id, data) {
+    return req.put(routes.containerFunctionLogic(appId, containerName, id), data)
   },
 
   //-- FUNCTIONS -----//
