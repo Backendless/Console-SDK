@@ -20,5 +20,9 @@ export default req => ({
 
   renameView(appId, viewId, name) {
     return req.put(dataViews(appId, viewId), { name })
+  },
+
+  deleteView(appId, viewId) {
+    return req.delete(dataViews(appId, viewId))
   }
 })
