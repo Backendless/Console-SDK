@@ -25,6 +25,7 @@ const BOOLEAN_SQL_VALUES = {
 
 export const tableRecordsReq = (req, url, table, query = {}, resetCache) => {
   const { pageSize = 15, offset = 0, sqlSearch, where, sortField, sortDir, filterString } = query
+  const { property, groupBy, having, distinct } = query
 
   const params = { pageSize, offset }
   const search = buildRecordsSearch(table, sqlSearch, where, filterString)
@@ -35,6 +36,22 @@ export const tableRecordsReq = (req, url, table, query = {}, resetCache) => {
 
   if (sortField && sortDir) {
     params.sortBy = `${sortField} ${sortDir}`
+  }
+
+  if (property) {
+    params.property = property
+  }
+
+  if (groupBy) {
+    params.groupBy = groupBy
+  }
+
+  if (having) {
+    params.having = having
+  }
+
+  if (distinct) {
+    params.distinct = distinct
   }
 
   return req.get(url)
