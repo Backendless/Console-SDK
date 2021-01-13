@@ -17,8 +17,8 @@ export default req => ({
     return req.billing.get(`${urls.billing(appId)}/plans/current/components`)
   },
 
-  switchToPlan(appId, planId) {
-    return req.billing.put(`${urls.billing(appId)}/subscriptions/${planId}`)
+  switchToPlan(appId, planId, billingPeriod) {
+    return req.billing.put(`${urls.billing(appId)}/subscriptions/${planId}/${billingPeriod}`)
   },
 
   getCreditCard(appId) {
@@ -52,9 +52,5 @@ export default req => ({
   exchangeBBtoUSD(appId, bbAmount) {
     return req.billing.post(`${urls.billing(appId)}/bb/exchange`, bbAmount)
       .set({ 'Content-Type': 'application/json' })
-  },
-
-  reactivateSubscription(appId) {
-    return req.billing.put(`${urls.billing(appId)}/subscriptions/reactivate`)
   },
 })
