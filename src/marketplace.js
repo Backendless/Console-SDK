@@ -25,6 +25,10 @@ export default req => ({
     return req.billing.post(`${urls.billing(appId)}/marketplace/purchases/${productId}`, options)
   },
 
+  previewProduct(appId, productId, options) {
+    return req.billing.post(`${urls.billing(appId)}/marketplace/purchases/${productId}/preview`, options)
+  },
+
   publishProduct(appId, marketplaceName, product) {
     return req.billing.post(`${urls.marketplace(appId, marketplaceName)}/product`, product)
   },
