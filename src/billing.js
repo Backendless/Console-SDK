@@ -9,12 +9,12 @@ export default req => ({
     return req.billing.get(`${urls.billing(appId)}/plans`)
   },
 
-  getPlanComponentsData(appId, planId) {
-    return req.billing.get(`${urls.billing(appId)}/plans/${planId}/components`)
+  getPlanComponentsData(appId, planId, billingPeriod) {
+    return req.billing.get(`${urls.billing(appId)}/plans/${planId}/${billingPeriod}/components`)
   },
 
   getCurrentPlanComponentData(appId) {
-    return req.billing.get(`${urls.billing(appId)}/plans/current/components`)
+    return req.billing.get(`${urls.billing(appId)}/plans/current/current/components`)
   },
 
   switchToPlan(appId, planId, billingPeriod) {
