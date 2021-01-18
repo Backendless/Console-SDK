@@ -40,7 +40,7 @@ export default req => ({
     return totalRows(req).getFor(recordsReq(req, appId, view, query, resetCache))
   },
 
-  getRecordsCountForViews(appId, views, resetCache) {
+  getRecordsCounts(appId, views, resetCache) {
     return req.post(`${urls.data(appId)}/tables-counters`, { tables: views, resetCache })
   },
 })
