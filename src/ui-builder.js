@@ -3,30 +3,28 @@ import urls from './urls'
 const routes = {
   init: 'ui-builder/init',
 
-  sdkStyles: 'ui-builder/sdk/styles',
+  sdkStyles    : 'ui-builder/library/sdk/styles',
+  sdkComponents: 'ui-builder/library/sdk/components',
 
-  themes     : 'ui-builder/library/local/themes',
-  theme      : 'ui-builder/library/local/themes/:themeId',
-  themeStyle : 'ui-builder/library/local/themes/:themeId/style',
-  themeAction: 'ui-builder/library/local/themes/:themeId/:action',
+  themes     : 'ui-builder/library/themes',
+  theme      : 'ui-builder/library/themes/:themeId',
+  themeStyle : 'ui-builder/library/themes/:themeId/style',
+  themeAction: 'ui-builder/library/themes/:themeId/:action',
 
   remoteThemes: 'ui-builder/library/remote/themes',
   remoteTheme : 'ui-builder/library/remote/themes/:themeId',
 
-  localComponents : 'ui-builder/library/components/local',
-  remoteComponents: 'ui-builder/library/components/remote',
-  importComponent : 'ui-builder/library/components/import',
-  exportComponent : 'ui-builder/library/components/export',
+  containers     : 'ui-builder/containers',
+  container      : 'ui-builder/containers/:containerName',
+  containerAction: 'ui-builder/containers/:containerName/:action',
 
-  containers              : 'ui-builder/containers',
-  container               : 'ui-builder/containers/:containerName',
-  containerAction         : 'ui-builder/containers/:containerName/:action',
-  containerTheme          : 'ui-builder/containers/:containerName/theme',
-  containerStyles         : 'ui-builder/containers/:containerName/styles',
-  containerStyle          : 'ui-builder/containers/:containerName/styles/:name',
-  containerFunctions      : 'ui-builder/containers/:containerName/functions',
-  containerFunction       : 'ui-builder/containers/:containerName/functions/:functionId',
-  containerFunctionLogic  : 'ui-builder/containers/:containerName/functions/:functionId/logic',
+  containerStyles: 'ui-builder/containers/:containerName/styles',
+  containerStyle : 'ui-builder/containers/:containerName/styles/:name',
+
+  containerFunctions    : 'ui-builder/containers/:containerName/functions',
+  containerFunction     : 'ui-builder/containers/:containerName/functions/:functionId',
+  containerFunctionLogic: 'ui-builder/containers/:containerName/functions/:functionId/logic',
+
   containerPages          : 'ui-builder/containers/:containerName/pages',
   containerPage           : 'ui-builder/containers/:containerName/pages/:pageName',
   containerPageUI         : 'ui-builder/containers/:containerName/pages/:pageName/ui',
@@ -73,15 +71,7 @@ export default req => ({
   //-- LIBRARY -----//
 
   getLocalComponents(appId) {
-    return req.get(routes.localComponents(appId))
-  },
-
-  getRemoteComponents(appId) {
-    return req.get(routes.remoteComponents(appId))
-  },
-
-  importComponent(appId, componentId) {
-    return req.post(routes.importComponent(appId), { componentId })
+    return req.get(routes.sdkComponents(appId))
   },
 
   //-- LIBRARY -----//

@@ -1,4 +1,10 @@
-import { dataViews } from './urls'
+import urls, { dataViews, dataTable } from './urls'
+import { viewRecordsReq } from './utils/views'
+import totalRows from './utils/total-rows'
+
+export const recordsReq = (req, appId, view, query = {}, resetCache) => {
+  return viewRecordsReq(req, dataTable(appId, view.name), view, query, resetCache)
+}
 
 export default req => ({
 
@@ -24,5 +30,17 @@ export default req => ({
 
   deleteView(appId, viewId) {
     return req.delete(dataViews(appId, viewId))
-  }
+  },
+
+  loadRecords(appId, view, query) {
+    return recordsReq(req, appId, view, query)
+  },
+
+  getRecordsCount(appId, view, query, resetCache) {
+    return totalRows(req).getFor(recordsReq(req, appId, view, query, resetCache))
+  },
+
+  getRecordsCounts(appId, views, resetCache) {
+    return req.post(`${urls.data(appId)}/tables-counters`, { tables: views, resetCache })
+  },
 })
