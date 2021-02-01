@@ -8,6 +8,8 @@ export const GEO_CATEGORY = (appId, category) => composePattern('GEO_CATEGORY', 
 export const BL_MODELS = (appId, language) => composePattern('BL_MODELS', appId, language)
 export const BL_CHAIN = (appId, eventId, context) => composePattern('BL_CHAIN', appId, eventId, context)
 export const VIEW_DATA = viewId => compose('VIEW_DATA', viewId)
+export const VIEW_GROUPING_DATA = viewId => compose('VIEW_GROUPING_DATA', viewId)
+export const VIEW_GROUP_DATA = viewId => compose('VIEW_GROUP_DATA', viewId)
 
 const compose = (...tokens) => tokens.join('-')
 const composePattern = (prefix, value) => value ? [prefix, value].join('-') : new RegExp(prefix + '.*')
