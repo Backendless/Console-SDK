@@ -1,18 +1,20 @@
-import { VIEW_DATA, VIEW_GROUPING_DATA, VIEW_GROUP_DATA } from './cache-tags'
+import { VIEW_DATA, VIEW_GROUP_DATA } from './cache-tags'
 
-const PropertiesToMap = [
-  'whereClause', 'distinct', 'sortBy',
-  'relatedProps', 'relationsPageSize', 'groupBy',
-  'props', 'excludeProps', 'property'
+const GroupRequestProperties = [
+  'where', 'distinct', 'props', 'excludeProps', 'property',
+  'loadRelations', 'relationsPageSize', 'sortBy', 'groupPath', 'groupBy'
 ]
+const GroupCountRequestProperties = ['where', 'distinct']
 
-const assignPropertiesIfDefined = (target, source, properties = []) => {
-  properties.forEach(property => {
-    if (source.hasOwnProperty(property) && source[property]) {
-      target[property] = source[property]
-    }
-  })
-}
+const assignPropertiesIfDefined = (target, source, properties) => properties.reduce((acc, property) => {
+  if (source.hasOwnProperty(property) && source[property]) {
+    acc[property] = source[property]
+
+    return acc
+  }
+
+  return acc
+}, target)
 
 export const viewRecordsReq = (req, url, view, query, resetCache) => {
   const { pageSize = 15, offset = 0 } = query
@@ -23,30 +25,22 @@ export const viewRecordsReq = (req, url, view, query, resetCache) => {
     .resetCache(resetCache)
 }
 
-const composeGroupReqParams = query => {
+export const viewRecordsGroupReq = (req, url, viewId, query) => {
   const { offset = 0, pageSize = 15, groupPageSize = 5, recordsPageSize = 5 } = query
 
   const params = { offset, pageSize, groupPageSize, recordsPageSize }
 
-  assignPropertiesIfDefined(params, query, PropertiesToMap)
-
-  return params
-}
-
-export const viewRecordsGroupingReq = (req, url, viewId, query) => {
-  const params = composeGroupReqParams(query)
-
-  return req.get(url)
-    .query(params)
-    .cacheTags(VIEW_GROUPING_DATA(viewId))
-}
-
-export const viewRecordsGroupReq = (req, url, viewId, query) => {
-  const params = composeGroupReqParams(query)
-
-  if (query.groupPath) {
-    params.groupPath = query.groupPath
-  }
+  assignPropertiesIfDefined(params, query, GroupRequestProperties)
 
   return req.post(url, params).cacheTags(VIEW_GROUP_DATA(viewId))
+}
+
+export const viewRecordsGroupCountReq = (req, url, query) => {
+  const { groupPath } = query
+
+  const params = { groupPath }
+
+  assignPropertiesIfDefined(params, query, GroupCountRequestProperties)
+
+  return req.post(url, params)
 }
