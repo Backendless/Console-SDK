@@ -19,6 +19,8 @@ export const messaging = consoleSection('messaging')
 
 export const dataTables = appId => `${data(appId)}/tables`
 export const dataTable = (appId, tableName) => `${data(appId)}/${tableName}`
+export const dataTableGroup = (appId, tableName) => `${data(appId)}/data-grouping/${tableName}`
+export const dataTableGroupCount = (appId, tableName) => `${dataTableGroup(appId, tableName)}/count`
 export const dataRecord = (appId, tableName, recordId) => `${dataTable(appId, tableName)}/${recordId}`
 export const dataConfigs = appId => `${data(appId)}/config`
 export const tableColumns = (appId, tableName) => `${dataTables(appId)}/${tableName}/columns`

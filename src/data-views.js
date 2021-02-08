@@ -1,9 +1,17 @@
-import urls, { dataViews, dataTable } from './urls'
-import { viewRecordsReq } from './utils/views'
+import urls, { dataViews, dataTable, dataTableGroup, dataTableGroupCount } from './urls'
+import { viewRecordsReq, viewRecordsGroupReq, viewRecordsGroupCountReq } from './utils/views'
 import totalRows from './utils/total-rows'
 
 export const recordsReq = (req, appId, view, query = {}, resetCache) => {
   return viewRecordsReq(req, dataTable(appId, view.name), view, query, resetCache)
+}
+
+export const groupRecordsReq = (req, appId, view, query = {}) => {
+  return viewRecordsGroupReq(req, dataTableGroup(appId, view.name), view.viewId, query)
+}
+
+export const groupRecordsCountReq = (req, appId, view, query = {}) => {
+  return viewRecordsGroupCountReq(req, dataTableGroupCount(appId, view.name), query)
 }
 
 export default req => ({
@@ -43,4 +51,12 @@ export default req => ({
   getRecordsCounts(appId, views, resetCache) {
     return req.post(`${urls.data(appId)}/tables-counters`, { tables: views, resetCache })
   },
+
+  loadGroupRecords(appId, view, query) {
+    return groupRecordsReq(req, appId, view, query)
+  },
+
+  getGroupRecordsCount(appId, view, query) {
+    return groupRecordsCountReq(req, appId, view, query)
+  }
 })
