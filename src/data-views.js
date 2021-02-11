@@ -33,7 +33,7 @@ export default req => ({
   },
 
   renameView(appId, viewId, name) {
-    return req.put(dataViews(appId, viewId), { name })
+    return req.put(`${dataViews(appId, viewId)}/name`, { name })
   },
 
   deleteView(appId, viewId) {
