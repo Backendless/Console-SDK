@@ -1,47 +1,76 @@
-import urls from './urls'
+import { prepareRoutes } from './utils/routes'
+
+const routes = prepareRoutes({
+  sections        : 'marketplace/sections',
+  categoryProducts: 'marketplace/categories/:categoryId/products',
+
+  products             : 'marketplace/products',
+  product              : 'marketplace/products/:productId',
+  productApprove       : 'marketplace/products/:productId/approve',
+  productReject        : 'marketplace/products/:productId/reject',
+  productConfigurations: 'marketplace/products/:productId/configurations',
+
+  purchases              : 'marketplace/purchases',
+  purchasesProduct       : 'marketplace/purchases/:productId',
+  purchasesProductPreview: 'marketplace/purchases/:productId/preview',
+})
 
 export default req => ({
-  getSections(appId, marketplaceName) {
-    return req.billing.get(`${urls.marketplace(appId, marketplaceName)}/sections`)
+
+  //---- SECTIONS ==>
+
+  getSections(appId) {
+    return req.get(routes.sections(appId))
   },
 
-  getProducts(appId, marketplaceName, categoryId) {
-    return req.billing.get(`${urls.marketplace(appId, marketplaceName)}/categories/${categoryId}/products`)
+  getCategoryProducts(appId, categoryId) {
+    return req.get(routes.categoryProducts(appId, categoryId))
   },
 
-  getProduct(appId, marketplaceName, productId) {
-    return req.billing.get(`${urls.marketplace(appId, marketplaceName)}/products/${productId}`)
+  //---- SECTIONS ----//
+
+  //---- PRODUCT ==>
+
+  // getProduct(appId, productId) {
+  //   return req.get(routes.product(appId, productId))
+  // },
+
+  getProductConfigurations(appId, productId) {
+    return req.get(routes.productConfigurations(appId, productId))
   },
 
-  getProductServicesConfigurations(appId, marketplaceName, productId) {
-    return req.billing.get(`${urls.marketplace(appId, marketplaceName)}/product/${productId}/service-configurations`)
+  publishProduct(appId, product) {
+    return req.post(routes.products(appId), product)
   },
+
+  approveProduct(appId, productId) {
+    return req.put(routes.productApprove(appId, productId))
+  },
+
+  rejectProduct(appId, productId, reason) {
+    return req.put(routes.productReject(appId, productId), reason)
+  },
+
+  removeProduct(appId, productId, reason) {
+    return req.delete(routes.product(appId, productId), reason)
+  },
+
+  //---- PRODUCT ----//
+
+  //---- PURCHASES ==>
 
   getPurchases(appId) {
-    return req.billing.get(`${urls.billing(appId)}/marketplace/purchases`)
+    return req.get(routes.purchases(appId))
   },
 
   allocateProduct(appId, productId, options) {
-    return req.billing.post(`${urls.billing(appId)}/marketplace/purchases/${productId}`, options)
+    return req.post(routes.purchasesProduct(appId, productId), options)
   },
 
-  previewProduct(appId, productId, options) {
-    return req.billing.post(`${urls.billing(appId)}/marketplace/purchases/${productId}/preview`, options)
-  },
+  // previewProduct(appId, productId, options) {
+  //   return req.post(routes.purchasesProductPreview(appId, productId), options)
+  // },
 
-  publishProduct(appId, marketplaceName, product) {
-    return req.billing.post(`${urls.marketplace(appId, marketplaceName)}/product`, product)
-  },
+  //---- PURCHASES ----//
 
-  approveProduct(appId, marketplaceName, productId) {
-    return req.billing.put(`${urls.marketplace(appId, marketplaceName)}/product/apply/${productId}`)
-  },
-
-  rejectProduct(appId, marketplaceName, productId, reason) {
-    return req.billing.put(`${urls.marketplace(appId, marketplaceName)}/product/reject/${productId}`, reason)
-  },
-
-  removeProduct(appId, marketplaceName, productId, reason) {
-    return req.billing.delete(`${urls.marketplace(appId, marketplaceName)}/product/${productId}`, reason)
-  },
 })
