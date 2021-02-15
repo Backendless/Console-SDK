@@ -1,8 +1,8 @@
 import { VIEW_DATA, VIEW_GROUP_DATA } from './cache-tags'
 
 const GroupRequestProperties = [
-  'where', 'distinct', 'props', 'excludeProps', 'property',
-  'loadRelations', 'relationsPageSize', 'sortBy', 'groupPath', 'groupBy'
+  'where', 'distinct', 'props', 'excludeProps', 'property', 'loadRelations',
+  'groupDepth', 'relationsPageSize', 'sortBy', 'groupPath', 'groupBy'
 ]
 const GroupCountRequestProperties = ['where', 'distinct']
 
