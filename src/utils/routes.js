@@ -6,14 +6,12 @@ export function prepareRoutes(routes) {
   Object.keys(routes).forEach(key => {
     const tokens = routes[key].split('/')
 
-    result[key] = (appId, ...args) => {
+    result[key] = (...args) => {
       let lastArgIndex = 0
 
       const targetTokens = tokens.map(pathToken => {
         return pathToken.startsWith(':') ? args[lastArgIndex++] : pathToken
       })
-
-      targetTokens.unshift(urls.appConsole(appId))
 
       const route = targetTokens.join('/')
 

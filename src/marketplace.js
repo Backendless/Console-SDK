@@ -1,58 +1,58 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  sections        : 'marketplace/sections',
-  categoryProducts: 'marketplace/categories/:categoryId/products',
+  sections        : '/console/marketplace/sections',
+  categoryProducts: '/console/marketplace/categories/:categoryId/products',
 
-  products             : 'marketplace/products',
-  product              : 'marketplace/products/:productId',
-  productApprove       : 'marketplace/products/:productId/approve',
-  productReject        : 'marketplace/products/:productId/reject',
-  productConfigurations: 'marketplace/products/:productId/configurations',
+  products             : '/console/marketplace/products',
+  product              : '/console/marketplace/products/:productId',
+  productApprove       : '/console/marketplace/products/:productId/approve',
+  productReject        : '/console/marketplace/products/:productId/reject',
+  productConfigurations: '/console/marketplace/products/:productId/configurations',
 
-  purchases              : 'marketplace/purchases',
-  purchasesProduct       : 'marketplace/purchases/:productId',
-  purchasesProductPreview: 'marketplace/purchases/:productId/preview',
+  purchases              : '/:appId/console/marketplace/purchases',
+  purchasesProduct       : '/:appId/console/marketplace/purchases/:productId',
+  purchasesProductPreview: '/:appId/console/marketplace/purchases/:productId/preview',
 })
 
 export default req => ({
 
   //---- SECTIONS ==>
 
-  getSections(appId) {
-    return req.get(routes.sections(appId))
+  getSections() {
+    return req.get(routes.sections())
   },
 
-  getCategoryProducts(appId, categoryId) {
-    return req.get(routes.categoryProducts(appId, categoryId))
+  getCategoryProducts(categoryId) {
+    return req.get(routes.categoryProducts(categoryId))
   },
 
   //---- SECTIONS ----//
 
   //---- PRODUCT ==>
 
-  // getProduct(appId, productId) {
-  //   return req.get(routes.product(appId, productId))
+  // getProduct(productId) {
+  //   return req.get(routes.product(productId))
   // },
 
-  getProductConfigurations(appId, productId) {
-    return req.get(routes.productConfigurations(appId, productId))
+  getProductConfigurations(productId) {
+    return req.get(routes.productConfigurations(productId))
   },
 
-  publishProduct(appId, product) {
-    return req.post(routes.products(appId), product)
+  publishProduct(product) {
+    return req.post(routes.products(), product)
   },
 
-  approveProduct(appId, productId) {
-    return req.put(routes.productApprove(appId, productId))
+  approveProduct(productId) {
+    return req.put(routes.productApprove(productId))
   },
 
-  rejectProduct(appId, productId, reason) {
-    return req.put(routes.productReject(appId, productId), reason)
+  rejectProduct(productId, reason) {
+    return req.put(routes.productReject(productId), reason)
   },
 
-  removeProduct(appId, productId, reason) {
-    return req.delete(routes.product(appId, productId), reason)
+  removeProduct(productId, reason) {
+    return req.delete(routes.product(productId), reason)
   },
 
   //---- PRODUCT ----//
