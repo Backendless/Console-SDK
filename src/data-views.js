@@ -2,7 +2,12 @@ import urls, { dataViews, dataTable, dataTableGroup, dataTableGroupCount } from 
 import { viewRecordsReq, viewRecordsGroupReq, viewRecordsGroupCountReq } from './utils/views'
 import totalRows from './utils/total-rows'
 
+const dataTableFindUrl = (appId, tableName) => `${dataTable(appId, tableName)}/find`
+
 export const recordsReq = (req, appId, view, query = {}, resetCache) => {
+  return viewRecordsReq(req, dataTableFindUrl(appId, view.name), view, query, resetCache)
+}
+export const recordsCountReq = (req, appId, view, query = {}, resetCache) => {
   return viewRecordsReq(req, dataTable(appId, view.name), view, query, resetCache)
 }
 
@@ -45,7 +50,7 @@ export default req => ({
   },
 
   getRecordsCount(appId, view, query, resetCache) {
-    return totalRows(req).getFor(recordsReq(req, appId, view, query, resetCache))
+    return totalRows(req).getFor(recordsCountReq(req, appId, view, query, resetCache))
   },
 
   getRecordsCounts(appId, views, resetCache) {
