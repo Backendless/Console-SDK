@@ -21,6 +21,8 @@ const tableUrl = (appId, table) => `${urls.dataTables(appId)}/${table.name}`
 const removeRecordsUrl = (appId, table, removeAll) => `${tableUrl(appId, table)}/${removeAll ? 'all' : 'records'}`
 const assignedUserRoles = appId => `${urls.security(appId)}/assignedroles`
 
+export const dataTableFindUrl = (appId, tableName) => `${urls.dataTable(appId, tableName)}/find`
+
 const updateRelationsUrl = (appId, table, columnName, recordId) => {
   return `${urls.dataRecord(appId, table.name, recordId)}/${columnName}`
 }
@@ -30,6 +32,10 @@ const removeRelationsUrl = (appId, table, columnName, recordId) => {
 }
 
 const recordsReq = (req, appId, table, query, resetCache) => {
+  return tableRecordsReq(req, dataTableFindUrl(appId, table.name), table, query, resetCache)
+}
+
+const recordsCountReq = (req, appId, table, query, resetCache) => {
   return tableRecordsReq(req, urls.dataTable(appId, table.name), table, query, resetCache)
 }
 
@@ -104,7 +110,7 @@ export default req => ({
   },
 
   getRecordsCount(appId, table, query, resetCache) {
-    return totalRows(req).getFor(recordsReq(req, appId, table, query, resetCache))
+    return totalRows(req).getFor(recordsCountReq(req, appId, table, query, resetCache))
   },
 
   getRecordsCountForTables(appId, tables, resetCache) {

@@ -19,8 +19,7 @@ const assignPropertiesIfDefined = (target, source, properties) => properties.red
 export const viewRecordsReq = (req, url, view, query, resetCache) => {
   const { pageSize = 15, offset = 0 } = query
 
-  return req.get(url)
-    .query({ pageSize, offset })
+  return req.post(url, { pageSize, offset })
     .cacheTags(VIEW_DATA(view.viewId))
     .resetCache(resetCache)
 }
