@@ -1,8 +1,8 @@
 import { VIEW_DATA, VIEW_GROUP_DATA } from './cache-tags'
 
 const GroupRequestProperties = [
-  'where', 'distinct', 'props', 'excludeProps', 'property',
-  'loadRelations', 'relationsPageSize', 'sortBy', 'groupPath', 'groupBy'
+  'where', 'distinct', 'props', 'excludeProps', 'property', 'loadRelations',
+  'groupDepth', 'relationsPageSize', 'sortBy', 'groupPath', 'groupBy'
 ]
 const GroupCountRequestProperties = ['where', 'distinct']
 
@@ -19,8 +19,7 @@ const assignPropertiesIfDefined = (target, source, properties) => properties.red
 export const viewRecordsReq = (req, url, view, query, resetCache) => {
   const { pageSize = 15, offset = 0 } = query
 
-  return req.get(url)
-    .query({ pageSize, offset })
+  return req.post(url, { pageSize, offset })
     .cacheTags(VIEW_DATA(view.viewId))
     .resetCache(resetCache)
 }

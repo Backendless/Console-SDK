@@ -54,8 +54,7 @@ export const tableRecordsReq = (req, url, table, query = {}, resetCache) => {
     params.distinct = distinct
   }
 
-  return req.get(url)
-    .query(params)
+  return req.post(url, params)
     .cacheTags(TABLE_DATA(table.tableId))
     .resetCache(resetCache)
 }
