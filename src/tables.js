@@ -4,7 +4,7 @@ import { DataTypes } from './constants/data'
 import urls from './urls'
 import totalRows from './utils/total-rows'
 import { TABLE_DATA } from './utils/cache-tags'
-import { tableRecordsReq, buildRecordsSearch } from './utils/table'
+import { tableRecordsReq, tableRecordsCountReq, buildRecordsSearch } from './utils/table'
 
 const RELATION_URL_SUFFIX = 'relation'
 const GEO_RELATION_URL_SUFFIX = 'georelation'
@@ -36,7 +36,7 @@ const recordsReq = (req, appId, table, query, resetCache) => {
 }
 
 const recordsCountReq = (req, appId, table, query, resetCache) => {
-  return tableRecordsReq(req, urls.dataTable(appId, table.name), table, query, resetCache)
+  return tableRecordsCountReq(req, urls.dataTable(appId, table.name), table, query, resetCache)
 }
 
 const getRelationColumn = (table, columnName) => {
