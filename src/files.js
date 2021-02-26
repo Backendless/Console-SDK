@@ -28,6 +28,36 @@ export default req => ({
     return totalRows(req).getWithData(dataReq)
   },
 
+  async loadFullDirectory(appId, authKey, path, params) {
+    let currentQuery = {
+      ...params,
+      pageSize: 100,
+      offset  : 0,
+    }
+
+    const url = urls.directoryView(appId, authKey, path)
+
+    const totalCount = await totalRows(req).get(url)
+
+    const filesList = []
+    const requests = []
+
+    while (currentQuery.offset < totalCount) {
+      requests.push(req.get(url).query(currentQuery))
+
+      currentQuery = {
+        ...currentQuery,
+        offset: currentQuery.offset + 100,
+      }
+    }
+
+    const results = await Promise.all(requests)
+
+    results.forEach(files => filesList.push(...files))
+
+    return filesList
+  },
+
   createDir(appId, path, folderName) {
     return req.post(urls.createDir(appId, path, folderName)).cacheTags(FOLDER(appId, path))
   },
