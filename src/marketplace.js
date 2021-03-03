@@ -13,6 +13,13 @@ const routes = prepareRoutes({
   purchases              : '/:appId/console/marketplace/purchases',
   purchasesProduct       : '/:appId/console/marketplace/purchases/:productId',
   purchasesProductPreview: '/:appId/console/marketplace/purchases/:productId/preview',
+
+  comments: '/console/marketplace/comments',
+  comment : '/console/marketplace/comments/:commentId',
+  reviews : '/console/marketplace/reviews',
+  review  : '/console/marketplace/review/:reviewId',
+  vote    : '/console/marketplace/vote/like',
+  likers  : '/console/marketplace/vote/likers',
 })
 
 export default req => ({
@@ -72,5 +79,52 @@ export default req => ({
   // },
 
   //---- PURCHASES ----//
+
+
+  //---- COMMENTS ----//
+
+  getComments(context, itemId, sorting) {
+    return req.get(routes.comments()).query({ context, itemId, sorting })
+  },
+
+  createComments(comment) {
+    return req.post(routes.comments(), comment)
+  },
+
+  editComment(commentId, body) {
+    return req.put(routes.comment(commentId), { commentId, body })
+  },
+
+  deleteComment(commentId) {
+    return req.delete(routes.comment(commentId))
+  },
+
+  //---- REVIEWS ----//
+
+  getReviews(context, itemId, sorting) {
+    return req.get(routes.reviews()).query({ context, itemId, sorting })
+  },
+
+  createReview(review) {
+    return req.post(routes.reviews(), review)
+  },
+
+  editReview(reviewId, summary, body, rating) {
+    return req.put(routes.review(reviewId), { summary, body, rating })
+  },
+
+  deleteReview(reviewId) {
+    return req.delete(routes.review(reviewId))
+  },
+
+  //---- VOTES ----//
+
+  vote(vote) {
+    return req.post(routes.vote(), vote)
+  },
+
+  getLikers(type, itemId) {
+    return req.get(routes.likers()).query({ type, itemId })
+  }
 
 })
