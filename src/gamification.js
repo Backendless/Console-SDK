@@ -1,12 +1,20 @@
 import urls from './urls'
 
 export default req => ({
-  loadTracks() {
-    return req.get(`${urls.gamification()}/tracks`)
+  loadPacks() {
+    return req.get(`${urls.gamification()}/packs`)
   },
 
-  loadMilestones() {
-    return req.get(`${urls.gamification()}/milestones`)
+  loadTracks(packId) {
+    return req.get(`${urls.gamification()}/tracks`).query({ packId })
+  },
+
+  loadMilestones(packId) {
+    return req.get(`${urls.gamification()}/milestones`).query({ packId })
+  },
+
+  loadMissions(packId) {
+    return req.get(`${urls.gamification()}/missions`).query({ packId })
   },
 
   loadLevels() {
@@ -21,20 +29,12 @@ export default req => ({
     return req.get(`${urls.gamification()}/redeem`)
   },
 
-  loadMissions() {
-    return req.get(`${urls.gamification()}/missions`)
-  },
-
   loadBalance() {
     return req.get(`${urls.gamification()}/balance`)
   },
 
   loadActivityHistory() {
     return req.get(`${urls.gamification()}/activity-history`)
-  },
-
-  loadTutorial(url) {
-    return req.get(url)
   },
 
   loadTrivia() {
@@ -77,16 +77,24 @@ export default req => ({
     return req.get(`${urls.gamification()}/enabled`)
   },
 
-  unlockFreePlan(appId) {
-    return req.put(`${urls.gamification()}/plan/free/unlock`).query({ appId })
+  unlockSpringboardPlan(appId) {
+    return req.put(`${urls.gamification()}/unlock-springboard`).query({ appId })
   },
 
   getFreeMilestoneProgress() {
     return req.get(`${urls.gamification()}/free-plan-milestone-progress`)
   },
 
-  getFreePlanStatus() {
+  getUnlockedFreePlanAppId() {
     return req.get(`${urls.gamification()}/free-plan-status`)
+  },
+
+  getSettings() {
+    return req.get(`${urls.gamification()}/settings`)
+  },
+
+  saveSettings(settings) {
+    return req.put(`${urls.gamification()}/settings`, settings)
   },
 
   isMissionsVisited() {
