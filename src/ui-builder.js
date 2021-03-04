@@ -6,6 +6,8 @@ const routes = prepareRoutes({
   sdkStyles    : '/:appId/console/ui-builder/library/sdk/styles',
   sdkComponents: '/:appId/console/ui-builder/library/sdk/components',
 
+  pageTemplates: '/:appId/console/ui-builder/library/page-templates',
+
   themes     : '/:appId/console/ui-builder/library/themes',
   theme      : '/:appId/console/ui-builder/library/themes/:themeId',
   themeStyle : '/:appId/console/ui-builder/library/themes/:themeId/style',
@@ -97,6 +99,14 @@ export default req => ({
   },
 
   //-- CONTAINER -----//
+
+  //-- PAGE TEMPLATES -----//
+
+  loadPageTemplates(appId) {
+    return req.get(routes.pageTemplates(appId))
+  },
+
+  //-- PAGE TEMPLATES -----//
 
   //-- THEMES -----//
 
