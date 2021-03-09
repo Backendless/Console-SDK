@@ -65,11 +65,11 @@ export default req => ({
   },
 
   loadRecords(appId, table, query, ignoreCounter) {
-    const request = recordsReq(req, appId, table, query)
-
     if (ignoreCounter) {
-      return request
+      return recordsReq(req, appId, table, query)
     }
+
+    const request = recordsCountReq(req, appId, table, query)
 
     return totalRows(req).getWithData(request)
   },
