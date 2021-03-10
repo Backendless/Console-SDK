@@ -18,12 +18,12 @@ export const files = consoleSection('files')
 export const messaging = consoleSection('messaging')
 
 export const dataTables = appId => `${data(appId)}/tables`
-export const dataTable = (appId, tableName) => `${data(appId)}/${tableName}`
-export const dataTableGroup = (appId, tableName) => `${data(appId)}/data-grouping/${tableName}`
+export const dataTable = (appId, tableName) => `${data(appId)}/${encodeURI(tableName)}`
+export const dataTableGroup = (appId, tableName) => `${data(appId)}/data-grouping/${encodeURI(tableName)}`
 export const dataTableGroupCount = (appId, tableName) => `${dataTableGroup(appId, tableName)}/count`
 export const dataRecord = (appId, tableName, recordId) => `${dataTable(appId, tableName)}/${recordId}`
 export const dataConfigs = appId => `${data(appId)}/config`
-export const tableColumns = (appId, tableName) => `${dataTables(appId)}/${tableName}/columns`
+export const tableColumns = (appId, tableName) => `${dataTables(appId)}/${encodeURI(tableName)}/columns`
 export const securityRoles = appId => `${security(appId)}/roles`
 
 const generalizeEventCategory = category => !category || category === 'TIMER' ? 'timers' : 'events'
