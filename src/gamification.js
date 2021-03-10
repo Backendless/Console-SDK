@@ -5,20 +5,20 @@ export default req => ({
     return req.get(`${urls.gamification()}/packs`)
   },
 
-  loadTracks(packId) {
-    return req.get(`${urls.gamification()}/tracks`).query({ packId })
+  getMapItems(packId) {
+    return req.get(`${urls.gamification()}/map-items`).query({ packId })
   },
 
-  loadMilestones(packId) {
-    return req.get(`${urls.gamification()}/milestones`).query({ packId })
-  },
-
-  loadMissions(packId) {
-    return req.get(`${urls.gamification()}/missions`).query({ packId })
+  getProgress() {
+    return req.get(`${urls.gamification()}/progress`)
   },
 
   loadLevels() {
     return req.get(`${urls.gamification()}/levels`)
+  },
+
+  loadBadges() {
+    return req.get(`${urls.gamification()}/badges`)
   },
 
   loadEarnBBItems() {
@@ -27,10 +27,6 @@ export default req => ({
 
   loadRedeemBBItems() {
     return req.get(`${urls.gamification()}/redeem`)
-  },
-
-  loadBalance() {
-    return req.get(`${urls.gamification()}/balance`)
   },
 
   loadActivityHistory() {
@@ -47,10 +43,6 @@ export default req => ({
 
   submitSocialSharing(data) {
     return req.post(`${urls.gamification()}/bonus`, data)
-  },
-
-  loadBadges() {
-    return req.get(`${urls.gamification()}/badges`)
   },
 
   reportSocialActivity(data) {
@@ -95,14 +87,6 @@ export default req => ({
 
   saveSettings(settings) {
     return req.put(`${urls.gamification()}/settings`, settings)
-  },
-
-  isMissionsVisited() {
-    return req.get(`${urls.gamification()}/missions-visited`)
-  },
-
-  setMissionsVisited() {
-    return req.put(`${urls.gamification()}/missions-visited`)
   },
 
   getSocialPostsCollection() {
