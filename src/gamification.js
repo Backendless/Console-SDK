@@ -42,11 +42,11 @@ export default req => ({
   },
 
   submitSocialSharing(data) {
-    return req.post(`${urls.gamification()}/bonus`, data)
+    return req.post(`${urls.gamification()}/social-share`, data)
   },
 
   reportSocialActivity(data) {
-    return req.post(`${urls.gamification()}/social-activity-link`, data)
+    return req.post(`${urls.gamification()}/social-link`, data)
   },
 
   getLastUpdates() {
