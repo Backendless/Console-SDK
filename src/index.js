@@ -17,7 +17,6 @@ import dataConnectors from './data-connectors'
 import dataViews from './data-views'
 import developerProfile from './developer-profile'
 import devTeam from './dev-team'
-import devProfile from './dev-profile'
 import email from './email'
 import files from './files'
 import gamification from './gamification'
@@ -159,7 +158,6 @@ const createClient = (serverUrl, authKey, options) => {
     dataViews       : dataViews(request),
     developerProfile: developerProfile(request),
     devTeam         : devTeam(request),
-    devProfile      : devProfile(request),
     email           : email(request),
     files           : files(request),
     gamification    : gamification(request),
