@@ -1,24 +1,33 @@
+import { prepareRoutes } from './utils/routes'
 import { developerPage } from './urls'
 
+const routes = prepareRoutes({
+  getProfile   : '/console/marketplace/profile/me',
+  setProfile   : '/console/marketplace/profile',
+  getCountries : '/console/marketplace/countries',
+  checkUsername: '/console/marketplace/profile/username/check',
+})
+
 export default req => ({
-  loadProfile() {
-    return req.get(developerPage())
+
+  getMyProfile() {
+    return req.get(routes.getProfile())
   },
 
   createProfile(profileData) {
-    return req.post(developerPage(), profileData)
+    return req.post(routes.setProfile(), profileData)
   },
 
   updateProfile(profileData) {
-    return req.put(developerPage(), profileData)
+    return req.put(routes.setProfile(), profileData)
   },
 
-  loadCountries() {
-    return req.get(`${developerPage()}/countries`)
+  getCountries() {
+    return req.get(routes.getCountries())
   },
 
   updateProfilePhoto(profilePhoto) {
-    return req.post(`${developerPage()}/profile-photo`, profilePhoto)
+    return req.post(routes.setProfile(), profilePhoto)
   },
 
   updateProfileAppIcon(appId, appIcon) {
@@ -26,10 +35,11 @@ export default req => ({
   },
 
   checkUsernameAvailable(userName) {
-    return req.get(`${developerPage()}/username-available?username=${userName}`)
+    return req.get(routes.checkUsername()).query({ userName })
   },
 
   updateProfileBackground(background) {
-    return req.post(`${developerPage()}/background`, background)
+    return req.post(routes.setProfile(), background)
   },
+
 })
