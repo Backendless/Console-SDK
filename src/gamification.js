@@ -90,6 +90,6 @@ export default req => ({
   },
 
   getSocialPostsCollection() {
-    return req.get(`${urls.gamification()}/social-posts-collection`)
+    return req.get(`${urls.gamification()}/social-posts-templates`)
   }
 })
