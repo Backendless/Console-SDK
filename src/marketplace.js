@@ -1,25 +1,29 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  sections        : '/console/marketplace/sections',
-  categoryProducts: '/console/marketplace/categories/:categoryId/products',
+  sections        : '/console/community/marketplace/sections',
+  categoryProducts: '/console/community/marketplace/categories/:categoryId/products',
 
-  products             : '/console/marketplace/products',
-  product              : '/console/marketplace/products/:productId',
-  productApprove       : '/console/marketplace/products/:productId/approve',
-  productReject        : '/console/marketplace/products/:productId/reject',
-  productConfigurations: '/console/marketplace/products/:productId/configurations',
+  products             : '/console/community/marketplace/products',
+  product              : '/console/community/marketplace/products/:productId',
+  productApprove       : '/console/community/marketplace/products/:productId/approve',
+  productReject        : '/console/community/marketplace/products/:productId/reject',
+  productConfigurations: '/console/community/marketplace/products/:productId/configurations',
 
-  purchases              : '/:appId/console/marketplace/purchases',
-  purchasesProduct       : '/:appId/console/marketplace/purchases/:productId',
-  purchasesProductPreview: '/:appId/console/marketplace/purchases/:productId/preview',
+  submissions: '/console/community/marketplace/submissions',
 
-  comments: '/console/marketplace/comments',
-  comment : '/console/marketplace/comments/:commentId',
-  reviews : '/console/marketplace/reviews',
-  review  : '/console/marketplace/review/:reviewId',
-  vote    : '/console/marketplace/vote/like',
-  likers  : '/console/marketplace/vote/likers',
+  purchases              : '/:appId/console/community/marketplace/purchases',
+  purchasesProduct       : '/:appId/console/community/marketplace/purchases/:productId',
+  purchasesProductPreview: '/:appId/console/community/marketplace/purchases/:productId/preview',
+
+  comments: '/console/community/comments',
+  comment : '/console/community/comments/:commentId',
+
+  reviews : '/console/community/reviews',
+  review  : '/console/community/review/:reviewId',
+
+  vote    : '/console/community/vote/like',
+  likers  : '/console/community/vote/likers',
 })
 
 export default req => ({
@@ -80,6 +84,13 @@ export default req => ({
 
   //---- PURCHASES ----//
 
+  //---- SUBMISSIONS ==>
+
+  getSubmissions() {
+    return req.get(routes.submissions())
+  },
+
+  //---- SUBMISSIONS ----//
 
   //---- COMMENTS ----//
 
