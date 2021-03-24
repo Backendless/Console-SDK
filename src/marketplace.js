@@ -20,7 +20,7 @@ const routes = prepareRoutes({
   comment : '/console/community/comments/:commentId',
 
   reviews : '/console/community/reviews',
-  review  : '/console/community/review/:reviewId',
+  review  : '/console/community/reviews/:reviewId',
 
   vote    : '/console/community/vote/like',
   likers  : '/console/community/vote/likers',
@@ -120,8 +120,8 @@ export default req => ({
     return req.post(routes.reviews(), review)
   },
 
-  editReview(reviewId, summary, body, rating) {
-    return req.put(routes.review(reviewId), { summary, body, rating })
+  editReview(reviewId, body, rating) {
+    return req.put(routes.review(reviewId), { body, rating })
   },
 
   deleteReview(reviewId) {
