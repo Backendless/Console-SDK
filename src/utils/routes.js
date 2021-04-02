@@ -1,5 +1,3 @@
-import urls from '../urls'
-
 export function prepareRoutes(routes) {
   const result = {}
 

@@ -2,10 +2,10 @@ import { prepareRoutes } from './utils/routes'
 import { developerPage } from './urls'
 
 const routes = prepareRoutes({
-  getProfile   : '/console/marketplace/profile/me',
-  setProfile   : '/console/marketplace/profile',
-  getCountries : '/console/marketplace/countries',
-  checkUsername: '/console/marketplace/profile/username/check',
+  getProfile   : '/console/community/profile/me',
+  setProfile   : '/console/community/profile',
+  getCountries : '/console/community/countries',
+  checkUsername: '/console/community/profile/username/check',
 })
 
 export default req => ({
