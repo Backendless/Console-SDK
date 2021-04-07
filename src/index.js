@@ -38,6 +38,7 @@ import users from './users'
 import warning from './warning'
 import uiBuilder from './ui-builder'
 import chartBuilder from './chart-builder'
+import visualizations from './visualizations'
 
 class Context {
 
@@ -179,6 +180,7 @@ const createClient = (serverUrl, authKey, options) => {
     warning         : warning(request),
     uiBuilder       : uiBuilder(request),
     chartBuilder    : chartBuilder(request),
+    visualizations: visualizations(request),
   }
 }
 
