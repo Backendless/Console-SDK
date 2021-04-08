@@ -1,57 +1,37 @@
-import urls from './urls'
+import { prepareRoutes } from './utils/routes'
 
-const routes = {
-  init: 'ui-builder/init',
+const routes = prepareRoutes({
+  init: '/:appId/console/ui-builder/init',
 
-  sdkStyles    : 'ui-builder/library/sdk/styles',
-  sdkComponents: 'ui-builder/library/sdk/components',
+  sdkStyles    : '/:appId/console/ui-builder/library/sdk/styles',
+  sdkComponents: '/:appId/console/ui-builder/library/sdk/components',
 
-  themes     : 'ui-builder/library/themes',
-  theme      : 'ui-builder/library/themes/:themeId',
-  themeStyle : 'ui-builder/library/themes/:themeId/style',
-  themeAction: 'ui-builder/library/themes/:themeId/:action',
+  pageTemplates: '/:appId/console/ui-builder/library/page-templates',
 
-  remoteThemes: 'ui-builder/library/remote/themes',
-  remoteTheme : 'ui-builder/library/remote/themes/:themeId',
+  themes     : '/:appId/console/ui-builder/library/themes',
+  theme      : '/:appId/console/ui-builder/library/themes/:themeId',
+  themeStyle : '/:appId/console/ui-builder/library/themes/:themeId/style',
+  themeAction: '/:appId/console/ui-builder/library/themes/:themeId/:action',
 
-  containers     : 'ui-builder/containers',
-  container      : 'ui-builder/containers/:containerName',
-  containerAction: 'ui-builder/containers/:containerName/:action',
+  remoteThemes: '/:appId/console/ui-builder/library/remote/themes',
+  remoteTheme : '/:appId/console/ui-builder/library/remote/themes/:themeId',
 
-  containerStyles: 'ui-builder/containers/:containerName/styles',
-  containerStyle : 'ui-builder/containers/:containerName/styles/:name',
+  containers     : '/:appId/console/ui-builder/containers',
+  container      : '/:appId/console/ui-builder/containers/:containerName',
+  containerAction: '/:appId/console/ui-builder/containers/:containerName/:action',
 
-  containerFunctions    : 'ui-builder/containers/:containerName/functions',
-  containerFunction     : 'ui-builder/containers/:containerName/functions/:functionId',
-  containerFunctionLogic: 'ui-builder/containers/:containerName/functions/:functionId/logic',
+  containerStyles: '/:appId/console/ui-builder/containers/:containerName/styles',
+  containerStyle : '/:appId/console/ui-builder/containers/:containerName/styles/:name',
 
-  containerPages          : 'ui-builder/containers/:containerName/pages',
-  containerPage           : 'ui-builder/containers/:containerName/pages/:pageName',
-  containerPageUI         : 'ui-builder/containers/:containerName/pages/:pageName/ui',
-  containerPageLogic      : 'ui-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
-  containerPageUnusedLogic: 'ui-builder/containers/:containerName/pages/:pageName/unused-logic',
-}
+  containerFunctions    : '/:appId/console/ui-builder/containers/:containerName/functions',
+  containerFunction     : '/:appId/console/ui-builder/containers/:containerName/functions/:functionId',
+  containerFunctionLogic: '/:appId/console/ui-builder/containers/:containerName/functions/:functionId/logic',
 
-Object.keys(routes).forEach(key => {
-  const tokens = routes[key].split('/')
-
-  routes[key] = (appId, ...args) => {
-    let lastArgIndex = 0
-
-    const targetTokens = tokens.map(pathToken => {
-      return pathToken.startsWith(':') ? args[lastArgIndex++] : pathToken
-    })
-
-    targetTokens.unshift(urls.appConsole(appId))
-
-    const route = targetTokens.join('/')
-
-    if (route.indexOf('/:') >= 0) {
-      throw new Error(`Invalid path params in route [${key}], arguments: ${args}`)
-    }
-
-    return route
-  }
+  containerPages          : '/:appId/console/ui-builder/containers/:containerName/pages',
+  containerPage           : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName',
+  containerPageUI         : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/ui',
+  containerPageLogic      : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
+  containerPageUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/unused-logic',
 })
 
 export default req => ({
@@ -119,6 +99,14 @@ export default req => ({
   },
 
   //-- CONTAINER -----//
+
+  //-- PAGE TEMPLATES -----//
+
+  loadPageTemplates(appId) {
+    return req.get(routes.pageTemplates(appId))
+  },
+
+  //-- PAGE TEMPLATES -----//
 
   //-- THEMES -----//
 

@@ -23,7 +23,7 @@ const BOOLEAN_SQL_VALUES = {
   'null' : 'IS NULL'
 }
 
-export const tableRecordsReq = (req, url, table, query = {}, resetCache) => {
+const composeRequestParams = (table, query) => {
   const { pageSize = 15, offset = 0, sqlSearch, where, sortField, sortDir, filterString } = query
   const { property, groupBy, having, distinct } = query
 
@@ -53,6 +53,20 @@ export const tableRecordsReq = (req, url, table, query = {}, resetCache) => {
   if (distinct) {
     params.distinct = distinct
   }
+
+  return params
+}
+
+export const tableRecordsReq = (req, url, table, query = {}, resetCache) => {
+  const params = composeRequestParams(table, query)
+
+  return req.post(url, params)
+    .cacheTags(TABLE_DATA(table.tableId))
+    .resetCache(resetCache)
+}
+
+export const tableRecordsCountReq = (req, url, table, query = {}, resetCache) => {
+  const params = composeRequestParams(table, query)
 
   return req.get(url)
     .query(params)
