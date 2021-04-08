@@ -2,6 +2,7 @@ import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
   sections        : '/console/community/marketplace/sections',
+  categories      : '/console/community/marketplace/categories',
   categoryProducts: '/console/community/marketplace/categories/:categoryId/products',
 
   products             : '/console/community/marketplace/products',
@@ -19,11 +20,11 @@ const routes = prepareRoutes({
   comments: '/console/community/comments',
   comment : '/console/community/comments/:commentId',
 
-  reviews : '/console/community/reviews',
-  review  : '/console/community/reviews/:reviewId',
+  reviews: '/console/community/reviews',
+  review : '/console/community/reviews/:reviewId',
 
-  vote    : '/console/community/vote/like',
-  likers  : '/console/community/vote/likers',
+  vote  : '/console/community/vote/like',
+  likers: '/console/community/vote/likers',
 })
 
 export default req => ({
@@ -34,11 +35,26 @@ export default req => ({
     return req.get(routes.sections())
   },
 
+  //---- SECTIONS ----//
+
+  //---- CATEGORIES ==>
+
+  getCategories(query) {
+    return req.get(routes.categories()).query(query)
+  },
+
   getCategoryProducts(categoryId) {
     return req.get(routes.categoryProducts(categoryId))
   },
 
-  //---- SECTIONS ----//
+  //---- CATEGORIES ----//
+
+  //---- PRODUCTS ==>
+
+  getProducts(query) {
+    return req.get(routes.products()).query(query)
+  },
+  //---- PRODUCTS ----//
 
   //---- PRODUCT ==>
 
