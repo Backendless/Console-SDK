@@ -1,16 +1,24 @@
 import urls from './urls'
 
 export default req => ({
-  loadTracks() {
-    return req.get(`${urls.gamification()}/tracks`)
+  loadPacks() {
+    return req.get(`${urls.gamification()}/packs`)
   },
 
-  loadMilestones() {
-    return req.get(`${urls.gamification()}/milestones`)
+  getMapItems(packId) {
+    return req.get(`${urls.gamification()}/map-items`).query({ packId })
+  },
+
+  getProgress() {
+    return req.get(`${urls.gamification()}/progress`)
   },
 
   loadLevels() {
     return req.get(`${urls.gamification()}/levels`)
+  },
+
+  loadBadges() {
+    return req.get(`${urls.gamification()}/badges`)
   },
 
   loadEarnBBItems() {
@@ -21,20 +29,8 @@ export default req => ({
     return req.get(`${urls.gamification()}/redeem`)
   },
 
-  loadMissions() {
-    return req.get(`${urls.gamification()}/missions`)
-  },
-
-  loadBalance() {
-    return req.get(`${urls.gamification()}/balance`)
-  },
-
   loadActivityHistory() {
     return req.get(`${urls.gamification()}/activity-history`)
-  },
-
-  loadTutorial(url) {
-    return req.get(url)
   },
 
   loadTrivia() {
@@ -46,15 +42,11 @@ export default req => ({
   },
 
   submitSocialSharing(data) {
-    return req.post(`${urls.gamification()}/bonus`, data)
-  },
-
-  loadBadges() {
-    return req.get(`${urls.gamification()}/badges`)
+    return req.post(`${urls.gamification()}/social-share`, data)
   },
 
   reportSocialActivity(data) {
-    return req.post(`${urls.gamification()}/social-activity-link`, data)
+    return req.post(`${urls.gamification()}/social-link`, data)
   },
 
   getLastUpdates() {
@@ -77,27 +69,27 @@ export default req => ({
     return req.get(`${urls.gamification()}/enabled`)
   },
 
-  unlockFreePlan(appId) {
-    return req.put(`${urls.gamification()}/plan/free/unlock`).query({ appId })
+  unlockSpringboardPlan(appId) {
+    return req.put(`${urls.gamification()}/unlock-springboard`).query({ appId })
   },
 
   getFreeMilestoneProgress() {
     return req.get(`${urls.gamification()}/free-plan-milestone-progress`)
   },
 
-  getFreePlanStatus() {
+  getUnlockedFreePlanAppId() {
     return req.get(`${urls.gamification()}/free-plan-status`)
   },
 
-  isMissionsVisited() {
-    return req.get(`${urls.gamification()}/missions-visited`)
+  getSettings() {
+    return req.get(`${urls.gamification()}/settings`)
   },
 
-  setMissionsVisited() {
-    return req.put(`${urls.gamification()}/missions-visited`)
+  saveSettings(settings) {
+    return req.put(`${urls.gamification()}/settings`, settings)
   },
 
   getSocialPostsCollection() {
-    return req.get(`${urls.gamification()}/social-posts-collection`)
+    return req.get(`${urls.gamification()}/social-posts-templates`)
   }
 })

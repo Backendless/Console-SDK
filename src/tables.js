@@ -4,7 +4,7 @@ import { DataTypes } from './constants/data'
 import urls from './urls'
 import totalRows from './utils/total-rows'
 import { TABLE_DATA } from './utils/cache-tags'
-import { tableRecordsReq, buildRecordsSearch } from './utils/table'
+import { tableRecordsReq, tableRecordsCountReq, buildRecordsSearch } from './utils/table'
 
 const RELATION_URL_SUFFIX = 'relation'
 const GEO_RELATION_URL_SUFFIX = 'georelation'
@@ -21,6 +21,8 @@ const tableUrl = (appId, table) => `${urls.dataTables(appId)}/${table.name}`
 const removeRecordsUrl = (appId, table, removeAll) => `${tableUrl(appId, table)}/${removeAll ? 'all' : 'records'}`
 const assignedUserRoles = appId => `${urls.security(appId)}/assignedroles`
 
+export const dataTableFindUrl = (appId, tableName) => `${urls.dataTable(appId, tableName)}/find`
+
 const updateRelationsUrl = (appId, table, columnName, recordId) => {
   return `${urls.dataRecord(appId, table.name, recordId)}/${columnName}`
 }
@@ -30,7 +32,11 @@ const removeRelationsUrl = (appId, table, columnName, recordId) => {
 }
 
 const recordsReq = (req, appId, table, query, resetCache) => {
-  return tableRecordsReq(req, urls.dataTable(appId, table.name), table, query, resetCache)
+  return tableRecordsReq(req, dataTableFindUrl(appId, table.name), table, query, resetCache)
+}
+
+const recordsCountReq = (req, appId, table, query, resetCache) => {
+  return tableRecordsCountReq(req, urls.dataTable(appId, table.name), table, query, resetCache)
 }
 
 const getRelationColumn = (table, columnName) => {
@@ -59,11 +65,11 @@ export default req => ({
   },
 
   loadRecords(appId, table, query, ignoreCounter) {
-    const request = recordsReq(req, appId, table, query)
-
     if (ignoreCounter) {
-      return request
+      return recordsReq(req, appId, table, query)
     }
+
+    const request = recordsCountReq(req, appId, table, query)
 
     return totalRows(req).getWithData(request)
   },
@@ -104,11 +110,11 @@ export default req => ({
   },
 
   getRecordsCount(appId, table, query, resetCache) {
-    return totalRows(req).getFor(recordsReq(req, appId, table, query, resetCache))
+    return totalRows(req).getFor(recordsCountReq(req, appId, table, query, resetCache))
   },
 
-  getRecordsCountForTables(appId, tables, resetCache) {
-    return req.post(`${urls.data(appId)}/tables-counters`, { tables, resetCache })
+  getRecordsCountForTables(appId, tables, connectorId, resetCache) {
+    return req.post(`${urls.data(appId)}/tables-counters`, { tables, connectorId, resetCache })
   },
 
   createRecord(appId, table, record) {

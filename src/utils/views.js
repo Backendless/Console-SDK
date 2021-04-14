@@ -1,9 +1,7 @@
 import { VIEW_DATA, VIEW_GROUP_DATA } from './cache-tags'
 
-const GroupRequestProperties = [
-  'where', 'distinct', 'props', 'excludeProps', 'property', 'loadRelations',
-  'groupDepth', 'relationsPageSize', 'sortBy', 'groupPath', 'groupBy'
-]
+const CommonRequestProperties = ['where', 'distinct', 'props', 'excludeProps', 'property', 'loadRelations', 'sortBy']
+const GroupRequestProperties = [...CommonRequestProperties, 'groupDepth', 'relationsPageSize', 'groupPath', 'groupBy']
 const GroupCountRequestProperties = ['where', 'distinct']
 
 const assignPropertiesIfDefined = (target, source, properties) => properties.reduce((acc, property) => {
@@ -19,8 +17,24 @@ const assignPropertiesIfDefined = (target, source, properties) => properties.red
 export const viewRecordsReq = (req, url, view, query, resetCache) => {
   const { pageSize = 15, offset = 0 } = query
 
+  const params = { offset, pageSize }
+
+  assignPropertiesIfDefined(params, query, CommonRequestProperties)
+
+  return req.post(url, { pageSize, offset })
+    .cacheTags(VIEW_DATA(view.viewId))
+    .resetCache(resetCache)
+}
+
+export const viewRecordsCountReq = (req, url, view, query, resetCache) => {
+  const { pageSize = 15, offset = 0 } = query
+
+  const params = { offset, pageSize }
+
+  assignPropertiesIfDefined(params, query, CommonRequestProperties)
+
   return req.get(url)
-    .query({ pageSize, offset })
+    .query(params)
     .cacheTags(VIEW_DATA(view.viewId))
     .resetCache(resetCache)
 }
