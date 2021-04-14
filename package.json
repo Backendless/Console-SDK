@@ -1,6 +1,6 @@
 {
   "name": "backendless-console-sdk",
-  "version": "2.11.7",
+  "version": "2.12.0",
   "description": "Backendless Console SDK for Node.js and browser",
   "browser": "dist/backendless-console-sdk.js",
   "main": "lib/index.js",
