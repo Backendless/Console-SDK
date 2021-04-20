@@ -3,6 +3,12 @@ import totalRows from './utils/total-rows'
 import { tableRecordsReq } from './utils/table'
 
 const recordsReq = (req, appId, connectorId, table, query, resetCache) => {
+  const url = `${urls.dataConnectorTableEntries(appId, connectorId, table.name)}/find`
+
+  return tableRecordsReq(req, url, table, query, resetCache)
+}
+
+const recordsCountReq = (req, appId, connectorId, table, query, resetCache) => {
   const url = urls.dataConnectorTableEntries(appId, connectorId, table.name)
 
   return tableRecordsReq(req, url, table, query, resetCache)
@@ -35,11 +41,11 @@ export default req => ({
   },
 
   getConnectorTableEntries(appId, connectorId, table, query) {
-    return totalRows(req).getWithData(recordsReq(req, appId, connectorId, table, query))
+    return recordsReq(req, appId, connectorId, table, query)
   },
 
   getConnectorTableEntriesCount(appId, connectorId, table, query, resetCache) {
-    return totalRows(req).getFor(recordsReq(req, appId, connectorId, table, query, resetCache))
+    return totalRows(req).getFor(recordsCountReq(req, appId, connectorId, table, query, resetCache))
   },
 
   getConnectorStoredProcedures(appId, connectorId, options = {}) {
