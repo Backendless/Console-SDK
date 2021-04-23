@@ -16,15 +16,6 @@ const routes = prepareRoutes({
   purchases              : '/:appId/console/community/marketplace/purchases',
   purchasesProduct       : '/:appId/console/community/marketplace/purchases/:productId',
   purchasesProductPreview: '/:appId/console/community/marketplace/purchases/:productId/preview',
-
-  comments: '/console/community/comments',
-  comment : '/console/community/comments/:commentId',
-
-  reviews: '/console/community/reviews',
-  review : '/console/community/reviews/:reviewId',
-
-  vote  : '/console/community/vote/like',
-  likers: '/console/community/vote/likers',
 })
 
 export const marketplace = req => ({
