@@ -23,7 +23,6 @@ import gamification from './gamification'
 import geo from './geo'
 import invites from './invites'
 import license from './license'
-import marketplace from './marketplace'
 import messaging from './messaging'
 import navigator from './navigator'
 import projectTemplate from './project-template'
@@ -38,6 +37,9 @@ import users from './users'
 import warning from './warning'
 import uiBuilder from './ui-builder'
 import chartBuilder from './chart-builder'
+
+import { community } from './community'
+import { marketplace } from './marketplace'
 
 class Context {
 
@@ -164,7 +166,6 @@ const createClient = (serverUrl, authKey, options) => {
     geo             : geo(request),
     invites         : invites(request),
     license         : license(request),
-    marketplace     : marketplace(request),
     messaging       : messaging(request),
     navigator       : navigator(request),
     projectTemplate : projectTemplate(request),
@@ -179,6 +180,8 @@ const createClient = (serverUrl, authKey, options) => {
     warning         : warning(request),
     uiBuilder       : uiBuilder(request),
     chartBuilder    : chartBuilder(request),
+    community       : community(request),
+    marketplace     : marketplace(request),
   }
 }
 
