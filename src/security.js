@@ -25,17 +25,13 @@ const transformOwnerResponse = response => ({
 const transformRolesResponse = response => ({ data: response })
 const transformUsersResponse = response => ({ data: response })
 const transformColumnsResponse = response => {
-  const result = { data: [] }
-
-  response.forEach(columnPermission => {
-    const permissions = columnPermission.rolesPermissions.map(permission => {
-      return { access: permission.access, id: permission.roleId, operation: permission.columnId }
-    })
-
-    result.data.push({ columnId: columnPermission.columnId, permissions })
-  })
-
-  return result
+  return {
+    data: response.map(item => ({
+      name       : item.roleName,
+      roleId     : item.roleId,
+      permissions: item.permissions
+    }))
+  }
 }
 
 /**
@@ -93,16 +89,16 @@ const alignGetResponseShape = response => {
   }
 
   const empty = !response.length
+  const columnsResponse = !empty && !!response[0].permissions && !!response[0].permissions[0].columnId
   const rolesResponse = !empty && !!response[0].permissions
   const aclRolesResponse = !empty && !!response[0].operationId
   const usersResponse = !empty && !!response[0].userId
-  const columnsResponse = !empty && !!response[0].columnId
 
   return (empty && emptyResponse)
+    || (columnsResponse && transformColumnsResponse(response))
     || (rolesResponse && transformRolesResponse(response))
     || (aclRolesResponse && transformAclRolesResponse(response))
     || (usersResponse && transformUsersResponse(response))
-    || (columnsResponse && transformColumnsResponse(response))
     || transformOwnerResponse(response)
 }
 
@@ -118,7 +114,7 @@ const enrichPermissions = result => {
 
 const enrichEntities = result => {
   result.data.forEach(item => {
-    item.id = item.userId || item.roleId || item.columnId || 'owner'
+    item.id = item.userId || item.roleId || 'owner'
   })
 
   return result
