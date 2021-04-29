@@ -2,7 +2,6 @@ export const ALL_OBJECTS = 'all'
 
 export const PermissionServices = {
   DATA        : 'data',
-  MEDIA       : 'media',
   MESSAGING   : 'messaging',
   GEO         : 'geo',
   FILES       : 'files',
@@ -10,9 +9,10 @@ export const PermissionServices = {
 }
 
 export const PermissionPolicies = {
-  USERS: 'users',
-  ROLES: 'roles',
-  OWNER: 'owner'
+  USERS  : 'users',
+  ROLES  : 'roles',
+  OWNER  : 'owner',
+  COLUMNS: 'columns'
 }
 
 export const SYSTEM_ROLES = [
