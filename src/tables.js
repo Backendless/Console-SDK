@@ -64,14 +64,21 @@ export default req => ({
     return req.delete(tableUrl(appId, table))
   },
 
-  loadRecords(appId, table, query, ignoreCounter) {
+  async loadRecords(appId, table, query, ignoreCounter) {
+    const dataRequest = recordsReq(req, appId, table, query)
+
     if (ignoreCounter) {
-      return recordsReq(req, appId, table, query)
+      return dataRequest
     }
 
-    const request = recordsCountReq(req, appId, table, query)
+    const countRequest = totalRows(req).getFor(recordsCountReq(req, appId, table, query))
 
-    return totalRows(req).getWithData(request)
+    const [total, data] = await Promise.all([countRequest, dataRequest])
+
+    return {
+      totalRows: total,
+      data
+    }
   },
 
   exportRecords(appId, connectorId, table, query) {
