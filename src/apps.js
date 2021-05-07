@@ -1,8 +1,8 @@
 import urls from './urls'
 
 export default req => ({
-  createApp({ appName, refCode, blueprintId, zone }) {
-    return req.post('/console/applications', { appName, refCode }).query({ blueprintId, zone })
+  createApp(app, query) {
+    return req.post('/console/applications', app).query(query)
   },
 
   getApps() {
