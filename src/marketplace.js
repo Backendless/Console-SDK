@@ -1,6 +1,6 @@
 import urls from './urls'
 
-export default req => ({
+export const marketplace = req => ({
   getSections(appId, marketplaceName) {
     return req.billing.get(`${urls.marketplace(appId, marketplaceName)}/sections`)
   },
