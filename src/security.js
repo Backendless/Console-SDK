@@ -24,6 +24,15 @@ const transformOwnerResponse = response => ({
 
 const transformRolesResponse = response => ({ data: response })
 const transformUsersResponse = response => ({ data: response })
+const transformColumnsResponse = response => {
+  return {
+    data: response.map(item => ({
+      name       : item.roleName,
+      roleId     : item.roleId,
+      permissions: item.permissions
+    }))
+  }
+}
 
 /**
  * Transforms
@@ -80,11 +89,13 @@ const alignGetResponseShape = response => {
   }
 
   const empty = !response.length
+  const columnsResponse = !empty && !!response[0].permissions && !!response[0].permissions[0].columnId
   const rolesResponse = !empty && !!response[0].permissions
   const aclRolesResponse = !empty && !!response[0].operationId
   const usersResponse = !empty && !!response[0].userId
 
   return (empty && emptyResponse)
+    || (columnsResponse && transformColumnsResponse(response))
     || (rolesResponse && transformRolesResponse(response))
     || (aclRolesResponse && transformAclRolesResponse(response))
     || (usersResponse && transformUsersResponse(response))
@@ -92,8 +103,10 @@ const alignGetResponseShape = response => {
 }
 
 const enrichPermissions = result => {
+  const columnsResponse = !!result.data[0]?.permissions[0]?.columnId
+
   result.data.forEach(item => {
-    item.permissions = toPermissionsMap(item.permissions)
+    item.permissions = toPermissionsMap(item.permissions, columnsResponse)
   })
 
   return result
@@ -131,6 +144,7 @@ const alignModifyResponseShape = (appId, policy, policyItemId, service, serviceI
 
   const isOwnerPolicy = policy === PermissionPolicies.OWNER
   const isRolesPolicy = policy === PermissionPolicies.ROLES
+  const isColumnsPolicy = policy === PermissionPolicies.COLUMNS
   const isObjectACL = objectId !== ALL_OBJECTS
 
   const result = {}
@@ -150,6 +164,8 @@ const alignModifyResponseShape = (appId, policy, policyItemId, service, serviceI
       })
     })
 
+  } else if (isColumnsPolicy) {
+    return response
   } else {
     if (response.permissions) {
       response = response.permissions
@@ -170,14 +186,19 @@ const alignModifyResponseShape = (appId, policy, policyItemId, service, serviceI
  *     =>
  *     {Update: 'Grant', Find: 'Deny'}
  * @param permissions
+ * @param columnsResponse
  * @returns {{}}
  */
-const toPermissionsMap = permissions => {
+const toPermissionsMap = (permissions, columnsResponse) => {
   const map = {}
 
   if (permissions) {
     permissions.forEach(permission => {
-      map[permission.operation] = permission.access
+      if (columnsResponse) {
+        map[permission.columnId] = permission.access
+      } else {
+        map[permission.operation] = permission.access
+      }
     })
   }
 
@@ -193,8 +214,7 @@ const normalizeRolesPropsNames = roles => roles.map(normalizeRolePropsNames)
 const enrichRolesProps = roles => roles.map(role => ({ system: SYSTEM_ROLES.includes(role.name), ...role }))
 
 export default req => {
-  const loadPermissions = (appId, policy, service, serviceItemId, serviceItemName,
-                           objectId, filterParams = {}) => {
+  const loadPermissions = (appId, policy, service, serviceItemId, serviceItemName, objectId, filterParams = {}) => {
 
     const url = buildGetUrl(appId, policy, service, serviceItemId, serviceItemName, objectId, filterParams)
 
@@ -218,12 +238,13 @@ export default req => {
   const setPermission = (appId, policy, policyItemId, service, serviceItemId, serviceItemName,
                          objectId, permission) => {
     const isOwnerPolicy = policy === PermissionPolicies.OWNER
+    const isColumnPolicy = policy === PermissionPolicies.COLUMNS
     const isObjectACL = objectId !== ALL_OBJECTS
 
     //for owner and object acl the body should contain just {access, permission} object
     //for all other cases it must be wrapped into an array and object :
     //{ permissions: [{access,permission}, ...] }
-    const body = (isOwnerPolicy || isObjectACL)
+    const body = (isOwnerPolicy || isColumnPolicy || isObjectACL)
       ? permission
       : { permissions: castArray(permission) }
 
@@ -243,7 +264,7 @@ export default req => {
   }
 
   const searchDataACLUsers = (appId, tableName, objectID, query) => {
-    return req.get(`${urls.security(appId)}/data/${tableName}/objectAcl/${objectID}/users/search/${query}`)
+    return req.get(`${ urls.security(appId) }/data/${ tableName }/objectAcl/${ objectID }/users/search/${ query }`)
       .then(result => ({ data: result }))
       .then(enrichPermissions)
       .then(enrichEntities)
@@ -254,16 +275,19 @@ export default req => {
     .then(normalizeRolesPropsNames) //TODO it will be removed when the server will be ready (CONSOLE-307)
     .then(enrichRolesProps) //TODO it will be removed when the server will be ready (CONSOLE-307)
 
-  const createRole = (appId, name) => req.put(`${urls.securityRoles(appId)}/${encodeURIComponent(name)}`)
+  const createRole = (appId, name) => req.put(`${ urls.securityRoles(appId) }/${ encodeURIComponent(name) }`)
     .then(normalizeRolePropsNames)
 
-  const deleteRole = (appId, id) => req.delete(`${urls.securityRoles(appId)}/${id}`)
+  const deleteRole = (appId, id) => req.delete(`${ urls.securityRoles(appId) }/${ id }`)
 
   const loadRolePermissions = (appId, id) =>
-    req.get(`${urls.securityRoles(appId)}/permissions/${id}`)
+    req.get(`${ urls.securityRoles(appId) }/permissions/${ id }`)
 
   const setRolePermission = (appId, id, permission) =>
-    req.put(`${urls.securityRoles(appId)}/permissions/${id}`, permission)
+    req.put(`${ urls.securityRoles(appId) }/permissions/${ id }`, permission)
+
+  const loadColumnPermissions = (appId, tableId) =>
+    req.get(`${ urls.security(appId) }/data/${ tableId }/columns/permissions`)
 
   return {
     loadRoles,
@@ -274,6 +298,7 @@ export default req => {
     setRolePermission,
     setPermission,
     dropPermissions,
-    searchDataACLUsers
+    searchDataACLUsers,
+    loadColumnPermissions
   }
 }

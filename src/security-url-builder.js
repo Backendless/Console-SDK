@@ -20,6 +20,7 @@ const baseUrl = appId => urls.security(appId)
  * service=files, policy=users    =>  :service/:policy/:serviceItemId   (BKNDLSS-13008)
  * service=files, policy=roles    =>  :policy/:service/:serviceItemId   (BKNDLSS-13008)
  * policy=owner                   =>  :service/ownerpolicy/:serviceItemId
+ * policy=columns                 =>  :service/:serviceItemId/:policy/permissions
  * objectId != ALL_OBJECTS        =>  :service/:serviceItemName/objectAcl/:objectId/:policy
  *
  * @returns {string}
@@ -28,6 +29,7 @@ export const buildGetUrl = (appId, policy, service, serviceItemId, serviceItemNa
   const isFilesService = service === PermissionServices.FILES
   const isRolesPolicy = policy === PermissionPolicies.ROLES
   const isOwnerPolicy = policy === PermissionPolicies.OWNER
+  const isColumnsPolicy = policy === PermissionPolicies.COLUMNS
   const isObjectACL = objectId !== ALL_OBJECTS
 
   let stickingPoint = `${service}/${serviceItemId}/${policy}`
@@ -42,6 +44,8 @@ export const buildGetUrl = (appId, policy, service, serviceItemId, serviceItemNa
     } else {
       stickingPoint = `${service}/users/${serviceItemId}`
     }
+  } else if (isColumnsPolicy) {
+    stickingPoint = `${service}/${serviceItemId}/${policy}/permissions`
   } else if (isObjectACL) {
     stickingPoint = `${service}/${serviceItemName}/objectAcl/${objectId}/${policy}`
   }
@@ -63,10 +67,11 @@ export const buildGetUrl = (appId, policy, service, serviceItemId, serviceItemNa
  */
 export const buildPutUrl = (appId, policy, service, serviceItemId, serviceItemName, objectId,
                             policyItemId, permission) => {
-  const { OWNER, USERS, ROLES } = PermissionPolicies
+  const { OWNER, USERS, ROLES, COLUMNS } = PermissionPolicies
   const isOwnerPolicy = policy === OWNER
   const isUserPolicy = policy === USERS
   const isRolesPolicy = policy === ROLES
+  const isColumnsPolicy = policy === COLUMNS
   const isFilesService = service === PermissionServices.FILES
   const isApiService = service === PermissionServices.API_SERVICES
   const isObjectACL = objectId !== ALL_OBJECTS
@@ -85,6 +90,8 @@ export const buildPutUrl = (appId, policy, service, serviceItemId, serviceItemNa
     }
   } else if (isApiService && permission.operation === 'all') {
     stickingPoint += '/access/' + permission.access
+  } else if (isColumnsPolicy) {
+    stickingPoint = `${service}/${serviceItemId}/${policy}/permissions/${permission.operation}/${policyItemId}`
   }
 
   return `${baseUrl(appId)}/${stickingPoint}`
