@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
