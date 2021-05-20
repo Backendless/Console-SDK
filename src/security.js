@@ -224,7 +224,7 @@ export default req => {
         const usersCountReq = req
           .get(urls.dataTable(appId, 'Users'))
           .query({
-            where: filterParams.name ? `${identityColumnName} like '%${name}%'` : undefined
+            where: filterParams.name ? `${identityColumnName} like '%${filterParams.name}%'` : undefined
           })
 
         return totalRows(req).getFor(usersCountReq)
