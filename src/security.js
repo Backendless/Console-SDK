@@ -221,9 +221,8 @@ export default req => {
 
     const addTotalRows = response => {
       if (policy === PermissionPolicies.USERS) {
-        const usersCountReq = name ? req.get(urls.dataTable(appId, 'Users'))
-            .query({ where: `${identityColumnName} like '%${name}%'` })
-          : req.get(urls.dataTable(appId, 'Users'))
+        const usersCountReq = req.get(urls.dataTable(appId, 'Users'))
+            .query({ where: filterParams.name ? `${identityColumnName} like '%${name}%'` : undefined})
 
         return totalRows(req).getFor(usersCountReq)
           .then(totalRows => ({ ...response, totalRows }))
