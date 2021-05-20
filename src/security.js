@@ -214,7 +214,8 @@ const normalizeRolesPropsNames = roles => roles.map(normalizeRolePropsNames)
 const enrichRolesProps = roles => roles.map(role => ({ system: SYSTEM_ROLES.includes(role.name), ...role }))
 
 export default req => {
-  const loadPermissions = (appId, policy, service, serviceItemId, serviceItemName, objectId, filterParams = {}, identityColumnName) => {
+  const loadPermissions = (appId, policy, service, serviceItemId, serviceItemName, objectId, filterParams = {},
+                           identityColumnName) => {
 
     const url = buildGetUrl(appId, policy, service, serviceItemId, serviceItemName, objectId, filterParams)
 
