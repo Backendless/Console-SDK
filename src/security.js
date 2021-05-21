@@ -214,13 +214,20 @@ const normalizeRolesPropsNames = roles => roles.map(normalizeRolePropsNames)
 const enrichRolesProps = roles => roles.map(role => ({ system: SYSTEM_ROLES.includes(role.name), ...role }))
 
 export default req => {
-  const loadPermissions = (appId, policy, service, serviceItemId, serviceItemName, objectId, filterParams = {}) => {
+  const loadPermissions = (appId, policy, service, serviceItemId, serviceItemName, objectId, filterParams = {},
+                           identityColumnName) => {
 
     const url = buildGetUrl(appId, policy, service, serviceItemId, serviceItemName, objectId, filterParams)
 
     const addTotalRows = response => {
       if (policy === PermissionPolicies.USERS) {
-        return totalRows(req).getFor(req.get(urls.dataTable(appId, 'Users')))
+        const usersCountReq = req
+          .get(urls.dataTable(appId, 'Users'))
+          .query({
+            where: filterParams.name ? `${identityColumnName} like '%${filterParams.name}%'` : undefined
+          })
+
+        return totalRows(req).getFor(usersCountReq)
           .then(totalRows => ({ ...response, totalRows }))
       }
 
