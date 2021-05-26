@@ -39,5 +39,9 @@ export default req => ({
 
   updateAppLogo(appId, logo) {
     return req.post(`${urls.appInfo(appId)}/logos`, logo)
+  },
+
+  generateSubdomains() {
+    return req.get('/console/applications/suggested-generated-domains')
   }
 })
