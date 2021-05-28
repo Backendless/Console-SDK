@@ -75,10 +75,6 @@ export default req => ({
     return req.post(`${urls.appConsole(appId)}/settings/custom-domain`, domainData)
   },
 
-  assignCustomDomain(appId, domainData) {
-    return req.post(`${urls.appConsole(appId)}/settings/custom-domain/assign-generated-domain`, domainData)
-  },
-
   changeCustomDomain(appId, domainData) {
     return req.put(`${urls.appConsole(appId)}/settings/custom-domain/${domainData.id}`, domainData)
   },
