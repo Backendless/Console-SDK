@@ -21,8 +21,11 @@ export default req => ({
     return req.delete(`${urls.appConsole(appId)}/application`)
   },
 
-  cloneApp(appId, newAppName) {
-    return req.post(`${urls.appConsole(appId)}/cloneApp`).query({ newAppName })
+  cloneApp(appId, newApp) {
+    // BKNDLSS-25315
+    return req
+      .post(`${urls.appConsole(appId)}/cloneApp`, newApp)
+      .query({ newAppName: newApp.name || newApp.newAppName })
   },
 
   getCloningAppStatus(appId, processId) {
