@@ -9,6 +9,8 @@ const routes = prepareRoutes({
 
   vote  : '/console/community/vote/like',
   likers: '/console/community/vote/likers',
+
+  blacklistStatus: '/console/community/blacklist/status',
 })
 
 export const community = req => ({
@@ -57,6 +59,10 @@ export const community = req => ({
 
   getLikers(type, itemId) {
     return req.get(routes.likers()).query({ type, itemId })
+  },
+
+  getUserBlacklistStatus() {
+    return req.get(routes.blacklistStatus())
   }
 
 })
