@@ -198,10 +198,6 @@ export default req => ({
 
   updateAssignedUserRoles(appId, roles, users) {
     return req.put(assignedUserRoles(appId), { roles, users })
-  },
-
-  getLockStatus(appId) {
-    return req.get(`${urls.data(appId)}/lock/status`)
   }
 })
 
