@@ -50,13 +50,45 @@ export default req => ({
     return req.delete(`${urls.mobileSettings(appId)}/${deviceType}/${id}`)
   },
 
+  /**
+   * @deprecated
+   * */
   updateDomainNames(appId, domainNames) {
     return req.put(`${urls.appConsole(appId)}/domaincontrolsettings`, domainNames.split(/\s+/))
   },
 
+  /**
+   * @deprecated
+   * */
   updateCustomDomain(appId, domainName) {
     return req.put(`${urls.appConsole(appId)}/dnsmapping`, domainName)
   },
+
+  //--------------------------------//
+  //-------- CUSTOM DOMAINS --------//
+
+  getCustomDomains(appId) {
+    return req.get(`${urls.appConsole(appId)}/settings/custom-domain`)
+  },
+
+  createCustomDomain(appId, domainData) {
+    return req.post(`${urls.appConsole(appId)}/settings/custom-domain`, domainData)
+  },
+
+  assignCustomDomain(appId, domainData) {
+    return req.post(`${urls.appConsole(appId)}/settings/custom-domain/assign-generated-domain`, domainData)
+  },
+
+  changeCustomDomain(appId, domainData) {
+    return req.put(`${urls.appConsole(appId)}/settings/custom-domain/${domainData.id}`, domainData)
+  },
+
+  deleteCustomDomain(appId, domainId) {
+    return req.delete(`${urls.appConsole(appId)}/settings/custom-domain/${domainId}`)
+  },
+
+  //-------- CUSTOM DOMAINS --------//
+  //--------------------------------//
 
   updateIOSCert(appId, data) {
     return req.post(`${urls.appConsole(appId)}/ioscert`, data)
