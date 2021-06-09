@@ -45,7 +45,7 @@ export default req => ({
     return req.post(`${urls.appInfo(appId)}/logos`, logo)
   },
 
-  generateSubdomains() {
-    return req.get('/console/applications/suggested-generated-domains')
+  generateSubdomains(zone) {
+    return req.get('/console/applications/suggested-generated-domains').query({ zone })
   }
 })
