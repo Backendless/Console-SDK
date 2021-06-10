@@ -25,8 +25,8 @@ export const community = req => ({
     return req.post(routes.comments(), comment)
   },
 
-  editComment(commentId, body) {
-    return req.put(routes.comment(commentId), { commentId, body })
+  editComment(commentId, body, textContent) {
+    return req.put(routes.comment(commentId), { commentId, body, textContent })
   },
 
   deleteComment(commentId) {
