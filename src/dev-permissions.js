@@ -37,13 +37,14 @@ const OperationsTypes = {
   RUN_TIMER              : 96, //Run timer
 
   /** Data Service */
-  DATA_SERVICE_SECTION                  : 'Data Service section',
-  MODIFY_DYNAMIC_SCHEMA_DEFINITION      : 47, //Modify "Dynamic Schema Definition" configuration
-  CREATE_MODIFY_DELETE_COLUMN           : 42, //Create/Rename/Delete columns
-  CREATE_MODIFY_DELETE_TABLE            : 40, //Create/Rename/Delete tables
-  CREATE_DELETE_UPDATE_OBJECTS          : 46, //Create/delete/update objects
-  CREATE_MODIFY_DELETE_TABLE_PERMISSIONS: 44, //Manage permissions for tables (including ACL)
-  CREATE_MODIFY_DELETE_OWNER_PERMISSIONS: 54, //Manage global owner permissions
+  DATA_SERVICE_SECTION                               : 'Data Service section',
+  MODIFY_DYNAMIC_SCHEMA_DEFINITION                   : 47, //Modify "Dynamic Schema Definition" configuration
+  CREATE_MODIFY_DELETE_COLUMN                        : 42, //Create/Rename/Delete columns
+  CREATE_MODIFY_DELETE_TABLE                         : 40, //Create/Rename/Delete tables
+  CREATE_DELETE_UPDATE_OBJECTS                       : 46, //Create/delete/update objects
+  CREATE_MODIFY_DELETE_TABLE_PERMISSIONS             : 44, //Manage permissions for tables (including ACL)
+  CREATE_MODIFY_DELETE_OWNER_PERMISSIONS             : 54, //Manage global owner permissions
+  CREATE_MODIFY_DELETE_COLUMNS_VISIBILITY_PERMISSIONS: 109, //Manage columns visibility permissions
 
   /** Data connector */
   DATA_CONNECTOR_SECTION             : 'Data Connector section',
