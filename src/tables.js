@@ -71,6 +71,8 @@ export default req => ({
       return dataRequest
     }
 
+    delete query.property
+
     const countRequest = totalRows(req).getFor(recordsCountReq(req, appId, table, query))
 
     const [total, data] = await Promise.all([countRequest, dataRequest])
