@@ -36,7 +36,11 @@ const recordsReq = (req, appId, table, query, resetCache) => {
 }
 
 const recordsCountReq = (req, appId, table, query, resetCache) => {
-  return tableRecordsCountReq(req, urls.dataTable(appId, table.name), table, query, resetCache)
+  const newQuery = { ...query }
+
+  delete newQuery.property
+
+  return tableRecordsCountReq(req, urls.dataTable(appId, table.name), table, newQuery, resetCache)
 }
 
 const getRelationColumn = (table, columnName) => {
