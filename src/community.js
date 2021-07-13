@@ -70,7 +70,7 @@ export const community = req => ({
   //---- ACTIVITY ----//
 
   onProductInstall(productId) {
-    return req.get(routes.onProductInstall(), { productId })
+    return req.post(routes.onProductInstall(), { productId })
   },
 
 })
