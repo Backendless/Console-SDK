@@ -11,6 +11,8 @@ const routes = prepareRoutes({
   likers: '/console/community/vote/likers',
 
   blacklistStatus: '/console/community/blacklist/status',
+
+  onProductInstall: '/console/community/activity/products/install',
 })
 
 export const community = req => ({
@@ -63,6 +65,12 @@ export const community = req => ({
 
   getUserBlacklistStatus() {
     return req.get(routes.blacklistStatus())
-  }
+  },
+
+  //---- ACTIVITY ----//
+
+  onProductInstall(productId) {
+    return req.get(routes.onProductInstall(), { productId })
+  },
 
 })
