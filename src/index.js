@@ -118,6 +118,14 @@ const createClient = (serverUrl, authKey, options) => {
     request.billing = request
   }
 
+  if (options.communityURL) {
+    request.community = contextifyRequest(context, options.communityURL, req => {
+      req.path = req.path.replace('/console/community', '')
+    })
+  } else {
+    request.community = request
+  }
+
   request.getFileDownloadURL = async () => {
     if (!options.useFileDownloadURL) {
       return null
