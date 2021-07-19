@@ -154,7 +154,8 @@ export const apiDocsService = (appId, serviceId) => `${apiDocs(appId)}/services/
 export const apiDocsGeo = appId => `${apiDocs(appId)}/geo`
 
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
-export const counters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
+export const counters = (appId, pattern) => `${appConsole(appId)}/counters/${pattern || '*'}/list`
+export const systemDataCounters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
 
 export const gamification = () => `${console()}/gamification`
 
@@ -182,6 +183,7 @@ export default {
   blueprints,
   cache,
   counters,
+  systemDataCounters,
   codelessApiServices,
   codelessDeployModel,
   codelessFunctionSource,
