@@ -33,6 +33,10 @@ const routes = prepareRoutes({
   containerPageUI         : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/ui',
   containerPageLogic      : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
   containerPageUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/unused-logic',
+
+  containerComponentUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/components/unused-logic',
+  containerReusableUI          : '/:appId/console/ui-builder/containers/:containerName/components/:componentUid/ui',
+  containerComponentLogic      : '/:appId/console/ui-builder/containers/:containerName/components/:componentUid/logic/:subcomponentUid/:handlerName',
 })
 
 export default req => ({
@@ -187,7 +191,39 @@ export default req => ({
     return req.delete(routes.containerPageUnusedLogic(appId, containerName, pageName), { componentUids })
   },
 
+  deleteUnusedReusableComponentsLogic(appId, containerName, componentUids) {
+    return req.delete(routes.containerComponentUnusedLogic(appId, containerName), { componentUids })
+  },
+
   //-- PAGE -----//
+
+  //-- COMPONENTS -----//
+
+  getReusableComponentLogic(appId, containerName, componentUid, subcomponentUid, handlerName) {
+    return req.get(routes.containerComponentLogic(appId, containerName, componentUid, subcomponentUid, handlerName))
+  },
+
+  updateReusableComponentLogic(appId, containerName, componentUid, subcomponentUid, data) {
+    return req.put(routes.containerComponentLogic(appId, containerName, componentUid, subcomponentUid), data)
+  },
+
+  createReusableComponentLogic(appId, containerName, componentUid, subcomponentUid, handlerName) {
+    return req.post(routes.containerComponentLogic(appId, containerName, componentUid, subcomponentUid, handlerName))
+  },
+
+  deleteReusableComponentLogic(appId, containerName, componentUid, subcomponentUid, handlerName) {
+    return req.delete(routes.containerComponentLogic(appId, containerName, componentUid, subcomponentUid, handlerName))
+  },
+
+  updateReusableUI(appId, containerName, componentUid, data) {
+    return req.put(routes.containerReusableUI(appId, containerName, componentUid), data)
+  },
+
+  createReusableComponent(appId, containerName, componentUid, data) {
+    return req.post(routes.containerReusableUI(appId, containerName, componentUid), data)
+  },
+
+  //-- COMPONENTS -----//
 
   //-- FUNCTIONS -----//
 
