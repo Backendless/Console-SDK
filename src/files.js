@@ -1,6 +1,7 @@
 import urls from './urls'
 import totalRows from './utils/total-rows'
 import { FOLDER } from './utils/cache-tags'
+import { encodePath } from './utils/path'
 
 const getFileFolder = file => {
   const tokens = file.split('/')
@@ -71,7 +72,7 @@ export default req => ({
   performOperation(appId, filePath, operation) {
     filePath = filePath || encodeURIComponent('/') //for root directory operations it has send '/' as path
 
-    return req.put(`${urls.appConsole(appId)}/files/${filePath}`)
+    return req.put(`${urls.appConsole(appId)}/files/${encodePath(filePath)}`)
       .query({ operation })
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
@@ -92,17 +93,17 @@ export default req => ({
   },
 
   moveFile(appId, filePath, newFilePath) {
-    return req.post(urls.fileMove(appId, filePath), newFilePath)
+    return req.post(urls.fileMove(appId, filePath), encodePath(newFilePath))
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
   copyFile(appId, filePath, newFilePath) {
-    return req.post(urls.fileCopy(appId, filePath), newFilePath)
+    return req.post(urls.fileCopy(appId, filePath), encodePath(newFilePath))
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
   renameFile(appId, filePath, newFileName) {
-    return req.post(urls.fileRename(appId, filePath), newFileName)
+    return req.post(urls.fileRename(appId, filePath), encodeURIComponent(newFileName))
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
@@ -117,7 +118,7 @@ export default req => ({
   },
 
   createConsoleFile(appId, path, content) {
-    return req.post(`${urls.appConsole(appId)}/files/create/${path}`, content)
+    return req.post(`${urls.appConsole(appId)}/files/create/${encodePath(path)}`, content)
       .set('Accept', '*/*') //workarround for BKNDLSS-13702
       .cacheTags(FOLDER(appId, getFileFolder(path)))
   },
