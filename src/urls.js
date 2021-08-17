@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 
-import { optional } from './utils/path'
+import { encodePath, optional } from './utils/path'
 
 export const console = authKey => `/console${optional(authKey)}`
 export const appConsole = (appId, authKey) => `/${appId}${console(authKey)}`
@@ -34,24 +34,44 @@ export const blHandlersCategory = (appId, mode, category) =>
 export const blHandlersChain = (appId, eventId, context) =>
   `${serverCode(appId)}/chain/${eventId}/${context}`
 
-export const fileDownload = (appId, authKey, filePath, options = {}) =>
-  `${options.host || ''}${appConsole(appId, authKey)}/files/download/${filePath}`
+const composeFileUrl = (appId, operation, filePath) => {
+  const routeParts = [files(appId)]
 
-export const fileUpload = (appId, filePath) =>
-  `${files(appId)}/upload/${filePath}/`
+  if (operation) {
+    routeParts.push(operation)
+  }
 
-export const createDir = (appId, path, folderName) => {
-  path = path ? `${path}/` : ''
+  routeParts.push(encodePath(filePath), '')
 
-  return `${files(appId)}/createdir/${path}${folderName}/`
+  return routeParts.join('/')
 }
+
+export const fileExists = (appId, filePath) => composeFileUrl(appId, 'files/exists', filePath)
+export const fileEdit = (appId, filePath) => composeFileUrl(appId, 'edit', filePath)
+export const fileMove = (appId, filePath) => composeFileUrl(appId, 'move', filePath)
+export const fileCopy = (appId, filePath) => composeFileUrl(appId, 'copy', filePath)
+export const fileRename = (appId, filePath) => composeFileUrl(appId, 'rename', filePath)
+export const fileDelete = (appId, filePath) => composeFileUrl(appId, null, filePath)
+export const fileCreate = (appId, filePath) => composeFileUrl(appId, 'create', filePath)
+export const fileUpload = (appId, filePath) => composeFileUrl(appId, 'upload', filePath)
 
 export const fileView = (appId, authKey, filePath, options = {}) => {
   if (filePath && filePath.startsWith('/')) {
     filePath = filePath.slice(1)
   }
 
-  return `${options.host || ''}${appConsole(appId, authKey)}/files/view/${filePath}`
+  return `${options.host || ''}${appConsole(appId, authKey)}/files/view/${encodePath(filePath)}`
+}
+
+export const fileDownload = (appId, authKey, filePath, options = {}) =>
+  `${options.host || ''}${appConsole(appId, authKey)}/files/download/${encodePath(filePath)}`
+
+export const createDir = (appId, path, folderName) => {
+  path = path ? `${path}/` : ''
+
+  const dirPath = encodePath(path + folderName)
+
+  return `${files(appId)}/createdir/${dirPath}/`
 }
 
 export const directoryView = (appId, authKey, filePath, options = {}) => {
@@ -59,29 +79,8 @@ export const directoryView = (appId, authKey, filePath, options = {}) => {
     filePath = filePath.slice(1)
   }
 
-  return `${options.host || ''}${appConsole(appId, authKey)}/files/directory/view/${filePath}`
+  return `${options.host || ''}${appConsole(appId, authKey)}/files/directory/view/${encodePath(filePath)}`
 }
-
-export const fileExists = (appId, filePath) =>
-  `${files(appId)}/files/exists/${filePath}`
-
-export const fileEdit = (appId, filePath) =>
-  `${files(appId)}/edit/${filePath}/`
-
-export const fileMove = (appId, filePath) =>
-  `${files(appId)}/move/${filePath}/`
-
-export const fileCopy = (appId, filePath) =>
-  `${files(appId)}/copy/${filePath}/`
-
-export const fileRename = (appId, filePath) =>
-  `${files(appId)}/rename/${filePath}/`
-
-export const fileDelete = (appId, filePath) =>
-  `${files(appId)}/${filePath}/`
-
-export const fileCreate = (appId, filePath) =>
-  `${files(appId)}/create/${filePath}/`
 
 export const blProd = (appId, language, model) =>
   `${serverCode(appId)}/${model}/production/${language}`
