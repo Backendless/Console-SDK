@@ -52,10 +52,6 @@ export default (req, context) => ({
     return req.delete('/console/developer-suicide').send()
   },
 
-  checkForCaptchaRequirement() {
-    return req.get('/console/devreg/captcha_required')
-  },
-
   loginSocial(type) {
     return req.get(`/console/social/oauth/${type}/request_url`)
   },
