@@ -40,6 +40,7 @@ import chartBuilder from './chart-builder'
 
 import { community } from './community'
 import { marketplace } from './marketplace'
+import { referrals } from './referrals'
 
 class Context {
 
@@ -190,6 +191,7 @@ const createClient = (serverUrl, authKey, options) => {
     chartBuilder    : chartBuilder(request),
     community       : community(request),
     marketplace     : marketplace(request),
+    referrals       : referrals(request),
   }
 }
 
