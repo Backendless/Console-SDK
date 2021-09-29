@@ -38,6 +38,8 @@ const routes = prepareRoutes({
   containerReusableUI          : '/:appId/console/ui-builder/containers/:containerName/components/:componentUid/ui',
   containerComponentLogic      : '/:appId/console/ui-builder/containers/:containerName/components/:componentUid/logic/:subcomponentUid/:handlerName',
 
+  containerReusableComponent: '/:appId/console/ui-builder/containers/:containerName/components/reusable',
+
   containerCustomComponentModel      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/model',
   containerCustomComponentFiles      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/content',
   containerCustomComponentFileContent: '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/content/:fileId',
@@ -223,8 +225,8 @@ export default req => ({
     return req.put(routes.containerReusableUI(appId, containerName, componentUid), data)
   },
 
-  createReusableComponent(appId, containerName, componentUid, data) {
-    return req.post(routes.containerReusableUI(appId, containerName, componentUid), data)
+  createReusableComponent(appId, containerName, data) {
+    return req.post(routes.containerReusableComponent(appId, containerName), data)
   },
 
   loadComponentFileContent(appId, containerName, componentUid, fileId) {
