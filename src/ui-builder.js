@@ -38,8 +38,9 @@ const routes = prepareRoutes({
   containerReusableUI          : '/:appId/console/ui-builder/containers/:containerName/components/:componentUid/ui',
   containerComponentLogic      : '/:appId/console/ui-builder/containers/:containerName/components/:componentUid/logic/:subcomponentUid/:handlerName',
 
-  containerReusableComponent: '/:appId/console/ui-builder/containers/:containerName/components/reusable',
+  containerReusableComponent: '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentUid',
 
+  containerCustomComponents          : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid',
   containerCustomComponentModel      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/model',
   containerCustomComponentFiles      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/content',
   containerCustomComponentFileContent: '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/content/:fileId',
@@ -239,6 +240,18 @@ export default req => ({
 
   updateUIBuilderCustomComponentFiles(appId, containerName, componentUid, files) {
     return req.put(routes.containerCustomComponentFiles(appId, containerName, componentUid), { files })
+  },
+
+  deleteCustomComponent(appId, containerName, componentUid) {
+    return req.delete(routes.containerCustomComponents(appId, containerName, componentUid))
+  },
+
+  deleteReusableComponent(appId, containerName, componentUid) {
+    return req.delete(routes.containerReusableComponent(appId, containerName, componentUid))
+  },
+
+  createCustomComponent(appId, containerName, componentUid, componentName) {
+    return req.post(routes.containerCustomComponents(appId, containerName, componentUid), { componentName })
   },
 
   //-- COMPONENTS -----//
