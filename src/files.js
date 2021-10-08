@@ -70,11 +70,12 @@ export default req => ({
   },
 
   performOperation(appId, filePath, operation) {
-    filePath = filePath || encodeURIComponent('/') //for root directory operations it has send '/' as path
+    //for root directory operations it has send '/' as path
+    const path = filePath ? encodePath(filePath) : encodeURIComponent('/')
 
-    return req.put(`${urls.appConsole(appId)}/files/${encodePath(filePath)}`)
+    return req.put(`${urls.appConsole(appId)}/files/${path}`)
       .query({ operation })
-      .cacheTags(FOLDER(appId, getFileFolder(filePath)))
+      .cacheTags(FOLDER(appId, getFileFolder(path)))
   },
 
   fileExists(appId, filePath) {
