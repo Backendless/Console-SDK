@@ -1,8 +1,9 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  comments: '/console/community/comments',
-  comment : '/console/community/comments/:commentId',
+  comments     : '/console/community/comments',
+  comment      : '/console/community/comments/:commentId',
+  commentAction: '/console/community/comments/:commentId/:action',
 
   reviews: '/console/community/reviews',
   review : '/console/community/reviews/:reviewId',
@@ -33,6 +34,14 @@ export const community = req => ({
 
   deleteComment(commentId) {
     return req.community.delete(routes.comment(commentId))
+  },
+
+  hideComment(commentId) {
+    return req.community.put(routes.commentAction(commentId, 'hide'))
+  },
+
+  displayComment(commentId) {
+    return req.community.put(routes.commentAction(commentId, 'display'))
   },
 
   //---- REVIEWS ----//
