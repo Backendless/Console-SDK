@@ -42,7 +42,7 @@ const routes = prepareRoutes({
 
   containerCustomComponents          : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid',
   containerCustomComponentModel      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/model',
-  containerCustomComponentFiles      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/content',
+  containerCustomComponentFiles      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/files',
   containerCustomComponentFileContent: '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/content/:fileId',
 })
 
@@ -239,7 +239,7 @@ export default req => ({
   },
 
   updateUIBuilderCustomComponentFiles(appId, containerName, componentUid, files) {
-    return req.put(routes.containerCustomComponentFiles(appId, containerName, componentUid), { files })
+    return req.put(routes.containerCustomComponentFileContent(appId, containerName, componentUid), { files })
   },
 
   deleteCustomComponent(appId, containerName, componentUid) {
@@ -252,6 +252,10 @@ export default req => ({
 
   createCustomComponent(appId, containerName, componentUid, componentName) {
     return req.post(routes.containerCustomComponents(appId, containerName, componentUid), { componentName })
+  },
+
+  uploadCustomComponentFiles(appId, containerName, componentUid, data) {
+    return req.post(routes.containerCustomComponentFiles(appId, containerName, componentUid), data)
   },
 
   //-- COMPONENTS -----//
