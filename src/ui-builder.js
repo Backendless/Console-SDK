@@ -40,10 +40,11 @@ const routes = prepareRoutes({
 
   containerReusableComponent: '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentUid',
 
-  containerCustomComponents          : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid',
-  containerCustomComponentModel      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/model',
-  containerCustomComponentFiles      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/files',
-  containerCustomComponentFileContent: '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/content/:fileId',
+  containerCustomComponents                : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid',
+  containerCustomComponentModel            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/model',
+  containerCustomComponentFiles            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/files',
+  containerCustomComponentFilesDownloadLink: '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/files/sign',
+  containerCustomComponentFileContent      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/content/:fileId',
 })
 
 export default req => ({
@@ -256,6 +257,15 @@ export default req => ({
 
   uploadCustomComponentFiles(appId, containerName, componentUid, data) {
     return req.post(routes.containerCustomComponentFiles(appId, containerName, componentUid), data)
+  },
+
+  loadCustomComponent(appId, containerName, componentUid) {
+    return req.get(routes.containerCustomComponents(appId, containerName, componentUid))
+  },
+
+  getCustomComponentFileDownloadLink(appId, containerName, componentUid, fileId) {
+    return req.get(routes.containerCustomComponentFilesDownloadLink(appId, containerName, componentUid))
+      .query({ fileId })
   },
 
   //-- COMPONENTS -----//
