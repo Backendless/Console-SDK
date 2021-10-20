@@ -34,11 +34,10 @@ const routes = prepareRoutes({
   containerPageLogic      : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
   containerPageUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/unused-logic',
 
-  containerComponentUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/components/unused-logic',
-  containerReusableUI          : '/:appId/console/ui-builder/containers/:containerName/components/:componentUid/ui',
-  containerComponentLogic      : '/:appId/console/ui-builder/containers/:containerName/components/:componentUid/logic/:subcomponentUid/:handlerName',
-
-  containerReusableComponent: '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentUid',
+  containerReusableComponent           : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId',
+  containerReusableComponentUI         : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/ui',
+  containerReusableComponentLogic      : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/logic/:componentUid/:handlerName',
+  containerReusableComponentUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/unused-logic',
 
   containerCustomComponents                : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid',
   containerCustomComponentModel            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentUid/model',
@@ -199,37 +198,43 @@ export default req => ({
     return req.delete(routes.containerPageUnusedLogic(appId, containerName, pageName), { componentUids })
   },
 
-  deleteUnusedReusableComponentsLogic(appId, containerName, componentUids) {
-    return req.delete(routes.containerComponentUnusedLogic(appId, containerName), { componentUids })
-  },
-
   //-- PAGE -----//
 
   //-- COMPONENTS -----//
 
-  getReusableComponentLogic(appId, containerName, componentUid, subcomponentUid, handlerName) {
-    return req.get(routes.containerComponentLogic(appId, containerName, componentUid, subcomponentUid, handlerName))
-  },
-
-  updateReusableComponentLogic(appId, containerName, componentUid, subcomponentUid, data) {
-    return req.put(routes.containerComponentLogic(appId, containerName, componentUid, subcomponentUid), data)
-  },
-
-  createReusableComponentLogic(appId, containerName, componentUid, subcomponentUid, handlerName) {
-    return req.post(routes.containerComponentLogic(appId, containerName, componentUid, subcomponentUid, handlerName))
-  },
-
-  deleteReusableComponentLogic(appId, containerName, componentUid, subcomponentUid, handlerName) {
-    return req.delete(routes.containerComponentLogic(appId, containerName, componentUid, subcomponentUid, handlerName))
-  },
-
-  updateReusableUI(appId, containerName, componentUid, data) {
-    return req.put(routes.containerReusableUI(appId, containerName, componentUid), data)
-  },
-
   createReusableComponent(appId, containerName, data) {
     return req.post(routes.containerReusableComponent(appId, containerName), data)
   },
+
+  deleteReusableComponent(appId, containerName, componentId) {
+    return req.delete(routes.containerReusableComponent(appId, containerName, componentId))
+  },
+
+  updateReusableComponentUI(appId, containerName, componentId, data) {
+    return req.put(routes.containerReusableComponentUI(appId, containerName, componentId), data)
+  },
+
+  getReusableComponentLogic(appId, containerName, componentId, componentUid, handlerName) {
+    return req.get(routes.containerReusableComponentLogic(appId, containerName, componentId, componentUid, handlerName))
+  },
+
+  updateReusableComponentLogic(appId, containerName, componentId, componentUid, data) {
+    return req.put(routes.containerReusableComponentLogic(appId, containerName, componentId, componentUid), data)
+  },
+
+  createReusableComponentLogic(appId, containerName, componentId, componentUid, handlerName) {
+    return req.post(routes.containerReusableComponentLogic(appId, containerName, componentId, componentUid, handlerName))
+  },
+
+  deleteReusableComponentLogic(appId, containerName, componentId, componentUid, handlerName) {
+    return req.delete(routes.containerReusableComponentLogic(appId, containerName, componentId, componentUid, handlerName))
+  },
+
+  deleteUnusedReusableComponentsLogic(appId, containerName, componentUids) {
+    return req.delete(routes.containerReusableComponentUnusedLogic(appId, containerName), { componentUids })
+  },
+
+  //
 
   loadComponentFileContent(appId, containerName, componentUid, fileId) {
     return req.get(routes.containerCustomComponentFileContent(appId, containerName, componentUid, fileId))
@@ -245,10 +250,6 @@ export default req => ({
 
   deleteCustomComponent(appId, containerName, componentUid) {
     return req.delete(routes.containerCustomComponents(appId, containerName, componentUid))
-  },
-
-  deleteReusableComponent(appId, containerName, componentUid) {
-    return req.delete(routes.containerReusableComponent(appId, containerName, componentUid))
   },
 
   createCustomComponent(appId, containerName, componentUid, componentName) {
