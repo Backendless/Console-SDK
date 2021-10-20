@@ -1,11 +1,10 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  inviteCode: '/console/community/referrals/invite-code',
-
-  invites      : '/console/community/referrals/invites',
-  sendInvite   : '/console/community/referrals/send-invite',
-  confirmInvite: '/console/community/referrals/confirm-invite',
+  inviteCode            : '/console/community/referrals/invite-code',
+  invites               : '/console/community/referrals/invites',
+  confirmUserRegistered : '/console/community/referrals/events/confirm-user-registered',
+  confirmFirstAppCreated: '/console/community/referrals/events/confirm-first-app-created',
 })
 
 export const referrals = req => ({
@@ -13,7 +12,7 @@ export const referrals = req => ({
   //---- LOAD INVITE CODE ==>
 
   loadInviteCode() {
-    return req.get(routes.inviteCode())
+    return req.community.get(routes.inviteCode())
   },
 
   //---- LOAD INVITE CODE ----//
@@ -21,25 +20,32 @@ export const referrals = req => ({
   //---- LOAD INVITES ==>
 
   loadInvites() {
-    return req.get(routes.invites())
+    return req.community.get(routes.invites())
   },
 
   //---- LOAD INVITES ----//
 
   //---- SEND INVITE CODE ==>
 
-  sendInvite(email) {
-    return req.post(routes.sendInvite(), email)
+  sendInvite(inviteData) {
+    return req.community.post(routes.invites(), inviteData)
   },
 
   //---- SEND INVITE CODE ----//
 
-  //---- CONFIRM INVITE ==>
+  //---- USER REGISTERED ==>
 
-  confirmInvite(inviteData) {
-    return req.post(routes.confirmInvite(), inviteData)
+  confirmUserRegistered(inviteData) {
+    return req.community.post(routes.confirmUserRegistered(), inviteData)
   },
 
-  //---- CONFIRM INVITE ----//
+  //---- USER REGISTERED ----//
 
+  //---- FIRST APP CREATED ==>
+
+  confirmFirstAppCreated() {
+    return req.community.post(routes.confirmFirstAppCreated())
+  },
+
+  //---- FIRST APP CREATED ----//
 })

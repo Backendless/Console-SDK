@@ -21,7 +21,6 @@ import email from './email'
 import files from './files'
 import gamification from './gamification'
 import geo from './geo'
-import invites from './invites'
 import license from './license'
 import messaging from './messaging'
 import navigator from './navigator'
@@ -173,7 +172,6 @@ const createClient = (serverUrl, authKey, options) => {
     files           : files(request),
     gamification    : gamification(request),
     geo             : geo(request),
-    invites         : invites(request),
     license         : license(request),
     messaging       : messaging(request),
     navigator       : navigator(request),
