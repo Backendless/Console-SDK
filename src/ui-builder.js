@@ -58,15 +58,11 @@ export default req => ({
     return req.get(routes.sdkStyles(appId))
   },
 
-  //-- SDK -----//
-
-  //-- LIBRARY -----//
-
-  getLocalComponents(appId) {
+  loadSDKComponents(appId) {
     return req.get(routes.sdkComponents(appId))
   },
 
-  //-- LIBRARY -----//
+  //-- SDK -----//
 
   //-- CONTAINER -----//
 
