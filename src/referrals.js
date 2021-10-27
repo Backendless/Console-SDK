@@ -8,44 +8,23 @@ const routes = prepareRoutes({
 })
 
 export const referrals = req => ({
-
-  //---- LOAD INVITE CODE ==>
-
   loadInviteCode() {
     return req.community.get(routes.inviteCode())
   },
-
-  //---- LOAD INVITE CODE ----//
-
-  //---- LOAD INVITES ==>
 
   loadInvites() {
     return req.community.get(routes.invites())
   },
 
-  //---- LOAD INVITES ----//
-
-  //---- SEND INVITE CODE ==>
-
   sendInvite(inviteData) {
     return req.community.post(routes.invites(), inviteData)
   },
-
-  //---- SEND INVITE CODE ----//
-
-  //---- USER REGISTERED ==>
 
   confirmUserRegistered(inviteData) {
     return req.community.post(routes.confirmUserRegistered(), inviteData)
   },
 
-  //---- USER REGISTERED ----//
-
-  //---- FIRST APP CREATED ==>
-
   confirmFirstAppCreated() {
     return req.community.post(routes.confirmFirstAppCreated())
   },
-
-  //---- FIRST APP CREATED ----//
 })
