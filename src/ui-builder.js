@@ -226,8 +226,8 @@ export default req => ({
     return req.delete(routes.containerReusableComponentLogic(appId, containerName, componentId, componentUid, handlerName))
   },
 
-  deleteUnusedReusableComponentsLogic(appId, containerName, componentUids) {
-    return req.delete(routes.containerReusableComponentUnusedLogic(appId, containerName), { componentUids })
+  deleteUnusedReusableComponentsLogic(appId, containerName, componentId, componentUids) {
+    return req.delete(routes.containerReusableComponentUnusedLogic(appId, containerName, componentId), { componentUids })
   },
 
   //
