@@ -190,7 +190,7 @@ export default req => ({
     return req.delete(routes.containerPageLogic(appId, containerName, pageName, componentUid, handlerName))
   },
 
-  deleteUnusedLogic(appId, containerName, pageName, componentUids) {
+  deletePageUnusedLogic(appId, containerName, pageName, componentUids) {
     return req.delete(routes.containerPageUnusedLogic(appId, containerName, pageName), { componentUids })
   },
 
@@ -226,7 +226,7 @@ export default req => ({
     return req.delete(routes.containerReusableComponentLogic(appId, containerName, componentId, componentUid, handlerName))
   },
 
-  deleteUnusedReusableComponentsLogic(appId, containerName, componentId, componentUids) {
+  deleteReusableComponentUnusedLogic(appId, containerName, componentId, componentUids) {
     return req.delete(routes.containerReusableComponentUnusedLogic(appId, containerName, componentId), { componentUids })
   },
 
