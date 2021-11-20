@@ -7,7 +7,8 @@ const routes = prepareRoutes({
   sdkStyles    : '/:appId/console/ui-builder/library/sdk/styles',
   sdkComponents: '/:appId/console/ui-builder/library/sdk/components',
 
-  pageTemplates: '/:appId/console/ui-builder/library/page-templates',
+  pageTemplates           : '/:appId/console/ui-builder/library/page-templates',
+  customComponentTemplates: '/:appId/console/ui-builder/library/custom-component-templates',
 
   themes     : '/:appId/console/ui-builder/library/themes',
   theme      : '/:appId/console/ui-builder/library/themes/:themeId',
@@ -64,6 +65,18 @@ export default req => ({
 
   //-- SDK -----//
 
+  //-- LIBRARY -----//
+
+  loadPageTemplates(appId) {
+    return req.get(routes.pageTemplates(appId))
+  },
+
+  loadCustomComponentTemplates(appId) {
+    return req.get(routes.customComponentTemplates(appId))
+  },
+
+  //-- LIBRARY -----//
+
   //-- CONTAINER -----//
 
   createContainer(appId, container) {
@@ -107,14 +120,6 @@ export default req => ({
   },
 
   //-- CONTAINER -----//
-
-  //-- PAGE TEMPLATES -----//
-
-  loadPageTemplates(appId) {
-    return req.get(routes.pageTemplates(appId))
-  },
-
-  //-- PAGE TEMPLATES -----//
 
   //-- THEMES -----//
 
@@ -248,8 +253,8 @@ export default req => ({
     return req.delete(routes.containerCustomComponents(appId, containerName, componentUid))
   },
 
-  createCustomComponent(appId, containerName, componentUid, componentName) {
-    return req.post(routes.containerCustomComponents(appId, containerName, componentUid), { componentName })
+  createCustomComponent(appId, containerName, component) {
+    return req.post(routes.containerCustomComponents(appId, containerName), component)
   },
 
   uploadCustomComponentFiles(appId, containerName, componentUid, data) {
