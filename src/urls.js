@@ -22,6 +22,7 @@ export const dataTable = (appId, tableName) => `${data(appId)}/${encodeURI(table
 export const dataTableGroup = (appId, tableName) => `${data(appId)}/data-grouping/${encodeURI(tableName)}`
 export const dataTableGroupCount = (appId, tableName) => `${dataTableGroup(appId, tableName)}/count`
 export const dataRecord = (appId, tableName, recordId) => `${dataTable(appId, tableName)}/${recordId}`
+export const dataCell = (appId, tableName, recordId, columnName) => `${dataRecord(appId, tableName, recordId)}/${columnName}`
 export const dataConfigs = appId => `${data(appId)}/config`
 export const tableColumns = (appId, tableName) => `${dataTables(appId)}/${encodeURI(tableName)}/columns`
 export const securityRoles = appId => `${security(appId)}/roles`
@@ -191,6 +192,7 @@ export default {
   createDir,
   data,
   dataConfigs,
+  dataCell,
   dataRecord,
   dataTable,
   dataTables,
