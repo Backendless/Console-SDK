@@ -6,6 +6,7 @@ import activityManager from './activity-manager'
 import analytics from './analytics'
 import apiDocs from './api-docs'
 import apps from './apps'
+import automation from './automation'
 import billing from './billing'
 import bl from './bl'
 import blueprints from './blueprints'
@@ -126,6 +127,14 @@ const createClient = (serverUrl, authKey, options) => {
     request.community = request
   }
 
+  if (options.automationURL) {
+    request.automation = contextifyRequest(context, options.automationURL, req => {
+      req.path = req.path.replace('/console/automation', '')
+    })
+  } else {
+    request.automation = request
+  }
+
   request.getFileDownloadURL = async () => {
     if (!options.useFileDownloadURL) {
       return null
@@ -157,6 +166,7 @@ const createClient = (serverUrl, authKey, options) => {
     analytics       : analytics(request),
     apiDocs         : apiDocs(request),
     apps            : apps(request),
+    automation      : automation(request),
     billing         : billing(request),
     bl              : bl(request),
     blueprints      : blueprints(request),
