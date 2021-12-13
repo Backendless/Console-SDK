@@ -35,12 +35,14 @@ const routes = prepareRoutes({
   containerPageLogic      : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
   containerPageUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/unused-logic',
 
+  containerReusableComponents          : '/:appId/console/ui-builder/containers/:containerName/components/reusable',
   containerReusableComponent           : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId',
   containerReusableComponentUI         : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/ui',
   containerReusableComponentLogic      : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/logic/:componentUid/:handlerName',
   containerReusableComponentUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/unused-logic',
 
-  containerCustomComponents                : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId',
+  containerCustomComponents                : '/:appId/console/ui-builder/containers/:containerName/components/custom',
+  containerCustomComponent                 : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId',
   containerCustomComponentModel            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/model',
   containerCustomComponentFiles            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files',
   containerCustomComponentFilesDownloadLink: '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files/sign',
@@ -204,7 +206,15 @@ export default req => ({
   //-- REUSABLE COMPONENTS -----//
 
   createReusableComponent(appId, containerName, data) {
-    return req.post(routes.containerReusableComponent(appId, containerName), data)
+    return req.post(routes.containerReusableComponents(appId, containerName), data)
+  },
+
+  loadReusableComponent(appId, containerName, id) {
+    return req.get(routes.containerReusableComponent(appId, containerName, id))
+  },
+
+  updateReusableComponent(appId, containerName, data) {
+    return req.put(routes.containerReusableComponent(appId, containerName, data.id), data)
   },
 
   deleteReusableComponent(appId, containerName, id) {
@@ -239,32 +249,32 @@ export default req => ({
 
   //-- CUSTOM COMPONENTS -----//
 
-  loadComponentFileContent(appId, containerName, id, fileId) {
-    return req.get(routes.containerCustomComponentFileContent(appId, containerName, id, fileId))
+  createCustomComponent(appId, containerName, data) {
+    return req.post(routes.containerCustomComponents(appId, containerName), data)
   },
 
-  updateCustomComponentModel(appId, containerName, id, model) {
-    return req.put(routes.containerCustomComponentModel(appId, containerName, id), { model })
+  loadCustomComponent(appId, containerName, id) {
+    return req.get(routes.containerCustomComponent(appId, containerName, id))
+  },
+
+  deleteCustomComponent(appId, containerName, id) {
+    return req.delete(routes.containerCustomComponent(appId, containerName, id))
+  },
+
+  updateCustomComponent(appId, containerName, data) {
+    return req.put(routes.containerCustomComponent(appId, containerName, data.id), data)
+  },
+
+  loadComponentFileContent(appId, containerName, id, fileId) {
+    return req.get(routes.containerCustomComponentFileContent(appId, containerName, id, fileId))
   },
 
   updateCustomComponentFiles(appId, containerName, id, files) {
     return req.put(routes.containerCustomComponentFileContent(appId, containerName, id), { files })
   },
 
-  deleteCustomComponent(appId, containerName, id) {
-    return req.delete(routes.containerCustomComponents(appId, containerName, id))
-  },
-
-  createCustomComponent(appId, containerName, component) {
-    return req.post(routes.containerCustomComponents(appId, containerName), component)
-  },
-
   uploadCustomComponentFiles(appId, containerName, id, data) {
     return req.post(routes.containerCustomComponentFiles(appId, containerName, id), data)
-  },
-
-  loadCustomComponent(appId, containerName, id) {
-    return req.get(routes.containerCustomComponents(appId, containerName, id))
   },
 
   getCustomComponentFileDownloadLink(appId, containerName, id, fileId) {
