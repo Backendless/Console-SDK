@@ -128,6 +128,10 @@ export default req => ({
     return req.post(`${urls.data(appId)}/tables-counters`, { tables, connectorId, resetCache })
   },
 
+  getCellData(appId, tableName, recordId, columnName) {
+    return req.get(`${urls.dataCell(appId, tableName, recordId, columnName)}/retrieve-value`)
+  },
+
   createRecord(appId, table, record) {
     return req.post(urls.dataTable(appId, table.name), record).cacheTags(TABLE_DATA(table.tableId))
   },

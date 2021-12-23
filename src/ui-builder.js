@@ -7,7 +7,8 @@ const routes = prepareRoutes({
   sdkStyles    : '/:appId/console/ui-builder/library/sdk/styles',
   sdkComponents: '/:appId/console/ui-builder/library/sdk/components',
 
-  pageTemplates: '/:appId/console/ui-builder/library/page-templates',
+  pageTemplates           : '/:appId/console/ui-builder/library/page-templates',
+  customComponentTemplates: '/:appId/console/ui-builder/library/custom-component-templates',
 
   themes     : '/:appId/console/ui-builder/library/themes',
   theme      : '/:appId/console/ui-builder/library/themes/:themeId',
@@ -33,6 +34,21 @@ const routes = prepareRoutes({
   containerPageUI         : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/ui',
   containerPageLogic      : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
   containerPageUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/unused-logic',
+
+  containerReusableComponents          : '/:appId/console/ui-builder/containers/:containerName/components/reusable',
+  containerReusableComponent           : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId',
+  containerReusableComponentClone      : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/clone',
+  containerReusableComponentUI         : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/ui',
+  containerReusableComponentLogic      : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/logic/:componentUid/:handlerName',
+  containerReusableComponentUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/unused-logic',
+
+  containerCustomComponents                : '/:appId/console/ui-builder/containers/:containerName/components/custom',
+  containerCustomComponent                 : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId',
+  containerCustomComponentClone            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/clone',
+  containerCustomComponentModel            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/model',
+  containerCustomComponentFiles            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files',
+  containerCustomComponentFilesDownloadLink: '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files/sign',
+  containerCustomComponentFileContent      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/content/:fileId',
 })
 
 export default req => ({
@@ -47,12 +63,20 @@ export default req => ({
     return req.get(routes.sdkStyles(appId))
   },
 
+  loadSDKComponents(appId) {
+    return req.get(routes.sdkComponents(appId))
+  },
+
   //-- SDK -----//
 
   //-- LIBRARY -----//
 
-  getLocalComponents(appId) {
-    return req.get(routes.sdkComponents(appId))
+  loadPageTemplates(appId) {
+    return req.get(routes.pageTemplates(appId))
+  },
+
+  loadCustomComponentTemplates(appId) {
+    return req.get(routes.customComponentTemplates(appId))
   },
 
   //-- LIBRARY -----//
@@ -100,14 +124,6 @@ export default req => ({
   },
 
   //-- CONTAINER -----//
-
-  //-- PAGE TEMPLATES -----//
-
-  loadPageTemplates(appId) {
-    return req.get(routes.pageTemplates(appId))
-  },
-
-  //-- PAGE TEMPLATES -----//
 
   //-- THEMES -----//
 
@@ -183,11 +199,100 @@ export default req => ({
     return req.delete(routes.containerPageLogic(appId, containerName, pageName, componentUid, handlerName))
   },
 
-  deleteUnusedLogic(appId, containerName, pageName, componentUids) {
+  deletePageUnusedLogic(appId, containerName, pageName, componentUids) {
     return req.delete(routes.containerPageUnusedLogic(appId, containerName, pageName), { componentUids })
   },
 
   //-- PAGE -----//
+
+  //-- REUSABLE COMPONENTS -----//
+
+  createReusableComponent(appId, containerName, data) {
+    return req.post(routes.containerReusableComponents(appId, containerName), data)
+  },
+
+  cloneReusableComponent(appId, containerName, id, data) {
+    return req.post(routes.containerReusableComponentClone(appId, containerName, id), data)
+  },
+
+  loadReusableComponent(appId, containerName, id) {
+    return req.get(routes.containerReusableComponent(appId, containerName, id))
+  },
+
+  updateReusableComponent(appId, containerName, data) {
+    return req.put(routes.containerReusableComponent(appId, containerName, data.id), data)
+  },
+
+  deleteReusableComponent(appId, containerName, id) {
+    return req.delete(routes.containerReusableComponent(appId, containerName, id))
+  },
+
+  updateReusableComponentUI(appId, containerName, id, data) {
+    return req.put(routes.containerReusableComponentUI(appId, containerName, id), data)
+  },
+
+  getReusableComponentLogic(appId, containerName, id, componentUid, handlerName) {
+    return req.get(routes.containerReusableComponentLogic(appId, containerName, id, componentUid, handlerName))
+  },
+
+  updateReusableComponentLogic(appId, containerName, id, componentUid, data) {
+    return req.put(routes.containerReusableComponentLogic(appId, containerName, id, componentUid), data)
+  },
+
+  createReusableComponentLogic(appId, containerName, id, componentUid, handlerName) {
+    return req.post(routes.containerReusableComponentLogic(appId, containerName, id, componentUid, handlerName))
+  },
+
+  deleteReusableComponentLogic(appId, containerName, id, componentUid, handlerName) {
+    return req.delete(routes.containerReusableComponentLogic(appId, containerName, id, componentUid, handlerName))
+  },
+
+  deleteReusableComponentUnusedLogic(appId, containerName, id, componentUids) {
+    return req.delete(routes.containerReusableComponentUnusedLogic(appId, containerName, id), { componentUids })
+  },
+
+  //-- REUSABLE COMPONENTS -----//
+
+  //-- CUSTOM COMPONENTS -----//
+
+  createCustomComponent(appId, containerName, data) {
+    return req.post(routes.containerCustomComponents(appId, containerName), data)
+  },
+
+  cloneCustomComponent(appId, containerName, id, data) {
+    return req.post(routes.containerCustomComponentClone(appId, containerName, id), data)
+  },
+
+  loadCustomComponent(appId, containerName, id) {
+    return req.get(routes.containerCustomComponent(appId, containerName, id))
+  },
+
+  deleteCustomComponent(appId, containerName, id) {
+    return req.delete(routes.containerCustomComponent(appId, containerName, id))
+  },
+
+  updateCustomComponent(appId, containerName, data) {
+    return req.put(routes.containerCustomComponent(appId, containerName, data.id), data)
+  },
+
+  loadComponentFileContent(appId, containerName, id, fileId) {
+    return req.get(routes.containerCustomComponentFileContent(appId, containerName, id, fileId))
+  },
+
+  updateCustomComponentFiles(appId, containerName, id, files) {
+    return req.put(routes.containerCustomComponentFileContent(appId, containerName, id), { files })
+  },
+
+  uploadCustomComponentFiles(appId, containerName, id, data) {
+    return req.post(routes.containerCustomComponentFiles(appId, containerName, id), data)
+  },
+
+  getCustomComponentFileDownloadLink(appId, containerName, id, fileId) {
+    return req.get(routes.containerCustomComponentFilesDownloadLink(appId, containerName, id))
+      .query({ fileId })
+  },
+
+  //-- CUSTOM COMPONENTS -----//
 
   //-- FUNCTIONS -----//
 
