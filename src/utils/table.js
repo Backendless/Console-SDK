@@ -18,8 +18,8 @@ const DATETIME_PATTERN = /[\w]?/
 const TIME_PATTERN = /^((([01]?[0-9]{1}|[2]{1}[0-3]{1})?)?(:([0-5]?[0-9])?)?(:([0-5]?[0-9])))?[ ]?(G|GM|GMT|GMT\+|GMT\+[0-9]+[ ]?)?$/
 
 const BOOLEAN_SQL_VALUES = {
-  'true' : '%3D 1',
-  'false': '%3D 0',
+  'true' : '= true',
+  'false': '= false',
   'null' : 'IS NULL'
 }
 
