@@ -72,8 +72,7 @@ export const tableRecordsReq = (req, url, table, query = {}, resetCache) => {
 export const tableRecordsCountReq = (req, url, table, query = {}, resetCache) => {
   const params = composeRequestParams(table, query)
 
-  return req.get(url)
-    .query(params)
+  return req.post(url, params)
     .cacheTags(TABLE_DATA(table.tableId))
     .resetCache(resetCache)
 }

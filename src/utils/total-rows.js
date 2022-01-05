@@ -33,7 +33,7 @@ const getCountPath = path => {
 export default req => ({
 
   get(path, cacheTags) {
-    return req.get(getCountPath(path)).useCache().cacheTags(cacheTags)
+    return req.post(getCountPath(path)).useCache().cacheTags(cacheTags)
   },
 
   getFor(dataReq, cacheTTL = DEFAULT_CACHE_TTL) {
@@ -44,10 +44,9 @@ export default req => ({
     }
 
     return req
-      .get(url + '/count')
+      .post(url + '/count', _omit(dataReq.queryParams, NON_COUNTS_PARAMS))
       .useCache(cacheTTL)
       .cacheTags(...(dataReq.tags || []))
-      .query(_omit(dataReq.queryParams, NON_COUNTS_PARAMS))
   },
 
   getWithData(dataReq, cacheTTL) {
