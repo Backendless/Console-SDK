@@ -44,7 +44,7 @@ export default req => ({
     }
 
     return req
-      .post(url + '/count', _omit(dataReq.queryParams, NON_COUNTS_PARAMS))
+      .post(url + '/count', _omit(dataReq.body, NON_COUNTS_PARAMS))
       .useCache(cacheTTL)
       .cacheTags(...(dataReq.tags || []))
   },
