@@ -75,7 +75,7 @@ export default req => ({
       return dataRequest
     }
 
-    const countRequest = totalRows(req).getFor(recordsCountReq(req, appId, table, query))
+    const countRequest = totalRows(req).getViaPostFor(recordsCountReq(req, appId, table, query))
 
     const [total, data] = await Promise.all([countRequest, dataRequest])
 
@@ -121,7 +121,7 @@ export default req => ({
   },
 
   getRecordsCount(appId, table, query, resetCache) {
-    return totalRows(req).getFor(recordsCountReq(req, appId, table, query, resetCache))
+    return totalRows(req).getViaPostFor(recordsCountReq(req, appId, table, query, resetCache))
   },
 
   getRecordsCountForTables(appId, tables, connectorId, resetCache) {
