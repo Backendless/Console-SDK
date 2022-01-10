@@ -50,7 +50,7 @@ export default req => ({
   },
 
   getRecordsCount(appId, view, query, resetCache) {
-    return totalRows(req).getFor(recordsCountReq(req, appId, view, query, resetCache))
+    return totalRows(req).getViaPostFor(recordsCountReq(req, appId, view, query, resetCache))
   },
 
   getRecordsCounts(appId, views, resetCache) {
