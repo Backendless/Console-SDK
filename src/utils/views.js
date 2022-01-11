@@ -33,8 +33,7 @@ export const viewRecordsCountReq = (req, url, view, query, resetCache) => {
 
   assignPropertiesIfDefined(params, query, CommonRequestProperties)
 
-  return req.get(url)
-    .query(params)
+  return req.post(url, params)
     .cacheTags(VIEW_DATA(view.viewId))
     .resetCache(resetCache)
 }
