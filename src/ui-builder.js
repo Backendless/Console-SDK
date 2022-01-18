@@ -35,6 +35,8 @@ const routes = prepareRoutes({
   containerPageLogic      : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
   containerPageUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/unused-logic',
 
+  containerComponentsInstall: '/:appId/console/ui-builder/containers/:containerName/components/install/:componentProductId',
+
   containerReusableComponents          : '/:appId/console/ui-builder/containers/:containerName/components/reusable',
   containerReusableComponent           : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId',
   containerReusableComponentClone      : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/clone',
@@ -204,6 +206,10 @@ export default req => ({
   },
 
   //-- PAGE -----//
+
+  installComponent(appId, containerName, componentProductId) {
+    return req.get(routes.containerComponentsInstall(appId, containerName, componentProductId))
+  },
 
   //-- REUSABLE COMPONENTS -----//
 
