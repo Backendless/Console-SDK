@@ -35,11 +35,10 @@ const routes = prepareRoutes({
   containerPageLogic      : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
   containerPageUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/unused-logic',
 
-  containerComponentsInstall: '/:appId/console/ui-builder/containers/:containerName/components/install/:componentProductId',
-
   containerReusableComponents          : '/:appId/console/ui-builder/containers/:containerName/components/reusable',
   containerReusableComponent           : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId',
   containerReusableComponentClone      : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/clone',
+  containerReusableComponentInstall    : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/install',
   containerReusableComponentUI         : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/ui',
   containerReusableComponentLogic      : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/logic/:componentUid/:handlerName',
   containerReusableComponentUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/unused-logic',
@@ -47,6 +46,7 @@ const routes = prepareRoutes({
   containerCustomComponents                : '/:appId/console/ui-builder/containers/:containerName/components/custom',
   containerCustomComponent                 : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId',
   containerCustomComponentClone            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/clone',
+  containerCustomComponentInstall          : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/install',
   containerCustomComponentModel            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/model',
   containerCustomComponentFiles            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files',
   containerCustomComponentFilesDownloadLink: '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files/sign',
@@ -207,10 +207,6 @@ export default req => ({
 
   //-- PAGE -----//
 
-  installComponent(appId, containerName, componentProductId) {
-    return req.get(routes.containerComponentsInstall(appId, containerName, componentProductId))
-  },
-
   //-- REUSABLE COMPONENTS -----//
 
   createReusableComponent(appId, containerName, data) {
@@ -219,6 +215,10 @@ export default req => ({
 
   cloneReusableComponent(appId, containerName, id, data) {
     return req.post(routes.containerReusableComponentClone(appId, containerName, id), data)
+  },
+
+  installReusableComponent(appId, containerName, componentId) {
+    return req.get(routes.containerReusableComponentInstall(appId, containerName, componentId))
   },
 
   loadReusableComponent(appId, containerName, id) {
@@ -267,6 +267,10 @@ export default req => ({
 
   cloneCustomComponent(appId, containerName, id, data) {
     return req.post(routes.containerCustomComponentClone(appId, containerName, id), data)
+  },
+
+  installCustomComponent(appId, containerName, componentId) {
+    return req.get(routes.containerCustomComponentInstall(appId, containerName, componentId))
   },
 
   loadCustomComponent(appId, containerName, id) {
