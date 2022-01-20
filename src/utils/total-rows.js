@@ -30,6 +30,16 @@ const getCountPath = path => {
   return `${pathTokens[0]}/count${pathTokens[1] ? '?' + pathTokens[1] : ''}`
 }
 
+const getDataReqURL = dataReq => {
+  let url = dataReq.path
+
+  if (url && url.endsWith('/')) {
+    url = url.slice(0, -1)
+  }
+
+  return url
+}
+
 export default req => ({
 
   get(path, cacheTags) {
@@ -37,17 +47,22 @@ export default req => ({
   },
 
   getFor(dataReq, cacheTTL = DEFAULT_CACHE_TTL) {
-    let url = dataReq.path
-
-    if (url && url.endsWith('/')) {
-      url = url.slice(0, -1)
-    }
+    const url = getDataReqURL(dataReq)
 
     return req
       .get(url + '/count')
       .useCache(cacheTTL)
       .cacheTags(...(dataReq.tags || []))
       .query(_omit(dataReq.queryParams, NON_COUNTS_PARAMS))
+  },
+
+  getViaPostFor(dataReq, cacheTTL = DEFAULT_CACHE_TTL) {
+    const url = getDataReqURL(dataReq)
+
+    return req
+      .post(url + '/count', _omit(dataReq.body, NON_COUNTS_PARAMS))
+      .useCache(cacheTTL)
+      .cacheTags(...(dataReq.tags || []))
   },
 
   getWithData(dataReq, cacheTTL) {

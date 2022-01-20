@@ -37,10 +37,12 @@ import users from './users'
 import warning from './warning'
 import uiBuilder from './ui-builder'
 import chartBuilder from './chart-builder'
+import visualizations from './visualizations'
 
 import { community } from './community'
 import { marketplace } from './marketplace'
 import { referrals } from './referrals'
+import { initialQuestionnaire } from './initial-questionnaire'
 
 class Context {
 
@@ -162,44 +164,46 @@ const createClient = (serverUrl, authKey, options) => {
   return request.api = {
     destroy,
 
-    activityManager : activityManager(request),
-    analytics       : analytics(request),
-    apiDocs         : apiDocs(request),
-    apps            : apps(request),
-    automation      : automation(request),
-    billing         : billing(request),
-    bl              : bl(request),
-    blueprints      : blueprints(request),
-    cache           : cache(request),
-    codegen         : codegen(request),
-    codeless        : codeless(request),
-    counters        : counters(request),
-    dataConnectors  : dataConnectors(request),
-    dataViews       : dataViews(request),
-    developerProfile: developerProfile(request),
-    devTeam         : devTeam(request),
-    email           : email(request),
-    files           : files(request),
-    gamification    : gamification(request),
-    geo             : geo(request),
-    license         : license(request),
-    messaging       : messaging(request),
-    navigator       : navigator(request),
-    projectTemplate : projectTemplate(request),
-    security        : security(request),
-    devPermissions  : devPermissions(request),
-    settings        : settings(request),
-    status          : status(request),
-    tables          : tables(request),
-    transfer        : transfer(request),
-    user            : user(request, context),
-    users           : users(request),
-    warning         : warning(request),
-    uiBuilder       : uiBuilder(request),
-    chartBuilder    : chartBuilder(request),
-    community       : community(request),
-    marketplace     : marketplace(request),
-    referrals       : referrals(request),
+    activityManager     : activityManager(request),
+    analytics           : analytics(request),
+    apiDocs             : apiDocs(request),
+    apps                : apps(request),
+    automation          : automation(request),
+    billing             : billing(request),
+    bl                  : bl(request),
+    blueprints          : blueprints(request),
+    cache               : cache(request),
+    codegen             : codegen(request),
+    codeless            : codeless(request),
+    counters            : counters(request),
+    dataConnectors      : dataConnectors(request),
+    dataViews           : dataViews(request),
+    developerProfile    : developerProfile(request),
+    devTeam             : devTeam(request),
+    email               : email(request),
+    files               : files(request),
+    gamification        : gamification(request),
+    geo                 : geo(request),
+    license             : license(request),
+    messaging           : messaging(request),
+    navigator           : navigator(request),
+    projectTemplate     : projectTemplate(request),
+    security            : security(request),
+    devPermissions      : devPermissions(request),
+    settings            : settings(request),
+    status              : status(request),
+    tables              : tables(request),
+    transfer            : transfer(request),
+    user                : user(request, context),
+    users               : users(request),
+    warning             : warning(request),
+    uiBuilder           : uiBuilder(request),
+    chartBuilder        : chartBuilder(request),
+    community           : community(request),
+    marketplace         : marketplace(request),
+    referrals           : referrals(request),
+    visualizations      : visualizations(request),
+    initialQuestionnaire: initialQuestionnaire(request),
   }
 }
 
