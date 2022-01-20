@@ -1,6 +1,6 @@
 {
   "name": "backendless-console-sdk",
-  "version": "2.16.0",
+  "version": "2.16.1",
   "description": "Backendless Console SDK for Node.js and browser",
   "browser": "dist/backendless-console-sdk.js",
   "main": "lib/index.js",
@@ -38,7 +38,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
+    "@babel/cli": "^7.16.8",
     "@babel/core": "^7.9.0",
     "@babel/plugin-transform-object-assign": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.9.0",
@@ -56,6 +56,6 @@
   "dependencies": {
     "@babel/runtime": "^7.9.2",
     "backendless-request": "^0.1.1",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.21"
   }
 }
