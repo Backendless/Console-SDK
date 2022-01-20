@@ -101,8 +101,8 @@ export default req => ({
     return req.get(routes.container(appId, containerName))
   },
 
-  publishContainer(appId, containerName, targetPath) {
-    return req.post(routes.containerAction(appId, containerName, 'publish'), { targetPath })
+  publishContainer(appId, containerName, options) {
+    return req.post(routes.containerAction(appId, containerName, 'publish'), options)
   },
 
   applyContainerTheme(appId, containerName, theme) {
