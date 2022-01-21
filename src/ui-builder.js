@@ -208,7 +208,7 @@ export default req => ({
   //-- PAGE -----//
 
   installComponentFromMarketplace(appId, containerName, productId) {
-    return req.get(routes.containerComponentInstall(appId, containerName, productId))
+    return req.post(routes.containerComponentInstall(appId, containerName, productId))
   },
 
   //-- REUSABLE COMPONENTS -----//
