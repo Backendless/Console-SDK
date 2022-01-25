@@ -35,7 +35,8 @@ const routes = prepareRoutes({
   containerPageLogic      : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/logic/:componentUid/:handlerName',
   containerPageUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/pages/:pageName/unused-logic',
 
-  containerComponentInstall: '/:appId/console/ui-builder/containers/:containerName/components/install/:productId',
+  containerComponentAddReference: '/:appId/console/ui-builder/containers/:containerName/components/add-reference',
+  containerComponentInstall     : '/:appId/console/ui-builder/containers/:containerName/components/install/:productId',
 
   containerReusableComponents          : '/:appId/console/ui-builder/containers/:containerName/components/reusable',
   containerReusableComponent           : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId',
@@ -206,6 +207,10 @@ export default req => ({
   },
 
   //-- PAGE -----//
+
+  addReferenceToMarketplaceProduct(appId, containerName, data) {
+    return req.post(routes.containerComponentAddReference(appId, containerName), data)
+  },
 
   installComponentFromMarketplace(appId, containerName, productId) {
     return req.post(routes.containerComponentInstall(appId, containerName, productId))
