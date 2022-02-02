@@ -212,8 +212,8 @@ export default req => ({
     return req.post(routes.containerComponentAddReference(appId, containerName), data)
   },
 
-  installComponentFromMarketplace(appId, containerName, productId) {
-    return req.post(routes.containerComponentInstall(appId, containerName, productId))
+  installComponentFromMarketplace(appId, containerName, productId, data) {
+    return req.post(routes.containerComponentInstall(appId, containerName, productId), data)
   },
 
   //-- REUSABLE COMPONENTS -----//
