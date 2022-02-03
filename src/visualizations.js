@@ -1,8 +1,9 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  visualizations: '/:appId/console/visualizations',
-  visualization: '/:appId/console/visualizations/:visualizationId'
+  visualizations        : '/:appId/console/visualizations',
+  visualization         : '/:appId/console/visualizations/:visualizationId',
+  visualizationResources: '/:appId/console/visualizations/:visualizationId/resources'
 })
 
 export default req => ({
@@ -21,4 +22,8 @@ export default req => ({
   deleteVisualizations(appId, visualizationIds) {
     return req.delete(routes.visualizations(appId)).query({ visualizationIds })
   },
+
+  updateVisualizationResources(appId, visualizationId) {
+    return req.put(routes.visualizationResources(appId, visualizationId))
+  }
 })
