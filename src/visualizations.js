@@ -10,8 +10,8 @@ export default req => ({
     return req.get(routes.visualizations(appId))
   },
 
-  createVisualization(appId, visualizationId, visualization) {
-    return req.post(routes.visualization(appId, visualizationId), visualization)
+  createVisualization(appId, visualization) {
+    return req.post(routes.visualizations(appId), visualization)
   },
 
   updateVisualization(appId, visualizationId, visualization) {
