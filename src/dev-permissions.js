@@ -20,6 +20,7 @@ const OperationsTypes = {
   MANAGE_OAUTH_PROVIDERS    : 5, //Manage OAuth2 providers
   DELETE_APPLICATION        : 11, //Delete application
   MANAGE_API_KEYS           : 4, //Manage API keys
+  RENAME_APP                : 110, //Manage API keys
 
   /** Billing */
   BILLING_SECTION            : 'Billing section',
