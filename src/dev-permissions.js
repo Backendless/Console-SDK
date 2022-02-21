@@ -108,6 +108,10 @@ const OperationsTypes = {
   MODIFY_LOGIN_PROPS            : 32, //Modify login properties
   MODIFY_USER_REGISTRATION_PROPS: 31, //Modify user registration properties
   LOGOUT_ALL_USERS              : 107, //Logout all users
+
+  /** UI Builder */
+  ACCESS_UI_BUILDER    : 'Access UI Builder',
+  PUBLISH_UI_CONTAINERS: 111,
 }
 
 const OperationsLabels = {}
@@ -126,6 +130,6 @@ export const DevPermissions = {
 export default req => ({
 
   get(appId, operation) {
-    return req.get(`${urls.security(appId)}/${operation}`)
+    return req.get(`${ urls.security(appId) }/${ operation }`)
   }
 })
