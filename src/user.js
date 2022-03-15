@@ -123,7 +123,6 @@ export default (req, context) => ({
   },
 
   updatePaymentProfile(id, data) {
-    console.log('SDK')
     return req.put(`/console/billing/developer/payment-profile/${id}`, data)
   },
 
