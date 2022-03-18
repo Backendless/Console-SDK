@@ -117,4 +117,16 @@ export default (req, context) => ({
   confirmOwnershipChange(appId, data) {
     return req.put(`${urls.appConsole(appId)}/devteam/owner-confirm`, data)
   },
+
+  addPaymentProfile(data) {
+    return req.post('/console/billing/developer/payment-profile', data)
+  },
+
+  updatePaymentProfile(id, data) {
+    return req.put(`/console/billing/developer/payment-profile/${id}`, data)
+  },
+
+  deletePaymentProfile(id) {
+    return req.delete(`/console/billing/developer/payment-profile/${id}`)
+  },
 })
