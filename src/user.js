@@ -117,4 +117,9 @@ export default (req, context) => ({
   confirmOwnershipChange(appId, data) {
     return req.put(`${urls.appConsole(appId)}/devteam/owner-confirm`, data)
   },
+
+  setPaymentProfile(appId, paymentProfileId) {
+    console.log('SDK')
+    return req.put(`${ urls.appConsole(appId) }/billing/creditcard/${ paymentProfileId }`)
+  },
 })
