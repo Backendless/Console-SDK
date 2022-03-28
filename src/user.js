@@ -118,6 +118,10 @@ export default (req, context) => ({
     return req.put(`${urls.appConsole(appId)}/devteam/owner-confirm`, data)
   },
 
+  setPaymentProfile(appId, paymentProfileId) {
+    return req.put(`${ urls.appConsole(appId) }/billing/creditcard/${ paymentProfileId }`)
+  },
+
   addPaymentProfile(data) {
     return req.post('/console/billing/developer/payment-profile', data)
   },
