@@ -34,6 +34,10 @@ export const buildGetUrl = (appId, policy, service, serviceItemId, serviceItemNa
 
   let stickingPoint = `${service}/${serviceItemId}/${policy}`
 
+  if (filterParams.identity != null) {
+    filterParams.name = filterParams.identity
+  }
+
   if (isOwnerPolicy) {
     stickingPoint = `${service}/ownerpolicy/${serviceItemId}`
   } else if (isFilesService && isRolesPolicy) {
