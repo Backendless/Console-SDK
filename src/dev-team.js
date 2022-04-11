@@ -26,6 +26,23 @@ export default req => ({
   },
 
   transferOwnership(appId, developerId) {
-    return req.put(`${devTeam(appId, 'owner')}`, { developerId })
-  }
+    return req.put(`${urls.appConsole(appId)}/devteam/owner`, { developerId })
+  },
+
+  loadOwnershipTransferProposals() {
+    return req.get('/console/devteam/application-owner-change/pending-received-proposal')
+  },
+
+  confirmOwnershipChange(appId, data) {
+    return req.put(`${urls.appConsole(appId)}/devteam/owner-confirm`, data)
+  },
+
+  loadSentOwnershipTransfer(appId) {
+    return req.get(`${urls.appConsole(appId)}/devteam/application-owner-change/pending-sent-proposal`)
+  },
+
+  cancelSentOwnershipTransfer(appId) {
+    return req.delete(`${urls.appConsole(appId)}/devteam/application-owner-change/pending-sent-proposal`)
+  },
+
 })

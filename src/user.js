@@ -110,14 +110,6 @@ export default (req, context) => ({
     return req.get('/console/billing/developer/payment-profile')
   },
 
-  loadOwnershipTransferProposals() {
-    return req.get('/console/devteam/application-owner-change/pending-received-proposal')
-  },
-
-  confirmOwnershipChange(appId, data) {
-    return req.put(`${urls.appConsole(appId)}/devteam/owner-confirm`, data)
-  },
-
   setPaymentProfile(appId, paymentProfileId) {
     return req.put(`${ urls.appConsole(appId) }/billing/creditcard/${ paymentProfileId }`)
   },
