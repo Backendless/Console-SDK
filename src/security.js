@@ -298,6 +298,8 @@ export default req => {
   const loadColumnPermissions = (appId, tableId) =>
     req.get(`${ urls.security(appId) }/data/${ tableId }/columns/permissions`)
 
+  const loadAuditLogs = appId => req.get(`${urls.security(appId)}/audit-logs`)
+
   return {
     loadRoles,
     createRole,
@@ -308,6 +310,7 @@ export default req => {
     setPermission,
     dropPermissions,
     searchDataACLUsers,
-    loadColumnPermissions
+    loadColumnPermissions,
+    loadAuditLogs
   }
 }
