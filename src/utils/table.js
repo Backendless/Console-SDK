@@ -36,9 +36,7 @@ const composeRequestParams = (table, query) => {
 
   if (sortBy) {
     params.sortBy = sortBy
-  }
-
-  if (!sortBy && sortField && sortDir) {
+  } else if (sortField && sortDir) {
     params.sortBy = `${sortField} ${sortDir}`
   }
 
