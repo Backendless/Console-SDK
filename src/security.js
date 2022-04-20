@@ -298,6 +298,12 @@ export default req => {
   const loadColumnPermissions = (appId, tableId) =>
     req.get(`${ urls.security(appId) }/data/${ tableId }/columns/permissions`)
 
+  const loadAuditLogs = appId => req.get(`${urls.security(appId)}/audit-logs`)
+
+  const activatePanicMode = (appId, settings) => req.put(`${ urls.appConsole(appId) }/panic/enable`, settings)
+
+  const deactivatePanicMode = (appId, settings) => req.put(`${ urls.appConsole(appId) }/panic/disable`, settings)
+
   return {
     loadRoles,
     createRole,
@@ -308,6 +314,9 @@ export default req => {
     setPermission,
     dropPermissions,
     searchDataACLUsers,
-    loadColumnPermissions
+    loadColumnPermissions,
+    loadAuditLogs,
+    activatePanicMode,
+    deactivatePanicMode,
   }
 }

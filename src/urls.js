@@ -136,6 +136,11 @@ export const codelessDeployModel = (appId, model) => `${codeless(appId)}/deploy/
 
 export const dataViews = (appId, id) => `${appConsole(appId)}/data/table-views${optional(id)}`
 
+export const dataHives = appId => `${appConsole(appId)}/hive`
+export const dataHive = (appId, hiveName) => `${dataHives(appId)}/${hiveName}`
+export const dataHiveStore = (appId, hiveName, storeType) => `${dataHive(appId, hiveName)}/${storeType}`
+export const dataHiveStoreKey = (appId, hiveName, storeType, keyName) => `${dataHiveStore(appId, hiveName, storeType)}/${keyName}`
+
 export const dataConnectors = appId => `${appConsole(appId)}/dataconnectors`
 export const dataConnectorTemplates = appId => `${dataConnectors(appId)}/templates`
 export const dataConnector = (appId, connectorId) => `${dataConnectors(appId)}/${connectorId}`
@@ -235,6 +240,7 @@ export default {
   userActivity,
   users,
   dataViews,
+  dataHives,
   dataConnectors,
   dataConnectorTemplates,
   dataConnector,

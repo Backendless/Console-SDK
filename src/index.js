@@ -16,6 +16,7 @@ import codeless from './codeless'
 import counters from './counters'
 import dataConnectors from './data-connectors'
 import dataViews from './data-views'
+import dataHives from './data-hives'
 import developerProfile from './developer-profile'
 import devTeam from './dev-team'
 import email from './email'
@@ -178,6 +179,7 @@ const createClient = (serverUrl, authKey, options) => {
     counters            : counters(request),
     dataConnectors      : dataConnectors(request),
     dataViews           : dataViews(request),
+    dataHives           : dataHives(request),
     developerProfile    : developerProfile(request),
     devTeam             : devTeam(request),
     email               : email(request),
