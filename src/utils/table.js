@@ -23,7 +23,7 @@ const BOOLEAN_SQL_VALUES = {
   'null' : 'IS NULL'
 }
 
-const composeRequestParams = (table, query) => {
+export const composeRequestParams = (table, query) => {
   const { pageSize = 15, offset = 0, sqlSearch, where, sortField, sortDir, filterString } = query
   const { property, groupBy, having, distinct, loadRelations } = query
 
