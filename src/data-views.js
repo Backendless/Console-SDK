@@ -1,6 +1,7 @@
 import urls, { dataViews, dataTable, dataTableGroup, dataTableGroupCount } from './urls'
 import { viewRecordsReq, viewRecordsCountReq, viewRecordsGroupReq, viewRecordsGroupCountReq } from './utils/views'
 import totalRows from './utils/total-rows'
+import { composeRequestParams } from "./utils/table";
 
 const dataTableFindUrl = (appId, tableName) => `${dataTable(appId, tableName)}/find`
 
@@ -63,5 +64,11 @@ export default req => ({
 
   getGroupRecordsCount(appId, view, query) {
     return groupRecordsCountReq(req, appId, view, query)
+  },
+
+  loadSampleRecords(appId, table, query = {}) {
+    const params = composeRequestParams(table, query)
+
+    return req.post(`${urls.data(appId)}/table-pre-view/${table.name}/find`, params)
   }
 })
