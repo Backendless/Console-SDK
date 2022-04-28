@@ -53,4 +53,8 @@ export default req => ({
     return req.billing.post(`${urls.billing(appId)}/bb/exchange`, bbAmount)
       .set({ 'Content-Type': 'application/json' })
   },
+
+  confirmConsolidateApp(appId, paymentProfileId, newBillingPlan, newBillingPeriod) {
+    return req.billing.put(`${urls.billing(appId)}/consolidate/${paymentProfileId}?newBillingPlan=${newBillingPlan}&newBillingPeriod=${newBillingPeriod}`)
+  },
 })

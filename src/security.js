@@ -221,10 +221,12 @@ export default req => {
 
     const addTotalRows = response => {
       if (policy === PermissionPolicies.USERS) {
+        filterParams.identity = filterParams.identity || filterParams.name
+
         const usersCountReq = req
           .get(urls.dataTable(appId, 'Users'))
           .query({
-            where: filterParams.name ? `${identityColumnName} like '%${filterParams.name}%'` : undefined
+            where: filterParams.identity ? `${identityColumnName} like '%${filterParams.identity}%'` : undefined
           })
 
         return totalRows(req).getFor(usersCountReq)
@@ -270,8 +272,8 @@ export default req => {
     return req.delete(url).then(alignModifyResponseShape(...args))
   }
 
-  const searchDataACLUsers = (appId, tableName, objectID, query) => {
-    return req.get(`${ urls.security(appId) }/data/${ tableName }/objectAcl/${ objectID }/users/search/${ query }`)
+  const searchDataACLUsers = (appId, tableName, objectId, query) => {
+    return req.get(`${ urls.security(appId) }/data/${ tableName }/objectAcl/${ objectId }/users/search/${ query }`)
       .then(result => ({ data: result }))
       .then(enrichPermissions)
       .then(enrichEntities)
@@ -296,6 +298,12 @@ export default req => {
   const loadColumnPermissions = (appId, tableId) =>
     req.get(`${ urls.security(appId) }/data/${ tableId }/columns/permissions`)
 
+  const loadAuditLogs = appId => req.get(`${urls.security(appId)}/audit-logs`)
+
+  const activatePanicMode = (appId, settings) => req.put(`${ urls.appConsole(appId) }/panic/enable`, settings)
+
+  const deactivatePanicMode = (appId, settings) => req.put(`${ urls.appConsole(appId) }/panic/disable`, settings)
+
   return {
     loadRoles,
     createRole,
@@ -306,6 +314,9 @@ export default req => {
     setPermission,
     dropPermissions,
     searchDataACLUsers,
-    loadColumnPermissions
+    loadColumnPermissions,
+    loadAuditLogs,
+    activatePanicMode,
+    deactivatePanicMode,
   }
 }
