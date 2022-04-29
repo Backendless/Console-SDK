@@ -54,7 +54,8 @@ export default req => ({
       .set({ 'Content-Type': 'application/json' })
   },
 
-  confirmConsolidateApp(appId, paymentProfileId, newBillingPlan, newBillingPeriod) {
-    return req.billing.put(`${urls.billing(appId)}/consolidate/${paymentProfileId}?newBillingPlan=${newBillingPlan}&newBillingPeriod=${newBillingPeriod}`)
+  confirmConsolidateApp(appId, { paymentProfileId, newBillingPlan, newBillingPeriod, zoneId }) {
+    return req.billing.put(`${urls.billing(appId)}/consolidate/${paymentProfileId}`)
+      .query({ newBillingPlan, newBillingPeriod, zoneId })
   },
 })
