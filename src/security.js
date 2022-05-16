@@ -304,6 +304,20 @@ export default req => {
 
   const deactivatePanicMode = (appId, settings) => req.put(`${ urls.appConsole(appId) }/panic/disable`, settings)
 
+  const loadUsers = (appId, { identityOrUserId, offset, pageSize }) => {
+    return req.get(`${urls.appConsole(appId)}/user/sessions/users`)
+      .query({ identityOrUserId, offset, pageSize })
+  }
+
+  const loadUserSessions = (appId, userId, { pageSize, cursor }) => {
+    return req.get(`${ urls.appConsole(appId) }/user/sessions/${ userId }`)
+      .query({ pageSize, cursor })
+  }
+
+  const logoutUserSessions = (appId, userId) => {
+    return req.put(`${ urls.appConsole(appId) }/user/sessions/logout`, userId)
+  }
+
   return {
     loadRoles,
     createRole,
@@ -318,5 +332,8 @@ export default req => {
     loadAuditLogs,
     activatePanicMode,
     deactivatePanicMode,
+    loadUsers,
+    loadUserSessions,
+    logoutUserSessions,
   }
 }
