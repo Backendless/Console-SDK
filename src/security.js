@@ -309,7 +309,7 @@ export default req => {
       .query({ identityOrUserId, offset, pageSize })
   }
 
-  const loadUserSessions = (appId, userId, { pageSize, cursor }) => {
+  const loadUserSessions = (appId, userId, { cursor, pageSize }) => {
     return req.get(`${ urls.appConsole(appId) }/user/sessions/${ userId }`)
       .query({ pageSize, cursor })
   }

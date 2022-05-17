@@ -124,6 +124,10 @@ export default req => ({
     return totalRows(req).getViaPostFor(recordsCountReq(req, appId, table, query, resetCache))
   },
 
+  getCount(appId, table, query) {
+    return totalRows(req).getFor(recordsCountReq(req, appId, table, query))
+  },
+
   getRecordsCountForTables(appId, tables, connectorId, resetCache) {
     return req.post(`${urls.data(appId)}/tables-counters`, { tables, connectorId, resetCache })
   },
