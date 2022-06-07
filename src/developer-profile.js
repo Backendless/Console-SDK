@@ -3,6 +3,7 @@ import { developerPage } from './urls'
 
 const routes = prepareRoutes({
   getProfile   : '/console/community/profile/me',
+  removeProfile: '/console/community/profile/me',
   setProfile   : '/console/community/profile',
   getCountries : '/console/community/countries',
   checkUsername: '/console/community/profile/username/check',
@@ -42,4 +43,7 @@ export default req => ({
     return req.post(routes.setProfile(), background)
   },
 
+  remove() {
+    return req.delete(routes.removeProfile())
+  }
 })
