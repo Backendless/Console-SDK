@@ -50,7 +50,7 @@ export const marketplace = req => ({
   //---- PRODUCT ==>
 
   getProduct(productId) {
-    return req.get(routes.product(productId))
+    return req.community.get(routes.product(productId))
   },
 
   getProductConfigurations(productId) {
