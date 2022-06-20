@@ -302,6 +302,10 @@ export default req => {
 
   const deleteAuditLogs = appId => req.delete(`${urls.security(appId)}/audit-logs`)
 
+  const downloadAuditLogs = (appId, fromDate, toDate) => {
+    return req.get(`${urls.security(appId)}/audit-logs/download`).query({ fromDate, toDate })
+  }
+
   const activatePanicMode = (appId, settings) => req.put(`${ urls.appConsole(appId) }/panic/enable`, settings)
 
   const deactivatePanicMode = (appId, settings) => req.put(`${ urls.appConsole(appId) }/panic/disable`, settings)
@@ -345,6 +349,7 @@ export default req => {
     loadColumnPermissions,
     loadAuditLogs,
     deleteAuditLogs,
+    downloadAuditLogs,
     activatePanicMode,
     deactivatePanicMode,
     loadUsers,
