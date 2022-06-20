@@ -320,6 +320,18 @@ export default req => {
     return req.put(`${ urls.appConsole(appId) }/user/sessions/logout`, userId)
   }
 
+  const activateHIPAACompliance = appId => {
+    return req.put(`${ urls.appConsole(appId) }/compliance/hipaa/enable`)
+  }
+
+  const deactivateHIPAACompliance = appId => {
+    return req.put(`${ urls.appConsole(appId) }/compliance/hipaa/disable`)
+  }
+
+  const getComplianceFileDownloadLink = (appId, complianceName) => {
+    return req.get(`${ urls.security(appId) }/compliances/sign`).query({ complianceName })
+  }
+
   return {
     loadRoles,
     createRole,
@@ -338,5 +350,8 @@ export default req => {
     loadUsers,
     loadUserSessions,
     logoutUserSessions,
+    activateHIPAACompliance,
+    deactivateHIPAACompliance,
+    getComplianceFileDownloadLink,
   }
 }
