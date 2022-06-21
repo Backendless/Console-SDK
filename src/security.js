@@ -326,10 +326,6 @@ export default req => {
     return req.put(`${ urls.appConsole(appId) }/compliance/hipaa/disable`)
   }
 
-  const getComplianceFileDownloadLink = (appId, complianceName) => {
-    return req.get(`${ urls.security(appId) }/compliances/sign`).query({ complianceName })
-  }
-
   return {
     loadRoles,
     createRole,
@@ -349,6 +345,5 @@ export default req => {
     logoutUserSessions,
     activateHIPAACompliance,
     deactivateHIPAACompliance,
-    getComplianceFileDownloadLink,
   }
 }
