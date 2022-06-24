@@ -3,6 +3,7 @@ import { prepareRoutes } from './utils/routes'
 const routes = prepareRoutes({
   getProfile   : '/console/community/profile/me',
   removeProfile: '/console/community/profile/me',
+  removeApp    : '/console/community/profile/app',
   setProfile   : '/console/community/profile',
   getCountries : '/console/community/countries',
   checkUsername: '/console/community/profile/username/check',
@@ -40,5 +41,9 @@ export default req => ({
 
   remove() {
     return req.community.delete(routes.removeProfile())
+  },
+
+  removeApp(appId) {
+    return req.community.delete(routes.removeApp()).query({ appId })
   }
 })
