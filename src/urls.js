@@ -168,11 +168,12 @@ export const userActivity = appId => `${appConsole(appId)}/user-activity`
 
 export const devTeam = (appId, devId) => `${appConsole(appId)}/devteam${optional(devId)}`
 
-export const developerPage = () => `${console()}/developer-page`
-
 export const users = appId => `${appConsole(appId)}/users`
 export const oauth1 = appId => `${users(appId)}/oauth1`
 export const oauth2 = appId => `${users(appId)}/oauth2`
+
+export const downloadComplianceFile = (appId, complianceName) =>
+  `${ security(appId) }/compliances/${ complianceName }/download`
 
 export default {
   appConsole,
@@ -201,7 +202,6 @@ export default {
   dataRecord,
   dataTable,
   dataTables,
-  developerPage,
   devTeam,
   emailTemplates,
   fileCopy,
@@ -253,4 +253,5 @@ export default {
   apiDocsFiles,
   apiDocsService,
   apiDocsGeo,
+  downloadComplianceFile,
 }

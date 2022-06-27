@@ -49,9 +49,9 @@ export const marketplace = req => ({
 
   //---- PRODUCT ==>
 
-  // getProduct(productId) {
-  //   return req.get(routes.product(productId))
-  // },
+  getProduct(productId) {
+    return req.community.get(routes.product(productId))
+  },
 
   getProductConfigurations(productId) {
     return req.get(routes.productConfigurations(productId))
