@@ -1,7 +1,7 @@
 import urls, { dataViews, dataTable, dataTableGroup, dataTableGroupCount } from './urls'
 import { viewRecordsReq, viewRecordsCountReq, viewRecordsGroupReq, viewRecordsGroupCountReq } from './utils/views'
 import totalRows from './utils/total-rows'
-import { composeRequestParams } from "./utils/table";
+import { composeRequestParams } from './utils/table'
 
 const dataTableFindUrl = (appId, tableName) => `${dataTable(appId, tableName)}/find`
 
