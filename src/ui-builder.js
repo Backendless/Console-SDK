@@ -47,6 +47,7 @@ const routes = prepareRoutes({
 
   containerCustomComponents                : '/:appId/console/ui-builder/containers/:containerName/components/custom',
   containerCustomComponent                 : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId',
+  containerCustomComponentPreview          : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/preview',
   containerCustomComponentClone            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/clone',
   containerCustomComponentModel            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/model',
   containerCustomComponentFiles            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files',
@@ -284,6 +285,10 @@ export default req => ({
 
   updateCustomComponent(appId, containerName, data) {
     return req.put(routes.containerCustomComponent(appId, containerName, data.id), data)
+  },
+
+  updateCustomComponentPreview(appId, containerName, id, data) {
+    return req.put(routes.containerCustomComponentPreview(appId, containerName, id), data)
   },
 
   loadComponentFileContent(appId, containerName, id, fileId) {
