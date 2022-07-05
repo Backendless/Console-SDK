@@ -22,10 +22,8 @@ export default req => ({
   },
 
   cloneApp(appId, newApp) {
-    // BKNDLSS-25315
     return req
       .post(`${urls.appConsole(appId)}/cloneApp`, newApp)
-      .query({ newAppName: newApp.name || newApp.newAppName })
   },
 
   getCloningAppStatus(appId, processId) {
