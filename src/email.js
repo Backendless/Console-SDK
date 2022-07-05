@@ -59,5 +59,9 @@ export default req => ({
 
   parseCustomTemplateKeys(appId, payload) {
     return req.post(`${urls.emailTemplates(appId)}/customkeys`, payload)
-  }
+  },
+
+  installEmailTemplateFromMarketplace(appId, productId, data) {
+    return req.post(urls.installEmailTemplate(appId, productId), data)
+  },
 })

@@ -300,9 +300,37 @@ export default req => {
 
   const loadAuditLogs = appId => req.get(`${urls.security(appId)}/audit-logs`)
 
+  const deleteAuditLogs = appId => req.delete(`${urls.security(appId)}/audit-logs`)
+
+  const downloadAuditLogs = (appId, fromDate, toDate) => {
+    return req.get(`${urls.security(appId)}/audit-logs/download`).query({ fromDate, toDate })
+  }
+
   const activatePanicMode = (appId, settings) => req.put(`${ urls.appConsole(appId) }/panic/enable`, settings)
 
   const deactivatePanicMode = (appId, settings) => req.put(`${ urls.appConsole(appId) }/panic/disable`, settings)
+
+  const loadUsers = (appId, { identityOrUserId, offset, pageSize }) => {
+    return req.get(`${urls.appConsole(appId)}/user/sessions/users`)
+      .query({ identityOrUserId, offset, pageSize })
+  }
+
+  const loadUserSessions = (appId, userId, { cursor, pageSize }) => {
+    return req.get(`${ urls.appConsole(appId) }/user/sessions/${ userId }`)
+      .query({ pageSize, cursor })
+  }
+
+  const logoutUserSessions = (appId, userId) => {
+    return req.put(`${ urls.appConsole(appId) }/user/sessions/logout`, userId)
+  }
+
+  const activateHIPAACompliance = appId => {
+    return req.put(`${ urls.appConsole(appId) }/compliance/hipaa/enable`)
+  }
+
+  const deactivateHIPAACompliance = appId => {
+    return req.put(`${ urls.appConsole(appId) }/compliance/hipaa/disable`)
+  }
 
   return {
     loadRoles,
@@ -316,7 +344,14 @@ export default req => {
     searchDataACLUsers,
     loadColumnPermissions,
     loadAuditLogs,
+    deleteAuditLogs,
+    downloadAuditLogs,
     activatePanicMode,
     deactivatePanicMode,
+    loadUsers,
+    loadUserSessions,
+    logoutUserSessions,
+    activateHIPAACompliance,
+    deactivateHIPAACompliance,
   }
 }
