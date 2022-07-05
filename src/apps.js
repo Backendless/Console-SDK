@@ -22,8 +22,7 @@ export default req => ({
   },
 
   cloneApp(appId, newApp) {
-    return req
-      .post(`${urls.appConsole(appId)}/cloneApp`, newApp)
+    return req.post(`${urls.appConsole(appId)}/cloneApp`, newApp)
   },
 
   getCloningAppStatus(appId, processId) {
