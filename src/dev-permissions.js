@@ -10,6 +10,8 @@ const OperationsTypes = {
   INVITE_OR_REMOVE_TEAM_MEMBER : 1, // Add/remove developer
   ASSIGN_TEAM_MEMBER_PERMISSION: 3, // Modify permission
   DELETE_AUDIT_LOGS            : 115, // Delete Audit Logs
+  ACTIVATE_HIPAA_COMPLIANCE    : 114, // Activate HIPAA Compliance
+  ENABLE_PANIC_MODE            : 112, // Enable Panic Mode
 
   /** App Settings */
   APP_RESET                 : 13, // Application reset
