@@ -310,9 +310,9 @@ export default req => {
 
   const deactivatePanicMode = (appId, settings) => req.put(`${ urls.appConsole(appId) }/panic/disable`, settings)
 
-  const loadUsers = (appId, { identityOrUserId, offset, pageSize }) => {
+  const loadUsers = (appId, { identityOrUserId, offset, pageSize, sortBy }) => {
     return req.get(`${urls.appConsole(appId)}/user/sessions/users`)
-      .query({ identityOrUserId, offset, pageSize })
+      .query({ identityOrUserId, offset, pageSize, sortBy })
   }
 
   const loadUserSessions = (appId, userId, { cursor, pageSize }) => {
