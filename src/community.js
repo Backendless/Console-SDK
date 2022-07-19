@@ -14,6 +14,12 @@ const routes = prepareRoutes({
   blacklistStatus: '/console/community/blacklist/status',
 
   onProductInstall: '/console/community/activity/products/install',
+
+  devSuicide:  '/console/community/dev/suicide',
+})
+
+const activeCampaignRoutes = prepareRoutes({
+  registerDeveloper: '/console/community/active-campaign/registration'
 })
 
 export const community = req => ({
@@ -82,4 +88,13 @@ export const community = req => ({
     return req.community.post(routes.onProductInstall(), { productId })
   },
 
+  //---- ACTIVE CAMPAIGN ----//
+
+  onRegisterDeveloper(dev) {
+    return req.community.post(activeCampaignRoutes.registerDeveloper(), { dev })
+  },
+
+  onDeveloperSuicide() {
+    return req.community.delete(routes.devSuicide())
+  }
 })
