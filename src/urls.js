@@ -161,7 +161,6 @@ export const apiDocsGeo = appId => `${apiDocs(appId)}/geo`
 
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
 export const atomicCounters = appId => `${appConsole(appId)}/counters`
-export const systemDataCounters = appId => `${appConsole(appId)}/system/counters`
 
 export const gamification = () => `${console()}/gamification`
 
@@ -180,7 +179,6 @@ export default {
   appConsole,
   appInfo,
   atomicCounters,
-  systemDataCounters,
   billing,
   blBasePath,
   blDraft,

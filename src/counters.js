@@ -4,7 +4,7 @@ const DEFAULT_NAME_PATTERN = '*'
 
 export default req => ({
   get(appId, { pageSize, offset, sortField, sortDir, pattern = DEFAULT_NAME_PATTERN }) {
-    return req.get(urls.systemDataCounters(appId)).query({ pageSize, offset, sortField, sortDir, pattern })
+    return req.get(urls.atomicCounters(appId)).query({ pageSize, offset, sortField, sortDir, pattern })
   },
 
   listNames(appId, pattern = DEFAULT_NAME_PATTERN) {
