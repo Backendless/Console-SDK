@@ -1,30 +1,29 @@
 import urls from './urls'
 
+const DEFAULT_NAME_PATTERN = '*'
+
 export default req => ({
-  get(appId, { pageSize, offset, sortField, sortDir }) {
-    return Promise.all([
-      req.get(urls.systemDataCounters(appId)).query({ pageSize, offset, sortField, sortDir }),
-      this.count(appId)
-    ]).then(([data, totalRows]) => ({ data, totalRows }))
+  get(appId, { pageSize, offset, sortField, sortDir, pattern = DEFAULT_NAME_PATTERN }) {
+    return req.get(urls.systemDataCounters(appId)).query({ pageSize, offset, sortField, sortDir, pattern })
   },
 
-  getAll(appId, pattern) {
-    return req.get(`${urls.counters(appId, pattern)}`)
+  listNames(appId, pattern = DEFAULT_NAME_PATTERN) {
+    return req.get(`${urls.atomicCounters(appId)}/${pattern}/list-names`)
   },
 
-  count(appId) {
-    return req.get(`${urls.systemDataCounters(appId)}/count`)
+  listCounters(appId, names) {
+    return req.post(`${urls.atomicCounters(appId)}/list-by-names`, names)
   },
 
   create(appId, name, value) {
-    return req.post(urls.systemDataCounters(appId), { name, value })
+    return req.post(`${urls.atomicCounters(appId)}/${encodeURIComponent(name)}`, { value })
   },
 
-  update(appId, value, objectId) {
-    return req.put(urls.systemDataCounters(appId, encodeURIComponent(objectId)), { value })
+  update(appId, name, currentValue, newValue) {
+    return req.put(`${urls.atomicCounters(appId)}/${encodeURIComponent(name)}`, { currentValue, newValue })
   },
 
-  remove(appId, key) {
-    return req.delete(urls.systemDataCounters(appId, encodeURIComponent(key)))
+  remove(appId, name) {
+    return req.delete(`${urls.atomicCounters(appId)}/${encodeURIComponent(name)}`)
   }
 })
