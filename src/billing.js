@@ -58,4 +58,8 @@ export default req => ({
     return req.billing.put(`${urls.billing(appId)}/consolidate/${paymentProfileId}`)
       .query({ newBillingPlan, newBillingPeriod, zoneId })
   },
+
+  loadHiveUsage(appId) {
+    return req.billing.get(`/${appId}/service/billing/usage/hive`)
+  },
 })
