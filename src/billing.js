@@ -62,4 +62,8 @@ export default req => ({
   loadHiveUsage(appId) {
     return req.billing.get(`/${appId}/service/billing/usage/hive`)
   },
+
+  loadHiveLimit(appId) {
+    return req.billing.get(`/${appId}/billing/limits/hive`)
+  },
 })
