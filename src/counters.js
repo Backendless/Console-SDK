@@ -2,6 +2,11 @@ import urls from './urls'
 
 const DEFAULT_NAME_PATTERN = '*'
 
+const normalizeResponse = item => ({
+  ...item,
+  objectId: item.name,
+})
+
 export default req => ({
   get(appId, { pageSize, offset, sortField, sortDir, pattern = DEFAULT_NAME_PATTERN }) {
     return req.get(urls.atomicCounters(appId)).query({ pageSize, offset, sortField, sortDir, pattern })
@@ -17,6 +22,7 @@ export default req => ({
 
   create(appId, name, value) {
     return req.post(`${urls.atomicCounters(appId)}/${encodeURIComponent(name)}`, { value })
+      .then(normalizeResponse)
   },
 
   update(appId, name, currentValue, newValue) {
