@@ -5,8 +5,8 @@ export default req => ({
     return req.billing.get(`${urls.billing(appId)}/accountinfo`)
   },
 
-  getPlans(appId) {
-    return req.billing.get(`${urls.billing(appId)}/plans`)
+  getPlans(appId, zoneId) {
+    return req.billing.get(`${urls.billing(appId)}/plans`).query({ zoneId })
   },
 
   getPlanComponentsData(appId, planId, billingPeriod) {
