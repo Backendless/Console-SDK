@@ -48,6 +48,10 @@ export default req => ({
   },
 
   saveHiveStoreRecord(appId, hiveName, storeType, keyName, payload) {
+    if (storeType === HiveDataTypesMap.KEY_VALUE) {
+      return req.put(dataHiveStore(appId, hiveName, storeType), { [keyName]: payload.value })
+    }
+
     return req.put(dataHiveStoreKey(appId, hiveName, storeType, keyName), payload)
   },
 
