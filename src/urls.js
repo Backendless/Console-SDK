@@ -12,7 +12,6 @@ export const security = consoleSection('security')
 export const serverCode = consoleSection('servercode')
 export const blBasePath = consoleSection('localservices')
 export const data = consoleSection('data')
-export const systemData = consoleSection('system/data')
 export const geo = consoleSection('geo')
 export const files = consoleSection('files')
 export const messaging = consoleSection('messaging')
@@ -161,8 +160,7 @@ export const apiDocsService = (appId, serviceId) => `${apiDocs(appId)}/services/
 export const apiDocsGeo = appId => `${apiDocs(appId)}/geo`
 
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
-export const counters = (appId, pattern) => `${appConsole(appId)}/counters/${pattern || '*'}/list`
-export const systemDataCounters = (appId, key) => `${systemData(appId)}/counters${optional(key)}`
+export const atomicCounters = appId => `${appConsole(appId)}/counters`
 
 export const gamification = () => `${console()}/gamification`
 
@@ -180,6 +178,7 @@ export const downloadComplianceFile = (appId, complianceName) =>
 export default {
   appConsole,
   appInfo,
+  atomicCounters,
   billing,
   blBasePath,
   blDraft,
@@ -190,8 +189,6 @@ export default {
   blServicesClientDownload,
   blueprints,
   cache,
-  counters,
-  systemDataCounters,
   codelessApiServices,
   codelessDeployModel,
   codelessFunctionSource,
