@@ -25,9 +25,10 @@ const routes = prepareRoutes({
   containerStyles: '/:appId/console/ui-builder/containers/:containerName/styles',
   containerStyle : '/:appId/console/ui-builder/containers/:containerName/styles/:name',
 
-  containerFunctions    : '/:appId/console/ui-builder/containers/:containerName/functions',
-  containerFunction     : '/:appId/console/ui-builder/containers/:containerName/functions/:functionId',
-  containerFunctionLogic: '/:appId/console/ui-builder/containers/:containerName/functions/:functionId/logic',
+  containerFunctions                   : '/:appId/console/ui-builder/containers/:containerName/functions',
+  containerFunction                    : '/:appId/console/ui-builder/containers/:containerName/functions/:functionId',
+  containerFunctionLogic               : '/:appId/console/ui-builder/containers/:containerName/functions/:functionId/logic',
+  installCustomFunctionsFromMarketplace: '/:appId/console/ui-builder/containers/:containerName/functions/install/:productId',
 
   containerPages          : '/:appId/console/ui-builder/containers/:containerName/pages',
   containerPage           : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName',
@@ -335,6 +336,10 @@ export default req => ({
   updateContainerFunctionLogic(appId, containerName, id, data) {
     return req.put(routes.containerFunctionLogic(appId, containerName, id), data)
   },
+
+  installCustomFunctionsFromMarketplace(appId, containerName, productId) {
+    return req.post(routes.installCustomFunctionsFromMarketplace(appId, containerName, productId))
+  }
 
   //-- FUNCTIONS -----//
 
