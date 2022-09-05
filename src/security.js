@@ -315,6 +315,11 @@ export default req => {
       .query({ identityOrUserId, offset, pageSize, sortBy })
   }
 
+  const loadUsersWithSessions = (appId, { cursor, pageSize }) => {
+    return req.get(`${urls.appConsole(appId)}/user/sessions/users-with-sessions`)
+      .query({ pageSize, cursor })
+  }
+
   const loadUserSessions = (appId, userId, { cursor, pageSize }) => {
     return req.get(`${ urls.appConsole(appId) }/user/sessions/${ userId }`)
       .query({ pageSize, cursor })
@@ -349,6 +354,7 @@ export default req => {
     activatePanicMode,
     deactivatePanicMode,
     loadUsers,
+    loadUsersWithSessions,
     loadUserSessions,
     logoutUserSessions,
     activateHIPAACompliance,
