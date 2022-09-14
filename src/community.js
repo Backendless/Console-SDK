@@ -1,9 +1,10 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  comments     : '/console/community/comments',
-  comment      : '/console/community/comments/:commentId',
-  commentAction: '/console/community/comments/:commentId/:action',
+  comments            : '/console/community/comments',
+  deleteCommentAsAdmin: '/console/community/comments/admin/:commentId',
+  comment             : '/console/community/comments/:commentId',
+  commentAction       : '/console/community/comments/:commentId/:action',
 
   reviews: '/console/community/reviews',
   review : '/console/community/reviews/:reviewId',
@@ -15,7 +16,7 @@ const routes = prepareRoutes({
 
   onProductInstall: '/console/community/activity/products/install',
 
-  devSuicide:  '/console/community/dev/suicide',
+  devSuicide: '/console/community/dev/suicide',
 })
 
 const activeCampaignRoutes = prepareRoutes({
@@ -40,6 +41,10 @@ export const community = req => ({
 
   deleteComment(commentId) {
     return req.community.delete(routes.comment(commentId))
+  },
+
+  deleteCommentAsAdmin(commentId) {
+    return req.community.delete(routes.deleteCommentAsAdmin(commentId))
   },
 
   hideComment(commentId) {
