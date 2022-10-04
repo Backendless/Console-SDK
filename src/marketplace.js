@@ -16,6 +16,7 @@ const routes = prepareRoutes({
 
   stripeConnectAuth : '/console/community/marketplace/stripe-connect/auth',
   stripeConnectToken: '/console/community/marketplace/stripe-connect/token',
+  stripeConnect     : '/console/developer/stripe-connect',
 
   purchases              : '/:appId/console/community/marketplace/purchases',
   purchasesProduct       : '/:appId/console/community/marketplace/purchases/:productId',
@@ -113,5 +114,13 @@ export const marketplace = req => ({
 
   getStripeConnectToken() {
     return req.get(routes.stripeConnectToken())
+  },
+
+  getStripeConnectAccountId() {
+    return req.get(routes.stripeConnect())
+  },
+
+  setStripeConnectAccountId(data) {
+    return req.put(routes.stripeConnect(), data)
   },
 })
