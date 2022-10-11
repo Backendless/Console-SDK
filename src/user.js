@@ -126,4 +126,20 @@ export default (req, context) => ({
   deletePaymentProfile(id) {
     return req.delete(`/console/billing/developer/payment-profile/${id}`)
   },
+
+  completeStripeConnection(data) {
+    return req.post('/console/community/marketplace/stripe-connect/auth', data)
+  },
+
+  getStripeConnectToken() {
+    return req.get('/console/community/marketplace/stripe-connect/token')
+  },
+
+  getStripeConnectAccountId() {
+    return req.get('/console/developer/stripe-connect')
+  },
+
+  setStripeConnectAccountId(data) {
+    return req.put('/console/developer/stripe-connect', data)
+  },
 })
