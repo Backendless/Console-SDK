@@ -46,7 +46,7 @@ const composeFileUrl = (appId, operation, filePath) => {
   return routeParts.join('/')
 }
 
-export const fileExists = (appId, filePath) => composeFileUrl(appId, 'files/exists', filePath)
+export const fileExists = (appId, filePath) => composeFileUrl(appId, 'exists', filePath)
 export const fileEdit = (appId, filePath) => composeFileUrl(appId, 'edit', filePath)
 export const fileMove = (appId, filePath) => composeFileUrl(appId, 'move', filePath)
 export const fileCopy = (appId, filePath) => composeFileUrl(appId, 'copy', filePath)
@@ -55,16 +55,16 @@ export const fileDelete = (appId, filePath) => composeFileUrl(appId, null, fileP
 export const fileCreate = (appId, filePath) => composeFileUrl(appId, 'create', filePath)
 export const fileUpload = (appId, filePath) => composeFileUrl(appId, 'upload', filePath)
 
-export const fileView = (appId, authKey, filePath, options = {}) => {
+export const fileView = (appId, filePath, options = {}) => {
   if (filePath && filePath.startsWith('/')) {
     filePath = filePath.slice(1)
   }
 
-  return `${options.host || ''}${appConsole(appId, authKey)}/files/view/${encodePath(filePath)}`
+  return `${options.host || ''}${appConsole(appId)}/files/view/${encodePath(filePath)}`
 }
 
-export const fileDownload = (appId, authKey, filePath, options = {}) =>
-  `${options.host || ''}${appConsole(appId, authKey)}/files/download/${encodePath(filePath)}`
+export const fileDownload = (appId, filePath, options = {}) =>
+  `${options.host || ''}${appConsole(appId)}/files/download/${encodePath(filePath)}`
 
 export const createDir = (appId, path, folderName) => {
   path = path ? `${path}/` : ''
@@ -74,12 +74,16 @@ export const createDir = (appId, path, folderName) => {
   return `${files(appId)}/createdir/${dirPath}/`
 }
 
-export const directoryView = (appId, authKey, filePath, options = {}) => {
+export const directoryView = (appId, filePath, options = {}) => {
   if (filePath && filePath.startsWith('/')) {
     filePath = filePath.slice(1)
   }
 
-  return `${options.host || ''}${appConsole(appId, authKey)}/files/directory/view/${encodePath(filePath)}`
+  if (filePath.endsWith('/')) {
+    filePath = filePath.slice(0, -1)
+  }
+
+  return `${options.host || ''}${appConsole(appId)}/files/directory/view${optional(encodePath(filePath))}`
 }
 
 export const blProd = (appId, language, model) =>

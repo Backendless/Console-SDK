@@ -101,9 +101,8 @@ const contextifyRequest = (context, serverUrl, middleware) => {
 }
 
 const DEFAULT_OPTIONS = {
-  billingURL        : null,
-  billingAuth       : null,
-  useFileDownloadURL: true,
+  billingURL : null,
+  billingAuth: null,
 }
 
 const createClient = (serverUrl, authKey, options) => {
@@ -136,22 +135,6 @@ const createClient = (serverUrl, authKey, options) => {
     })
   } else {
     request.automation = request
-  }
-
-  request.getFileDownloadURL = async () => {
-    if (!options.useFileDownloadURL) {
-      return null
-    }
-
-    //TODO: get rid of this method
-
-    if (!request.fileDownloadURL) {
-      const consoleStatus = await status(request)()
-
-      request.fileDownloadURL = consoleStatus.fileDownloadURL
-    }
-
-    return request.fileDownloadURL
   }
 
   const destroy = () => {

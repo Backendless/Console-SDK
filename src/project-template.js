@@ -10,35 +10,35 @@ const DEFAULT_PROMPT = 'Make a selection'
 const getFolders = folders => folders.filter(({ size }) => !size)
 
 export default req => ({
-  loadTemplates(appId, authKey, path = '') {
+  loadTemplates(appId, path = '') {
     const result = {}
 
-    return loadDirectory(req, appId, authKey, `${PROJECT_TEMPLATES_PATH}/${path}`)
+    return loadDirectory(req, appId, `${PROJECT_TEMPLATES_PATH}/${path}`)
       .then(children => {
         result.children = getFolders(children)
 
         const map = children.map(child => {
           if (child.name === PROMPT_FILE_NAME) {
-            return loadDirectory(req, appId, authKey, child.url)
+            return loadDirectory(req, appId, child.url)
               .then(({ prompt }) => result.prompt = prompt)
           } else {
             result.prompt = DEFAULT_PROMPT
           }
 
           if (!child.size) {
-            return loadDirectory(req, appId, authKey, child.url).then(children => {
+            return loadDirectory(req, appId, child.url).then(children => {
               const icon = children.find(({ name }) => IMAGE_FILE.test(name))
               const readme = children.find(({ name }) => name === 'README.md')
 
               if (icon) {
-                child.icon = urls.fileView(appId, authKey, icon.url)
+                child.icon = urls.fileView(appId, icon.url)
               }
 
               let chain = Promise.resolve()
 
               if (readme) {
                 chain = chain
-                  .then(() => loadDirectory(req, appId, authKey, readme.url))
+                  .then(() => loadDirectory(req, appId, readme.url))
                   .then(readmeContent => child.readme = readmeContent)
               }
 
@@ -69,6 +69,6 @@ export default req => ({
   }
 })
 
-function loadDirectory(req, appId, authKey, path) {
-  return req.get(urls.fileView(appId, authKey, path))
+function loadDirectory(req, appId, path) {
+  return req.get(urls.fileView(appId, path))
 }
