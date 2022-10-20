@@ -39,7 +39,7 @@ export default req => ({
       return keys.map(key => req.get(`${dataHiveStoreKey(appId, hiveName, storeType, key)}/get-range-by-rank`)
         .query({
           startRank : 0,
-          stopRank  : 100,
+          stopRank  : 99,
           withScores: true
         }))
     }
