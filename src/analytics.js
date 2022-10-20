@@ -35,8 +35,8 @@ export default req => ({
   performance(appId, { aggInterval, from, to }) {
     const params = {
       aggregationPeriod: aggInterval.name,
-      startEpochSecond : from / 1000, //TODO: the server expects timestamp in seconds not in milliseconds
-      endEpochSecond   : to / 1000      //TODO: the server expects timestamp in seconds not in milliseconds
+      startEpochSecond : from / 1000, // the server expects timestamp in seconds, not in milliseconds
+      endEpochSecond   : to / 1000
     }
 
     return req.get(`${urls.appConsole(appId)}/performance`)
@@ -45,7 +45,27 @@ export default req => ({
         const result = {}
 
         for (let i = from; i <= to; i += aggInterval.value) {
-          result[i] = points[i / 1000] //TODO: the server return timestamp in seconds not in milliseconds
+          result[i] = points[i / 1000] // the server return timestamp in seconds, not in milliseconds
+        }
+
+        return result
+      })
+  },
+
+  concurrentRequests(appId, { aggInterval, from, to }) {
+    const params = {
+      aggregationPeriod: aggInterval.name,
+      startEpochSecond : from / 1000, // the server expects timestamp in seconds, not in milliseconds
+      endEpochSecond   : to / 1000
+    }
+
+    return req.get(`${urls.appConsole(appId)}/concurrent-requests`)
+      .query(params)
+      .then(points => {
+        const result = {}
+
+        for (let i = from; i <= to; i += aggInterval.value) {
+          result[i] = points[i / 1000] // the server return timestamp in seconds, not in milliseconds
         }
 
         return result
