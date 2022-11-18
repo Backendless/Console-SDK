@@ -18,9 +18,14 @@ const routes = prepareRoutes({
   remoteThemes: '/:appId/console/ui-builder/library/remote/themes',
   remoteTheme : '/:appId/console/ui-builder/library/remote/themes/:themeId',
 
-  containers     : '/:appId/console/ui-builder/containers',
-  container      : '/:appId/console/ui-builder/containers/:containerName',
-  containerAction: '/:appId/console/ui-builder/containers/:containerName/:action',
+  containers                        : '/:appId/console/ui-builder/containers',
+  container                         : '/:appId/console/ui-builder/containers/:containerName',
+  containerSettings                 : '/:appId/console/ui-builder/containers/:containerName/settings',
+  containerSettingsFavicon          : '/:appId/console/ui-builder/containers/:containerName/settings/favicon',
+  containerSettingsViewport         : '/:appId/console/ui-builder/containers/:containerName/settings/viewport',
+  containerSettingsMetaTags         : '/:appId/console/ui-builder/containers/:containerName/settings/meta-tags',
+  containerSettingsExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/settings/libraries/external',
+  containerAction                   : '/:appId/console/ui-builder/containers/:containerName/:action',
 
   containerStyles: '/:appId/console/ui-builder/containers/:containerName/styles',
   containerStyle : '/:appId/console/ui-builder/containers/:containerName/styles/:name',
@@ -102,6 +107,26 @@ export default req => ({
 
   loadContainer(appId, containerName) {
     return req.get(routes.container(appId, containerName))
+  },
+
+  uploadContainerFavicon(appId, containerName, favicon) {
+    return req.put(routes.containerSettingsFavicon(appId, containerName)).form({ favicon })
+  },
+
+  removeContainerFavicon(appId, containerName) {
+    return req.delete(routes.containerSettingsFavicon(appId, containerName))
+  },
+
+  updateContainerViewport(appId, containerName, viewport) {
+    return req.put(routes.containerSettingsViewport(appId, containerName), viewport)
+  },
+
+  updateContainerMetaTags(appId, containerName, metaTags) {
+    return req.put(routes.containerSettingsMetaTags(appId, containerName), metaTags)
+  },
+
+  updateContainerExternalLibraries(appId, containerName, externalLibraries) {
+    return req.put(routes.containerSettingsExternalLibraries(appId, containerName), externalLibraries)
   },
 
   publishContainer(appId, containerName, options) {
