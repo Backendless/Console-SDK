@@ -140,7 +140,7 @@ export default req => ({
 
   //-- SETTINGS -----//
 
-  uploadContainerSettings(appId, containerName, settings) {
+  updateContainerSettings(appId, containerName, settings) {
     return req.put(routes.containerSettings(appId, containerName), settings)
   },
 
@@ -148,7 +148,7 @@ export default req => ({
     return req.put(routes.containerCustomConfigs(appId, containerName), customConfigs)
   },
 
-  uploadContainerFavicon(appId, containerName, favicon) {
+  updateContainerCustomConfigs(appId, containerName, favicon) {
     return req.put(routes.containerFavicon(appId, containerName)).form({ favicon })
   },
 
