@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.2",
-    "backendless-request": "^0.1.1",
+    "backendless-request": "^0.4.0",
     "lodash": "^4.17.21"
   }
 }
