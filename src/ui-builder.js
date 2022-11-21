@@ -18,14 +18,17 @@ const routes = prepareRoutes({
   remoteThemes: '/:appId/console/ui-builder/library/remote/themes',
   remoteTheme : '/:appId/console/ui-builder/library/remote/themes/:themeId',
 
-  containers                        : '/:appId/console/ui-builder/containers',
-  container                         : '/:appId/console/ui-builder/containers/:containerName',
-  containerSettings                 : '/:appId/console/ui-builder/containers/:containerName/settings',
-  containerSettingsFavicon          : '/:appId/console/ui-builder/containers/:containerName/settings/favicon',
-  containerSettingsViewport         : '/:appId/console/ui-builder/containers/:containerName/settings/viewport',
-  containerSettingsMetaTags         : '/:appId/console/ui-builder/containers/:containerName/settings/meta-tags',
-  containerSettingsExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/settings/libraries/external',
-  containerAction                   : '/:appId/console/ui-builder/containers/:containerName/:action',
+  containers: '/:appId/console/ui-builder/containers',
+  container : '/:appId/console/ui-builder/containers/:containerName',
+
+  containerSettings         : '/:appId/console/ui-builder/containers/:containerName/settings',
+  containerCustomConfigs    : '/:appId/console/ui-builder/containers/:containerName/custom-configs',
+  containerFavicon          : '/:appId/console/ui-builder/containers/:containerName/favicon',
+  containerViewport         : '/:appId/console/ui-builder/containers/:containerName/viewport',
+  containerMetaTags         : '/:appId/console/ui-builder/containers/:containerName/meta-tags',
+  containerExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/external-libraries',
+
+  containerAction: '/:appId/console/ui-builder/containers/:containerName/:action',
 
   containerStyles: '/:appId/console/ui-builder/containers/:containerName/styles',
   containerStyle : '/:appId/console/ui-builder/containers/:containerName/styles/:name',
@@ -109,26 +112,6 @@ export default req => ({
     return req.get(routes.container(appId, containerName))
   },
 
-  uploadContainerFavicon(appId, containerName, favicon) {
-    return req.put(routes.containerSettingsFavicon(appId, containerName)).form({ favicon })
-  },
-
-  removeContainerFavicon(appId, containerName) {
-    return req.delete(routes.containerSettingsFavicon(appId, containerName))
-  },
-
-  updateContainerViewport(appId, containerName, viewport) {
-    return req.put(routes.containerSettingsViewport(appId, containerName), viewport)
-  },
-
-  updateContainerMetaTags(appId, containerName, metaTags) {
-    return req.put(routes.containerSettingsMetaTags(appId, containerName), metaTags)
-  },
-
-  updateContainerExternalLibraries(appId, containerName, externalLibraries) {
-    return req.put(routes.containerSettingsExternalLibraries(appId, containerName), externalLibraries)
-  },
-
   publishContainer(appId, containerName, options) {
     return req.post(routes.containerAction(appId, containerName, 'publish'), options)
   },
@@ -154,6 +137,38 @@ export default req => ({
   },
 
   //-- CONTAINER -----//
+
+  //-- SETTINGS -----//
+
+  uploadContainerSettings(appId, containerName, settings) {
+    return req.put(routes.containerSettings(appId, containerName), settings)
+  },
+
+  uploadContainerCustomConfigs(appId, containerName, customConfigs) {
+    return req.put(routes.containerCustomConfigs(appId, containerName), customConfigs)
+  },
+
+  uploadContainerFavicon(appId, containerName, favicon) {
+    return req.put(routes.containerFavicon(appId, containerName)).form({ favicon })
+  },
+
+  removeContainerFavicon(appId, containerName) {
+    return req.delete(routes.containerFavicon(appId, containerName))
+  },
+
+  updateContainerViewport(appId, containerName, viewport) {
+    return req.put(routes.containerViewport(appId, containerName), viewport)
+  },
+
+  updateContainerMetaTags(appId, containerName, metaTags) {
+    return req.put(routes.containerMetaTags(appId, containerName), metaTags)
+  },
+
+  updateContainerExternalLibraries(appId, containerName, externalLibraries) {
+    return req.put(routes.containerExternalLibraries(appId, containerName), externalLibraries)
+  },
+
+  //-- SETTINGS -----//
 
   //-- THEMES -----//
 
