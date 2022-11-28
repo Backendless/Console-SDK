@@ -47,11 +47,19 @@ export default req => ({
     return keys.map(key => req.get(dataHiveStoreKey(appId, hiveName, storeType, key)))
   },
 
-  saveHiveStoreRecord(appId, hiveName, storeType, keyName, payload) {
+  setHiveStoreValue(appId, hiveName, storeType, keyName, payload) {
     return req.put(dataHiveStoreKey(appId, hiveName, storeType, keyName), payload)
+  },
+
+  addHiveStoreValue(appId, hiveName, storeType, keyName, payload) {
+    return req.put(`${ dataHiveStoreKey(appId, hiveName, storeType, keyName) }/add`, payload)
   },
 
   removeHiveStoreRecords(appId, hiveName, storeType, keys) {
     return req.delete(dataHiveStore(appId, hiveName, storeType), keys)
+  },
+
+  removeHiveStoreValue(appId, hiveName, storeType, keyName, values) {
+    return req.delete(`${ dataHiveStoreKey(appId, hiveName, storeType, keyName) }/values`, values)
   },
 })
