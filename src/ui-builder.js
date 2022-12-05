@@ -149,7 +149,7 @@ export default req => ({
     return req.get(routes.removedContainers(appId))
   },
 
-  deleteRemovedContainers(appId, containerName) {
+  deleteRemovedContainer(appId, containerName) {
     return req.delete(routes.removedContainer(appId, containerName))
   },
 
