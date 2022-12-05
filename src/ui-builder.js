@@ -28,6 +28,11 @@ const routes = prepareRoutes({
   containerMetaTags         : '/:appId/console/ui-builder/containers/:containerName/meta-tags',
   containerExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/external-libraries',
 
+  removedContainers: '/:appId/console/ui-builder/removed-containers',
+  removedContainer : '/:appId/console/ui-builder/removed-containers/:containerName',
+
+  containerBackups: '/:appId/console/ui-builder/containers/:containerName/backups',
+
   containerAction: '/:appId/console/ui-builder/containers/:containerName/:action',
 
   containerStyles: '/:appId/console/ui-builder/containers/:containerName/styles',
@@ -137,6 +142,30 @@ export default req => ({
   },
 
   //-- CONTAINER -----//
+
+  //-- BACKUPS -----//
+
+  loadRemovedContainers(appId) {
+    return req.get(routes.removedContainers(appId))
+  },
+
+  deleteRemovedContainers(appId, containerName) {
+    return req.delete(routes.removedContainer(appId, containerName))
+  },
+
+  loadContainerBackups(appId, containerName) {
+    return req.get(routes.containerBackups(appId, containerName))
+  },
+
+  createContainerBackup(appId, containerName, backup) {
+    return req.post(routes.containerBackups(appId, containerName), backup)
+  },
+
+  deleteContainerBackups(appId, containerName, backupsIds) {
+    return req.delete(routes.containerBackups(appId, containerName), backupsIds)
+  },
+
+  //-- BACKUPS -----//
 
   //-- SETTINGS -----//
 
