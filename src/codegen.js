@@ -37,9 +37,9 @@ export default req => ({
     return req.post(`${urls.appConsole(appId)}/codegen`, codegenData)
   },
 
-  getGenerators(appId, authKey) {
-    const listGenerators = (appId, authKey) => {
-      return req.api.files.loadDirectory(appId, authKey, GENERATORS_PATH, {
+  getGenerators(appId) {
+    const listGenerators = appId => {
+      return req.api.files.loadDirectory(appId, GENERATORS_PATH, {
         pattern : JSON_PATTERN,
         sub     : false,
         pageSize: PAGE_SIZE
@@ -47,7 +47,7 @@ export default req => ({
     }
 
     const getFeatureFile = file => {
-      return req.get(urls.fileView(appId, authKey, file.url))
+      return req.get(urls.fileView(appId, file.url))
         .then(feature => {
           if (_isObject(feature) && !Array.isArray(feature)) {
             // TODO: remove this transformation when the format of options will be changes
@@ -61,11 +61,11 @@ export default req => ({
         .catch(() => undefined)
     }
 
-    return listGenerators(appId, authKey).then(({ data }) => Promise.all(data.map(getFeatureFile)))
+    return listGenerators(appId).then(({ data }) => Promise.all(data.map(getFeatureFile)))
       .then(features => features.filter(feature => !!feature))
   },
 
-  getCache(appId, authKey) {
-    return req.get(urls.fileView(appId, authKey, CACHE_PATH))
+  getCache(appId) {
+    return req.get(urls.fileView(appId, CACHE_PATH))
   },
 })
