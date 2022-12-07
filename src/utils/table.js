@@ -25,7 +25,7 @@ const BOOLEAN_SQL_VALUES = {
 
 export const composeRequestParams = (table, query) => {
   const { pageSize = 15, offset = 0, sqlSearch, where, sortField, sortDir, filterString } = query
-  const { property, groupBy, having, distinct, loadRelations, sortBy } = query
+  const { property, groupBy, having, distinct, loadRelations, sortBy, props } = query
 
   const params = { pageSize, offset }
   const search = buildRecordsSearch(table, sqlSearch, where, filterString)
@@ -42,6 +42,10 @@ export const composeRequestParams = (table, query) => {
 
   if (property) {
     params.property = property
+  }
+
+  if (props) {
+    params.props = props
   }
 
   if (groupBy) {

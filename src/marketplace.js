@@ -12,11 +12,14 @@ const routes = prepareRoutes({
   productReject        : '/console/community/marketplace/products/:productId/reject',
   productConfigurations: '/console/community/marketplace/products/:productId/configurations',
 
-  submissions: '/console/community/marketplace/submissions',
+  submissions  : '/console/community/marketplace/submissions',
 
-  purchases              : '/:appId/console/community/marketplace/purchases',
-  purchasesProduct       : '/:appId/console/community/marketplace/purchases/:productId',
-  purchasesProductPreview: '/:appId/console/community/marketplace/purchases/:productId/preview',
+  appPurchases              : '/:appId/console/community/marketplace/app-purchases',
+  appPurchasesProduct       : '/:appId/console/community/marketplace/app-purchases/:productId',
+  appPurchasesProductPreview: '/:appId/console/community/marketplace/app-purchases/:productId/preview',
+
+  accountPurchases       : '/console/community/marketplace/account-purchases',
+  accountPurchasesProduct: '/console/community/marketplace/account-purchases/:productId',
 })
 
 export const marketplace = req => ({
@@ -82,16 +85,16 @@ export const marketplace = req => ({
 
   //---- PURCHASES ==>
 
-  getPurchases(appId) {
-    return req.get(routes.purchases(appId))
+  getAppPurchases(appId) {
+    return req.get(routes.appPurchases(appId))
   },
 
-  allocateProduct(appId, productId, options) {
-    return req.post(routes.purchasesProduct(appId, productId), options)
+  allocateAppProduct(appId, productId, options) {
+    return req.post(routes.appPurchasesProduct(appId, productId), options)
   },
 
   // previewProduct(appId, productId, options) {
-  //   return req.post(routes.purchasesProductPreview(appId, productId), options)
+  //   return req.post(routes.appPurchasesProductPreview(appId, productId), options)
   // },
 
   //---- PURCHASES ----//
@@ -102,6 +105,11 @@ export const marketplace = req => ({
     return req.get(routes.submissions())
   },
 
-  //---- SUBMISSIONS ----//
+  getAccountPurchases() {
+    return req.get(routes.accountPurchases())
+  },
 
+  allocateAccountProduct(productId, options) {
+    return req.post(routes.accountPurchasesProduct(productId), options)
+  },
 })
