@@ -1,4 +1,11 @@
 import { dataHive, dataHives, dataHiveStore, dataHiveStoreKey } from './urls'
+import { prepareRoutes } from './utils/routes'
+
+const routes = prepareRoutes({
+  addListStoreItems         : '/:appId/console/hive/:hiveName/list/:key/add-last',
+  removeListStoreItemByValue: '/:appId/console/hive/:hiveName/list/:key/delete-value',
+  listStoreItemByIndex      : '/:appId/console/hive/:hiveName/list/:key/:index',
+})
 
 const HiveDataTypesMap = {
   KEY_VALUE : 'key-value',
@@ -52,7 +59,7 @@ export default req => ({
   },
 
   addHiveStoreValue(appId, hiveName, storeType, keyName, payload) {
-    return req.put(`${ dataHiveStoreKey(appId, hiveName, storeType, keyName) }/add`, payload)
+    return req.put(`${dataHiveStoreKey(appId, hiveName, storeType, keyName)}/add`, payload)
   },
 
   removeHiveStoreRecords(appId, hiveName, storeType, keys) {
@@ -60,6 +67,22 @@ export default req => ({
   },
 
   removeHiveStoreValue(appId, hiveName, storeType, keyName, values) {
-    return req.delete(`${ dataHiveStoreKey(appId, hiveName, storeType, keyName) }/values`, values)
+    return req.delete(`${dataHiveStoreKey(appId, hiveName, storeType, keyName)}/values`, values)
   },
+
+  //---- LIST Type -------------------------//
+
+  addHiveListStoreItems(appId, hiveName, key, items) {
+    return req.put(routes.addListStoreItems(appId, hiveName, key), items)
+  },
+
+  removeHiveListStoreItemByValue(appId, hiveName, key, value) {
+    return req.put(routes.removeListStoreItemByValue(appId, hiveName, key), { value })
+  },
+
+  updateHiveListStoreItemByIndex(appId, hiveName, key, index, value) {
+    return req.put(routes.listStoreItemByIndex(appId, hiveName, key, index), { value })
+  },
+
+  //---- LIST Type -------------------------//
 })
