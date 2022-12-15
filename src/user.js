@@ -81,12 +81,16 @@ export default (req, context) => ({
   },
 
   registerAndJoinTeam({ appId, confirmationCode, ...userData }) {
-    return req.post(`${urls.appConsole(appId)}/activatedev`, userData)
+    return req.post(`${urls.appConsole(appId)}/activatedev`)
       .query({ 'confirmation-code': confirmationCode })
-      .then(authKey => {
+      .unwrapBody(false)
+      .send(userData)
+      .then(res => {
+        const authKey = (cookieEnabled() && getCookie('dev-auth-key')) || res.headers['auth-key']
+
         context.setAuthKey(authKey)
 
-        return authKey
+        return { ...res.body, authKey }
       })
   },
 
