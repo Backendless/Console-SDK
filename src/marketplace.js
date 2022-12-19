@@ -20,6 +20,10 @@ const routes = prepareRoutes({
 
   accountPurchases       : '/console/community/marketplace/account-purchases',
   accountPurchasesProduct: '/console/community/marketplace/account-purchases/:productId',
+
+  developerPayoutHistory: '/console/community/marketplace/developer-sales/payouts',
+  developerProductSales : '/console/community/marketplace/developer-sales/product-sales',
+  developerGeneralSales : '/console/community/marketplace/developer-sales/general-sales',
 })
 
 export const marketplace = req => ({
@@ -111,5 +115,17 @@ export const marketplace = req => ({
 
   allocateAccountProduct(productId, options) {
     return req.post(routes.accountPurchasesProduct(productId), options)
+  },
+
+  getDeveloperPayoutHistory() {
+    return req.get(routes.developerPayoutHistory())
+  },
+
+  getDeveloperProductSales() {
+    return req.get(routes.developerProductSales())
+  },
+
+  getDeveloperGeneralSales(query) {
+    return req.get(routes.developerGeneralSales()).query(query)
   },
 })
