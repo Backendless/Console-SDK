@@ -18,8 +18,21 @@ const routes = prepareRoutes({
   remoteThemes: '/:appId/console/ui-builder/library/remote/themes',
   remoteTheme : '/:appId/console/ui-builder/library/remote/themes/:themeId',
 
-  containers     : '/:appId/console/ui-builder/containers',
-  container      : '/:appId/console/ui-builder/containers/:containerName',
+  containers: '/:appId/console/ui-builder/containers',
+  container : '/:appId/console/ui-builder/containers/:containerName',
+
+  containerSettings         : '/:appId/console/ui-builder/containers/:containerName/settings',
+  containerCustomConfigs    : '/:appId/console/ui-builder/containers/:containerName/custom-configs',
+  containerFavicon          : '/:appId/console/ui-builder/containers/:containerName/favicon',
+  containerViewport         : '/:appId/console/ui-builder/containers/:containerName/viewport',
+  containerMetaTags         : '/:appId/console/ui-builder/containers/:containerName/meta-tags',
+  containerExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/external-libraries',
+
+  removedContainers: '/:appId/console/ui-builder/removed-containers',
+  removedContainer : '/:appId/console/ui-builder/removed-containers/:containerName',
+
+  containerBackups: '/:appId/console/ui-builder/containers/:containerName/backups',
+
   containerAction: '/:appId/console/ui-builder/containers/:containerName/:action',
 
   containerStyles: '/:appId/console/ui-builder/containers/:containerName/styles',
@@ -129,6 +142,62 @@ export default req => ({
   },
 
   //-- CONTAINER -----//
+
+  //-- BACKUPS -----//
+
+  loadRemovedContainers(appId) {
+    return req.get(routes.removedContainers(appId))
+  },
+
+  deleteRemovedContainer(appId, containerName) {
+    return req.delete(routes.removedContainer(appId, containerName))
+  },
+
+  loadContainerBackups(appId, containerName) {
+    return req.get(routes.containerBackups(appId, containerName))
+  },
+
+  createContainerBackup(appId, containerName, backup) {
+    return req.post(routes.containerBackups(appId, containerName), backup)
+  },
+
+  deleteContainerBackups(appId, containerName, backupsIds) {
+    return req.delete(routes.containerBackups(appId, containerName), backupsIds)
+  },
+
+  //-- BACKUPS -----//
+
+  //-- SETTINGS -----//
+
+  updateContainerSettings(appId, containerName, settings) {
+    return req.put(routes.containerSettings(appId, containerName), settings)
+  },
+
+  updateContainerCustomConfigs(appId, containerName, customConfigs) {
+    return req.put(routes.containerCustomConfigs(appId, containerName), customConfigs)
+  },
+
+  uploadContainerFavicon(appId, containerName, favicon) {
+    return req.put(routes.containerFavicon(appId, containerName)).form({ favicon })
+  },
+
+  removeContainerFavicon(appId, containerName) {
+    return req.delete(routes.containerFavicon(appId, containerName))
+  },
+
+  updateContainerViewport(appId, containerName, viewport) {
+    return req.put(routes.containerViewport(appId, containerName), viewport)
+  },
+
+  updateContainerMetaTags(appId, containerName, metaTags) {
+    return req.put(routes.containerMetaTags(appId, containerName), metaTags)
+  },
+
+  updateContainerExternalLibraries(appId, containerName, externalLibraries) {
+    return req.put(routes.containerExternalLibraries(appId, containerName), externalLibraries)
+  },
+
+  //-- SETTINGS -----//
 
   //-- THEMES -----//
 

@@ -17,26 +17,26 @@ const getFileFolder = file => {
 
 export default req => ({
 
-  loadDirectory(appId, authKey, path, params) {
+  loadDirectory(appId, path, params) {
     path = path || '/'
 
     const { pattern, sub, sortBy, sortDirection, pageSize, offset } = params || {}
 
-    const dataReq = req.get(urls.directoryView(appId, authKey, path))
+    const dataReq = req.get(urls.directoryView(appId, path))
       .query({ pattern, sub, sortBy, sortDirection, pageSize, offset })
       .cacheTags(FOLDER(appId, path))
 
     return totalRows(req).getWithData(dataReq)
   },
 
-  async loadFullDirectory(appId, authKey, path, params) {
+  async loadFullDirectory(appId, path, params) {
     let currentQuery = {
       ...params,
       pageSize: 100,
       offset  : 0,
     }
 
-    const url = urls.directoryView(appId, authKey, path)
+    const url = urls.directoryView(appId, path)
 
     const totalCount = await totalRows(req).get(url)
 
@@ -63,10 +63,8 @@ export default req => ({
     return req.post(urls.createDir(appId, path, folderName)).cacheTags(FOLDER(appId, path))
   },
 
-  async getFileContent(appId, authKey, filePath) {
-    const fileDownloadURL = await req.getFileDownloadURL()
-
-    return req.get(urls.fileDownload(appId, authKey, filePath, { host: fileDownloadURL }))
+  async getFileContent(appId, filePath) {
+    return req.get(urls.fileDownload(appId, filePath))
   },
 
   performOperation(appId, filePath, operation) {
@@ -124,7 +122,7 @@ export default req => ({
       .cacheTags(FOLDER(appId, getFileFolder(path)))
   },
 
-  viewFiles(appId, authKey, path = '') {
-    return req.get(urls.fileView(appId, authKey, path))
+  viewFiles(appId, path = '') {
+    return req.get(urls.fileView(appId, path))
   }
 })
