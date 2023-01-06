@@ -59,8 +59,8 @@ export default req => ({
       .query({ newBillingPlan, newBillingPeriod, zoneId })
   },
 
-  loadHiveUsage(appId) {
-    return req.billing.get(`/${appId}/service/billing/usage/hive`)
+  loadHiveUsage(appId, cached = true) {
+    return req.billing.get(`/${appId}/service/billing/usage/hive`).query({ cached })
   },
 
   loadHiveLimit(appId) {
