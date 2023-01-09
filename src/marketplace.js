@@ -21,6 +21,9 @@ const routes = prepareRoutes({
   accountPurchases       : '/console/community/marketplace/account-purchases',
   accountPurchasesProduct: '/console/community/marketplace/account-purchases/:productId',
 
+  accountPurchasePaymentProfile: '/console/community/marketplace/account-purchases/:productId/update-payment-profile',
+  accountPurchaseReactivate    : '/console/community/marketplace/account-purchases/:productId/renew',
+
   developerPayoutHistory: '/console/community/marketplace/developer-sales/payouts',
   developerProductSales : '/console/community/marketplace/developer-sales/product-sales',
   developerGeneralSales : '/console/community/marketplace/developer-sales/general-sales',
@@ -115,6 +118,14 @@ export const marketplace = req => ({
 
   allocateAccountProduct(productId, options) {
     return req.post(routes.accountPurchasesProduct(productId), options)
+  },
+
+  updateAccountPurchasePaymentProfile(productId, paymentProfileId) {
+    return req.put(routes.accountPurchasePaymentProfile(productId), { paymentProfileId })
+  },
+
+  reactivateAccountPurchase(productId) {
+    return req.post(routes.accountPurchaseReactivate(productId))
   },
 
   getDeveloperPayoutHistory() {
