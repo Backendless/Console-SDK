@@ -4,7 +4,7 @@ const routes = prepareRoutes({
   visualizations              : '/:appId/console/visualizations',
   visualization               : '/:appId/console/visualizations/:visualizationId',
   visualizationResources      : '/:appId/console/visualizations/:visualizationId/resources',
-  publishedUIBuilderContainers: '/:appId/console/visualizations/publishedUIBuilderContainers',
+  publishedUIBuilderContainers: '/:appId/console/visualizations/ui-builder/containers/published',
 })
 
 export default req => ({
