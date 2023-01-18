@@ -2,6 +2,12 @@ import { dataHive, dataHives, dataHiveStore, dataHiveStoreKey } from './urls'
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
+  setKeyExpire                : '/:appId/console/hive/:hiveName/:store/:key/expire',
+  setKeyExpireAt              : '/:appId/console/hive/:hiveName/:store/:key/expire-at',
+  keyExpirationTTL            : '/:appId/console/hive/:hiveName/:store/:key/get-expiration-ttl',
+  clearKeyExpiration          : '/:appId/console/hive/:hiveName/:store/:key/clear-expiration',
+  keySecondsSinceLastOperation: '/:appId/console/hive/:hiveName/:store/:key/seconds-since-last-operation',
+  //
   addListStoreItems         : '/:appId/console/hive/:hiveName/list/:key/add-last',
   removeListStoreItemByValue: '/:appId/console/hive/:hiveName/list/:key/delete-value',
   listStoreItemByIndex      : '/:appId/console/hive/:hiveName/list/:key/:index',
@@ -16,6 +22,7 @@ const HiveDataTypesMap = {
 }
 
 export default req => ({
+
   getHiveNames(appId) {
     return req.get(dataHives(appId))
   },
@@ -69,6 +76,30 @@ export default req => ({
   removeHiveStoreValue(appId, hiveName, storeType, keyName, values) {
     return req.delete(`${dataHiveStoreKey(appId, hiveName, storeType, keyName)}/values`, values)
   },
+
+  //---- Base Type -------------------------//
+
+  setKeyExpiration(appId, hiveName, storeType, key, { ttl, unixTime }) {
+    if (ttl !== undefined) {
+      return req.put(routes.setKeyExpire(appId, hiveName, storeType, key)).query({ ttl })
+    }
+
+    return req.put(routes.setKeyExpireAt(appId, hiveName, storeType, key)).query({ unixTime })
+  },
+
+  getKeyExpirationTTL(appId, hiveName, storeType, key) {
+    return req.get(routes.keyExpirationTTL(appId, hiveName, storeType, key))
+  },
+
+  clearKeyExpiration(appId, hiveName, storeType, key) {
+    return req.put(routes.clearKeyExpiration(appId, hiveName, storeType, key))
+  },
+
+  getKeySecondsSinceLastOperation(appId, hiveName, storeType, key) {
+    return req.get(routes.keySecondsSinceLastOperation(appId, hiveName, storeType, key))
+  },
+
+  //---- Base Type -------------------------//
 
   //---- LIST Type -------------------------//
 
