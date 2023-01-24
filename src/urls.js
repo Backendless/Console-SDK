@@ -56,11 +56,11 @@ export const fileCreate = (appId, filePath) => composeFileUrl(appId, 'create', f
 export const fileUpload = (appId, filePath) => composeFileUrl(appId, 'upload', filePath)
 
 export const fileView = (appId, filePath, options = {}) => {
-  if (filePath && filePath.startsWith('/')) {
-    filePath = filePath.slice(1)
+  if (filePath && !filePath.startsWith('/')) {
+    filePath = `/${filePath}`
   }
 
-  return `${options.host || ''}${appConsole(appId)}/files/view/${encodePath(filePath)}`
+  return `${options.host || ''}${appConsole(appId)}/files/view${encodePath(filePath)}`
 }
 
 export const fileDownload = (appId, filePath, options = {}) =>
