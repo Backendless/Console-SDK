@@ -1,9 +1,10 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  visualizations        : '/:appId/console/visualizations',
-  visualization         : '/:appId/console/visualizations/:visualizationId',
-  visualizationResources: '/:appId/console/visualizations/:visualizationId/resources'
+  visualizations              : '/:appId/console/visualizations',
+  visualization               : '/:appId/console/visualizations/:visualizationId',
+  visualizationResources      : '/:appId/console/visualizations/:visualizationId/resources',
+  publishedUIBuilderContainers: '/:appId/console/visualizations/ui-builder/containers/published',
 })
 
 export default req => ({
@@ -25,5 +26,9 @@ export default req => ({
 
   updateVisualizationResources(appId, visualizationId) {
     return req.put(routes.visualizationResources(appId, visualizationId))
+  },
+
+  loadPublishedUIBuilderContainers(appId) {
+    return req.get(routes.publishedUIBuilderContainers(appId))
   }
 })
