@@ -11,6 +11,9 @@ const routes = prepareRoutes({
   addListStoreItems         : '/:appId/console/hive/:hiveName/list/:key/add-last',
   removeListStoreItemByValue: '/:appId/console/hive/:hiveName/list/:key/delete-value',
   listStoreItemByIndex      : '/:appId/console/hive/:hiveName/list/:key/:index',
+
+  addSetStoreItems          : '/:appId/console/hive/:hiveName/set/:key/add',
+  removeSetStoreItemByValue : '/:appId/console/hive/:hiveName/set/:key/values',
 })
 
 const HiveDataTypesMap = {
@@ -116,4 +119,16 @@ export default req => ({
   },
 
   //---- LIST Type -------------------------//
+
+  //---- SET Type -------------------------//
+
+  addHiveSetStoreItems(appId, hiveName, key, items) {
+    return req.put(routes.addSetStoreItems(appId, hiveName, key), items)
+  },
+
+  removeHiveSetStoreItemByValue(appId, hiveName, key, value) {
+    return req.delete(routes.removeSetStoreItemByValue(appId, hiveName, key), [value])
+  },
+
+//---- SET Type -------------------------//
 })
