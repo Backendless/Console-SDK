@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 import { DataTypes } from './constants/data'
-import urls, { dataTableBulkCreate } from './urls'
+import urls from './urls'
 import totalRows from './utils/total-rows'
 import { TABLE_DATA } from './utils/cache-tags'
 import { tableRecordsReq, tableRecordsCountReq, buildRecordsSearch } from './utils/table'
