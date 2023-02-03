@@ -2,7 +2,7 @@ import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
   flowManagement: '/console/automation/management/:workspaceId/flow/:id',
-  workspace     : '/console/automation/management/account/:id',
+  workspace     : '/console/automation/management/workspace/:id',
 })
 
 export default req => ({
