@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 import { DataTypes } from './constants/data'
-import urls from './urls'
+import urls, { dataTableBulkCreate } from './urls'
 import totalRows from './utils/total-rows'
 import { TABLE_DATA } from './utils/cache-tags'
 import { tableRecordsReq, tableRecordsCountReq, buildRecordsSearch } from './utils/table'
@@ -138,6 +138,14 @@ export default req => ({
 
   createRecord(appId, table, record) {
     return req.post(urls.dataTable(appId, table.name), record).cacheTags(TABLE_DATA(table.tableId))
+  },
+
+  bulkCreateRecords(appId, tableName, records) {
+    return req.post(urls.dataTableBulkCreate(appId, tableName), records)
+  },
+
+  bulkUpsertRecords(appId, tableName, records) {
+    return req.put(urls.dataTableBulkUpsert(appId, tableName), records)
   },
 
   updateRecord(appId, table, record) {
