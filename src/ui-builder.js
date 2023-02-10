@@ -417,8 +417,8 @@ export default req => ({
     return req.get(routes.containerFunctions(appId, containerName))
   },
 
-  createContainerFunction(appId, containerName, name) {
-    return req.post(routes.containerFunctions(appId, containerName), { name })
+  createContainerFunction(appId, containerName, fn) {
+    return req.post(routes.containerFunctions(appId, containerName), fn)
   },
 
   updateContainerFunction(appId, containerName, id, definition) {

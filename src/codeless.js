@@ -10,8 +10,8 @@ export default req => ({
     return req.get(urls.codelessFunctions(appId))
   },
 
-  createFunctionSource(appId, xml, code, definition) {
-    return req.post(urls.codelessFunctions(appId), { xml, code, definition })
+  createFunction(appId, fn) {
+    return req.post(urls.codelessFunctions(appId), fn)
   },
 
   loadFunctionSource(appId, functionId) {
