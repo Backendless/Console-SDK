@@ -27,11 +27,18 @@ const routes = prepareRoutes({
   containerViewport         : '/:appId/console/ui-builder/containers/:containerName/viewport',
   containerMetaTags         : '/:appId/console/ui-builder/containers/:containerName/meta-tags',
   containerExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/external-libraries',
+  containerDefaultI18n: '/:appId/console/ui-builder/containers/:containerName/i18n',
 
   removedContainers: '/:appId/console/ui-builder/removed-containers',
   removedContainer : '/:appId/console/ui-builder/removed-containers/:containerName',
 
   containerBackups: '/:appId/console/ui-builder/containers/:containerName/backups',
+
+  containerI18ns        : '/:appId/console/ui-builder/containers/:containerName/i18n/dictionary',
+  containerI18n         : '/:appId/console/ui-builder/containers/:containerName/i18n/dictionary/:dictionaryName',
+  containerI18nKeys     : '/:appId/console/ui-builder/containers/:containerName/i18n/key',
+  containerI18nKey      : '/:appId/console/ui-builder/containers/:containerName/i18n/key/:key',
+  containerI18nKeyRename: '/:appId/console/ui-builder/containers/:containerName/i18n/key/:key/rename',
 
   containerAction: '/:appId/console/ui-builder/containers/:containerName/:action',
 
@@ -175,6 +182,30 @@ export default req => ({
 
   updateContainerCustomConfigs(appId, containerName, customConfigs) {
     return req.put(routes.containerCustomConfigs(appId, containerName), customConfigs)
+  },
+
+  updateContainerDefaultI18n(appId, containerName, defaultI18n) {
+    return req.put(routes.containerDefaultI18n(appId, containerName), { defaultI18n })
+  },
+
+  saveContainerI18n(appId, containerName, dictionaryName, dictionaryObject) {
+    return req.put(routes.containerI18n(appId, containerName, dictionaryName), dictionaryObject)
+  },
+
+  deleteContainerI18n(appId, containerName, dictionaryName) {
+    return req.delete(routes.containerI18n(appId, containerName, dictionaryName))
+  },
+
+  updateContainerI18nKey(appId, containerName, key, changes) {
+    return req.put(routes.containerI18nKey(appId, containerName, key), changes)
+  },
+
+  renameContainerI18nKey(appId, containerName, oldKeyName, newKeyName) {
+    return req.put(routes.containerI18nKeyRename(appId, containerName, oldKeyName)).query({ newKeyName })
+  },
+
+  deleteContainerI18nKeys(appId, containerName, keys) {
+    return req.delete(routes.containerI18nKeys(appId, containerName), keys)
   },
 
   uploadContainerFavicon(appId, containerName, favicon) {
