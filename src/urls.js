@@ -18,6 +18,8 @@ export const messaging = consoleSection('messaging')
 
 export const dataTables = appId => `${data(appId)}/tables`
 export const dataTable = (appId, tableName) => `${data(appId)}/${encodeURI(tableName)}`
+export const dataTableBulkCreate = (appId, tableName) => `${data(appId)}/bulk/${encodeURI(tableName)}`
+export const dataTableBulkUpsert = (appId, tableName) => `${data(appId)}/bulkupsert/${encodeURI(tableName)}`
 export const dataTableGroup = (appId, tableName) => `${data(appId)}/data-grouping/${encodeURI(tableName)}`
 export const dataTableGroupCount = (appId, tableName) => `${dataTableGroup(appId, tableName)}/count`
 export const dataRecord = (appId, tableName, recordId) => `${dataTable(appId, tableName)}/${recordId}`
@@ -204,6 +206,8 @@ export default {
   dataCell,
   dataRecord,
   dataTable,
+  dataTableBulkCreate,
+  dataTableBulkUpsert,
   dataTables,
   devTeam,
   emailTemplates,
