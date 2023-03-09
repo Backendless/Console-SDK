@@ -140,6 +140,14 @@ export default req => ({
     return req.post(urls.dataTable(appId, table.name), record).cacheTags(TABLE_DATA(table.tableId))
   },
 
+  bulkCreateRecords(appId, tableName, records) {
+    return req.post(urls.dataTableBulkCreate(appId, tableName), records)
+  },
+
+  bulkUpsertRecords(appId, tableName, records) {
+    return req.put(urls.dataTableBulkUpsert(appId, tableName), records)
+  },
+
   updateRecord(appId, table, record) {
     return req.put(urls.dataRecord(appId, table.name, record.objectId), record)
   },
