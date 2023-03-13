@@ -10,7 +10,7 @@ const routes = prepareRoutes({
   inviteCode        : '/:appId/console/billing/refcode',
   billingPeriodStart: '/:appId/console/billing/application/period/start',
   billingPeriodEnd  : '/:appId/console/billing/application/period/end',
-  unlockPlan        : '/:appId/console/billing/application/plan/:planId/unlock',
+  unlockPlan        : '/:appId/console/billing/plan/:planId/unlock',
   exchangeBB        : '/:appId/console/billing/application/bb/exchange',
   consolidateApp    : '/:appId/console/billing/application/consolidate/:paymentProfileId',
   hiveUsage         : '/:appId/service/billing/usage/hive',
