@@ -137,6 +137,6 @@ export default req => ({
   },
 
   pricingEstimate(appId, query) {
-    return req.get(`${urls.appConsole(appId)}/billing/application/tiers/period-details`).query(query)
+    return req.billing.get(`/${appId}/console/billing/application/tiers/price-estimation`).query(query)
   }
 })
