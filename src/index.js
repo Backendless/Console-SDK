@@ -147,6 +147,7 @@ const createClient = (serverUrl, authKey, options) => {
 
   return request.api = {
     destroy,
+    request,
 
     activityManager     : activityManager(request),
     analytics           : analytics(request),
