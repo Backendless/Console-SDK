@@ -116,7 +116,7 @@ export default (req, context) => ({
   },
 
   setPaymentProfile(appId, paymentProfileId, zoneId) {
-    return req.billing.put(`${urls.appConsole(appId)}/billing/creditcard/${paymentProfileId}`, { zoneId })
+    return req.billing.put(`${urls.appConsole(appId)}/billing/application/creditcard/${paymentProfileId}`, { zoneId })
   },
 
   addPaymentProfile(data) {
