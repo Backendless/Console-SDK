@@ -12,10 +12,11 @@ const routes = prepareRoutes({
   productReject        : '/console/community/marketplace/products/:productId/reject',
   productConfigurations: '/console/community/marketplace/products/:productId/configurations',
 
-  submissions  : '/console/community/marketplace/submissions',
+  submissions: '/console/community/marketplace/submissions',
 
   appPurchases              : '/:appId/console/community/marketplace/app-purchases',
   appPurchasesProduct       : '/:appId/console/community/marketplace/app-purchases/:productId',
+  appPurchasesProductExists : '/:appId/console/community/marketplace/app-purchases/:productId/exists',
   appPurchasesProductPreview: '/:appId/console/community/marketplace/app-purchases/:productId/preview',
 
   accountPurchases       : '/console/community/marketplace/account-purchases',
@@ -98,6 +99,10 @@ export const marketplace = req => ({
 
   allocateAppProduct(appId, productId, options) {
     return req.post(routes.appPurchasesProduct(appId, productId), options)
+  },
+
+  isAppProductPurchased(appId, productId) {
+    return req.community.get(routes.appPurchasesProductExists(appId, productId))
   },
 
   // previewProduct(appId, productId, options) {
