@@ -80,7 +80,7 @@ export default (req, context) => ({
     return req.put('/console/home/myaccount/', profile)
   },
 
-  registerAndJoinTeam({ appId, confirmationCode, ...userData }) {
+  registerAndJoinAppTeam(appId, confirmationCode, userData) {
     return req.post(`${urls.appConsole(appId)}/activatedev`)
       .query({ 'confirmation-code': confirmationCode })
       .unwrapBody(false)
@@ -94,8 +94,18 @@ export default (req, context) => ({
       })
   },
 
-  joinTeam({ appId, ...userData }) {
-    return req.put(`${urls.appConsole(appId)}/devconfirmation/${userData.devId}`, userData)
+  registerAndJoinWorkspace(workspaceId, confirmationCode, userData) {
+    return req.automation.post(`/console/automation/management/${workspaceId}/activatedev`)
+      .query({ 'confirmation-code': confirmationCode })
+      .unwrapBody(false)
+      .send(userData)
+      .then(res => {
+        const authKey = (cookieEnabled() && getCookie('dev-auth-key')) || res.headers['auth-key']
+
+        context.setAuthKey(authKey)
+
+        return { ...res.body, authKey }
+      })
   },
 
   loginToDiscourse(user, sig, sso) {
@@ -116,7 +126,7 @@ export default (req, context) => ({
   },
 
   setPaymentProfile(appId, paymentProfileId, zoneId) {
-    return req.billing.put(`${urls.appConsole(appId)}/billing/creditcard/${paymentProfileId}`, { zoneId })
+    return req.billing.put(`${urls.appConsole(appId)}/billing/application/creditcard/${paymentProfileId}`, { zoneId })
   },
 
   addPaymentProfile(data) {

@@ -40,6 +40,8 @@ const routes = prepareRoutes({
   containerI18nKey      : '/:appId/console/ui-builder/containers/:containerName/i18n/key/:key',
   containerI18nKeyRename: '/:appId/console/ui-builder/containers/:containerName/i18n/key/:key/rename',
 
+  containerAutomations: '/:appId/console/ui-builder/containers/:containerName/automations',
+
   containerAction: '/:appId/console/ui-builder/containers/:containerName/:action',
 
   containerStyles: '/:appId/console/ui-builder/containers/:containerName/styles',
@@ -439,8 +441,11 @@ export default req => ({
 
   installCustomFunctionsFromMarketplace(appId, containerName, productId) {
     return req.post(routes.installCustomFunctionsFromMarketplace(appId, containerName, productId))
-  }
+  },
 
   //-- FUNCTIONS -----//
 
+  saveAutomationsTriggers(appId, containerName, triggers) {
+    return req.put(routes.containerAutomations(appId, containerName), triggers)
+  }
 })
