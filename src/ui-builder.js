@@ -27,7 +27,7 @@ const routes = prepareRoutes({
   containerViewport         : '/:appId/console/ui-builder/containers/:containerName/viewport',
   containerMetaTags         : '/:appId/console/ui-builder/containers/:containerName/meta-tags',
   containerExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/external-libraries',
-  containerDefaultI18n: '/:appId/console/ui-builder/containers/:containerName/i18n',
+  containerDefaultI18n      : '/:appId/console/ui-builder/containers/:containerName/i18n',
 
   removedContainers: '/:appId/console/ui-builder/removed-containers',
   removedContainer : '/:appId/console/ui-builder/removed-containers/:containerName',
@@ -64,6 +64,7 @@ const routes = prepareRoutes({
   containerReusableComponents          : '/:appId/console/ui-builder/containers/:containerName/components/reusable',
   containerReusableComponent           : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId',
   containerReusableComponentClone      : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/clone',
+  containerReusableComponentUpgrade    : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/upgrade',
   containerReusableComponentUI         : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/ui',
   containerReusableComponentLogic      : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/logic/:componentUid/:handlerName',
   containerReusableComponentUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId/unused-logic',
@@ -72,6 +73,7 @@ const routes = prepareRoutes({
   containerCustomComponent                 : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId',
   containerCustomComponentPreview          : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/preview',
   containerCustomComponentClone            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/clone',
+  containerCustomComponentUpgrade          : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/upgrade',
   containerCustomComponentModel            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/model',
   containerCustomComponentFiles            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files',
   containerCustomComponentFilesDownloadLink: '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files/sign',
@@ -330,6 +332,10 @@ export default req => ({
     return req.post(routes.containerReusableComponentClone(appId, containerName, id), data)
   },
 
+  upgradeReusableComponent(appId, containerName, id, data) {
+    return req.post(routes.containerReusableComponentUpgrade(appId, containerName, id), data)
+  },
+
   loadReusableComponent(appId, containerName, id) {
     return req.get(routes.containerReusableComponent(appId, containerName, id))
   },
@@ -376,6 +382,10 @@ export default req => ({
 
   cloneCustomComponent(appId, containerName, id, data) {
     return req.post(routes.containerCustomComponentClone(appId, containerName, id), data)
+  },
+
+  upgradeCustomComponent(appId, containerName, id, data) {
+    return req.post(routes.containerCustomComponentUpgrade(appId, containerName, id), data)
   },
 
   loadCustomComponent(appId, containerName, id) {
