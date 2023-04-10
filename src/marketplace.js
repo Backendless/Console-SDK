@@ -8,6 +8,7 @@ const routes = prepareRoutes({
   products             : '/console/community/marketplace/products',
   product              : '/console/community/marketplace/products/:productId',
   productResources     : '/console/community/marketplace/products/:productId/resources',
+  productVersions      : '/console/community/marketplace/products/:productId/versions',
   productApprove       : '/console/community/marketplace/products/:productId/approve',
   productReject        : '/console/community/marketplace/products/:productId/reject',
   productConfigurations: '/console/community/marketplace/products/:productId/configurations',
@@ -63,6 +64,10 @@ export const marketplace = req => ({
 
   getProduct(productId) {
     return req.community.get(routes.product(productId))
+  },
+
+  getProductVersions(productId, query) {
+    return req.community.get(routes.productVersions(productId)).query(query)
   },
 
   getProductResources(productId) {
