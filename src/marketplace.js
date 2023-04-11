@@ -5,13 +5,14 @@ const routes = prepareRoutes({
   categories      : '/console/community/marketplace/categories',
   categoryProducts: '/console/community/marketplace/categories/:categoryId/products',
 
-  products             : '/console/community/marketplace/products',
-  product              : '/console/community/marketplace/products/:productId',
-  productResources     : '/console/community/marketplace/products/:productId/resources',
-  productVersions      : '/console/community/marketplace/products/:productId/versions',
-  productApprove       : '/console/community/marketplace/products/:productId/approve',
-  productReject        : '/console/community/marketplace/products/:productId/reject',
-  productConfigurations: '/console/community/marketplace/products/:productId/configurations',
+  products               : '/console/community/marketplace/products',
+  product                : '/console/community/marketplace/products/:productId',
+  productResources       : '/console/community/marketplace/products/:productId/resources',
+  productResourcesDetails: '/console/community/marketplace/products/:productId/resources/details',
+  productVersions        : '/console/community/marketplace/products/:productId/versions',
+  productApprove         : '/console/community/marketplace/products/:productId/approve',
+  productReject          : '/console/community/marketplace/products/:productId/reject',
+  productConfigurations  : '/console/community/marketplace/products/:productId/configurations',
 
   submissions: '/console/community/marketplace/submissions',
 
@@ -70,8 +71,13 @@ export const marketplace = req => ({
     return req.community.get(routes.productVersions(productId)).query(query)
   },
 
-  getProductResources(productId) {
-    return req.community.get(routes.productResources(productId))
+  getProductResources(productId, versionId) {
+    return req.community.get(routes.productResources(productId)).query({ versionId })
+      .setEncoding(null)
+  },
+
+  getProductResourcesDetails(productId, versionId) {
+    return req.community.get(routes.productResourcesDetails(productId)).query({ versionId })
   },
 
   getProductConfigurations(productId) {
