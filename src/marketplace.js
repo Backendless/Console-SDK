@@ -5,24 +5,27 @@ const routes = prepareRoutes({
   categories      : '/console/community/marketplace/categories',
   categoryProducts: '/console/community/marketplace/categories/:categoryId/products',
 
-  products             : '/console/community/marketplace/products',
-  product              : '/console/community/marketplace/products/:productId',
-  productResources     : '/console/community/marketplace/products/:productId/resources',
-  productApprove       : '/console/community/marketplace/products/:productId/approve',
-  productReject        : '/console/community/marketplace/products/:productId/reject',
-  productConfigurations: '/console/community/marketplace/products/:productId/configurations',
+  products               : '/console/community/marketplace/products',
+  product                : '/console/community/marketplace/products/:productId',
+  productResources       : '/console/community/marketplace/products/:productId/resources',
+  productResourcesDetails: '/console/community/marketplace/products/:productId/resources/details',
+  productVersions        : '/console/community/marketplace/products/:productId/versions',
+  productApprove         : '/console/community/marketplace/products/:productId/approve',
+  productReject          : '/console/community/marketplace/products/:productId/reject',
+  productConfigurations  : '/console/community/marketplace/products/:productId/configurations',
 
-  submissions  : '/console/community/marketplace/submissions',
+  submissions: '/console/community/marketplace/submissions',
 
   appPurchases              : '/:appId/console/community/marketplace/app-purchases',
   appPurchasesProduct       : '/:appId/console/community/marketplace/app-purchases/:productId',
+  appPurchasesProductExists : '/:appId/console/community/marketplace/app-purchases/:productId/exists',
   appPurchasesProductPreview: '/:appId/console/community/marketplace/app-purchases/:productId/preview',
 
   accountPurchases       : '/console/community/marketplace/account-purchases',
   accountPurchasesProduct: '/console/community/marketplace/account-purchases/:productId',
 
-  accountPurchasePaymentProfile: '/console/community/marketplace/account-purchases/:productId/update-payment-profile',
-  accountPurchaseReactivate    : '/console/community/marketplace/account-purchases/:productId/renew',
+  accountPurchasesPaymentProfile: '/console/community/marketplace/account-purchases/update-payment-profile',
+  accountPurchaseReactivate     : '/console/community/marketplace/account-purchases/:productId/renew',
 
   developerPayoutHistory: '/console/community/marketplace/developer-sales/payouts',
   developerProductSales : '/console/community/marketplace/developer-sales/product-sales',
@@ -64,8 +67,17 @@ export const marketplace = req => ({
     return req.community.get(routes.product(productId))
   },
 
-  getProductResources(productId) {
-    return req.community.get(routes.productResources(productId))
+  getProductVersions(productId, query) {
+    return req.community.get(routes.productVersions(productId)).query(query)
+  },
+
+  getProductResources(productId, versionId) {
+    return req.community.get(routes.productResources(productId)).query({ versionId })
+      .setEncoding(null)
+  },
+
+  getProductResourcesDetails(productId, versionId) {
+    return req.community.get(routes.productResourcesDetails(productId)).query({ versionId })
   },
 
   getProductConfigurations(productId) {
@@ -100,6 +112,10 @@ export const marketplace = req => ({
     return req.post(routes.appPurchasesProduct(appId, productId), options)
   },
 
+  isAppProductPurchased(appId, productId) {
+    return req.community.get(routes.appPurchasesProductExists(appId, productId))
+  },
+
   // previewProduct(appId, productId, options) {
   //   return req.post(routes.appPurchasesProductPreview(appId, productId), options)
   // },
@@ -120,8 +136,8 @@ export const marketplace = req => ({
     return req.post(routes.accountPurchasesProduct(productId), options)
   },
 
-  updateAccountPurchasePaymentProfile(productId, paymentProfileId) {
-    return req.put(routes.accountPurchasePaymentProfile(productId), { paymentProfileId })
+  updateAccountPurchasesPaymentProfile(paymentProfileId) {
+    return req.put(routes.accountPurchasesPaymentProfile(), { paymentProfileId })
   },
 
   reactivateAccountPurchase(productId) {

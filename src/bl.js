@@ -265,6 +265,10 @@ export default req => ({
     return req.post(`${ urls.blHandlersCategory(appId, mode, category) }/${ timername }/run`)
   },
 
+  changeTimerState(appId, mode, category, timerId, enabled) {
+    return req.put(`${urls.blHandlersCategory(appId, mode, category)}/${ timerId }/state`, { enabled })
+  },
+
   getCategories(appId) {
     return req.get(`${ urls.serverCode(appId) }/categories`)
   },
