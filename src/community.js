@@ -15,6 +15,8 @@ const routes = prepareRoutes({
 
   onProductInstall: '/console/community/activity/products/install',
 
+  reportUserActivity: '/console/community/activity/report',
+
   devSuicide:  '/console/community/dev/suicide',
 })
 
@@ -86,6 +88,10 @@ export const community = req => ({
 
   onProductInstall(productId) {
     return req.community.post(routes.onProductInstall(), { productId })
+  },
+
+  reportUserActivity() {
+    return req.community.post(routes.reportUserActivity())
   },
 
   //---- ACTIVE CAMPAIGN ----//
