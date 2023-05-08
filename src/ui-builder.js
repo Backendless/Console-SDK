@@ -26,6 +26,7 @@ const routes = prepareRoutes({
   containerFavicon          : '/:appId/console/ui-builder/containers/:containerName/favicon',
   containerViewport         : '/:appId/console/ui-builder/containers/:containerName/viewport',
   containerMetaTags         : '/:appId/console/ui-builder/containers/:containerName/meta-tags',
+  containerCustomHeadContent: '/:appId/console/ui-builder/containers/:containerName/custom-head-content',
   containerExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/external-libraries',
   containerDefaultI18n      : '/:appId/console/ui-builder/containers/:containerName/i18n',
 
@@ -226,6 +227,10 @@ export default req => ({
 
   updateContainerMetaTags(appId, containerName, metaTags) {
     return req.put(routes.containerMetaTags(appId, containerName), metaTags)
+  },
+
+  updateContainerCustomHeadContent(appId, containerName, data) {
+    return req.put(routes.containerCustomHeadContent(appId, containerName), { data })
   },
 
   updateContainerExternalLibraries(appId, containerName, externalLibraries) {
