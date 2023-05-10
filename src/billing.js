@@ -22,8 +22,8 @@ export default req => ({
     return req.billing.get(routes.billingInfo(appId))
   },
 
-  getPlans(appId, zoneId) {
-    return req.billing.get(routes.billingPlans(appId)).query({ zoneId })
+  getPlans(appId) {
+    return req.billing.get(routes.billingPlans(appId))
   },
 
   getPlanComponentsData(appId, planId, billingPeriod) {
@@ -67,9 +67,9 @@ export default req => ({
       .set({ 'Content-Type': 'application/json' })
   },
 
-  confirmConsolidateApp(appId, { paymentProfileId, newBillingPlan, newBillingPeriod, zoneId }) {
+  confirmConsolidateApp(appId, { paymentProfileId, newBillingPlan, newBillingPeriod }) {
     return req.billing.put(routes.consolidateApp(appId, paymentProfileId))
-      .query({ newBillingPlan, newBillingPeriod, zoneId })
+      .query({ newBillingPlan, newBillingPeriod })
   },
 
   loadHiveUsage(appId, cached = true) {
