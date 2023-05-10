@@ -275,5 +275,10 @@ export default req => ({
 
   getEvents(appId) {
     return req.get(`${ urls.serverCode(appId) }/events`)
+  },
+
+  getTimerLogs(appId, query) {
+    return req.get(`${urls.serverCode(appId)}/timers/logs`)
+      .query(query)
   }
 })
