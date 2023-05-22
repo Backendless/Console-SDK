@@ -265,7 +265,7 @@ export default req => ({
     return req.post(`${ urls.blHandlersCategory(appId, mode, category) }/${ timername }/run`)
   },
 
-  changeTimerState(appId, mode, category, timerId, enabled) {
+  changeHandlerState(appId, mode, category, timerId, enabled) {
     return req.put(`${urls.blHandlersCategory(appId, mode, category)}/${ timerId }/state`, { enabled })
   },
 
@@ -275,5 +275,10 @@ export default req => ({
 
   getEvents(appId) {
     return req.get(`${ urls.serverCode(appId) }/events`)
+  },
+
+  getTimerLogs(appId, query) {
+    return req.get(`${urls.serverCode(appId)}/timers/logs`)
+      .query(query)
   }
 })

@@ -13,6 +13,7 @@ const routes = prepareRoutes({
   productApprove         : '/console/community/marketplace/products/:productId/approve',
   productReject          : '/console/community/marketplace/products/:productId/reject',
   productConfigurations  : '/console/community/marketplace/products/:productId/configurations',
+  productPrivateDevs     : '/console/community/marketplace/products/:productId/private-devs',
 
   submissions: '/console/community/marketplace/submissions',
 
@@ -82,6 +83,14 @@ export const marketplace = req => ({
 
   getProductConfigurations(productId) {
     return req.get(routes.productConfigurations(productId))
+  },
+
+  getProductPrivateDevs(productId) {
+    return req.community.get(routes.productPrivateDevs(productId))
+  },
+
+  updateProductPrivateDevs(productId, privateDevs) {
+    return req.community.put(routes.productPrivateDevs(productId), privateDevs)
   },
 
   publishProduct(product) {
