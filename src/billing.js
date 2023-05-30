@@ -13,6 +13,8 @@ const routes = prepareRoutes({
   unlockPlan        : '/:appId/billing/plan/:planId/unlock',
   exchangeBB        : '/:appId/console/billing/application/bb/exchange',
   consolidateApp    : '/:appId/console/billing/application/consolidate/:paymentProfileId',
+  tiers             : '/:appId/console/billing/application/tiers',
+  maxTier           : '/:appId/console/billing/application/tiers/max',
   hiveUsage         : '/:appId/service/billing/usage/hive',
   hiveLimits        : '/:appId/billing/limits/hive',
 })
@@ -78,5 +80,17 @@ export default req => ({
 
   loadHiveLimit(appId) {
     return req.billing.get(routes.hiveLimits(appId))
+  },
+
+  getMaxTier(appId) {
+    return req.billing.get(routes.maxTier(appId))
+  },
+
+  setMaxTier(appId, tierId) {
+    return req.billing.put(routes.maxTier(appId), { tierId })
+  },
+
+  getTiersList(appId) {
+    return req.billing.get(routes.tiers(appId))
   },
 })
