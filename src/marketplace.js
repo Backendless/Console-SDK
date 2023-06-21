@@ -31,6 +31,10 @@ const routes = prepareRoutes({
   developerPayoutHistory: '/console/community/marketplace/developer-sales/payouts',
   developerProductSales : '/console/community/marketplace/developer-sales/product-sales',
   developerGeneralSales : '/console/community/marketplace/developer-sales/general-sales',
+
+  installDetails: '/console/community/marketplace/installs/details',
+
+  appInstalls: '/api/app/:appId/marketplace/installs',
 })
 
 export const marketplace = req => ({
@@ -130,6 +134,18 @@ export const marketplace = req => ({
   // },
 
   //---- PURCHASES ----//
+
+  //---- APP INSTALLS ==>
+
+  getAppInstalls(appId) {
+    return req.get(routes.appInstalls(appId))
+  },
+
+  getInstallsDetails(productIds) {
+    return req.community.get(routes.installDetails()).query({ productIds })
+  },
+
+  //---- APP INSTALLS ----//
 
   //---- SUBMISSIONS ==>
 

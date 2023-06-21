@@ -9,6 +9,7 @@ import apps from './apps'
 import automation from './automation'
 import billing from './billing'
 import bl from './bl'
+import cloudCode from './cloud-code'
 import blueprints from './blueprints'
 import cache from './cache'
 import codegen from './codegen'
@@ -156,6 +157,7 @@ const createClient = (serverUrl, authKey, options) => {
     automation          : automation(request),
     billing             : billing(request),
     bl                  : bl(request),
+    cloudCode           : cloudCode(request),
     blueprints          : blueprints(request),
     cache               : cache(request),
     codegen             : codegen(request),
