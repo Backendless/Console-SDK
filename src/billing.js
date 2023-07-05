@@ -8,8 +8,7 @@ const routes = prepareRoutes({
   componentLimit    : '/:appId/console/billing/application/limits/:componentId',
   apiCallsBlocked   : '/:appId/console/billing/apicalls/blocked',
   inviteCode        : '/:appId/console/billing/refcode',
-  billingPeriodStart: '/:appId/console/billing/application/period/start',
-  billingPeriodEnd  : '/:appId/console/billing/application/period/end',
+  billingPeriodInfo : '/:appId/console/billing/application/billing-period-info',
   unlockPlan        : '/:appId/billing/plan/:planId/unlock',
   exchangeBB        : '/:appId/console/billing/application/bb/exchange',
   consolidateApp    : '/:appId/console/billing/application/consolidate/:paymentProfileId',
@@ -52,12 +51,8 @@ export default req => ({
     return req.billing.get(routes.inviteCode(appId))
   },
 
-  getCurrentBillingPeriodStart(appId) {
-    return req.billing.get(routes.billingPeriodStart(appId))
-  },
-
-  getCurrentBillingPeriodEnd(appId) {
-    return req.billing.get(routes.billingPeriodEnd(appId))
+  getBillingPeriodInfo(appId) {
+    return req.billing.get(routes.billingPeriodInfo(appId))
   },
 
   unlockPlan(appId, planId) {
