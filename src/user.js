@@ -1,5 +1,10 @@
 import urls from './urls'
 import { cookieEnabled, deleteCookie, getCookie } from './utils/cookie'
+import { prepareRoutes } from './utils/routes'
+
+const routes = prepareRoutes({
+  twoFA: '/console/developer/login/2fa'
+})
 
 /**
  *
@@ -155,4 +160,12 @@ export default (req, context) => ({
   setStripeConnectAccountId(data) {
     return req.put('/console/developer/stripe-connect', data)
   },
+
+  get2FAState() {
+    return req.get(routes.twoFA())
+  },
+
+  update2FAState(enabled) {
+    return req.put(routes.twoFA(), { enabled })
+  }
 })
