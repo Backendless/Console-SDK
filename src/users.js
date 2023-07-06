@@ -1,4 +1,11 @@
 import { appConsole as appUrl, users, oauth1, oauth2 } from './urls'
+import { prepareRoutes } from './utils/routes'
+
+const routes = prepareRoutes({
+  auth0Config  : '/:appId/console/security/auth0/config',
+  scopeBindings: '/:appId/console/security/auth0/scope-to-role',
+  scopeBinding : '/:appId/console/security/auth0/scope-to-role/:id',
+})
 
 export default req => ({
   getUsersRegs(appId) {
@@ -95,5 +102,29 @@ export default req => ({
 
   getOAuth2CallbackUrls(appId, providerCode) {
     return req.get(`${oauth2(appId)}/${providerCode}/callback-url`)
-  }
+  },
+
+  getAuth0Configuration(appId) {
+    return req.get(routes.auth0Config(appId))
+  },
+
+  updateAuth0Configuration(appId, config) {
+    return req.put(routes.auth0Config(appId), config)
+  },
+
+  createAuth0ScopeBinding(appId, binding) {
+    return req.post(routes.scopeBindings(appId), binding)
+  },
+
+  updateAuth0ScopeBinding(appId, binding) {
+    return req.put(routes.scopeBinding(appId, binding.id), binding)
+  },
+
+  getAuth0ScopeBindings(appId) {
+    return req.get(routes.scopeBindings(appId))
+  },
+
+  deleteAuth0ScopeBinding(appId, bindingId) {
+    return req.delete(routes.scopeBinding(appId, bindingId))
+  },
 })
