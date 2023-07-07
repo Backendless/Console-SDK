@@ -3,7 +3,8 @@ import { cookieEnabled, deleteCookie, getCookie } from './utils/cookie'
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  twoFA: '/console/developer/login/2fa'
+  twoFA        : '/console/developer/login/2fa',
+  loginWithTOTP: '/console/home/login/totp'
 })
 
 /**
@@ -167,5 +168,9 @@ export default (req, context) => ({
 
   update2FAState(enabled) {
     return req.put(routes.twoFA(), { enabled })
+  },
+
+  loginWithTOTP(authData) {
+    return req.post(routes.loginWithTOTP(), authData)
   }
 })
