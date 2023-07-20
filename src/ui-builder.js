@@ -26,6 +26,7 @@ const routes = prepareRoutes({
   containerFavicon          : '/:appId/console/ui-builder/containers/:containerName/favicon',
   containerViewport         : '/:appId/console/ui-builder/containers/:containerName/viewport',
   containerMetaTags         : '/:appId/console/ui-builder/containers/:containerName/meta-tags',
+  containerCustomHeadContent: '/:appId/console/ui-builder/containers/:containerName/custom-head-content',
   containerExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/external-libraries',
   containerDefaultI18n      : '/:appId/console/ui-builder/containers/:containerName/i18n',
 
@@ -78,6 +79,8 @@ const routes = prepareRoutes({
   containerCustomComponentFiles            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files',
   containerCustomComponentFilesDownloadLink: '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files/sign',
   containerCustomComponentFileContent      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/content/:fileId',
+
+  previewInitToken:'/:appId/console/files/ui-builder/preview-init-token',
 })
 
 export default req => ({
@@ -226,6 +229,10 @@ export default req => ({
 
   updateContainerMetaTags(appId, containerName, metaTags) {
     return req.put(routes.containerMetaTags(appId, containerName), metaTags)
+  },
+
+  updateContainerCustomHeadContent(appId, containerName, data) {
+    return req.put(routes.containerCustomHeadContent(appId, containerName), { data })
   },
 
   updateContainerExternalLibraries(appId, containerName, externalLibraries) {
@@ -457,5 +464,11 @@ export default req => ({
 
   saveAutomationsTriggers(appId, containerName, triggers) {
     return req.put(routes.containerAutomations(appId, containerName), triggers)
-  }
+  },
+
+  // -- PREVIEW INIT TOKEN -----//
+
+  getPreviewInitToken(appId) {
+    return req.get(routes.previewInitToken(appId))
+  },
 })

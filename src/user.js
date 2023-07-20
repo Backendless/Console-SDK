@@ -116,17 +116,16 @@ export default (req, context) => ({
     return req.get(`${urls.appConsole(appId)}/my-permissions`)
   },
 
-  loadSubscriptionsInfo({ zoneId } = {}) {
+  loadSubscriptionsInfo() {
     return req.billing.get('/console/billing/developer/subscriptions-info')
-      .query({ zoneId })
   },
 
   loadPaymentProfiles() {
     return req.get('/console/billing/developer/payment-profile')
   },
 
-  setPaymentProfile(appId, paymentProfileId, zoneId) {
-    return req.billing.put(`${urls.appConsole(appId)}/billing/application/creditcard/${paymentProfileId}`, { zoneId })
+  setPaymentProfile(appId, paymentProfileId) {
+    return req.billing.put(`${urls.appConsole(appId)}/billing/application/creditcard/${paymentProfileId}`)
   },
 
   addPaymentProfile(data) {

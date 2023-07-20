@@ -9,8 +9,10 @@ import apps from './apps'
 import automation from './automation'
 import billing from './billing'
 import bl from './bl'
+import cloudCode from './cloud-code'
 import blueprints from './blueprints'
 import cache from './cache'
+import cacheControl from './cache-control'
 import codegen from './codegen'
 import codeless from './codeless'
 import counters from './counters'
@@ -156,8 +158,10 @@ const createClient = (serverUrl, authKey, options) => {
     automation          : automation(request),
     billing             : billing(request),
     bl                  : bl(request),
+    cloudCode           : cloudCode(request),
     blueprints          : blueprints(request),
     cache               : cache(request),
+    cacheControl        : cacheControl(request),
     codegen             : codegen(request),
     codeless            : codeless(request),
     counters            : counters(request),

@@ -13,6 +13,7 @@ const routes = prepareRoutes({
   productApprove         : '/console/community/marketplace/products/:productId/approve',
   productReject          : '/console/community/marketplace/products/:productId/reject',
   productConfigurations  : '/console/community/marketplace/products/:productId/configurations',
+  productPrivateDevs     : '/console/community/marketplace/products/:productId/private-devs',
 
   submissions: '/console/community/marketplace/submissions',
 
@@ -30,6 +31,10 @@ const routes = prepareRoutes({
   developerPayoutHistory: '/console/community/marketplace/developer-sales/payouts',
   developerProductSales : '/console/community/marketplace/developer-sales/product-sales',
   developerGeneralSales : '/console/community/marketplace/developer-sales/general-sales',
+
+  installDetails: '/console/community/marketplace/installs/details',
+
+  appInstalls: '/api/app/:appId/marketplace/installs',
 })
 
 export const marketplace = req => ({
@@ -84,6 +89,14 @@ export const marketplace = req => ({
     return req.get(routes.productConfigurations(productId))
   },
 
+  getProductPrivateDevs(productId) {
+    return req.community.get(routes.productPrivateDevs(productId))
+  },
+
+  updateProductPrivateDevs(productId, privateDevs) {
+    return req.community.put(routes.productPrivateDevs(productId), privateDevs)
+  },
+
   publishProduct(product) {
     return req.post(routes.products(), product)
   },
@@ -121,6 +134,18 @@ export const marketplace = req => ({
   // },
 
   //---- PURCHASES ----//
+
+  //---- APP INSTALLS ==>
+
+  getAppInstalls(appId) {
+    return req.get(routes.appInstalls(appId))
+  },
+
+  getInstallsDetails(productIds) {
+    return req.community.get(routes.installDetails()).query({ productIds })
+  },
+
+  //---- APP INSTALLS ----//
 
   //---- SUBMISSIONS ==>
 
