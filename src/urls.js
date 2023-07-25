@@ -169,6 +169,7 @@ export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}
 export const atomicCounters = appId => `${appConsole(appId)}/counters`
 
 export const gamification = () => `${console()}/gamification`
+export const gamificationApiTracking = appId => `${appConsole(appId)}/gamification`
 
 export const userActivity = appId => `${appConsole(appId)}/user-activity`
 
@@ -222,6 +223,7 @@ export default {
   fileUpload,
   fileView,
   gamification,
+  gamificationApiTracking,
   directoryView,
   geo,
   installEmailTemplate,
