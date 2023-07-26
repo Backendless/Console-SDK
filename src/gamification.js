@@ -57,16 +57,28 @@ export default req => ({
     return req.put(`${urls.gamification()}/mark-event-played`, { taskId })
   },
 
-  enableAPITracking(appId) {
-    return req.put(`${urls.gamificationApiTracking(appId)}/enable`)
+  enableAppAPITracking(appId) {
+    return req.put(`${urls.gamificationApp(appId)}/enable`)
   },
 
-  disableAPITracking(appId) {
-    return req.put(`${urls.gamificationApiTracking(appId)}/disable`)
+  disableAppAPITracking(appId) {
+    return req.put(`${urls.gamificationApp(appId)}/disable`)
   },
 
-  isAPITrackingEnabled(appId) {
-    return req.get(`${urls.gamificationApiTracking(appId)}/enabled`)
+  isAppAPITrackingEnabled(appId) {
+    return req.get(`${urls.gamificationApp(appId)}/enabled`)
+  },
+
+  enableAccountAPITracking() {
+    return req.put(`${urls.gamification()}/enable`)
+  },
+
+  disableAccountAPITracking() {
+    return req.put(`${urls.gamification()}/disable`)
+  },
+
+  isAccountAPITrackingEnabled() {
+    return req.get(`${urls.gamification()}/enabled`)
   },
 
   unlockSpringboardPlan(appId) {
