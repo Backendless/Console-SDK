@@ -69,11 +69,11 @@ export default req => ({
     return req.get(`${urls.gamificationApp(appId)}/enabled`)
   },
 
-  enableAccountAPITracking() {
+  enableAccountAPITracking() { // enable API monitoring for all developer's apps
     return req.put(`${urls.gamification()}/enable`)
   },
 
-  disableAccountAPITracking() {
+  disableAccountAPITracking() { // disable API monitoring for all developer's apps
     return req.put(`${urls.gamification()}/disable`)
   },
 
