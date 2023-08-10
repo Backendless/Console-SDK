@@ -1,5 +1,21 @@
 import urls from './urls'
 import { cookieEnabled, deleteCookie, getCookie } from './utils/cookie'
+import { prepareRoutes } from './utils/routes'
+
+
+// TODO: move all routes here
+const routes = prepareRoutes({
+  twoFA        : '/console/developer/login/2fa',
+  loginWithTOTP: '/console/home/otp-login'
+})
+
+const contextifyWithAuthToken = (res, context) => {
+  const authKey = (cookieEnabled() && getCookie('dev-auth-key')) || res.headers['auth-key']
+
+  context.setAuthKey(authKey)
+
+  return { ...res.body, authKey }
+}
 
 /**
  *
@@ -36,11 +52,11 @@ export default (req, context) => ({
       .unwrapBody(false)
       .send({ login, password })
       .then(res => {
-        const authKey = (cookieEnabled() && getCookie('dev-auth-key')) || res.headers['auth-key']
+        if (res.body.otpCreated) {
+          return res.body
+        }
 
-        context.setAuthKey(authKey)
-
-        return { ...res.body, authKey }
+        return contextifyWithAuthToken(res, context)
       })
   },
 
@@ -85,13 +101,7 @@ export default (req, context) => ({
       .query({ 'confirmation-code': confirmationCode })
       .unwrapBody(false)
       .send(userData)
-      .then(res => {
-        const authKey = (cookieEnabled() && getCookie('dev-auth-key')) || res.headers['auth-key']
-
-        context.setAuthKey(authKey)
-
-        return { ...res.body, authKey }
-      })
+      .then(res => contextifyWithAuthToken(res, context))
   },
 
   registerAndJoinWorkspace(workspaceId, confirmationCode, userData) {
@@ -99,13 +109,7 @@ export default (req, context) => ({
       .query({ 'confirmation-code': confirmationCode })
       .unwrapBody(false)
       .send(userData)
-      .then(res => {
-        const authKey = (cookieEnabled() && getCookie('dev-auth-key')) || res.headers['auth-key']
-
-        context.setAuthKey(authKey)
-
-        return { ...res.body, authKey }
-      })
+      .then(res => contextifyWithAuthToken(res, context))
   },
 
   loginToDiscourse(user, sig, sso) {
@@ -155,4 +159,19 @@ export default (req, context) => ({
   setStripeConnectAccountId(data) {
     return req.put('/console/developer/stripe-connect', data)
   },
+
+  get2FAState() {
+    return req.get(routes.twoFA())
+  },
+
+  update2FAState(enabled) {
+    return req.put(routes.twoFA(), { enabled })
+  },
+
+  loginWithTOTP(authData) {
+    return req.post(routes.loginWithTOTP())
+      .unwrapBody(false)
+      .send(authData)
+      .then(res => contextifyWithAuthToken(res, context))
+  }
 })
