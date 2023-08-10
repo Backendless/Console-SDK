@@ -76,8 +76,12 @@ export const marketplace = req => ({
     return req.community.get(routes.productVersions(productId)).query(query)
   },
 
-  getProductResources(productId, versionId) {
-    return req.community.get(routes.productResources(productId)).query({ versionId })
+  getProductResources(productId, { versionId, filePath }) {
+    if(filePath) {
+      filePath = encodeURIComponent(filePath)
+    }
+
+    return req.community.get(routes.productResources(productId)).query({ versionId, filePath })
       .setEncoding(null)
   },
 
