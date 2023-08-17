@@ -77,7 +77,7 @@ export const marketplace = req => ({
   },
 
   getProductResources(productId, { versionId, filePath }) {
-    if(filePath) {
+    if (filePath) {
       filePath = encodeURIComponent(filePath)
     }
 
