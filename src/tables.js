@@ -5,6 +5,7 @@ import urls from './urls'
 import totalRows from './utils/total-rows'
 import { TABLE_DATA } from './utils/cache-tags'
 import { tableRecordsReq, tableRecordsCountReq, buildRecordsSearch } from './utils/table'
+import { prepareRoutes } from './utils/routes'
 
 const RELATION_URL_SUFFIX = 'relation'
 const GEO_RELATION_URL_SUFFIX = 'georelation'
@@ -46,6 +47,10 @@ const recordsCountReq = (req, appId, table, query, resetCache) => {
 const getRelationColumn = (table, columnName) => {
   return [...table.relations, ...table.geoRelations].find(r => r.name === columnName)
 }
+
+const routes = prepareRoutes({
+  tableOwnerPolicyDelayCheck: '/:appId/console/data/tables/:tableName/acl/owner-policy-delay-check',
+})
 
 export default req => ({
   get(appId, query) {
@@ -218,7 +223,16 @@ export default req => ({
 
   updateAssignedUserRoles(appId, roles, users) {
     return req.put(assignedUserRoles(appId), { roles, users })
-  }
+  },
+
+  loadTableOwnerPolicyDelayCheck(appId, tableName) {
+    return req.get(routes.tableOwnerPolicyDelayCheck(appId, tableName))
+  },
+
+  changeTableOwnerPolicyDelayCheck(appId, tableName, data) {
+    return req.put(routes.tableOwnerPolicyDelayCheck(appId, tableName),data)
+  },
+
 })
 
 const normalizeTable = table => ({
