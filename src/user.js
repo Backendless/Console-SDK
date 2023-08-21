@@ -2,11 +2,11 @@ import urls from './urls'
 import { cookieEnabled, deleteCookie, getCookie } from './utils/cookie'
 import { prepareRoutes } from './utils/routes'
 
-
 // TODO: move all routes here
 const routes = prepareRoutes({
-  twoFA        : '/console/developer/login/2fa',
-  loginWithTOTP: '/console/home/otp-login'
+  twoFA         : '/console/developer/login/2fa',
+  loginWithTOTP : '/console/home/otp-login',
+  changePassword: '/console/passwordchange'
 })
 
 const contextifyWithAuthToken = (res, context) => {
@@ -173,5 +173,9 @@ export default (req, context) => ({
       .unwrapBody(false)
       .send(authData)
       .then(res => contextifyWithAuthToken(res, context))
+  },
+
+  changePassword(id, password) {
+    return req.post(routes.changePassword(), { id, password })
   }
 })
