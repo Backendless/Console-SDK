@@ -19,7 +19,7 @@ import counters from './counters'
 import dataConnectors from './data-connectors'
 import dataViews from './data-views'
 import dataHives from './data-hives'
-import dataWidgets from './data-widgets'
+import dataToVisualize from './data-to-visualize'
 import developerProfile from './developer-profile'
 import devTeam from './dev-team'
 import email from './email'
@@ -169,7 +169,7 @@ const createClient = (serverUrl, authKey, options) => {
     dataConnectors      : dataConnectors(request),
     dataViews           : dataViews(request),
     dataHives           : dataHives(request),
-    dataWidgets         : dataWidgets(request),
+    dataToVisualize     : dataToVisualize(request),
     developerProfile    : developerProfile(request),
     devTeam             : devTeam(request),
     email               : email(request),
