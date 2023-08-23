@@ -146,6 +146,8 @@ export const dataHive = (appId, hiveName) => `${dataHives(appId)}/${hiveName}`
 export const dataHiveStore = (appId, hiveName, storeType) => `${dataHive(appId, hiveName)}/${storeType}`
 export const dataHiveStoreKey = (appId, hiveName, storeType, keyName) => `${dataHiveStore(appId, hiveName, storeType)}/${keyName}`
 
+export const dataToVisualize = appId => `${appConsole(appId)}/data-to-visualize`
+
 export const dataConnectors = appId => `${appConsole(appId)}/dataconnectors`
 export const dataConnectorTemplates = appId => `${dataConnectors(appId)}/templates`
 export const dataConnector = (appId, connectorId) => `${dataConnectors(appId)}/${connectorId}`
@@ -180,7 +182,7 @@ export const oauth1 = appId => `${users(appId)}/oauth1`
 export const oauth2 = appId => `${users(appId)}/oauth2`
 
 export const downloadComplianceFile = (appId, complianceName) =>
-  `${ security(appId) }/compliances/${ complianceName }/download`
+  `${security(appId)}/compliances/${complianceName}/download`
 
 export default {
   appConsole,
@@ -251,6 +253,7 @@ export default {
   users,
   dataViews,
   dataHives,
+  dataToVisualize,
   dataConnectors,
   dataConnectorTemplates,
   dataConnector,
