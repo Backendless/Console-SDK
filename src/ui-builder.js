@@ -21,14 +21,15 @@ const routes = prepareRoutes({
   containers: '/:appId/console/ui-builder/containers',
   container : '/:appId/console/ui-builder/containers/:containerName',
 
-  containerSettings         : '/:appId/console/ui-builder/containers/:containerName/settings',
-  containerCustomConfigs    : '/:appId/console/ui-builder/containers/:containerName/custom-configs',
-  containerFavicon          : '/:appId/console/ui-builder/containers/:containerName/favicon',
-  containerViewport         : '/:appId/console/ui-builder/containers/:containerName/viewport',
-  containerMetaTags         : '/:appId/console/ui-builder/containers/:containerName/meta-tags',
-  containerCustomHeadContent: '/:appId/console/ui-builder/containers/:containerName/custom-head-content',
-  containerExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/external-libraries',
-  containerDefaultI18n      : '/:appId/console/ui-builder/containers/:containerName/i18n',
+  containerSettings                : '/:appId/console/ui-builder/containers/:containerName/settings',
+  containerCustomConfigs           : '/:appId/console/ui-builder/containers/:containerName/custom-configs',
+  containerFavicon                 : '/:appId/console/ui-builder/containers/:containerName/favicon',
+  containerViewport                : '/:appId/console/ui-builder/containers/:containerName/viewport',
+  containerMetaTags                : '/:appId/console/ui-builder/containers/:containerName/meta-tags',
+  containerCustomHeadContent       : '/:appId/console/ui-builder/containers/:containerName/custom-head-content',
+  containerExternalLibraries       : '/:appId/console/ui-builder/containers/:containerName/external-libraries',
+  containerProductExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/external-libraries/:productId',
+  containerDefaultI18n             : '/:appId/console/ui-builder/containers/:containerName/i18n',
 
   removedContainers: '/:appId/console/ui-builder/removed-containers',
   removedContainer : '/:appId/console/ui-builder/removed-containers/:containerName',
@@ -458,6 +459,10 @@ export default req => ({
 
   installCustomFunctionsFromMarketplace(appId, containerName, productId) {
     return req.post(routes.installCustomFunctionsFromMarketplace(appId, containerName, productId))
+  },
+
+  removeContainerExternalLibraries(appId, containerName, productId) {
+    return req.delete(routes.containerProductExternalLibraries(appId, containerName, productId))
   },
 
   //-- FUNCTIONS -----//
