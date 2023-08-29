@@ -6,7 +6,6 @@ const routes = prepareRoutes({
   dashboard        : '/:appId/console/data-to-visualize/dashboards/:dashboardId',
   dashboardSettings: '/:appId/console/data-to-visualize/dashboards/:dashboardId/settings',
   dashboardLayout  : '/:appId/console/data-to-visualize/dashboards/:dashboardId/layouts',
-  dashboardRename  : '/:appId/console/data-to-visualize/dashboards/:dashboardId/rename',
 
   dashlets        : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
   dashletAdd      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/add',
@@ -31,16 +30,16 @@ export default req => ({
     return req.post(routes.dashboards(appId), dashboard)
   },
 
+  updateDashboard(appId, dashboardId, changes) {
+    return req.put(routes.dashboard(appId, dashboardId), changes)
+  },
+
   updateDashboardSettings(appId, dashboardId, settings) {
     return req.put(routes.dashboardSettings(appId, dashboardId), settings)
   },
 
   deleteDashboard(appId, name) {
     return req.delete(routes.dashboard(appId, name))
-  },
-
-  renameDashboard(appId, dashboardId, newName) {
-    return req.put(routes.dashboardRename(appId, dashboardId), { newName })
   },
 
   updateDashboardLayouts(appId, dashboardName, layouts) {
