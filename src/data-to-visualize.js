@@ -10,7 +10,6 @@ const routes = prepareRoutes({
   dashlets        : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
   dashletAdd      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/add',
   dashlet         : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId',
-  dashletConfigure: '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId/configure',
   dashletLayout   : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId/layout',
 
   dashletComponents                : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components',
@@ -56,10 +55,6 @@ export default req => ({
 
   updateDashboardDashlet(appId, dashboardId, dashletId, changes) {
     return req.put(routes.dashlet(appId, dashboardId, dashletId), changes)
-  },
-
-  configureDashboardDashlet(appId, dashboardId, dashlet) {
-    return req.put(routes.dashletConfigure(appId, dashboardId, dashlet.id), dashlet)
   },
 
   loadDashletComponents(appId, dashboardId) {
