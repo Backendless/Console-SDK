@@ -6,12 +6,10 @@ const routes = prepareRoutes({
   dashboard        : '/:appId/console/data-to-visualize/dashboards/:dashboardId',
   dashboardSettings: '/:appId/console/data-to-visualize/dashboards/:dashboardId/settings',
   dashboardLayout  : '/:appId/console/data-to-visualize/dashboards/:dashboardId/layouts',
-  dashboardRename  : '/:appId/console/data-to-visualize/dashboards/:dashboardId/rename',
 
   dashlets        : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
   dashletAdd      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/add',
   dashlet         : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId',
-  dashletConfigure: '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId/configure',
   dashletLayout   : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId/layout',
 
   dashletComponents                : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components',
@@ -31,16 +29,16 @@ export default req => ({
     return req.post(routes.dashboards(appId), dashboard)
   },
 
+  updateDashboard(appId, dashboardId, changes) {
+    return req.put(routes.dashboard(appId, dashboardId), changes)
+  },
+
   updateDashboardSettings(appId, dashboardId, settings) {
     return req.put(routes.dashboardSettings(appId, dashboardId), settings)
   },
 
   deleteDashboard(appId, name) {
     return req.delete(routes.dashboard(appId, name))
-  },
-
-  renameDashboard(appId, dashboardId, newName) {
-    return req.put(routes.dashboardRename(appId, dashboardId), { newName })
   },
 
   updateDashboardLayouts(appId, dashboardName, layouts) {
@@ -57,10 +55,6 @@ export default req => ({
 
   updateDashboardDashlet(appId, dashboardId, dashletId, changes) {
     return req.put(routes.dashlet(appId, dashboardId, dashletId), changes)
-  },
-
-  configureDashboardDashlet(appId, dashboardId, dashlet) {
-    return req.put(routes.dashletConfigure(appId, dashboardId, dashlet.id), dashlet)
   },
 
   loadDashletComponents(appId, dashboardId) {
