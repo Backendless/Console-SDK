@@ -2,6 +2,7 @@ import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
   flowManagement: '/console/automation/management/:workspaceId/flow/:id',
+  flowState     : '/console/automation/management/:workspaceId/flow/:id/:state',
   workspace     : '/console/automation/management/workspace/:id',
 })
 
@@ -44,5 +45,9 @@ export default req => ({
 
   deleteFlow(workspaceId, id) {
     return req.automation.delete(routes.flowManagement(workspaceId, id))
+  },
+
+  enableFlow(workspaceId, id) {
+    return req.automation.post(routes.flowState(workspaceId, id, 'enable'))
   },
 })
