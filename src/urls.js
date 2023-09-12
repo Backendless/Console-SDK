@@ -118,6 +118,9 @@ export const messagingChannel = (appId, channelId) =>
 export const mobileSettings = appId =>
   `${appConsole(appId)}/mobilesettings`
 
+export const mobileSettingsAndroid = (appId, id) =>
+  `${mobileSettings(appId)}/android${optional(id)}`
+
 export const billing = appId =>
   `${appConsole(appId)}/billing`
 
@@ -244,6 +247,7 @@ export default {
   messagingPushChannelTemplates,
   messagingPushChannelTemplate,
   mobileSettings,
+  mobileSettingsAndroid,
   proLicense,
   security,
   securityRoles,
