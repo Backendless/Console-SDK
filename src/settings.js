@@ -35,15 +35,15 @@ function normalizeAppSettings(result) {
 
 export default req => ({
   createAndroidMobileSettings(appId, settings) {
-    return req.post(`${urls.mobileSettingsAndroid(appId)}`, settings)
+    return req.post(urls.mobileSettingsAndroid(appId), settings)
   },
 
   updateAndroidMobileSettings(appId, settings, id) {
-    return req.put(`${urls.mobileSettingsAndroid(appId, id)}`, settings)
+    return req.put(urls.mobileSettingsAndroid(appId, id), settings)
   },
 
   deleteAndroidMobileSettings(appId, id) {
-    return req.delete(`${urls.mobileSettingsAndroid(appId, id)}`)
+    return req.delete(urls.mobileSettingsAndroid(appId, id))
   },
 
   createAppleMobileSettings(appId, settings, deviceType) {
