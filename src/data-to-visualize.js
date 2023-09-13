@@ -7,10 +7,10 @@ const routes = prepareRoutes({
   dashboardSettings: '/:appId/console/data-to-visualize/dashboards/:dashboardId/settings',
   dashboardLayout  : '/:appId/console/data-to-visualize/dashboards/:dashboardId/layouts',
 
-  dashlets        : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
-  dashletAdd      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/add',
-  dashlet         : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId',
-  dashletLayout   : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId/layout',
+  dashlets     : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
+  dashletAdd   : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/add',
+  dashlet      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId',
+  dashletLayout: '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId/layout',
 
   dashletComponents                : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components',
   dashletComponentCreate           : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components/create',
@@ -21,8 +21,8 @@ const routes = prepareRoutes({
 })
 
 export default req => ({
-  getDashboards(appId) {
-    return req.get(routes.dashboards(appId))
+  getDashboards(appId, query) {
+    return req.get(routes.dashboards(appId)).query(query)
   },
 
   createDashboard(appId, dashboard) {
