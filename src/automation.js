@@ -1,48 +1,33 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  flowManagement: '/console/automation/management/:workspaceId/flow/:id',
-  workspace     : '/console/automation/management/workspace/:id',
+  flows    : '/console/automation/management/:appId/flow/:id',
+  flowState: '/console/automation/management/:appId/flow/:id/:state',
 })
 
 export default req => ({
-  getWorkspaces() {
-    return req.automation.get(routes.workspace())
+
+  getFlows(appId) {
+    return req.automation.get(routes.flows(appId))
   },
 
-  getWorkspace(id) {
-    return req.automation.get(routes.workspace(id))
+  getFlow(appId, id) {
+    return req.automation.get(routes.flows(appId, id))
   },
 
-  createWorkspace(name) {
-    return req.automation.post(routes.workspace(), { name })
+  createFlow(appId, flow) {
+    return req.automation.post(routes.flows(appId), flow)
   },
 
-  updateWorkspace(id, name) {
-    return req.automation.put(routes.workspace(id), { name })
+  updateFlow(appId, flow) {
+    return req.automation.put(routes.flows(appId, flow.id), flow)
   },
 
-  deleteWorkspace(id) {
-    return req.automation.delete(routes.workspace(id))
+  deleteFlow(appId, id) {
+    return req.automation.delete(routes.flows(appId, id))
   },
 
-  getFlows(workspaceId) {
-    return req.automation.get(routes.flowManagement(workspaceId))
-  },
-
-  getFlow(workspaceId, id) {
-    return req.automation.get(routes.flowManagement(workspaceId, id))
-  },
-
-  createFlow(workspaceId, flow) {
-    return req.automation.post(routes.flowManagement(workspaceId), flow)
-  },
-
-  updateFlow(workspaceId, flow) {
-    return req.automation.put(routes.flowManagement(workspaceId, flow.id), flow)
-  },
-
-  deleteFlow(workspaceId, id) {
-    return req.automation.delete(routes.flowManagement(workspaceId, id))
+  enableFlow(appId, id) {
+    return req.automation.post(routes.flowState(appId, id, 'enable'))
   },
 })
