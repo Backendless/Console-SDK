@@ -1,8 +1,8 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  flows    : '/api/:appId/console/automation/management/flow/:id',
-  flowState: '/api/:appId/console/automation/management/flow/:id/:state',
+  flows    : '/api/app/:appId/automation/management/flow/:id',
+  flowState: '/api/app/:appId/automation/management/flow/:id/:state',
 })
 
 export default req => ({
