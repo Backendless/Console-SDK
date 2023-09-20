@@ -32,11 +32,11 @@ const OperationsTypes = {
   MARKETPLACE_DELETE_PURCHASE: 23, // Delete Marketplace purchases
   MARKETPLACE_PURCHASE       : 22, // Purchase from the Marketplace
 
-  /** Business Logic */
-  BUSINESS_LOGIC_SECTION : 'Business Logic section',
+  /** Cloud Code */
+  CLOUD_CODE_SECTION     : 'Cloud Code section',
   DELETE_FROM_MARKETPLACE: 98, // Delete from marketplace
   INVOKE_EVENT_WITH_MODEL: 97, // Invoke event with model
-  MODIFY_BL              : 93, // Modify Business Logic
+  MODIFY_BL              : 93, // Modify Cloud Code
   PUBLISH_TO_MARKETPLACE : 94, // Publish to Marketplace
   RUN_TIMER              : 96, // Run timer
 
