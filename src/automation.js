@@ -1,7 +1,8 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  flows    : '/api/app/:appId/automation/management/flow/:id',
+  flows    : '/api/app/:appId/automation/management/flow',
+  flow     : '/api/app/:appId/automation/management/flow/:id',
   flowState: '/api/app/:appId/automation/management/flow/:id/:state',
 })
 
@@ -12,7 +13,7 @@ export default req => ({
   },
 
   getFlow(appId, id) {
-    return req.automation.get(routes.flows(appId, id))
+    return req.automation.get(routes.flow(appId, id))
   },
 
   createFlow(appId, flow) {
@@ -20,11 +21,11 @@ export default req => ({
   },
 
   updateFlow(appId, flow) {
-    return req.automation.put(routes.flows(appId, flow.id), flow)
+    return req.automation.put(routes.flow(appId, flow.id), flow)
   },
 
   deleteFlow(appId, id) {
-    return req.automation.delete(routes.flows(appId, id))
+    return req.automation.delete(routes.flow(appId, id))
   },
 
   enableFlow(appId, id) {
