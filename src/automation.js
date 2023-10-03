@@ -1,9 +1,11 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  flows    : '/api/app/:appId/automation/management/flow',
-  flow     : '/api/app/:appId/automation/management/flow/:id',
-  flowState: '/api/app/:appId/automation/management/flow/:id/:state',
+  flows         : '/api/app/:appId/automation/flow',
+  flow          : '/api/app/:appId/automation/flow/:id',
+  newFlowVersion: '/api/app/:appId/automation/flow/:id/new-version',
+  flowState     : '/api/app/:appId/automation/flow/:id/:state',
+  flowGroupName : '/api/app/:appId/automation/flow/versions/:groupId/name',
 })
 
 export default req => ({
@@ -30,5 +32,21 @@ export default req => ({
 
   enableFlow(appId, id) {
     return req.automation.post(routes.flowState(appId, id, 'enable'))
+  },
+
+  pauseFlow(appId, id) {
+    return req.automation.post(routes.flowState(appId, id, 'pause'))
+  },
+
+  terminateFlow(appId, id) {
+    return req.automation.post(routes.flowState(appId, id, 'terminate'))
+  },
+
+  createNewVersion(appId, id) {
+    return req.automation.post(routes.newFlowVersion(appId, id))
+  },
+
+  editFlowsGroupName(appId, groupId, name) {
+    return req.automation.put(routes.flowGroupName(appId, groupId), { name })
   },
 })
