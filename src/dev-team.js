@@ -45,4 +45,7 @@ export default req => ({
     return req.delete(`${urls.appConsole(appId)}/devteam/application-owner-change/pending-sent-proposal`)
   },
 
+  generateDeveloperSignature() {
+    return req.get(`${urls.console()}/developer/signature`)
+  },
 })
