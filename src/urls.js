@@ -151,6 +151,8 @@ export const dataHiveStoreKey = (appId, hiveName, storeType, keyName) => `${data
 
 export const dataToVisualize = appId => `${appConsole(appId)}/data-to-visualize`
 
+export const openAI = appId => `${appConsole(appId)}/open-ai`
+
 export const dataConnectors = appId => `${appConsole(appId)}/dataconnectors`
 export const dataConnectorTemplates = appId => `${dataConnectors(appId)}/templates`
 export const dataConnector = (appId, connectorId) => `${dataConnectors(appId)}/${connectorId}`
@@ -270,5 +272,6 @@ export default {
   apiDocsFiles,
   apiDocsService,
   apiDocsGeo,
+  openAI,
   downloadComplianceFile,
 }
