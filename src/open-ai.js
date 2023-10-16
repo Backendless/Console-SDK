@@ -1,7 +1,7 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  chatCompletionCreate: '/:appId/console/open-ai/',
+  chatCompletionCreate: '/:appId/console/open-ai/chat-completion',
 })
 
 export default req => ({
