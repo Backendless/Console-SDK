@@ -79,6 +79,8 @@ const routes = prepareRoutes({
   containerCustomComponentFiles            : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files',
   containerCustomComponentFilesDownloadLink: '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/files/sign',
   containerCustomComponentFileContent      : '/:appId/console/ui-builder/containers/:containerName/components/custom/:componentId/content/:fileId',
+
+  previewInitToken:'/:appId/console/files/ui-builder/preview-init-token',
 })
 
 export default req => ({
@@ -462,5 +464,11 @@ export default req => ({
 
   saveAutomationsTriggers(appId, containerName, triggers) {
     return req.put(routes.containerAutomations(appId, containerName), triggers)
+  },
+
+  // -- PREVIEW INIT TOKEN -----//
+
+  getPreviewInitToken(appId) {
+    return req.get(routes.previewInitToken(appId))
   },
 })
