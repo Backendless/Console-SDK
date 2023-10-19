@@ -43,6 +43,7 @@ import warning from './warning'
 import uiBuilder from './ui-builder'
 import chartBuilder from './chart-builder'
 import visualizations from './visualizations'
+import consolePreview from './console-preview'
 
 import { community } from './community'
 import { marketplace } from './marketplace'
@@ -206,6 +207,7 @@ const createClient = (serverUrl, authKey, options) => {
     referrals           : referrals(request),
     visualizations      : visualizations(request),
     initialQuestionnaire: initialQuestionnaire(request),
+    consolePreview      : consolePreview(request),
   }
 }
 
