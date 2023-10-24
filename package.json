@@ -22,7 +22,7 @@
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack ./src/index.js -o ./dist/backendless-console-sdk.js",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack ./src/index.js -o ./dist/backendless-console-sdk.min.js",
     "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
-    "prepublish": "npm run clean && npm run check && npm run build"
+    "prepare": "npm run clean && npm run check && npm run build"
   },
   "repository": {
     "type": "git",
