@@ -42,11 +42,13 @@ import warning from './warning'
 import uiBuilder from './ui-builder'
 import chartBuilder from './chart-builder'
 import visualizations from './visualizations'
+import consolePreview from './console-preview'
 
 import { community } from './community'
 import { marketplace } from './marketplace'
 import { referrals } from './referrals'
 import { initialQuestionnaire } from './initial-questionnaire'
+import { sqlService } from './sql-service'
 
 class Context {
 
@@ -132,6 +134,12 @@ const createClient = (serverUrl, authKey, options) => {
     request.community = request
   }
 
+  if (options.sqlServiceURL) {
+    request.sqlService = contextifyRequest(context, options.sqlServiceURL)
+  } else {
+    request.sqlService = request
+  }
+
   if (options.automationURL) {
     request.automation = contextifyRequest(context, options.automationURL, req => {
       req.path = req.path.replace('/console/automation', '')
@@ -192,10 +200,12 @@ const createClient = (serverUrl, authKey, options) => {
     uiBuilder           : uiBuilder(request),
     chartBuilder        : chartBuilder(request),
     community           : community(request),
+    sqlService          : sqlService(request),
     marketplace         : marketplace(request),
     referrals           : referrals(request),
     visualizations      : visualizations(request),
     initialQuestionnaire: initialQuestionnaire(request),
+    consolePreview      : consolePreview(request),
   }
 }
 

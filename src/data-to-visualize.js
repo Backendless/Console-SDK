@@ -5,12 +5,10 @@ const routes = prepareRoutes({
   dashboards       : '/:appId/console/data-to-visualize/dashboards',
   dashboard        : '/:appId/console/data-to-visualize/dashboards/:dashboardId',
   dashboardSettings: '/:appId/console/data-to-visualize/dashboards/:dashboardId/settings',
-  dashboardLayout  : '/:appId/console/data-to-visualize/dashboards/:dashboardId/layouts',
 
-  dashlets        : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
-  dashletAdd      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/add',
-  dashlet         : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId',
-  dashletLayout   : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId/layout',
+  dashlets     : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
+  dashletAdd   : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/add',
+  dashlet      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId',
 
   dashletComponents                : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components',
   dashletComponentCreate           : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components/create',
@@ -21,8 +19,8 @@ const routes = prepareRoutes({
 })
 
 export default req => ({
-  getDashboards(appId) {
-    return req.get(routes.dashboards(appId))
+  getDashboards(appId, query) {
+    return req.get(routes.dashboards(appId)).query(query)
   },
 
   createDashboard(appId, dashboard) {
@@ -39,10 +37,6 @@ export default req => ({
 
   deleteDashboard(appId, name) {
     return req.delete(routes.dashboard(appId, name))
-  },
-
-  updateDashboardLayouts(appId, dashboardName, layouts) {
-    return req.put(routes.dashboardLayout(appId, dashboardName), layouts)
   },
 
   addDashboardDashlet(appId, dashboardId, dashlet) {
