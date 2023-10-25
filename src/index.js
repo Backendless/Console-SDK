@@ -12,12 +12,14 @@ import bl from './bl'
 import cloudCode from './cloud-code'
 import blueprints from './blueprints'
 import cache from './cache'
+import cacheControl from './cache-control'
 import codegen from './codegen'
 import codeless from './codeless'
 import counters from './counters'
 import dataConnectors from './data-connectors'
 import dataViews from './data-views'
 import dataHives from './data-hives'
+import dataToVisualize from './data-to-visualize'
 import developerProfile from './developer-profile'
 import devTeam from './dev-team'
 import email from './email'
@@ -30,6 +32,7 @@ import navigator from './navigator'
 import projectTemplate from './project-template'
 import security from './security'
 import devPermissions, { DevPermissions } from './dev-permissions'
+import openAI from './open-ai'
 import settings from './settings'
 import status from './status'
 import tables from './tables'
@@ -40,11 +43,13 @@ import warning from './warning'
 import uiBuilder from './ui-builder'
 import chartBuilder from './chart-builder'
 import visualizations from './visualizations'
+import consolePreview from './console-preview'
 
 import { community } from './community'
 import { marketplace } from './marketplace'
 import { referrals } from './referrals'
 import { initialQuestionnaire } from './initial-questionnaire'
+import { sqlService } from './sql-service'
 
 class Context {
 
@@ -130,6 +135,12 @@ const createClient = (serverUrl, authKey, options) => {
     request.community = request
   }
 
+  if (options.sqlServiceURL) {
+    request.sqlService = contextifyRequest(context, options.sqlServiceURL)
+  } else {
+    request.sqlService = request
+  }
+
   if (options.automationURL) {
     request.automation = contextifyRequest(context, options.automationURL, req => {
       req.path = req.path.replace('/console/automation', '')
@@ -160,12 +171,14 @@ const createClient = (serverUrl, authKey, options) => {
     cloudCode           : cloudCode(request),
     blueprints          : blueprints(request),
     cache               : cache(request),
+    cacheControl        : cacheControl(request),
     codegen             : codegen(request),
     codeless            : codeless(request),
     counters            : counters(request),
     dataConnectors      : dataConnectors(request),
     dataViews           : dataViews(request),
     dataHives           : dataHives(request),
+    dataToVisualize     : dataToVisualize(request),
     developerProfile    : developerProfile(request),
     devTeam             : devTeam(request),
     email               : email(request),
@@ -178,6 +191,7 @@ const createClient = (serverUrl, authKey, options) => {
     projectTemplate     : projectTemplate(request),
     security            : security(request),
     devPermissions      : devPermissions(request),
+    openAI              : openAI(request),
     settings            : settings(request),
     status              : status(request),
     tables              : tables(request),
@@ -188,10 +202,12 @@ const createClient = (serverUrl, authKey, options) => {
     uiBuilder           : uiBuilder(request),
     chartBuilder        : chartBuilder(request),
     community           : community(request),
+    sqlService          : sqlService(request),
     marketplace         : marketplace(request),
     referrals           : referrals(request),
     visualizations      : visualizations(request),
     initialQuestionnaire: initialQuestionnaire(request),
+    consolePreview      : consolePreview(request),
   }
 }
 

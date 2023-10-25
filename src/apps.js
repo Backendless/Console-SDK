@@ -5,6 +5,10 @@ export default req => ({
     return req.post('/console/applications', app).query(query)
   },
 
+  createAppFromZIP(app) {
+    return req.post('/console/applications/from-zip', app)
+  },
+
   getApps() {
     return req.get('/console/applications')
   },
@@ -23,6 +27,10 @@ export default req => ({
 
   cloneApp(appId, newApp) {
     return req.post(`${urls.appConsole(appId)}/cloneApp`, newApp)
+  },
+
+  generateAppZIP(appId) {
+    return req.post(`${urls.appConsole(appId)}/application/transfer`)
   },
 
   getCloningAppStatus(appId, processId) {

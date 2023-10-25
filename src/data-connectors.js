@@ -20,8 +20,8 @@ export default req => ({
     return req.get(urls.dataConnectorTemplates(appId))
   },
 
-  getConnectors(appId) {
-    return req.get(urls.dataConnectors(appId))
+  getConnectors(appId, forceRefresh) {
+    return req.get(urls.dataConnectors(appId)).query({ forceRefresh })
   },
 
   activateConnector(appId, connector) {

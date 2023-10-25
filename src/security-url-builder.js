@@ -41,12 +41,12 @@ export const buildGetUrl = (appId, policy, service, serviceItemId, serviceItemNa
   if (isOwnerPolicy) {
     stickingPoint = `${service}/ownerpolicy/${serviceItemId}`
   } else if (isFilesService && isRolesPolicy) {
-    stickingPoint = `roles/${service}/${serviceItemId}`
+    stickingPoint = `roles/${service}/${encodeURIComponent(serviceItemId)}`
   } else if (isFilesService) {
     if (filterParams.name) {
-      stickingPoint = `users/search/${encodeURI(filterParams.name)}/${service}/${serviceItemId}`
+      stickingPoint = `users/search/${encodeURI(filterParams.name)}/${service}/${encodeURIComponent(serviceItemId)}`
     } else {
-      stickingPoint = `${service}/users/${serviceItemId}`
+      stickingPoint = `${service}/users/${encodeURIComponent(serviceItemId)}`
     }
   } else if (isColumnsPolicy) {
     stickingPoint = `${service}/${serviceItemId}/${policy}/permissions`
