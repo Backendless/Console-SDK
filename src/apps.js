@@ -5,8 +5,12 @@ export default req => ({
     return req.post('/console/applications', app).query(query)
   },
 
-  getApps() {
-    return req.get('/console/applications')
+  createAppFromZIP(app) {
+    return req.post('/console/applications/from-zip', app)
+  },
+
+  getApps(zone) {
+    return req.get('/console/applications').query({ zone })
   },
 
   resetApp(appId, resets) {
@@ -25,6 +29,10 @@ export default req => ({
     return req.post(`${urls.appConsole(appId)}/cloneApp`, newApp)
   },
 
+  generateAppZIP(appId) {
+    return req.post(`${urls.appConsole(appId)}/application/transfer`)
+  },
+
   getCloningAppStatus(appId, processId) {
     return req.get(`${urls.appConsole(appId)}/cloneApp/${processId}`)
   },
@@ -41,7 +49,7 @@ export default req => ({
     return req.post(`${urls.appInfo(appId)}/logos`, logo)
   },
 
-  generateSubdomains() {
-    return req.get('/console/applications/suggested-generated-domains')
+  generateSubdomains(zone) {
+    return req.get('/console/applications/suggested-generated-domains').query({ zone })
   }
 })
