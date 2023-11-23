@@ -32,6 +32,7 @@ import navigator from './navigator'
 import projectTemplate from './project-template'
 import security from './security'
 import devPermissions, { DevPermissions } from './dev-permissions'
+import openAI from './open-ai'
 import settings from './settings'
 import status from './status'
 import tables from './tables'
@@ -190,6 +191,7 @@ const createClient = (serverUrl, authKey, options) => {
     projectTemplate     : projectTemplate(request),
     security            : security(request),
     devPermissions      : devPermissions(request),
+    openAI              : openAI(request),
     settings            : settings(request),
     status              : status(request),
     tables              : tables(request),

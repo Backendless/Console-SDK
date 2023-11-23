@@ -6,6 +6,7 @@ const routes = prepareRoutes({
   newFlowVersion: '/api/app/:appId/automation/flow/:id/new-version',
   flowState     : '/api/app/:appId/automation/flow/:id/:state',
   flowGroupName : '/api/app/:appId/automation/flow/versions/:groupId/name',
+  flowGroup     : '/api/app/:appId/automation/flow/versions/:groupId',
 })
 
 export default req => ({
@@ -48,5 +49,9 @@ export default req => ({
 
   editFlowsGroupName(appId, groupId, name) {
     return req.automation.put(routes.flowGroupName(appId, groupId), { name })
+  },
+
+  deleteFlowsGroup(appId, groupId) {
+    return req.automation.delete(routes.flowGroup(appId, groupId))
   },
 })

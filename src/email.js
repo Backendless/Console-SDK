@@ -64,4 +64,8 @@ export default req => ({
   installEmailTemplateFromMarketplace(appId, productId, data) {
     return req.post(urls.installEmailTemplate(appId, productId), data)
   },
+
+  resetSystemEmailTemplate(appId, eventId) {
+    return req.delete(`${urls.appConsole(appId)}/email/events/${eventId}`)
+  }
 })
