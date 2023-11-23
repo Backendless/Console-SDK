@@ -512,6 +512,10 @@ export default req => ({
     return req.delete(routes.containerFunction(appId, containerName, id))
   },
 
+  deleteContainerFunctionsPack(appId, containerName, productId, functions) {
+    return req.delete(routes.containerFunctions(appId, containerName), { productId, functions })
+  },
+
   loadContainerFunctionLogic(appId, containerName, id) {
     return req.get(routes.containerFunctionLogic(appId, containerName, id))
   },
@@ -522,10 +526,6 @@ export default req => ({
 
   installCustomFunctionsFromMarketplace(appId, containerName, productId) {
     return req.post(routes.installCustomFunctionsFromMarketplace(appId, containerName, productId))
-  },
-
-  removeContainerExternalLibraries(appId, containerName, productId) {
-    return req.delete(routes.containerProductExternalLibraries(appId, containerName, productId))
   },
 
   //-- FUNCTIONS -----//
