@@ -29,7 +29,6 @@ const routes = prepareRoutes({
   containerMetaTags                : '/:appId/console/ui-builder/containers/:containerName/meta-tags',
   containerCustomHeadContent       : '/:appId/console/ui-builder/containers/:containerName/custom-head-content',
   containerExternalLibraries       : '/:appId/console/ui-builder/containers/:containerName/external-libraries',
-  containerProductExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/external-libraries/:productId',
   containerDefaultI18n             : '/:appId/console/ui-builder/containers/:containerName/i18n',
 
   removedContainers: '/:appId/console/ui-builder/removed-containers',
@@ -56,6 +55,7 @@ const routes = prepareRoutes({
   containerFunction                    : '/:appId/console/ui-builder/containers/:containerName/functions/:functionId',
   containerFunctionLogic               : '/:appId/console/ui-builder/containers/:containerName/functions/:functionId/logic',
   installCustomFunctionsFromMarketplace: '/:appId/console/ui-builder/containers/:containerName/functions/install/:productId',
+  removeFunctionsPack                   : '/:appId/console/ui-builder/containers/:containerName/functions/remove-functions-pack/:productId',
 
   containerPages          : '/:appId/console/ui-builder/containers/:containerName/pages',
   containerPage           : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName',
@@ -512,8 +512,8 @@ export default req => ({
     return req.delete(routes.containerFunction(appId, containerName, id))
   },
 
-  deleteContainerFunctionsPack(appId, containerName, productId, functions) {
-    return req.delete(routes.containerFunctions(appId, containerName), { productId, functions })
+  deleteContainerFunctionsPack(appId, containerName, productId) {
+    return req.delete(routes.removeFunctionsPack(appId, containerName, productId))
   },
 
   loadContainerFunctionLogic(appId, containerName, id) {
