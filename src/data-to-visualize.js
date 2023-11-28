@@ -6,9 +6,10 @@ const routes = prepareRoutes({
   dashboard        : '/:appId/console/data-to-visualize/dashboards/:dashboardId',
   dashboardSettings: '/:appId/console/data-to-visualize/dashboards/:dashboardId/settings',
 
-  dashlets     : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
-  dashletAdd   : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/add',
-  dashlet      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId',
+  dashlets      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
+  dashletAdd    : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/add',
+  dashletInstall: '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/install',
+  dashlet       : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId',
 
   dashletComponents                : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components',
   dashletComponentCreate           : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components/create',
@@ -39,8 +40,12 @@ export default req => ({
     return req.delete(routes.dashboard(appId, name))
   },
 
-  addDashboardDashlet(appId, dashboardId, dashlet) {
-    return req.post(routes.dashletAdd(appId, dashboardId), dashlet)
+  addDashboardDashlet(appId, dashboardId, dashletComponent) {
+    return req.post(routes.dashletAdd(appId, dashboardId), dashletComponent)
+  },
+
+  installDashboardDashlet(appId, dashboardId, product) {
+    return req.post(routes.dashletInstall(appId, dashboardId), product)
   },
 
   deleteDashboardDashlet(appId, dashboardId, dashletId) {
