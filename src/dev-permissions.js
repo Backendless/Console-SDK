@@ -32,6 +32,14 @@ const OperationsTypes = {
   MARKETPLACE_DELETE_PURCHASE: 23, // Delete Marketplace purchases
   MARKETPLACE_PURCHASE       : 22, // Purchase from the Marketplace
 
+  /** Cache-Control **/
+  CACHE_CONTROL_SECTION     : 'Cache-Control settings',
+  MODIFY_CACHE_CONTROL_RULES: 116,  // Modify Cache-Control rules
+
+  /** AUTOMATION **/
+  AUTOMATION_SECTION        : 'Automation',
+  CREATE_MODIFY_DELETE_FLOWS: 117,  // Create/Rename/Delete flows
+
   /** Cloud Code */
   CLOUD_CODE_SECTION     : 'Cloud Code section',
   DELETE_FROM_MARKETPLACE: 98, // Delete from marketplace

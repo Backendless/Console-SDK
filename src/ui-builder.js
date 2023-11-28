@@ -34,7 +34,9 @@ const routes = prepareRoutes({
   removedContainers: '/:appId/console/ui-builder/removed-containers',
   removedContainer : '/:appId/console/ui-builder/removed-containers/:containerName',
 
-  containerBackups: '/:appId/console/ui-builder/containers/:containerName/backups',
+  containerBackups           : '/:appId/console/ui-builder/containers/:containerName/backups',
+  containerBackupUpload      : '/:appId/console/ui-builder/containers/:containerName/backups/upload',
+  containerBackupDownloadLink: '/:appId/console/ui-builder/containers/:containerName/backups/download/sign/:backupId',
 
   containerI18ns        : '/:appId/console/ui-builder/containers/:containerName/i18n/dictionary',
   containerI18n         : '/:appId/console/ui-builder/containers/:containerName/i18n/dictionary/:dictionaryName',
@@ -186,6 +188,14 @@ export default req => ({
 
   deleteContainerBackups(appId, containerName, backupsIds) {
     return req.delete(routes.containerBackups(appId, containerName), backupsIds)
+  },
+
+  getBackupDownloadLink(appId, containerName, backupId) {
+    return req.get(routes.containerBackupDownloadLink(appId, containerName, backupId))
+  },
+
+  uploadBackup(appId, containerName, file, data) {
+    return req.post(routes.containerBackupUpload(appId, containerName)).form({ ...data, file })
   },
 
   //-- BACKUPS -----//
