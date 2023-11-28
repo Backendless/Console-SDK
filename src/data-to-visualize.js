@@ -7,7 +7,6 @@ const routes = prepareRoutes({
   dashboardSettings: '/:appId/console/data-to-visualize/dashboards/:dashboardId/settings',
 
   dashlets      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
-  dashletAdd    : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/add',
   dashletInstall: '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/install',
   dashlet       : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId',
 
@@ -41,7 +40,7 @@ export default req => ({
   },
 
   addDashboardDashlet(appId, dashboardId, dashletComponent) {
-    return req.post(routes.dashletAdd(appId, dashboardId), dashletComponent)
+    return req.post(routes.dashlets(appId, dashboardId), dashletComponent)
   },
 
   installDashboardDashlet(appId, dashboardId, product) {
