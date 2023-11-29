@@ -55,6 +55,7 @@ const routes = prepareRoutes({
   containerFunction                    : '/:appId/console/ui-builder/containers/:containerName/functions/:functionId',
   containerFunctionLogic               : '/:appId/console/ui-builder/containers/:containerName/functions/:functionId/logic',
   installCustomFunctionsFromMarketplace: '/:appId/console/ui-builder/containers/:containerName/functions/install/:productId',
+  removeFunctionsPack                  : '/:appId/console/ui-builder/containers/:containerName/functions/remove-functions-pack/:productId',
 
   containerPages          : '/:appId/console/ui-builder/containers/:containerName/pages',
   containerPage           : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName',
@@ -509,6 +510,10 @@ export default req => ({
 
   deleteContainerFunction(appId, containerName, id) {
     return req.delete(routes.containerFunction(appId, containerName, id))
+  },
+
+  deleteContainerFunctionsPack(appId, containerName, productId) {
+    return req.delete(routes.removeFunctionsPack(appId, containerName, productId))
   },
 
   loadContainerFunctionLogic(appId, containerName, id) {
