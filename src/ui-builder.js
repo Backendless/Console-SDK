@@ -7,6 +7,7 @@ const routes = prepareRoutes({
   sdkStyles    : '/:appId/console/ui-builder/library/sdk/styles',
   sdkComponents: '/:appId/console/ui-builder/library/sdk/components',
 
+  layoutTemplates         : '/:appId/console/ui-builder/library/layout-templates',
   pageTemplates           : '/:appId/console/ui-builder/library/page-templates',
   customComponentTemplates: '/:appId/console/ui-builder/library/custom-component-templates',
 
@@ -33,7 +34,9 @@ const routes = prepareRoutes({
   removedContainers: '/:appId/console/ui-builder/removed-containers',
   removedContainer : '/:appId/console/ui-builder/removed-containers/:containerName',
 
-  containerBackups: '/:appId/console/ui-builder/containers/:containerName/backups',
+  containerBackups           : '/:appId/console/ui-builder/containers/:containerName/backups',
+  containerBackupUpload      : '/:appId/console/ui-builder/containers/:containerName/backups/upload',
+  containerBackupDownloadLink: '/:appId/console/ui-builder/containers/:containerName/backups/download/sign/:backupId',
 
   containerI18ns        : '/:appId/console/ui-builder/containers/:containerName/i18n/dictionary',
   containerI18n         : '/:appId/console/ui-builder/containers/:containerName/i18n/dictionary/:dictionaryName',
@@ -52,6 +55,7 @@ const routes = prepareRoutes({
   containerFunction                    : '/:appId/console/ui-builder/containers/:containerName/functions/:functionId',
   containerFunctionLogic               : '/:appId/console/ui-builder/containers/:containerName/functions/:functionId/logic',
   installCustomFunctionsFromMarketplace: '/:appId/console/ui-builder/containers/:containerName/functions/install/:productId',
+  removeFunctionsPack                  : '/:appId/console/ui-builder/containers/:containerName/functions/remove-functions-pack/:productId',
 
   containerPages          : '/:appId/console/ui-builder/containers/:containerName/pages',
   containerPage           : '/:appId/console/ui-builder/containers/:containerName/pages/:pageName',
@@ -61,6 +65,12 @@ const routes = prepareRoutes({
 
   containerComponentAddReference: '/:appId/console/ui-builder/containers/:containerName/components/add-reference',
   containerComponentInstall     : '/:appId/console/ui-builder/containers/:containerName/components/install/:productId',
+
+  containerLayouts          : '/:appId/console/ui-builder/containers/:containerName/layouts',
+  containerLayout           : '/:appId/console/ui-builder/containers/:containerName/layouts/:layoutId',
+  containerLayoutUI         : '/:appId/console/ui-builder/containers/:containerName/layouts/:layoutId/ui',
+  containerLayoutLogic      : '/:appId/console/ui-builder/containers/:containerName/layouts/:layoutId/logic/:componentUid/:handlerName',
+  containerLayoutUnusedLogic: '/:appId/console/ui-builder/containers/:containerName/layouts/:layoutId/unused-logic',
 
   containerReusableComponents          : '/:appId/console/ui-builder/containers/:containerName/components/reusable',
   containerReusableComponent           : '/:appId/console/ui-builder/containers/:containerName/components/reusable/:componentId',
@@ -100,6 +110,10 @@ export default req => ({
   //-- SDK -----//
 
   //-- LIBRARY -----//
+
+  loadLayoutTemplates(appId) {
+    return req.get(routes.layoutTemplates(appId))
+  },
 
   loadPageTemplates(appId) {
     return req.get(routes.pageTemplates(appId))
@@ -175,6 +189,14 @@ export default req => ({
 
   deleteContainerBackups(appId, containerName, backupsIds) {
     return req.delete(routes.containerBackups(appId, containerName), backupsIds)
+  },
+
+  getBackupDownloadLink(appId, containerName, backupId) {
+    return req.get(routes.containerBackupDownloadLink(appId, containerName, backupId))
+  },
+
+  uploadBackup(appId, containerName, file, data) {
+    return req.post(routes.containerBackupUpload(appId, containerName)).form({ ...data, file })
   },
 
   //-- BACKUPS -----//
@@ -327,6 +349,50 @@ export default req => ({
     return req.post(routes.containerComponentInstall(appId, containerName, productId), data)
   },
 
+  //-- LAYOUTS -----//
+
+  createLayout(appId, containerName, data) {
+    return req.post(routes.containerLayouts(appId, containerName), data)
+  },
+
+  updateLayout(appId, containerName, data) {
+    return req.put(routes.containerLayout(appId, containerName, data.id), data)
+  },
+
+  deleteLayout(appId, containerName, id) {
+    return req.delete(routes.containerLayout(appId, containerName, id))
+  },
+
+  getLayoutUI(appId, containerName, id) {
+    return req.get(routes.containerLayoutUI(appId, containerName, id))
+  },
+
+  updateLayoutUI(appId, containerName, id, data) {
+    return req.put(routes.containerLayoutUI(appId, containerName, id), data)
+  },
+
+  getLayoutLogic(appId, containerName, id, componentUid, handlerName) {
+    return req.get(routes.containerLayoutLogic(appId, containerName, id, componentUid, handlerName))
+  },
+
+  updateLayoutLogic(appId, containerName, id, componentUid, data) {
+    return req.put(routes.containerLayoutLogic(appId, containerName, id, componentUid), data)
+  },
+
+  createLayoutLogic(appId, containerName, id, componentUid, handlerName) {
+    return req.post(routes.containerLayoutLogic(appId, containerName, id, componentUid, handlerName))
+  },
+
+  deleteLayoutLogic(appId, containerName, id, componentUid, handlerName) {
+    return req.delete(routes.containerLayoutLogic(appId, containerName, id, componentUid, handlerName))
+  },
+
+  deleteLayoutUnusedLogic(appId, containerName, id, componentUids) {
+    return req.delete(routes.containerLayoutUnusedLogic(appId, containerName, id), { componentUids })
+  },
+
+  //-- LAYOUTS -----//
+
   //-- REUSABLE COMPONENTS -----//
 
   createReusableComponent(appId, containerName, data) {
@@ -444,6 +510,10 @@ export default req => ({
 
   deleteContainerFunction(appId, containerName, id) {
     return req.delete(routes.containerFunction(appId, containerName, id))
+  },
+
+  deleteContainerFunctionsPack(appId, containerName, productId) {
+    return req.delete(routes.removeFunctionsPack(appId, containerName, productId))
   },
 
   loadContainerFunctionLogic(appId, containerName, id) {
