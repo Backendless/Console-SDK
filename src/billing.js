@@ -6,22 +6,29 @@ const routes = prepareRoutes({
   planComponentsData        : '/:appId/console/billing/application/plans/:planId/:billingPeriod/components',
   switchPlan                : '/:appId/console/billing/application/subscriptions/:planId/:billingPeriod',
   componentLimit            : '/:appId/console/billing/application/limits/:componentId',
-  apiCallsBlocked           : '/:appId/console/billing/apicalls/blocked',
-  inviteCode                : '/:appId/console/billing/refcode',
   billingPeriodInfo         : '/:appId/console/billing/application/billing-period-info',
-  unlockPlan                : '/:appId/billing/plan/:planId/unlock',
   exchangeBB                : '/:appId/console/billing/application/bb/exchange',
   consolidateApp            : '/:appId/console/billing/application/consolidate/:paymentProfileId',
   tiers                     : '/:appId/console/billing/application/tiers',
   maxTier                   : '/:appId/console/billing/application/tiers/max',
-  hiveUsage                 : '/:appId/service/billing/usage/hive',
-  hiveLimits                : '/:appId/billing/limits/hive',
   paymentProfilesForCloneApp: '/:appId/console/billing/application/payment-profiles-for-clone-operation',
+
+  apiCallsBlocked: '/:appId/console/billing/apicalls/blocked',
+  inviteCode     : '/:appId/console/billing/refcode',
+
+  subscriptionStatus: '/:appId/billing/subscriptions/status',
+  unlockPlan        : '/:appId/billing/plan/:planId/unlock',
+  hiveLimits        : '/:appId/billing/limits/hive',
+  hiveUsage         : '/:appId/service/billing/usage/hive',
 })
 
 export default req => ({
   getBillingInfo(appId) {
     return req.billing.get(routes.billingInfo(appId))
+  },
+
+  getSubscriptionStatus(appId) {
+    return req.billing.get(routes.subscriptionStatus(appId))
   },
 
   getPlans(appId) {
