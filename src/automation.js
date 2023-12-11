@@ -1,12 +1,12 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  flows         : '/api/app/:appId/automation/flow',
-  flow          : '/api/app/:appId/automation/flow/:id',
-  newFlowVersion: '/api/app/:appId/automation/flow/:id/new-version',
-  flowState     : '/api/app/:appId/automation/flow/:id/:state',
-  flowGroupName : '/api/app/:appId/automation/flow/versions/:groupId/name',
-  flowGroup     : '/api/app/:appId/automation/flow/versions/:groupId',
+  flows         : '/api/app/:appId/automation/flow/version',
+  flow          : '/api/app/:appId/automation/flow/version/:versionId',
+  newFlowVersion: '/api/app/:appId/automation/flow/version/:versionId/new-version',
+  flowState     : '/api/app/:appId/automation/flow/version/:versionId/:state',
+  flowGroupName : '/api/app/:appId/automation/flow/:flowId/name',
+  flowGroup     : '/api/app/:appId/automation/flow/:flowId',
 })
 
 export default req => ({
