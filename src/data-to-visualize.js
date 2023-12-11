@@ -84,10 +84,6 @@ export default req => ({
     return req.get(routes.dashletComponentFile(appId, dashboardId, componentId, fileName))
   },
 
-  uploadDashletComponentFiles(appId, dashboardId, componentId, files) {
-    return req.post(routes.dashletComponentFiles(appId, dashboardId, componentId), files)
-  },
-
   updateDashletComponentFiles(appId, dashboardId, componentId, files) {
     return req.put(routes.dashletComponentFiles(appId, dashboardId, componentId), files)
   }
