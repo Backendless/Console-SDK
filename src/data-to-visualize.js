@@ -8,6 +8,7 @@ const routes = prepareRoutes({
 
   dashlets      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
   dashletInstall: '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/install',
+  dashletUpgrade: '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/upgrade',
   dashlet       : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId',
 
   dashletComponents                : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components',
@@ -45,6 +46,10 @@ export default req => ({
 
   installDashboardDashlet(appId, dashboardId, product) {
     return req.post(routes.dashletInstall(appId, dashboardId), product)
+  },
+
+  upgradeDashboardDashlet(appId, dashboardId, product, versionId) {
+    return req.post(routes.dashletUpgrade(appId, dashboardId), { product, versionId })
   },
 
   deleteDashboardDashlet(appId, dashboardId, dashletId) {
