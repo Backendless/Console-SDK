@@ -1,12 +1,14 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  flows         : '/api/app/:appId/automation/flow/version',
-  flow          : '/api/app/:appId/automation/flow/version/:versionId',
-  newFlowVersion: '/api/app/:appId/automation/flow/version/:versionId/new-version',
-  flowState     : '/api/app/:appId/automation/flow/version/:versionId/:state',
-  flowGroupName : '/api/app/:appId/automation/flow/:flowId/name',
-  flowGroup     : '/api/app/:appId/automation/flow/:flowId',
+  flows             : '/api/app/:appId/automation/flow/version',
+  flow              : '/api/app/:appId/automation/flow/version/:versionId',
+  newFlowVersion    : '/api/app/:appId/automation/flow/version/:versionId/new-version',
+  flowState         : '/api/app/:appId/automation/flow/version/:versionId/:state',
+  flowGroupName     : '/api/app/:appId/automation/flow/:flowId/name',
+  flowGroup         : '/api/app/:appId/automation/flow/:flowId',
+  flowVersionMetrics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
+  stepsMetrics      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
 })
 
 export default req => ({
@@ -54,4 +56,12 @@ export default req => ({
   deleteFlowsGroup(appId, groupId) {
     return req.automation.delete(routes.flowGroup(appId, groupId))
   },
+
+  getFlowVersionMetrics(appId, flowId, versionId) {
+    return req.automation.get(routes.flowVersionMetrics(appId, flowId, versionId))
+  },
+
+  getFlowStepsMetrics(appId, flowId, versionId) {
+    return req.automation.get(routes.stepsMetrics(appId, flowId, versionId))
+  }
 })
