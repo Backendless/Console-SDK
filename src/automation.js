@@ -2,6 +2,7 @@ import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
   flows             : '/api/app/:appId/automation/flow/version',
+  flowsTriggers     : '/api/app/:appId/automation/flow/all-versions-with-callback-triggers',
   flow              : '/api/app/:appId/automation/flow/version/:versionId',
   newFlowVersion    : '/api/app/:appId/automation/flow/version/:versionId/new-version',
   flowState         : '/api/app/:appId/automation/flow/version/:versionId/:state',
@@ -15,6 +16,10 @@ export default req => ({
 
   getFlows(appId) {
     return req.automation.get(routes.flows(appId))
+  },
+
+  getFlowsTriggers(appId) {
+    return req.automation.get(routes.flowsTriggers(appId))
   },
 
   getFlow(appId, id) {
