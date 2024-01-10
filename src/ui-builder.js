@@ -360,8 +360,8 @@ export default req => ({
     return req.post(routes.containerLayouts(appId, containerName), data)
   },
 
-  updateLayout(appId, containerName, data) {
-    return req.put(routes.containerLayout(appId, containerName, data.id), data)
+  updateLayout(appId, containerName, layoutId, data) {
+    return req.put(routes.containerLayout(appId, containerName, layoutId), data)
   },
 
   deleteLayout(appId, containerName, id) {
