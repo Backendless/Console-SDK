@@ -8,6 +8,7 @@ const routes = prepareRoutes({
 
   dashlets      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
   dashletInstall: '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/install',
+  dashletUpgrade: '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/upgrade',
   dashlet       : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId',
 
   dashletComponents                : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components',
@@ -47,6 +48,10 @@ export default req => ({
     return req.post(routes.dashletInstall(appId, dashboardId), product)
   },
 
+  upgradeDashboardDashlet(appId, dashboardId, product, versionId) {
+    return req.post(routes.dashletUpgrade(appId, dashboardId), { product, versionId })
+  },
+
   deleteDashboardDashlet(appId, dashboardId, dashletId) {
     return req.delete(routes.dashlet(appId, dashboardId, dashletId))
   },
@@ -82,6 +87,10 @@ export default req => ({
 
   loadDashletComponentFileContent(appId, dashboardId, componentId, fileName) {
     return req.get(routes.dashletComponentFile(appId, dashboardId, componentId, fileName))
+  },
+
+  uploadDashletComponentFiles(appId, dashboardId, componentId, files) {
+    return req.post(routes.dashletComponentFiles(appId, dashboardId, componentId), files)
   },
 
   updateDashletComponentFiles(appId, dashboardId, componentId, files) {

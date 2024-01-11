@@ -35,6 +35,7 @@ const routes = prepareRoutes({
   removedContainer : '/:appId/console/ui-builder/removed-containers/:containerName',
 
   containerBackups           : '/:appId/console/ui-builder/containers/:containerName/backups',
+  containerBackupsPolicy     : '/:appId/console/ui-builder/containers/:containerName/backups/policy',
   containerBackupUpload      : '/:appId/console/ui-builder/containers/:containerName/backups/upload',
   containerBackupDownloadLink: '/:appId/console/ui-builder/containers/:containerName/backups/download/sign/:backupId',
 
@@ -181,6 +182,10 @@ export default req => ({
 
   loadContainerBackups(appId, containerName) {
     return req.get(routes.containerBackups(appId, containerName))
+  },
+
+  updateContainerBackupsPolicy(appId, containerName, backupsPolicy) {
+    return req.put(routes.containerBackupsPolicy(appId, containerName), backupsPolicy)
   },
 
   createContainerBackup(appId, containerName, backup) {
@@ -355,8 +360,8 @@ export default req => ({
     return req.post(routes.containerLayouts(appId, containerName), data)
   },
 
-  updateLayout(appId, containerName, data) {
-    return req.put(routes.containerLayout(appId, containerName, data.id), data)
+  updateLayout(appId, containerName, layoutId, data) {
+    return req.put(routes.containerLayout(appId, containerName, layoutId), data)
   },
 
   deleteLayout(appId, containerName, id) {
