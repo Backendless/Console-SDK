@@ -10,6 +10,7 @@ const routes = prepareRoutes({
   flowGroup         : '/api/app/:appId/automation/flow/:flowId',
   flowVersionMetrics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
   stepsMetrics      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
+  cloudCodeElements : '/api/app/:appId/automation/flow/cloud-code/elements',
 })
 
 export default req => ({
@@ -68,5 +69,9 @@ export default req => ({
 
   getFlowStepsMetrics(appId, flowId, versionId) {
     return req.automation.get(routes.stepsMetrics(appId, flowId, versionId))
-  }
+  },
+
+  getCloudCodeElements(appId) {
+    return req.automation.get(routes.cloudCodeElements(appId))
+  },
 })
