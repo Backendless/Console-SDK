@@ -12,7 +12,9 @@ const routes = prepareRoutes({
   stepsMetrics         : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
   cloudCodeElements    : '/api/app/:appId/automation/flow/cloud-code/elements',
   startDebugSession    : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/start-session',
+  stopDebugSession     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/stop-session',
   testMonitorHistory   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/history',
+  // eslint-disable-next-line max-len
   debugExecutionContext: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/execution-context',
   runElementInDebugMode: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/run/element/:elementId',
 })
@@ -81,6 +83,10 @@ export default req => ({
 
   startDebugSession(appId, flowId, versionId) {
     return req.automation.post(routes.startDebugSession(appId, flowId, versionId))
+  },
+
+  stopDebugSession(appId, flowId, versionId) {
+    return req.automation.delete(routes.stopDebugSession(appId, flowId, versionId))
   },
 
   loadTestMonitorHistory(appId, flowId, versionId) {
