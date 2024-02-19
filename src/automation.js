@@ -1,15 +1,22 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  flows             : '/api/app/:appId/automation/flow/version',
-  flowsTriggers     : '/api/app/:appId/automation/flow/all-versions-with-callback-triggers',
-  flow              : '/api/app/:appId/automation/flow/version/:versionId',
-  newFlowVersion    : '/api/app/:appId/automation/flow/version/:versionId/new-version',
-  flowState         : '/api/app/:appId/automation/flow/version/:versionId/:state',
-  flowGroupName     : '/api/app/:appId/automation/flow/:flowId/name',
-  flowGroup         : '/api/app/:appId/automation/flow/:flowId',
-  flowVersionMetrics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
-  stepsMetrics      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
+  flows                : '/api/app/:appId/automation/flow/version',
+  flowsTriggers        : '/api/app/:appId/automation/flow/all-versions-with-callback-triggers',
+  flow                 : '/api/app/:appId/automation/flow/version/:versionId',
+  newFlowVersion       : '/api/app/:appId/automation/flow/version/:versionId/new-version',
+  flowState            : '/api/app/:appId/automation/flow/version/:versionId/:state',
+  flowGroupName        : '/api/app/:appId/automation/flow/:flowId/name',
+  flowGroup            : '/api/app/:appId/automation/flow/:flowId',
+  flowVersionMetrics   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
+  stepsMetrics         : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
+  cloudCodeElements    : '/api/app/:appId/automation/flow/cloud-code/elements',
+  startDebugSession    : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/start-session',
+  stopDebugSession     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/stop-session',
+  testMonitorHistory   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/history',
+  // eslint-disable-next-line max-len
+  debugExecutionContext: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/execution-context',
+  runElementInDebugMode: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/run/element/:elementId',
 })
 
 export default req => ({
@@ -68,5 +75,33 @@ export default req => ({
 
   getFlowStepsMetrics(appId, flowId, versionId) {
     return req.automation.get(routes.stepsMetrics(appId, flowId, versionId))
-  }
+  },
+
+  getCloudCodeElements(appId) {
+    return req.automation.get(routes.cloudCodeElements(appId))
+  },
+
+  startDebugSession(appId, flowId, versionId) {
+    return req.automation.post(routes.startDebugSession(appId, flowId, versionId))
+  },
+
+  stopDebugSession(appId, flowId, versionId) {
+    return req.automation.delete(routes.stopDebugSession(appId, flowId, versionId))
+  },
+
+  loadTestMonitorHistory(appId, flowId, versionId) {
+    return req.automation.get(routes.testMonitorHistory(appId, flowId, versionId))
+  },
+
+  loadDebugExecutionContext(appId, flowId, versionId) {
+    return req.automation.get(routes.debugExecutionContext(appId, flowId, versionId))
+  },
+
+  updateDebugExecutionContext(appId, flowId, versionId, context) {
+    return req.automation.put(routes.debugExecutionContext(appId, flowId, versionId), context)
+  },
+
+  runElementInDebugMode(appId, flowId, versionId, elementId, body) {
+    return req.automation.post(routes.runElementInDebugMode(appId, flowId, versionId, elementId), body)
+  },
 })

@@ -157,6 +157,10 @@ export default req => ({
     return req.put(urls.dataRecord(appId, table.name, record.objectId), record)
   },
 
+  updateImageTypeRecord(appId, table, record) {
+    return req.put(`${urls.dataTable(appId, table.name)}/file/${ record.columnName }/${ record.objectId }`, record.value)
+  },
+
   deleteRecords(appId, table, recordIds) {
     const url = removeRecordsUrl(appId, table, !recordIds)
     const removeItems = recordIds && recordIds.map(objectId => ({ objectId }))
@@ -230,7 +234,7 @@ export default req => ({
   },
 
   changeTableOwnerPolicyDelayCheck(appId, tableName, data) {
-    return req.put(routes.tableOwnerPolicyDelayCheck(appId, tableName),data)
+    return req.put(routes.tableOwnerPolicyDelayCheck(appId, tableName), data)
   },
 
 })
