@@ -1,4 +1,4 @@
-import { appConsole as appUrl, users, oauth1, oauth2 } from './urls'
+import { appConsole as appUrl, users, oauth1, oauth2, oauth0Config, oauth0Binding } from './urls'
 
 export default req => ({
   getUsersRegs(appId) {
@@ -95,5 +95,29 @@ export default req => ({
 
   getOAuth2CallbackUrls(appId, providerCode) {
     return req.get(`${oauth2(appId)}/${providerCode}/callback-url`)
+  },
+
+  getAuth0Configuration(appId) {
+    return req.get(`${oauth0Config(appId)}`)
+  },
+
+  updateAuth0Configuration(appId, config) {
+    return req.put(`${oauth0Config(appId)}`, config)
+  },
+
+  createAuth0ScopeBinding(appId, binding) {
+    return req.post(`${oauth0Binding(appId)}`, binding)
+  },
+
+  updateAuth0ScopeBinding(appId, binding) {
+    return req.put(`${oauth0Binding(appId)}/${binding.id}`, binding)
+  },
+
+  getAuth0ScopeBindings(appId) {
+    return req.get(`${oauth0Binding(appId)}`)
+  },
+
+  deleteAuth0ScopeBinding(appId, bindingId) {
+    return req.delete(`${oauth0Binding(appId)}/${bindingId}`, )
   }
 })
