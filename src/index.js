@@ -33,6 +33,7 @@ import projectTemplate from './project-template'
 import security from './security'
 import devPermissions, { DevPermissions } from './dev-permissions'
 import openAI from './open-ai'
+import integrations from './integrations'
 import settings from './settings'
 import status from './status'
 import tables from './tables'
@@ -210,6 +211,7 @@ const createClient = (serverUrl, authKey, options) => {
     initialQuestionnaire: initialQuestionnaire(request),
     consolePreview      : consolePreview(request),
     quickApps           : quickApps(request),
+    integrations        : integrations(request),
   }
 }
 
