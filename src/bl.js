@@ -216,6 +216,16 @@ export default req => ({
       .cacheTags(BL_MODELS(appId, language))
   },
 
+  getAllModels(appId) {
+    return req.get(`${ urls.serverCode(appId) }/models`)
+  },
+
+  createModel(appId, language, model) {
+    const data = { appId, language, model }
+
+    return req.post(`${ urls.serverCode(appId) }/models/create`, data)
+  },
+
   createEventHandler(appId, handler) {
     const { category, mode, ...data } = handler
 
