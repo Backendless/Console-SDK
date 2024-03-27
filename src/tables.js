@@ -168,6 +168,10 @@ export default req => ({
     return req.delete(url, removeItems).cacheTags(TABLE_DATA(table.tableId))
   },
 
+  deleteImageTypeRecord(appId, tableName, columnName, recordId) {
+    return req.delete(`${urls.dataTable(appId, tableName)}/file/${ columnName }/${ recordId }`)
+  },
+
   updateRelations(appId, table, columnName, recordId, relationIds) {
     const relationColumn = getRelationColumn(table, columnName)
 
