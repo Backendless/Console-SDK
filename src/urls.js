@@ -163,8 +163,6 @@ export const emailTemplates = (appId, templateName) => `${appConsole(appId)}/ema
 
 export const installEmailTemplate = (appId, productId) => `${appConsole(appId)}/email-templates/install/${productId}`
 
-export const integrations = appId => `${appConsole(appId)}/integrations/openAI`
-
 export const apiDocs = appId => `${appConsole(appId)}/api-docs`
 export const apiDocsDataTable = (appId, tableName) => `${apiDocs(appId)}/data/table/${tableName}`
 export const apiDocsMessagingChannel = (appId, channelName) => `${apiDocs(appId)}/messaging/channel/${channelName}`
@@ -238,7 +236,6 @@ export default {
   directoryView,
   geo,
   installEmailTemplate,
-  integrations,
   landingPage,
   mailSettings,
   marketplace,
