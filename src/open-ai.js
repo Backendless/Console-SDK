@@ -1,4 +1,5 @@
 import { prepareRoutes } from './utils/routes'
+
 const routes = prepareRoutes({
   chatCompletionCreate: '/:appId/console/open-ai/chat-completion/:featureName',
   info                : '/:appId/console/open-ai/info/:featureName',
