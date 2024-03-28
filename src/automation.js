@@ -81,8 +81,9 @@ export default req => ({
       .query({ fromDate, toDate })
   },
 
-  loadErrorHandlerAnalytics(appId, flowId, versionId, errorHandlerId) {
+  loadErrorHandlerAnalytics(appId, flowId, versionId, errorHandlerId, fromDate, toDate) {
     return req.automation.get(routes.errorHandlerAnalytics(appId, flowId, versionId, errorHandlerId))
+      .query({ fromDate, toDate })
   },
 
   getCloudCodeElements(appId) {
