@@ -33,7 +33,6 @@ import projectTemplate from './project-template'
 import security from './security'
 import devPermissions, { DevPermissions } from './dev-permissions'
 import openAI from './open-ai'
-import integrations from './integrations'
 import settings from './settings'
 import status from './status'
 import tables from './tables'
@@ -45,7 +44,6 @@ import uiBuilder from './ui-builder'
 import chartBuilder from './chart-builder'
 import visualizations from './visualizations'
 import consolePreview from './console-preview'
-import quickApps from './quick-apps'
 
 import { community } from './community'
 import { marketplace } from './marketplace'
@@ -210,8 +208,6 @@ const createClient = (serverUrl, authKey, options) => {
     visualizations      : visualizations(request),
     initialQuestionnaire: initialQuestionnaire(request),
     consolePreview      : consolePreview(request),
-    quickApps           : quickApps(request),
-    integrations        : integrations(request),
   }
 }
 
