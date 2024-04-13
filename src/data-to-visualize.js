@@ -7,12 +7,13 @@ const routes = prepareRoutes({
   dashboardSettings: '/:appId/console/data-to-visualize/dashboards/:dashboardId/settings',
 
   dashlets      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
-  dashletInstall: '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/install',
-  dashletUpgrade: '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/upgrade',
+  createDashlets: '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/create',
   dashlet       : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets/:dashletId',
 
   dashletComponents                : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components',
+  dashletComponentInstall          : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components/install',
   dashletComponentCreate           : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components/create',
+  dashletComponentUpgrade          : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components/upgrade',
   dashletComponent                 : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components/:componentId/',
   dashletComponentFiles            : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components/:componentId/files',
   dashletComponentFile             : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlet-components/:componentId/files/:fileId',
@@ -44,12 +45,8 @@ export default req => ({
     return req.post(routes.dashlets(appId, dashboardId), dashletComponent)
   },
 
-  installDashboardDashlet(appId, dashboardId, product) {
-    return req.post(routes.dashletInstall(appId, dashboardId), product)
-  },
-
-  upgradeDashboardDashlet(appId, dashboardId, product, versionId) {
-    return req.post(routes.dashletUpgrade(appId, dashboardId), { product, versionId })
+  createDashboardDashlets(appId, dashboardId, dashlets) {
+    return req.post(routes.createDashlets(appId, dashboardId), dashlets)
   },
 
   deleteDashboardDashlet(appId, dashboardId, dashletId) {
@@ -62,6 +59,14 @@ export default req => ({
 
   loadDashletComponents(appId, dashboardId) {
     return req.get(routes.dashletComponents(appId, dashboardId))
+  },
+
+  installDashletComponent(appId, dashboardId, product) {
+    return req.post(routes.dashletComponentInstall(appId, dashboardId), product)
+  },
+
+  upgradeDashletComponent(appId, dashboardId, product, versionId) {
+    return req.post(routes.dashletComponentUpgrade(appId, dashboardId), { product, versionId })
   },
 
   createDashletComponent(appId, dashboardId, dashlet) {
