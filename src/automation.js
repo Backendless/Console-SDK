@@ -105,6 +105,11 @@ export default req => ({
       .query({ sessionId })
   },
 
+  clearTestMonitorHistory(appId, flowId, versionId, sessionId) {
+    return req.automation.delete(routes.testMonitorHistory(appId, flowId, versionId))
+      .query({ sessionId })
+  },
+
   loadDebugExecutionContext(appId, flowId, versionId, sessionId) {
     return req.automation.get(routes.debugExecutionContext(appId, flowId, versionId))
       .query({ sessionId })
