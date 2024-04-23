@@ -136,7 +136,11 @@ export default req => ({
     return req.get(`${urls.appConsole(appId)}/workers`).query(query)
   },
 
-  pricingEstimate(appId, query) {
+  scalePlanePricingEstimate(appId, query) {
     return req.billing.get(`/${appId}/console/billing/application/tiers/price-estimation`).query(query)
+  },
+
+  scaleFixedPlanePricingEstimate(appId, tierId, query) {
+    return req.billing.get(`/${appId}/console/billing/application/tiers/price-estimation/${ tierId }`).query(query)
   }
 })

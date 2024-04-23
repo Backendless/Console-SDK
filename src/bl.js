@@ -174,6 +174,10 @@ export default req => ({
     return req.put(`${ hostedServices(appId) }/${ serviceId }/update`, updates)
   },
 
+  updateServiceDefaultModel(appId, updates) {
+    return req.put(`${urls.blBasePath(appId)}/default-model`, updates)
+  },
+
   loadServiceConfig(appId, serviceId) {
     return req.get(hostedServiceConfig(appId, serviceId))
   },
@@ -214,6 +218,16 @@ export default req => ({
     return req
       .get(`${ urls.serverCode(appId) }/models/${ language }`)
       .cacheTags(BL_MODELS(appId, language))
+  },
+
+  getAllModels(appId) {
+    return req.get(`${ urls.serverCode(appId) }/models`)
+  },
+
+  createModel(appId, language, model) {
+    const data = { appId, language, model }
+
+    return req.post(`${ urls.serverCode(appId) }/models/create`, data)
   },
 
   createEventHandler(appId, handler) {

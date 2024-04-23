@@ -81,8 +81,9 @@ export default req => ({
       .query({ fromDate, toDate })
   },
 
-  loadErrorHandlerAnalytics(appId, flowId, versionId, errorHandlerId) {
+  loadErrorHandlerAnalytics(appId, flowId, versionId, errorHandlerId, fromDate, toDate) {
     return req.automation.get(routes.errorHandlerAnalytics(appId, flowId, versionId, errorHandlerId))
+      .query({ fromDate, toDate })
   },
 
   getCloudCodeElements(appId) {
@@ -101,6 +102,11 @@ export default req => ({
 
   loadTestMonitorHistory(appId, flowId, versionId, sessionId) {
     return req.automation.get(routes.testMonitorHistory(appId, flowId, versionId))
+      .query({ sessionId })
+  },
+
+  clearTestMonitorHistory(appId, flowId, versionId, sessionId) {
+    return req.automation.delete(routes.testMonitorHistory(appId, flowId, versionId))
       .query({ sessionId })
   },
 
