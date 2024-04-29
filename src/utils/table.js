@@ -101,7 +101,7 @@ const searchStringToSQLFormat = (table, searchValue) => {
       const sqlFragment = getSQLQueryForColumn(searchValue, column.dataType)
 
       if (sqlFragment) {
-        sqlParts.push(`${column.name} ${sqlFragment}`)
+        sqlParts.push(`${wrapQueryColumnName(column.name)} ${sqlFragment}`)
       }
     }
   })
@@ -145,4 +145,22 @@ const getSQLQueryForColumn = (searchString, columnType) => {
       return sqlLike(dateTimeQuery)
     }
   }
+}
+
+function shouldWrap(path) {
+  if (path && path.startsWith('`') && path.endsWith('`')) {
+    return false
+  }
+
+  if (path.includes('[') && path.includes(']')) {
+    return false
+  }
+
+  return true
+}
+
+export function wrapQueryColumnName(columnName) {
+  return columnName.split('.')
+    .map(path => shouldWrap(path) ? `\`${path}\`` : path)
+    .join('.')
 }

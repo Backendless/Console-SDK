@@ -10,6 +10,8 @@ const routes = prepareRoutes({
   flowGroup            : '/api/app/:appId/automation/flow/:flowId',
   flowVersionMetrics   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
   stepsMetrics         : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
+  // eslint-disable-next-line max-len
+  errorHandlerAnalytics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/error-handler/:errorHandlerId/recorded-errors',
   cloudCodeElements    : '/api/app/:appId/automation/flow/cloud-code/elements',
   startDebugSession    : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/start-session',
   stopDebugSession     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/stop-session',
@@ -69,39 +71,57 @@ export default req => ({
     return req.automation.delete(routes.flowGroup(appId, groupId))
   },
 
-  getFlowVersionMetrics(appId, flowId, versionId) {
+  getFlowVersionMetrics(appId, flowId, versionId, fromDate, toDate) {
     return req.automation.get(routes.flowVersionMetrics(appId, flowId, versionId))
+      .query({ fromDate, toDate })
   },
 
-  getFlowStepsMetrics(appId, flowId, versionId) {
+  getFlowStepsMetrics(appId, flowId, versionId, fromDate, toDate) {
     return req.automation.get(routes.stepsMetrics(appId, flowId, versionId))
+      .query({ fromDate, toDate })
+  },
+
+  loadErrorHandlerAnalytics(appId, flowId, versionId, errorHandlerId, fromDate, toDate) {
+    return req.automation.get(routes.errorHandlerAnalytics(appId, flowId, versionId, errorHandlerId))
+      .query({ fromDate, toDate })
   },
 
   getCloudCodeElements(appId) {
     return req.automation.get(routes.cloudCodeElements(appId))
   },
 
-  startDebugSession(appId, flowId, versionId) {
+  startDebugSession(appId, flowId, versionId, forceStart) {
     return req.automation.post(routes.startDebugSession(appId, flowId, versionId))
+      .query({ forceStart })
   },
 
-  stopDebugSession(appId, flowId, versionId) {
+  stopDebugSession(appId, flowId, versionId, sessionId) {
     return req.automation.delete(routes.stopDebugSession(appId, flowId, versionId))
+      .query({ sessionId })
   },
 
-  loadTestMonitorHistory(appId, flowId, versionId) {
+  loadTestMonitorHistory(appId, flowId, versionId, sessionId) {
     return req.automation.get(routes.testMonitorHistory(appId, flowId, versionId))
+      .query({ sessionId })
   },
 
-  loadDebugExecutionContext(appId, flowId, versionId) {
+  clearTestMonitorHistory(appId, flowId, versionId, sessionId) {
+    return req.automation.delete(routes.testMonitorHistory(appId, flowId, versionId))
+      .query({ sessionId })
+  },
+
+  loadDebugExecutionContext(appId, flowId, versionId, sessionId) {
     return req.automation.get(routes.debugExecutionContext(appId, flowId, versionId))
+      .query({ sessionId })
   },
 
-  updateDebugExecutionContext(appId, flowId, versionId, context) {
+  updateDebugExecutionContext(appId, flowId, versionId, context, sessionId) {
     return req.automation.put(routes.debugExecutionContext(appId, flowId, versionId), context)
+      .query({ sessionId })
   },
 
-  runElementInDebugMode(appId, flowId, versionId, elementId, body) {
-    return req.automation.post(routes.runElementInDebugMode(appId, flowId, versionId, elementId), body)
+  runElementInDebugMode(appId, flowId, versionId, elementId, body, sessionId) {
+    return req.automation.post(routes.runElementInDebugMode(appId, flowId, versionId, elementId), body, sessionId)
+      .query({ sessionId })
   },
 })
