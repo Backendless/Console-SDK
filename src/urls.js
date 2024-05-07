@@ -169,7 +169,7 @@ export const apiDocs = appId => `${appConsole(appId)}/api-docs`
 export const apiDocsDataTable = (appId, tableName) => `${apiDocs(appId)}/data/table/${tableName}`
 export const apiDocsMessagingChannel = (appId, channelName) => `${apiDocs(appId)}/messaging/channel/${channelName}`
 export const apiDocsFiles = appId => `${apiDocs(appId)}/files`
-export const apiDocsService = (appId, serviceId) => `${apiDocs(appId)}/services/${serviceId}`
+export const apiDocsService = (appId, serviceId, model) => `${apiDocs(appId)}/services/${serviceId}/${model}`
 export const apiDocsGeo = appId => `${apiDocs(appId)}/geo`
 
 export const cache = (appId, key) => `${appConsole(appId)}/cache${optional(key)}`
