@@ -9,8 +9,8 @@ export default req => ({
     return req.post('/console/applications/from-zip', app)
   },
 
-  createAppFromZipUrl(app) {
-    return req.post('/console/applications/from-zip-url', app)
+  createAppFromZipUrl(data) {
+    return req.post('/console/applications/from-zip-url', data)
   },
 
   getApps(zone) {
