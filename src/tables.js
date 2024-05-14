@@ -18,7 +18,7 @@ const COLUMNS_URL_SUFFIX = {
 const isRelType = dataType => dataType === DataTypes.DATA_REF || dataType === DataTypes.GEO_REF
 
 const tableColumnsUrl = (appId, table) => urls.tableColumns(appId, table.name)
-const tableUrl = (appId, table) => `${urls.dataTables(appId)}/${table.name}`
+const tableUrl = (appId, table) => `${urls.dataTables(appId)}/${encodeURI(table.name)}`
 const removeRecordsUrl = (appId, table, removeAll) => `${tableUrl(appId, table)}/${removeAll ? 'all' : 'records'}`
 const assignedUserRoles = appId => `${urls.security(appId)}/assignedroles`
 
