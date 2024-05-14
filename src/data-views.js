@@ -69,6 +69,6 @@ export default req => ({
   loadSampleRecords(appId, table, query = {}) {
     const params = composeRequestParams(table, query)
 
-    return req.post(`${urls.data(appId)}/table-pre-view/${table.name}/find`, params)
+    return req.post(`${urls.data(appId)}/table-pre-view/${encodeURI(table.name)}/find`, params)
   }
 })
