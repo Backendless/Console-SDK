@@ -30,6 +30,8 @@ const routes = prepareRoutes({
   containerCustomHeadContent: '/:appId/console/ui-builder/containers/:containerName/custom-head-content',
   containerExternalLibraries: '/:appId/console/ui-builder/containers/:containerName/external-libraries',
   containerDefaultI18n      : '/:appId/console/ui-builder/containers/:containerName/i18n',
+  containerPWASettings      : '/:appId/console/ui-builder/containers/:containerName/pwa-settings',
+  containerPWAIcon          : '/:appId/console/ui-builder/containers/:containerName/pwa-icon',
 
   removedContainers: '/:appId/console/ui-builder/removed-containers',
   removedContainer : '/:appId/console/ui-builder/removed-containers/:containerName',
@@ -262,6 +264,14 @@ export default req => ({
 
   updateContainerExternalLibraries(appId, containerName, externalLibraries) {
     return req.put(routes.containerExternalLibraries(appId, containerName), externalLibraries)
+  },
+
+  updateContainerPWASettings(appId, containerName, PWASettings) {
+    return req.put(routes.containerPWASettings(appId, containerName), PWASettings)
+  },
+
+  updateContainerPWAIcon(appId, containerName, file) {
+    return req.put(routes.containerPWAIcon(appId, containerName)).form({ file })
   },
 
   //-- SETTINGS -----//
