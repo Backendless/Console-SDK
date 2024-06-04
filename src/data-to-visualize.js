@@ -33,6 +33,10 @@ export default req => ({
     return req.put(routes.dashboard(appId, dashboardId), changes)
   },
 
+  updateDashboards(appId, changes) {
+    return req.put(routes.dashboards(appId), changes)
+  },
+
   updateDashboardSettings(appId, dashboardId, settings) {
     return req.put(routes.dashboardSettings(appId, dashboardId), settings)
   },
