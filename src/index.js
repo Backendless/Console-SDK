@@ -7,7 +7,7 @@ import analytics from './analytics'
 import apiDocs from './api-docs'
 import apps from './apps'
 import automation from './automation'
-import billing from './billing'
+import { billingAPI } from './billing'
 import bl from './bl'
 import cloudCode from './cloud-code'
 import blueprints from './blueprints'
@@ -168,7 +168,7 @@ const createClient = (serverUrl, authKey, options) => {
     apiDocs             : apiDocs(request),
     apps                : apps(request),
     automation          : automation(request),
-    billing             : billing(request),
+    billing             : billingAPI(request),
     bl                  : bl(request),
     cloudCode           : cloudCode(request),
     blueprints          : blueprints(request),

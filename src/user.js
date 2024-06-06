@@ -120,30 +120,6 @@ export default (req, context) => ({
     return req.get(`${urls.appConsole(appId)}/my-permissions`)
   },
 
-  loadSubscriptionsInfo() {
-    return req.billing.get('/console/billing/developer/subscriptions-info')
-  },
-
-  loadPaymentProfiles() {
-    return req.get('/console/billing/developer/payment-profile')
-  },
-
-  setPaymentProfile(appId, paymentProfileId) {
-    return req.billing.put(`${urls.appConsole(appId)}/billing/application/creditcard/${paymentProfileId}`)
-  },
-
-  addPaymentProfile(data) {
-    return req.post('/console/billing/developer/payment-profile', data)
-  },
-
-  updatePaymentProfile(id, data) {
-    return req.put(`/console/billing/developer/payment-profile/${id}`, data)
-  },
-
-  deletePaymentProfile(id) {
-    return req.delete(`/console/billing/developer/payment-profile/${id}`)
-  },
-
   completeStripeConnection(data) {
     return req.post('/console/community/marketplace/stripe-connect/auth', data)
   },

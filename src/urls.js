@@ -121,8 +121,11 @@ export const mobileSettings = appId =>
 export const mobileSettingsAndroid = (appId, id) =>
   `${mobileSettings(appId)}/android${optional(id)}`
 
-export const billing = appId =>
-  `${appConsole(appId)}/billing`
+export const billing = appId => {
+  console.warn('DO NOT USE THE FUNCTION')
+
+  return `${appConsole(appId)}/billing`
+}
 
 export const marketplace = (appId, name) => `${appConsole(appId)}/marketplace/${name}`
 
