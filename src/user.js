@@ -5,6 +5,8 @@ const routes = prepareRoutes({
   myAccount         : '/console/home/myaccount',
   login             : '/console/home/login',
   loginWithTOTP     : '/console/home/otp-login',
+  cloudLogin        : '/console/home/cloud/login',
+  cloudLoginWithTOTP: '/console/home/cloud/otp-login',
   logout            : '/console/home/logout',
   registerDev       : '/console/devreg',
   deleteDev         : '/console/developer-suicide',
@@ -78,6 +80,31 @@ export default (req, context) => ({
 
   loginWithTOTP(authData) {
     return req.post(routes.loginWithTOTP())
+      .unwrapBody(false)
+      .send(authData)
+      .then(res => contextifyWithAuthToken(res, context))
+  },
+
+  /**
+   * @param {String} login
+   * @param {String} password
+   * @return {Promise.<{name:String, email:String, authKey:String}>}
+   */
+  cloudLogin(login, password) {
+    return req.post(routes.cloudLogin())
+      .unwrapBody(false)
+      .send({ login, password })
+      .then(res => {
+        if (res.body.otpCreated) {
+          return res.body
+        }
+
+        return contextifyWithAuthToken(res, context)
+      })
+  },
+
+  cloudLoginWithTOTP(authData) {
+    return req.post(routes.cloudLoginWithTOTP())
       .unwrapBody(false)
       .send(authData)
       .then(res => contextifyWithAuthToken(res, context))
