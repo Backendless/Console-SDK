@@ -34,6 +34,7 @@ import security from './security'
 import devPermissions, { DevPermissions } from './dev-permissions'
 import openAI from './open-ai'
 import integrations from './integrations'
+import pdf from './pdf'
 import settings from './settings'
 import status from './status'
 import tables from './tables'
@@ -212,6 +213,7 @@ const createClient = (serverUrl, authKey, options) => {
     consolePreview      : consolePreview(request),
     quickApps           : quickApps(request),
     integrations        : integrations(request),
+    pdf                 : pdf(request),
   }
 }
 
