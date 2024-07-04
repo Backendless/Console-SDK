@@ -45,6 +45,14 @@ export default req => ({
     return req.post(urls.appInfo(appId), info)
   },
 
+  loadAppsMenuItems() {
+    return req.get('/console/applications/menu-items')
+  },
+
+  loadAppFavorites(appId, devId) {
+    return req.get('/console/applications/app-favorites').query({ appId, devId })
+  },
+
   loadAppsInfo(appsIds) {
     return req.get('/console/apps-info').query({ appsIds })
   },
