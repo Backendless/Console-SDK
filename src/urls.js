@@ -121,8 +121,11 @@ export const mobileSettings = appId =>
 export const mobileSettingsAndroid = (appId, id) =>
   `${mobileSettings(appId)}/android${optional(id)}`
 
-export const billing = appId =>
-  `${appConsole(appId)}/billing`
+export const billing = appId => {
+  console.warn('DO NOT USE THE FUNCTION')
+
+  return `${appConsole(appId)}/billing`
+}
 
 export const marketplace = (appId, name) => `${appConsole(appId)}/marketplace/${name}`
 
@@ -163,7 +166,7 @@ export const emailTemplates = (appId, templateName) => `${appConsole(appId)}/ema
 
 export const installEmailTemplate = (appId, productId) => `${appConsole(appId)}/email-templates/install/${productId}`
 
-export const integrations = appId => `${appConsole(appId)}/integrations/openAI`
+export const integrations = (appId, dataId) => `${appConsole(appId)}/integrations${optional(dataId)}`
 
 export const apiDocs = appId => `${appConsole(appId)}/api-docs`
 export const apiDocsDataTable = (appId, tableName) => `${apiDocs(appId)}/data/table/${tableName}`

@@ -10,6 +10,10 @@ const routes = prepareRoutes({
   flowGroup            : '/api/app/:appId/automation/flow/:flowId',
   flowVersionMetrics   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
   stepsMetrics         : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
+  flowSlA              : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goal',
+  flowSlAGoal          : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goal/:id',
+  SLACalendars         : '/api/app/:appId/automation/flow/sla/calendar',
+  SLACalendar          : '/api/app/:appId/automation/flow/sla/calendar/:id',
   // eslint-disable-next-line max-len
   errorHandlerAnalytics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/error-handler/:errorHandlerId/recorded-errors',
   cloudCodeElements    : '/api/app/:appId/automation/flow/cloud-code/elements',
@@ -123,5 +127,37 @@ export default req => ({
   runElementInDebugMode(appId, flowId, versionId, elementId, body, sessionId) {
     return req.automation.post(routes.runElementInDebugMode(appId, flowId, versionId, elementId), body, sessionId)
       .query({ sessionId })
+  },
+
+  getFlowSLAGoals(appId, flowId, versionId) {
+    return req.automation.get(routes.flowSlA(appId, flowId, versionId))
+  },
+
+  createFlowSLAGoal(appId, flowId, versionId, data) {
+    return req.automation.post(routes.flowSlA(appId, flowId, versionId), data)
+  },
+
+  updateFlowSLAGoal(appId, flowId, versionId, data, id) {
+    return req.automation.put(routes.flowSlAGoal(appId, flowId, versionId, id), data)
+  },
+
+  deleteFlowSLAGoal(appId, flowId, versionId, id) {
+    return req.automation.delete(routes.flowSlAGoal(appId, flowId, versionId, id))
+  },
+
+  getSLACalendars(appId) {
+    return req.automation.get(routes.SLACalendars(appId))
+  },
+
+  createSLACalendar(appId, data) {
+    return req.automation.post(routes.SLACalendars(appId), data)
+  },
+
+  updateSLACalendar(appId, data, id) {
+    return req.automation.put(routes.SLACalendar(appId, id), data)
+  },
+
+  deleteSLACalendar(appId, id) {
+    return req.automation.delete(routes.SLACalendar(appId, id))
   },
 })
