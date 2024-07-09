@@ -31,7 +31,7 @@ export function billingLimitsAPI(req) {
     },
 
     scaleFixedPlanePricingEstimate(appId, tierId, query) {
-      return req.billing.get(routes.tiersFloatPriceEstimation(appId, tierId)).query(query)
+      return req.billing.get(routes.tiersFixedPriceEstimation(appId, tierId)).query(query)
     },
 
     getMaxTier(appId) {
