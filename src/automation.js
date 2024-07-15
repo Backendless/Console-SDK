@@ -10,8 +10,8 @@ const routes = prepareRoutes({
   flowGroup            : '/api/app/:appId/automation/flow/:flowId',
   flowVersionMetrics   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
   stepsMetrics         : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
-  flowSlA              : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goal',
-  flowSlAGoal          : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goal/:id',
+  flowSlA              : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
+  flowSlAGoal          : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals/:id',
   SLACalendars         : '/api/app/:appId/automation/flow/sla/calendar',
   SLACalendar          : '/api/app/:appId/automation/flow/sla/calendar/:id',
   // eslint-disable-next-line max-len
