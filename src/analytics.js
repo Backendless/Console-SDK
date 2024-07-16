@@ -135,8 +135,4 @@ export default req => ({
   workers(appId, query) {
     return req.get(`${urls.appConsole(appId)}/workers`).query(query)
   },
-
-  pricingEstimate(appId, query) {
-    return req.billing.get(`/${appId}/console/billing/application/tiers/price-estimation`).query(query)
-  }
 })

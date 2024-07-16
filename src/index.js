@@ -7,7 +7,7 @@ import analytics from './analytics'
 import apiDocs from './api-docs'
 import apps from './apps'
 import automation from './automation'
-import billing from './billing'
+import { billingAPI } from './billing'
 import bl from './bl'
 import cloudCode from './cloud-code'
 import blueprints from './blueprints'
@@ -34,6 +34,7 @@ import security from './security'
 import devPermissions, { DevPermissions } from './dev-permissions'
 import openAI from './open-ai'
 import integrations from './integrations'
+import pdf from './pdf'
 import settings from './settings'
 import status from './status'
 import tables from './tables'
@@ -168,7 +169,7 @@ const createClient = (serverUrl, authKey, options) => {
     apiDocs             : apiDocs(request),
     apps                : apps(request),
     automation          : automation(request),
-    billing             : billing(request),
+    billing             : billingAPI(request),
     bl                  : bl(request),
     cloudCode           : cloudCode(request),
     blueprints          : blueprints(request),
@@ -212,6 +213,7 @@ const createClient = (serverUrl, authKey, options) => {
     consolePreview      : consolePreview(request),
     quickApps           : quickApps(request),
     integrations        : integrations(request),
+    pdf                 : pdf(request),
   }
 }
 

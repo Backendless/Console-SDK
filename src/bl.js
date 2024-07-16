@@ -174,6 +174,10 @@ export default req => ({
     return req.put(`${ hostedServices(appId) }/${ serviceId }/update`, updates)
   },
 
+  updateServiceDefaultModel(appId, updates) {
+    return req.put(`${urls.blBasePath(appId)}/default-model`, updates)
+  },
+
   loadServiceConfig(appId, serviceId) {
     return req.get(hostedServiceConfig(appId, serviceId))
   },

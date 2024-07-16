@@ -18,7 +18,7 @@ const COLUMNS_URL_SUFFIX = {
 const isRelType = dataType => dataType === DataTypes.DATA_REF || dataType === DataTypes.GEO_REF
 
 const tableColumnsUrl = (appId, table) => urls.tableColumns(appId, table.name)
-const tableUrl = (appId, table) => `${urls.dataTables(appId)}/${table.name}`
+const tableUrl = (appId, table) => `${urls.dataTables(appId)}/${encodeURI(table.name)}`
 const removeRecordsUrl = (appId, table, removeAll) => `${tableUrl(appId, table)}/${removeAll ? 'all' : 'records'}`
 const assignedUserRoles = appId => `${urls.security(appId)}/assignedroles`
 
@@ -166,6 +166,10 @@ export default req => ({
     const removeItems = recordIds && recordIds.map(objectId => ({ objectId }))
 
     return req.delete(url, removeItems).cacheTags(TABLE_DATA(table.tableId))
+  },
+
+  deleteImageTypeRecord(appId, tableName, columnName, recordId) {
+    return req.delete(`${urls.dataTable(appId, tableName)}/file/${ columnName }/${ recordId }`)
   },
 
   updateRelations(appId, table, columnName, recordId, relationIds) {
