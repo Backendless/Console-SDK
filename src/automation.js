@@ -7,6 +7,7 @@ const routes = prepareRoutes({
   newFlowVersion       : '/api/app/:appId/automation/flow/version/:versionId/new-version',
   flowState            : '/api/app/:appId/automation/flow/version/:versionId/:state',
   flowGroupName        : '/api/app/:appId/automation/flow/:flowId/name',
+  flowDescription      : '/api/app/:appId/automation/flow/version/:versionId/description',
   flowGroup            : '/api/app/:appId/automation/flow/:flowId',
   flowVersionMetrics   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
   stepsMetrics         : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
@@ -73,6 +74,10 @@ export default req => ({
 
   deleteFlowsGroup(appId, groupId) {
     return req.automation.delete(routes.flowGroup(appId, groupId))
+  },
+
+  updateFlowDescription(appId, versionId, description) {
+    return req.put(routes.flowDescription(appId, versionId, description), { description })
   },
 
   getFlowVersionMetrics(appId, flowId, versionId, fromDate, toDate) {
