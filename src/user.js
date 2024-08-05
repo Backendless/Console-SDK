@@ -1,21 +1,31 @@
-import urls from './urls'
 import { cookieEnabled, deleteCookie, getCookie } from './utils/cookie'
 import { prepareRoutes } from './utils/routes'
 
-// TODO: move all routes here
 const routes = prepareRoutes({
-  twoFA         : '/console/developer/login/2fa',
-  loginWithTOTP : '/console/home/otp-login',
-  changePassword: '/console/passwordchange'
+  myAccount         : '/console/home/myaccount',
+  login             : '/console/home/login',
+  loginWithTOTP     : '/console/home/otp-login',
+  cloudLogin        : '/console/home/cloud/login',
+  cloudLoginWithTOTP: '/console/home/cloud/otp-login',
+  logout            : '/console/home/logout',
+  registerDev       : '/console/devreg',
+  deleteDev         : '/console/developer-suicide',
+  twoFA             : '/console/developer/login/2fa',
+  stripeConnect     : '/console/developer/stripe-connect',
+  changePassword    : '/console/passwordchange',
+  restorePassword   : '/console/restorepassword',
+  resendConfirmEmail: '/console/resend',
+  discourseSSO      : '/console/discourse/sso',
+  socialLogin       : '/console/social/oauth/:type/request_url',
+
+  devToAutomationWorkspace: '/console/automation/management/:workspaceId/activatedev',
+
+  stripeConnectionAuth : '/console/community/marketplace/stripe-connect/auth',
+  stripeConnectionToken: '/console/community/marketplace/stripe-connect/token',
+
+  devToAppTeam  : '/:appId/console/activatedev',
+  devPermissions: '/:appId/console/my-permissions',
 })
-
-const contextifyWithAuthToken = (res, context) => {
-  const authKey = (cookieEnabled() && getCookie('dev-auth-key')) || res.headers['auth-key']
-
-  context.setAuthKey(authKey)
-
-  return { ...res.body, authKey }
-}
 
 /**
  *
@@ -28,7 +38,7 @@ export default (req, context) => ({
    * @return {Promise|*}
    */
   getAccountInfo(authKey) {
-    const request = req.get('/console/home/myaccount')
+    const request = req.get(routes.myAccount())
 
     if (authKey) {
       request.set('auth-key', authKey)
@@ -42,13 +52,21 @@ export default (req, context) => ({
       })
   },
 
+  register(userData) {
+    return req.post(routes.registerDev()).send(userData)
+  },
+
+  suicide() {
+    return req.delete(routes.deleteDev()).send()
+  },
+
   /**
    * @param {String} login
    * @param {String} password
    * @return {Promise.<{name:String, email:String, authKey:String}>}
    */
   login(login, password) {
-    return req.post('/console/home/login')
+    return req.post(routes.login())
       .unwrapBody(false)
       .send({ login, password })
       .then(res => {
@@ -60,20 +78,44 @@ export default (req, context) => ({
       })
   },
 
-  register(userData) {
-    return req.post('/console/devreg').send(userData)
+  loginWithTOTP(authData) {
+    return req.post(routes.loginWithTOTP())
+      .unwrapBody(false)
+      .send(authData)
+      .then(res => contextifyWithAuthToken(res, context))
   },
 
-  suicide() {
-    return req.delete('/console/developer-suicide').send()
+  /**
+   * @param {String} login
+   * @param {String} password
+   * @return {Promise.<{name:String, email:String, authKey:String}>}
+   */
+  cloudLogin(login, password) {
+    return req.post(routes.cloudLogin())
+      .unwrapBody(false)
+      .send({ login, password })
+      .then(res => {
+        if (res.body.otpCreated) {
+          return res.body
+        }
+
+        return contextifyWithAuthToken(res, context)
+      })
+  },
+
+  cloudLoginWithTOTP(authData) {
+    return req.post(routes.cloudLoginWithTOTP())
+      .unwrapBody(false)
+      .send(authData)
+      .then(res => contextifyWithAuthToken(res, context))
   },
 
   loginSocial(type) {
-    return req.get(`/console/social/oauth/${type}/request_url`)
+    return req.get(routes.socialLogin(type))
   },
 
   logout() {
-    return req.delete('/console/home/logout').then(() => {
+    return req.delete(routes.logout()).then(() => {
       context.setAuthKey(null)
 
       if (cookieEnabled()) {
@@ -83,21 +125,21 @@ export default (req, context) => ({
   },
 
   restorePassword(email) {
-    return req.post('/console/restorepassword')
+    return req.post(routes.restorePassword())
       .type('application/x-www-form-urlencoded; charset=UTF-8')
       .send('email=' + encodeURIComponent(email))
   },
 
   resendConfirmEmail(email) {
-    return req.get('console/resend').query({ email })
+    return req.get(routes.resendConfirmEmail()).query({ email })
   },
 
   updateProfile(profile) {
-    return req.put('/console/home/myaccount/', profile)
+    return req.put(routes.myAccount(), profile)
   },
 
   registerAndJoinAppTeam(appId, confirmationCode, userData) {
-    return req.post(`${urls.appConsole(appId)}/activatedev`)
+    return req.post(routes.devToAppTeam(appId))
       .query({ 'confirmation-code': confirmationCode })
       .unwrapBody(false)
       .send(userData)
@@ -105,7 +147,7 @@ export default (req, context) => ({
   },
 
   registerAndJoinWorkspace(workspaceId, confirmationCode, userData) {
-    return req.automation.post(`/console/automation/management/${workspaceId}/activatedev`)
+    return req.automation.post(routes.devToAutomationWorkspace(workspaceId))
       .query({ 'confirmation-code': confirmationCode })
       .unwrapBody(false)
       .send(userData)
@@ -113,27 +155,27 @@ export default (req, context) => ({
   },
 
   loginToDiscourse(user, sig, sso) {
-    return req.post('/console/discourse/sso', { user, sig, sso })
+    return req.post(routes.discourseSSO(), { user, sig, sso })
   },
 
   getPermissions(appId) {
-    return req.get(`${urls.appConsole(appId)}/my-permissions`)
+    return req.get(routes.devPermissions(appId))
   },
 
   completeStripeConnection(data) {
-    return req.post('/console/community/marketplace/stripe-connect/auth', data)
+    return req.post(routes.stripeConnectionAuth(), data)
   },
 
   getStripeConnectToken() {
-    return req.get('/console/community/marketplace/stripe-connect/token')
+    return req.get(routes.stripeConnectionToken())
   },
 
   getStripeConnectAccountId() {
-    return req.get('/console/developer/stripe-connect')
+    return req.get(routes.stripeConnect())
   },
 
   setStripeConnectAccountId(data) {
-    return req.put('/console/developer/stripe-connect', data)
+    return req.put(routes.stripeConnect(), data)
   },
 
   get2FAState() {
@@ -144,14 +186,15 @@ export default (req, context) => ({
     return req.put(routes.twoFA(), { enabled })
   },
 
-  loginWithTOTP(authData) {
-    return req.post(routes.loginWithTOTP())
-      .unwrapBody(false)
-      .send(authData)
-      .then(res => contextifyWithAuthToken(res, context))
-  },
-
   changePassword(id, password) {
     return req.post(routes.changePassword(), { id, password })
   }
 })
+
+function contextifyWithAuthToken(res, context) {
+  const authKey = (cookieEnabled() && getCookie('dev-auth-key')) || res.headers['auth-key']
+
+  context.setAuthKey(authKey)
+
+  return { ...res.body, authKey }
+}
