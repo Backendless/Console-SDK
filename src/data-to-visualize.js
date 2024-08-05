@@ -4,6 +4,7 @@ import { prepareRoutes } from './utils/routes'
 const routes = prepareRoutes({
   dashboards       : '/:appId/console/data-to-visualize/dashboards',
   dashboard        : '/:appId/console/data-to-visualize/dashboards/:dashboardId',
+  dashboardClone   : '/:appId/console/data-to-visualize/dashboards/:dashboardId/clone',
   dashboardSettings: '/:appId/console/data-to-visualize/dashboards/:dashboardId/settings',
 
   dashlets      : '/:appId/console/data-to-visualize/dashboards/:dashboardId/dashlets',
@@ -27,6 +28,10 @@ export default req => ({
 
   createDashboard(appId, dashboard) {
     return req.post(routes.dashboards(appId), dashboard)
+  },
+
+  cloneDashboard(appId, dashboardId) {
+    return req.post(routes.dashboardClone(appId, dashboardId))
   },
 
   updateDashboard(appId, dashboardId, changes) {

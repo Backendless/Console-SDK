@@ -53,6 +53,7 @@ import { marketplace } from './marketplace'
 import { referrals } from './referrals'
 import { initialQuestionnaire } from './initial-questionnaire'
 import { sqlService } from './sql-service'
+import { systemAPI } from './system'
 
 class Context {
 
@@ -163,6 +164,8 @@ const createClient = (serverUrl, authKey, options) => {
   return request.api = {
     destroy,
     request,
+
+    system: systemAPI(request),
 
     activityManager     : activityManager(request),
     analytics           : analytics(request),
