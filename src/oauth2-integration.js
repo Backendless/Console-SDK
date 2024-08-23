@@ -1,9 +1,9 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  connectionURL: '/:appId/console/integration/connection/oauth/url',
-  integrationConnections: '/:appId/console/integration/connections/',
-  integrationConnectionById: '/:appId/console/integration/connections/:connectionId',
+  connectionURL: '/api/node-server/manage/app/:appId/integration/connection/oauth/url',
+  integrationConnections: '/api/node-server/manage/app/:appId/integration/connections',
+  integrationConnectionById: '/api/node-server/manage/app/:appId/integration/connections/:connectionId',
 })
 
 export default req => ({

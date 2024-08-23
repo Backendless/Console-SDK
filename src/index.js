@@ -154,6 +154,14 @@ const createClient = (serverUrl, authKey, options) => {
     request.automation = request
   }
 
+  if (options.nodeApiURL) {
+    request.nodeAPI = contextifyRequest(context, options.nodeApiURL, req => {
+      req.path = req.path.replace('/api/node-server', '')
+    })
+  } else {
+    request.nodeAPI = request
+  }
+
   const destroy = () => {
     context.middleware = req => {
       req.send = () => Promise.reject(new Error('Client has been destroyed'))
