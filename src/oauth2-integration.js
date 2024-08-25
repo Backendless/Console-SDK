@@ -1,8 +1,8 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  connectionURL: '/api/node-server/manage/app/:appId/integration/connection/oauth/url',
-  integrationConnections: '/api/node-server/manage/app/:appId/integration/connections',
+  connectionURL            : '/api/node-server/api/app/:appId/integration/connection/oauth/url',
+  integrationConnections   : '/api/node-server/manage/app/:appId/integration/connections',
   integrationConnectionById: '/api/node-server/manage/app/:appId/integration/connections/:connectionId',
 })
 
@@ -15,9 +15,9 @@ export default req => ({
     return req.delete(routes.integrationConnectionById(appId, connectionId))
   },
 
-  getConnectionURL(appId, serviceName, integrationName) {
+  getConnectionURL({ appId, serviceName, integrationName, serviceId }) {
     return req.get(routes.connectionURL(appId))
-      .query({ serviceName, integrationName })
+      .query({ serviceName, integrationName, serviceId })
   },
 
 })
