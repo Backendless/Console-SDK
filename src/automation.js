@@ -1,19 +1,20 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  flows                : '/api/app/:appId/automation/flow/version',
-  flowsElements        : '/api/app/:appId/automation/flows/versions/elements',
-  flow                 : '/api/app/:appId/automation/flow/version/:versionId',
-  newFlowVersion       : '/api/app/:appId/automation/flow/version/:versionId/new-version',
-  flowState            : '/api/app/:appId/automation/flow/version/:versionId/:state',
-  flowGroupName        : '/api/app/:appId/automation/flow/:flowId/name',
-  flowGroup            : '/api/app/:appId/automation/flow/:flowId',
-  flowVersionMetrics   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
-  stepsMetrics         : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
-  flowSlA              : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
-  flowSlAGoal          : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals/:id',
-  SLACalendars         : '/api/app/:appId/automation/flow/sla/calendar',
-  SLACalendar          : '/api/app/:appId/automation/flow/sla/calendar/:id',
+  flows             : '/api/app/:appId/automation/flow/version',
+  flowsElements     : '/api/app/:appId/automation/flows/versions/elements',
+  flow              : '/api/app/:appId/automation/flow/version/:versionId',
+  newFlowVersion    : '/api/app/:appId/automation/flow/version/:versionId/new-version',
+  flowState         : '/api/app/:appId/automation/flow/version/:versionId/:state',
+  flowGroupName     : '/api/app/:appId/automation/flow/:flowId/name',
+  flowDescription   : '/api/app/:appId/automation/flow/version/:versionId/description',
+  flowGroup         : '/api/app/:appId/automation/flow/:flowId',
+  flowVersionMetrics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
+  stepsMetrics      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
+  flowSlA           : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
+  flowSlAGoal       : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals/:id',
+  SLACalendars      : '/api/app/:appId/automation/flow/sla/calendar',
+  SLACalendar       : '/api/app/:appId/automation/flow/sla/calendar/:id',
   // eslint-disable-next-line max-len
   errorHandlerAnalytics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/error-handler/:errorHandlerId/recorded-errors',
   cloudCodeElements    : '/api/app/:appId/automation/flow/cloud-code/elements',
@@ -23,6 +24,10 @@ const routes = prepareRoutes({
   // eslint-disable-next-line max-len
   debugExecutionContext: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/execution-context',
   runElementInDebugMode: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/run/element/:elementId',
+
+  registerAIAssistant: '/api/app/:appId/automation/ai/assistants/register',
+  aiAssistants       : '/api/app/:appId/automation/ai/assistants',
+  aiAssistant        : '/api/app/:appId/automation/ai/assistants/:id',
 })
 
 export default req => ({
@@ -73,6 +78,10 @@ export default req => ({
 
   deleteFlowsGroup(appId, groupId) {
     return req.automation.delete(routes.flowGroup(appId, groupId))
+  },
+
+  updateFlowDescription(appId, versionId, description) {
+    return req.put(routes.flowDescription(appId, versionId, description), { description })
   },
 
   getFlowVersionMetrics(appId, flowId, versionId, fromDate, toDate) {
@@ -159,5 +168,25 @@ export default req => ({
 
   deleteSLACalendar(appId, id) {
     return req.automation.delete(routes.SLACalendar(appId, id))
+  },
+
+  registerAIAssistant(appId, openAiAssistantId) {
+    return req.automation.post(routes.registerAIAssistant(appId), { openAiAssistantId })
+  },
+
+  createAIAssistant(appId, assistant) {
+    return req.automation.post(routes.aiAssistants(appId), assistant)
+  },
+
+  updateAIAssistant(appId, assistant) {
+    return req.automation.put(routes.aiAssistant(appId, assistant.id), assistant)
+  },
+
+  deleteAIAssistant(appId, assistantId) {
+    return req.automation.delete(routes.aiAssistant(appId, assistantId))
+  },
+
+  getAIAssistants(appId) {
+    return req.automation.get(routes.aiAssistants(appId))
   },
 })

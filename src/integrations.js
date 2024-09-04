@@ -1,19 +1,24 @@
-import urls from './urls'
+import { prepareRoutes } from './utils/routes'
+
+const routes = prepareRoutes({
+  integrations: '/:appId/console/integrations',
+  integration: '/:appId/console/integrations/:name',
+})
 
 export default req => ({
-  loadOpenAIData(appId, dataId) {
-    return req.get(urls.integrations(appId, dataId))
+  getIntegrations(appId) {
+    return req.get(routes.integrations(appId))
   },
 
-  saveOpenAIData(appId, aiData) {
-    return req.post(urls.integrations(appId), aiData)
+  saveIntegration(appId, configData) {
+    return req.post(routes.integrations(appId), configData)
   },
 
-  updateOpenAIData(appId, dataId, configData) {
-    return req.put(urls.integrations(appId, dataId), configData)
+  updateIntegration(appId, name, configData) {
+    return req.put(routes.integration(appId, name), configData)
   },
 
-  deleteOpenAIData(appId, dataId) {
-    return req.delete(urls.integrations(appId, dataId))
+  deleteIntegration(appId, name) {
+    return req.delete(routes.integration(appId, name))
   },
 })
