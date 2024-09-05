@@ -28,6 +28,8 @@ const routes = prepareRoutes({
   registerAIAssistant: '/api/app/:appId/automation/ai/assistants/register',
   aiAssistants       : '/api/app/:appId/automation/ai/assistants',
   aiAssistant        : '/api/app/:appId/automation/ai/assistants/:id',
+
+  flowLogs: '/api/app/:appId/automation/flow/version/:id/logs',
 })
 
 export default req => ({
@@ -189,4 +191,8 @@ export default req => ({
   getAIAssistants(appId) {
     return req.automation.get(routes.aiAssistants(appId))
   },
+
+  loadFlowLogs(appId, versionId, data) {
+    return req.automation.post(routes.flowLogs(appId, versionId), data)
+  }
 })
