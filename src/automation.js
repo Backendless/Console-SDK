@@ -15,7 +15,6 @@ const routes = prepareRoutes({
   flowSlAGoal       : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals/:id',
   SLACalendars      : '/api/app/:appId/automation/flow/sla/calendar',
   SLACalendar       : '/api/app/:appId/automation/flow/sla/calendar/:id',
-
   // eslint-disable-next-line max-len
   errorHandlerAnalytics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/error-handler/:errorHandlerId/recorded-errors',
   cloudCodeElements    : '/api/app/:appId/automation/flow/cloud-code/elements',
