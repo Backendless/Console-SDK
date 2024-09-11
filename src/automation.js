@@ -28,6 +28,11 @@ const routes = prepareRoutes({
   registerAIAssistant: '/api/app/:appId/automation/ai/assistants/register',
   aiAssistants       : '/api/app/:appId/automation/ai/assistants',
   aiAssistant        : '/api/app/:appId/automation/ai/assistants/:id',
+
+  flowLogs          : '/api/app/:appId/automation/flow/version/:id/logs',
+  exportFlowVersion : '/api/app/:appId/automation/flow/version/:id/export',
+  importFlowVersion : '/api/app/:appId/automation/flow/:flowId/import',
+  createFlowFromJSON: '/api/app/:appId/automation/flow/import',
 })
 
 export default req => ({
@@ -188,5 +193,21 @@ export default req => ({
 
   getAIAssistants(appId) {
     return req.automation.get(routes.aiAssistants(appId))
+  },
+
+  loadFlowLogs(appId, versionId, data) {
+    return req.automation.post(routes.flowLogs(appId, versionId), data)
+  },
+
+  exportFlowVersion(appId, versionId) {
+    return req.automation.get(routes.exportFlowVersion(appId, versionId))
+  },
+
+  importFlowVersion(appId, versionId, flow) {
+    return req.automation.post(routes.importFlowVersion(appId, versionId), flow)
+  },
+
+  createFlowFromJSON(appId, flow) {
+    return req.automation.post(routes.createFlowFromJSON(appId), flow)
   },
 })
