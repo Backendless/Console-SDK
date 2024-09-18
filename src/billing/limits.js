@@ -2,12 +2,20 @@ import { routes } from './routes'
 
 export function billingLimitsAPI(req) {
   return {
-    getPlanComponentsData(appId, planId, billingPeriod) {
-      return req.billing.get(routes.planComponentsData(appId, planId, billingPeriod))
+    getAppPlanComponentsData(appId, planId, billingPeriod) {
+      return req.billing.get(routes.appPlanComponentsData(appId, planId, billingPeriod))
     },
 
-    getCurrentPlanComponentData(appId) {
-      return req.billing.get(routes.planComponentsData(appId, 'current', 'current'))
+    getAppCurrentPlanComponentData(appId) {
+      return req.billing.get(routes.appPlanComponentsData(appId, 'current', 'current'))
+    },
+
+    getAutomationPlanComponentsData(appId, planId, billingPeriod) {
+      return req.billing.get(routes.automationPlanComponentsData(appId, planId, billingPeriod))
+    },
+
+    getAutomationCurrentPlanComponentData(appId) {
+      return req.billing.get(routes.automationPlanComponentsData(appId, 'current', 'current'))
     },
 
     getComponentLimit(appId, componentId) {
