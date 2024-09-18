@@ -5,7 +5,7 @@ const routes = prepareRoutes({
   integrationConnectionsById  : '/api/node-server/manage/app/:appId/integration/connections/:connectionId',
   integrationConnectionsUsages: '/api/node-server/manage/app/:appId/integration/connections/usages',
   integrationConnectionURL    : '/api/node-server/manage/app/:appId/integration/connection/oauth/url',
-  integrationConnectionById   : '/api/node-server/manage/app/:appId/integration/connection/:connectionId',
+  integrationConnectionToken  : '/api/node-server/manage/app/:appId/integration/connection/:connectionId/token',
 })
 
 export default req => ({
@@ -14,7 +14,7 @@ export default req => ({
   },
 
   getIntegrationConnectionAccessToken(appId, connectionId) {
-    return req.get(routes.integrationConnectionById(appId, connectionId))
+    return req.get(routes.integrationConnectionToken(appId, connectionId))
   },
 
   deleteIntegrationConnectionById(appId, connectionId) {
