@@ -25,6 +25,7 @@ const routes = prepareRoutes({
   debugExecutionContext: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/execution-context',
   runElementInDebugMode: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/run/element/:elementId',
 
+  allowedAIModels    : '/api/app/:appId/automation/ai/assistants/allowed-models',
   registerAIAssistant: '/api/app/:appId/automation/ai/assistants/register',
   aiAssistants       : '/api/app/:appId/automation/ai/assistants',
   aiAssistant        : '/api/app/:appId/automation/ai/assistants/:id',
@@ -173,6 +174,10 @@ export default req => ({
 
   deleteSLACalendar(appId, id) {
     return req.automation.delete(routes.SLACalendar(appId, id))
+  },
+
+  getAllowedAIModels(appId) {
+    return req.automation.get(routes.allowedAIModels(appId))
   },
 
   registerAIAssistant(appId, openAiAssistantId) {
