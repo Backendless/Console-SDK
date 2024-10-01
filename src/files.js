@@ -111,8 +111,9 @@ export default req => ({
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
   },
 
-  uploadFile(appId, file, path, fileName) {
+  uploadFile(appId, file, path, fileName, overwrite = false) {
     return req.post(urls.fileUpload(appId, `${path}/${fileName}`), file)
+      .query({ overwrite })
       .cacheTags(FOLDER(appId, path))
   },
 
