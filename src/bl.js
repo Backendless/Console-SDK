@@ -6,6 +6,7 @@ import { BL_MODELS, BL_CHAIN } from './utils/cache-tags'
 
 const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
 const codelessServices = appId => `${ urls.blBasePath(appId) }/codeless`
+const jsServices = appId => `${ urls.blBasePath(appId) }/js`
 const marketplaceServices = appId => `${ urls.blBasePath(appId) }/marketplace`
 
 const hostedServiceConfig = (appId, serviceId) => `${ hostedServices(appId) }/configure/${ serviceId }`
@@ -136,6 +137,12 @@ export default req => ({
     return req
       .post(codelessServices(appId), service)
       .cacheTags(BL_MODELS(appId, 'CODELESS'))
+  },
+
+  createJsService(appId, service) {
+    return req
+      .post(jsServices(appId), service)
+      .cacheTags(BL_MODELS(appId, 'JS'))
   },
 
   updateCodelessService(appId, serviceId, updates) {
