@@ -2,7 +2,7 @@ import { cookieEnabled, deleteCookie, getCookie } from './utils/cookie'
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  myAccount         : '/console/home/myaccount',
+  myAccount         : '/console/home/myaccount/',
   login             : '/console/home/login',
   loginWithTOTP     : '/console/home/otp-login',
   cloudLogin        : '/console/home/cloud/login',
