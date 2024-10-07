@@ -9,8 +9,12 @@ export function billingAPI(req) {
     ...billingLimitsAPI(req),
     ...billingPlansAPI(req),
 
-    getBillingInfo(appId) {
-      return req.billing.get(routes.billingInfo(appId))
+    getAppBillingInfo(appId) {
+      return req.billing.get(routes.appBillingInfo(appId))
+    },
+
+    getAutomationBillingInfo(appId) {
+      return req.billing.get(routes.automationBillingInfo(appId))
     },
 
     getSubscriptionStatus(appId) {
@@ -21,14 +25,17 @@ export function billingAPI(req) {
       return req.billing.get(routes.devSubscriptionsInfo())
     },
 
-    getBillingPeriodInfo(appId) {
-      return req.billing.get(routes.billingPeriodInfo(appId))
+    getAppBillingPeriodInfo(appId) {
+      return req.billing.get(routes.appBillingPeriodInfo(appId))
+    },
+
+    getAutomationBillingPeriodInfo(appId) {
+      return req.billing.get(routes.automationBillingPeriodInfo(appId))
     },
 
     // TODO: seems like we do not use the function
     // getInviteCode(appId) {
     //   return req.billing.get(routes.inviteCode(appId))
     // },
-
   }
 }

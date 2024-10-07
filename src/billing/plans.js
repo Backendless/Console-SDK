@@ -2,12 +2,20 @@ import { routes } from './routes'
 
 export function billingPlansAPI(req) {
   return {
-    getPlans(appId) {
-      return req.billing.get(routes.billingPlans(appId))
+    getAppPlans(appId) {
+      return req.billing.get(routes.appBillingPlans(appId))
     },
 
-    switchToPlan(appId, planId, billingPeriod) {
-      return req.billing.put(routes.switchPlan(appId, planId, billingPeriod))
+    getAutomationPlans(appId) {
+      return req.billing.get(routes.automationBillingPlans(appId))
+    },
+
+    switchToAppPlan(appId, planId, billingPeriod) {
+      return req.billing.put(routes.switchAppPlan(appId, planId, billingPeriod))
+    },
+
+    switchToAutomationPlan(appId, planId, billingPeriod) {
+      return req.billing.put(routes.switchAutomationPlan(appId, planId, billingPeriod))
     },
 
     unlockPlan(appId, planId) {
