@@ -19,7 +19,8 @@ export const routes = prepareRoutes({
   tiersFloatPriceEstimation   : '/:appId/console/billing/application/tiers/price-estimation',
   tiersFixedPriceEstimation   : '/:appId/console/billing/application/tiers/price-estimation/:tierId',
   paymentProfilesForCloneApp  : '/:appId/console/billing/application/payment-profiles-for-clone-operation',
-  devPaymentProfileCard       : '/:appId/console/billing/application/creditcard/:paymentProfileId',
+  appPaymentProfileCard       : '/:appId/console/billing/application/creditcard/:paymentProfileId',
+  automationPaymentProfileCard: '/:appId/console/billing/automation/creditcard/:paymentProfileId',
 
   apiCallsBlocked: '/:appId/console/billing/apicalls/blocked',
   // inviteCode                : '/:appId/console/billing/refcode',
