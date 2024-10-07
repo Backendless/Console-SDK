@@ -2,7 +2,8 @@ import { cookieEnabled, deleteCookie, getCookie } from './utils/cookie'
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  myAccount         : '/console/home/myaccount/',
+  getMyAccount      : '/console/home/myaccount',
+  updateMyAccount   : '/console/home/myaccount/',
   login             : '/console/home/login',
   loginWithTOTP     : '/console/home/otp-login',
   cloudLogin        : '/console/home/cloud/login',
@@ -38,7 +39,7 @@ export default (req, context) => ({
    * @return {Promise|*}
    */
   getAccountInfo(authKey) {
-    const request = req.get(routes.myAccount())
+    const request = req.get(routes.getMyAccount())
 
     if (authKey) {
       request.set('auth-key', authKey)
@@ -135,7 +136,7 @@ export default (req, context) => ({
   },
 
   updateProfile(profile) {
-    return req.put(routes.myAccount(), profile)
+    return req.put(routes.updateMyAccount(), profile)
   },
 
   registerAndJoinAppTeam(appId, confirmationCode, userData) {
