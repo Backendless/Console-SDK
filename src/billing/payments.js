@@ -15,8 +15,12 @@ export function billingPaymentsAPI(req) {
       return req.billing.get(routes.devPaymentProfile())
     },
 
-    setPaymentProfile(appId, paymentProfileId) {
-      return req.billing.put(routes.devPaymentProfileCard(appId, paymentProfileId))
+    setAppPaymentProfile(appId, paymentProfileId) {
+      return req.billing.put(routes.appPaymentProfileCard(appId, paymentProfileId))
+    },
+
+    setAutomationPaymentProfile(appId, paymentProfileId) {
+      return req.billing.put(routes.automationPaymentProfileCard(appId, paymentProfileId))
     },
 
     addPaymentProfile(data) {
