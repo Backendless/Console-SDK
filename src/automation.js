@@ -4,6 +4,7 @@ const routes = prepareRoutes({
   flows             : '/api/app/:appId/automation/flow/version',
   flowsElements     : '/api/app/:appId/automation/flows/versions/elements',
   flow              : '/api/app/:appId/automation/flow/version/:versionId',
+  flowSchedule      : '/api/app/:appId/automation/flow/version/:versionId/schedule',
   newFlowVersion    : '/api/app/:appId/automation/flow/version/:versionId/new-version',
   flowState         : '/api/app/:appId/automation/flow/version/:versionId/:state',
   flowGroupName     : '/api/app/:appId/automation/flow/:flowId/name',
@@ -214,5 +215,9 @@ export default req => ({
 
   createFlowFromJSON(appId, flow) {
     return req.automation.post(routes.createFlowFromJSON(appId), flow)
+  },
+
+  updateFlowSchedule(appId, versionId, data) {
+    return req.automation.put(routes.flowSchedule(appId, versionId), data)
   },
 })
