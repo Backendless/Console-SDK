@@ -132,8 +132,6 @@ export const marketplace = (appId, name) => `${appConsole(appId)}/marketplace/${
 export const appInfo = appId =>
   `${appConsole(appId)}/app-info`
 
-export const proLicense = () => `${console()}/license`
-
 export const blueprints = id => `${console()}/blueprints${optional(id)}`
 
 export const landingPage = appId =>
@@ -255,7 +253,6 @@ export default {
   messagingPushChannelTemplate,
   mobileSettings,
   mobileSettingsAndroid,
-  proLicense,
   security,
   securityRoles,
   serverCode,
