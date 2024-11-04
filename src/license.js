@@ -1,17 +1,17 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  licence       : '/console/license',
+  license       : '/console/license',
   replaceCluster: '/console/license/cluster/replace',
 })
 
 export default req => ({
   get() {
-    return req.get(routes.licence())
+    return req.get(routes.license())
   },
 
   upload(file) {
-    return req.post(routes.licence(), file)
+    return req.post(routes.license(), file)
   },
 
   replaceCluster(data) {
