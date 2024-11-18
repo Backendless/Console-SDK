@@ -199,12 +199,13 @@ export default req => ({
 
   deleteColumn(appId, table, column) {
     const path = tableColumnsUrl(appId, table)
+    const columnName = encodeURI(column.name)
 
     if (isRelType(column.dataType)) {
-      return req.delete(`${path}/${RELATION_URL_SUFFIX}/${column.name}`)
+      return req.delete(`${path}/${RELATION_URL_SUFFIX}/${columnName}`)
     }
 
-    return req.delete(`${path}/${column.name}`)
+    return req.delete(`${path}/${columnName}`)
   },
 
   updateColumn(appId, table, prevColumn, column) {
