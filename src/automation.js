@@ -12,7 +12,7 @@ const routes = prepareRoutes({
   flowGroup         : '/api/app/:appId/automation/flow/:flowId',
   flowVersionMetrics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
   stepsMetrics      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
-  flowInstances     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances',
+  flowInstances     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
   flowInstance      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
   flowSlA           : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
   flowSlAGoal       : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals/:id',
@@ -103,9 +103,8 @@ export default req => ({
       .query({ fromDate, toDate })
   },
 
-  getFlowInstances(appId, flowId, versionId, query) {
-    return req.automation.get(routes.flowInstances(appId, flowId, versionId))
-      .query(query)
+  getFlowInstances(appId, flowId, versionId, body) {
+    return req.automation.post(routes.flowInstances(appId, flowId, versionId), body)
   },
 
   getFlowInstanceAnalytics(appId, flowId, versionId, executionId) {
