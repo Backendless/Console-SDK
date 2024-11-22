@@ -37,6 +37,9 @@ const routes = prepareRoutes({
   exportFlowVersion : '/api/app/:appId/automation/flow/version/:id/export',
   importFlowVersion : '/api/app/:appId/automation/flow/:flowId/import',
   createFlowFromJSON: '/api/app/:appId/automation/flow/import',
+
+  // eslint-disable-next-line max-len
+  cloudCodeMethodParamDictionary  : '/api/node-server/manage/app/:appId/flow-runner/param-dictionary/:serviceName/:paramName',
 })
 
 export default req => ({
@@ -229,5 +232,9 @@ export default req => ({
 
   updateFlowSchedule(appId, versionId, data) {
     return req.automation.put(routes.flowSchedule(appId, versionId), data)
+  },
+
+  getCloudCodeMethodParamDictionary(appId, serviceName, paramName, payload) {
+    return req.post(routes.cloudCodeMethodParamDictionary(appId,serviceName, paramName), payload)
   },
 })
