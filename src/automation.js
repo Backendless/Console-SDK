@@ -33,7 +33,7 @@ const routes = prepareRoutes({
   aiAssistants       : '/api/app/:appId/automation/ai/assistants',
   aiAssistant        : '/api/app/:appId/automation/ai/assistants/:id',
 
-  flowLogs          : '/api/app/:appId/automation/flow/version/:id/logs',
+  flowLogs          : '/api/app/:appId/automation/flow/version/:id/logs/find',
   exportFlowVersion : '/api/app/:appId/automation/flow/version/:id/export',
   importFlowVersion : '/api/app/:appId/automation/flow/:flowId/import',
   createFlowFromJSON: '/api/app/:appId/automation/flow/import',
