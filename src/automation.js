@@ -34,6 +34,7 @@ const routes = prepareRoutes({
   aiAssistant        : '/api/app/:appId/automation/ai/assistants/:id',
 
   flowLogs          : '/api/app/:appId/automation/flow/version/:id/logs/find',
+  flowLogsLevel     : '/api/app/:appId/automation/:flowId/logging/level',
   exportFlowVersion : '/api/app/:appId/automation/flow/version/:id/export',
   importFlowVersion : '/api/app/:appId/automation/flow/:flowId/import',
   createFlowFromJSON: '/api/app/:appId/automation/flow/import',
@@ -213,6 +214,14 @@ export default req => ({
 
   loadFlowLogs(appId, versionId, data) {
     return req.automation.post(routes.flowLogs(appId, versionId), data)
+  },
+
+  getFlowLogsLevel(appId, flowId) {
+    return req.automation.get(routes.flowLogsLevel(appId, flowId))
+  },
+
+  updateFlowLogsLevel(appId, flowId, data) {
+    return req.automation.put(routes.flowLogsLevel(appId, flowId), data)
   },
 
   exportFlowVersion(appId, versionId) {
