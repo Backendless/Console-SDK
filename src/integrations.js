@@ -1,8 +1,9 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  integrations: '/:appId/console/integrations',
-  integration: '/:appId/console/integrations/:name',
+  integrations              : '/:appId/console/integrations',
+  integration               : '/:appId/console/integrations/:name',
+  integrationParamDictionary: '/api/node-server/manage/app/:appId/integration/block/:name/param-dictionary/:dictionary',
 })
 
 export default req => ({
@@ -20,5 +21,9 @@ export default req => ({
 
   deleteIntegration(appId, name) {
     return req.delete(routes.integration(appId, name))
+  },
+
+  getParamDictionary(appId, name, dictionary, payload) {
+    return req.post(routes.integrationParamDictionary(appId, name, dictionary), payload)
   },
 })
