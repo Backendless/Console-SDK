@@ -12,7 +12,8 @@ const routes = prepareRoutes({
   flowGroup         : '/api/app/:appId/automation/flow/:flowId',
   flowVersionMetrics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
   stepsMetrics      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
-  flowInstances     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances',
+  flowInstances     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
+  countInstances     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
   flowInstance      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
   flowSlA           : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
   flowSlAGoal       : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals/:id',
@@ -33,7 +34,8 @@ const routes = prepareRoutes({
   aiAssistants       : '/api/app/:appId/automation/ai/assistants',
   aiAssistant        : '/api/app/:appId/automation/ai/assistants/:id',
 
-  flowLogs          : '/api/app/:appId/automation/flow/version/:id/logs',
+  flowLogs          : '/api/app/:appId/automation/flow/version/:id/logs/find',
+  flowLogsLevel     : '/api/app/:appId/automation/:flowId/logging/level',
   exportFlowVersion : '/api/app/:appId/automation/flow/version/:id/export',
   importFlowVersion : '/api/app/:appId/automation/flow/:flowId/import',
   createFlowFromJSON: '/api/app/:appId/automation/flow/import',
@@ -103,9 +105,12 @@ export default req => ({
       .query({ fromDate, toDate })
   },
 
-  getFlowInstances(appId, flowId, versionId, query) {
-    return req.automation.get(routes.flowInstances(appId, flowId, versionId))
-      .query(query)
+  getFlowInstances(appId, flowId, versionId, body) {
+    return req.automation.post(routes.flowInstances(appId, flowId, versionId), body)
+  },
+
+  countFlowInstances(appId, flowId, versionId, body) {
+    return req.automation.post(routes.countInstances(appId, flowId, versionId), body)
   },
 
   getFlowInstanceAnalytics(appId, flowId, versionId, executionId) {
@@ -214,6 +219,14 @@ export default req => ({
 
   loadFlowLogs(appId, versionId, data) {
     return req.automation.post(routes.flowLogs(appId, versionId), data)
+  },
+
+  getFlowLogsLevel(appId, flowId) {
+    return req.automation.get(routes.flowLogsLevel(appId, flowId))
+  },
+
+  updateFlowLogsLevel(appId, flowId, data) {
+    return req.automation.put(routes.flowLogsLevel(appId, flowId), data)
   },
 
   exportFlowVersion(appId, versionId) {
