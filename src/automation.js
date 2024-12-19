@@ -1,24 +1,26 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  flows             : '/api/app/:appId/automation/flow/version',
-  flowsElements     : '/api/app/:appId/automation/flows/versions/elements',
-  flow              : '/api/app/:appId/automation/flow/version/:versionId',
-  flowSchedule      : '/api/app/:appId/automation/flow/version/:versionId/schedule',
-  newFlowVersion    : '/api/app/:appId/automation/flow/version/:versionId/new-version',
-  flowState         : '/api/app/:appId/automation/flow/version/:versionId/:state',
-  flowGroupName     : '/api/app/:appId/automation/flow/:flowId/name',
-  flowDescription   : '/api/app/:appId/automation/flow/version/:versionId/description',
-  flowGroup         : '/api/app/:appId/automation/flow/:flowId',
-  flowVersionMetrics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
-  stepsMetrics      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
-  flowInstances     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
-  countInstances     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
-  flowInstance      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
-  flowSlA           : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
-  flowSlAGoal       : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals/:id',
-  SLACalendars      : '/api/app/:appId/automation/flow/sla/calendar',
-  SLACalendar       : '/api/app/:appId/automation/flow/sla/calendar/:id',
+  flows               : '/api/app/:appId/automation/flow/version',
+  flowsElements       : '/api/app/:appId/automation/flows/versions/elements',
+  flow                : '/api/app/:appId/automation/flow/version/:versionId',
+  flowSchedule        : '/api/app/:appId/automation/flow/version/:versionId/schedule',
+  newFlowVersion      : '/api/app/:appId/automation/flow/version/:versionId/new-version',
+  flowState           : '/api/app/:appId/automation/flow/version/:versionId/:state',
+  flowGroupName       : '/api/app/:appId/automation/flow/:flowId/name',
+  flowDescription     : '/api/app/:appId/automation/flow/version/:versionId/description',
+  flowGroup           : '/api/app/:appId/automation/flow/:flowId',
+  flowVersionMetrics  : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
+  stepsMetrics        : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
+  flowInstances       : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
+  countInstances      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
+  flowInstance        : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
+  // eslint-disable-next-line max-len
+  elementExecutionInfo: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId/element/:elementId',
+  flowSlA             : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
+  flowSlAGoal         : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals/:id',
+  SLACalendars        : '/api/app/:appId/automation/flow/sla/calendar',
+  SLACalendar         : '/api/app/:appId/automation/flow/sla/calendar/:id',
   // eslint-disable-next-line max-len
   errorHandlerAnalytics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/error-handler/:errorHandlerId/recorded-errors',
   cloudCodeElements    : '/api/app/:appId/automation/flow/cloud-code/elements',
@@ -115,6 +117,10 @@ export default req => ({
 
   getFlowInstanceAnalytics(appId, flowId, versionId, executionId) {
     return req.automation.get(routes.flowInstance(appId, flowId, versionId, executionId))
+  },
+
+  getElementExecutionInfo(appId, flowId, versionId, executionId, elementId) {
+    return req.automation.get(routes.elementExecutionInfo(appId, flowId, versionId, executionId, elementId))
   },
 
   loadErrorHandlerAnalytics(appId, flowId, versionId, errorHandlerId, fromDate, toDate) {
