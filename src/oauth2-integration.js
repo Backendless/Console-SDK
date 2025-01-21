@@ -30,8 +30,8 @@ export default req => ({
     return req.get(routes.integrationConnectionsUsages(appId))
   },
 
-  getConnectionURL({ appId, serviceName, integrationName, serviceId }) {
+  getConnectionURL({ appId, serviceName, integrationName, serviceId, serviceType }) {
     return req.get(routes.integrationConnectionURL(appId))
-      .query({ serviceName, integrationName, serviceId })
+      .query({ serviceName, integrationName, serviceId, serviceType })
   },
 })
