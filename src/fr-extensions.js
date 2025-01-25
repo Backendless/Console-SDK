@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
@@ -8,53 +9,53 @@ const routes = prepareRoutes({
   integrationConnectionURL    : '/api/node-server/manage/app/:appId/integration/connection/oauth/url',
   integrationConnectionToken  : '/api/node-server/manage/app/:appId/integration/connection/:connectionId/token',
 
-  sharedServices: '/api/node-server/manage/app/:appId/shared-extension',
+  elementParamDictionary: '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-dictionary/:dictionaryName',
 
-  integrationParamDictionary: '/api/node-server/manage/app/:appId/integration/block/:name/param-dictionary/:dictionary',
+  sharedElements : '/api/node-server/manage/integration/shared/elements',
 
-  integrationSharedProductStatus : '/api/node-server/manage/integration/shared/:productId/status',
-  integrationSharedProductInstall: '/api/node-server/manage/integration/shared/:productId/install'
+  sharedProductStatus : '/api/node-server/manage/integration/shared/product/:productId/status',
+  sharedProductInstall: '/api/node-server/manage/integration/shared/product/:productId/install'
 })
 
 export default req => ({
   getAllIntegrationConnections(appId) {
-    return req.get(routes.integrationConnections(appId))
+    return req.nodeAPI.get(routes.integrationConnections(appId))
   },
 
   getIntegrationConnectionAccessToken(appId, connectionId) {
-    return req.get(routes.integrationConnectionToken(appId, connectionId))
+    return req.nodeAPI.get(routes.integrationConnectionToken(appId, connectionId))
   },
 
   deleteIntegrationConnectionById(appId, connectionId) {
-    return req.delete(routes.integrationConnectionsById(appId, connectionId))
+    return req.nodeAPI.delete(routes.integrationConnectionsById(appId, connectionId))
   },
 
   updateIntegrationConnectionName(appId, connectionId, updatedName) {
-    return req.put(routes.integrationConnectionName(appId, connectionId), { updatedName })
+    return req.nodeAPI.put(routes.integrationConnectionName(appId, connectionId), { updatedName })
   },
 
   getConnectionsUsages(appId) {
-    return req.get(routes.integrationConnectionsUsages(appId))
+    return req.nodeAPI.get(routes.integrationConnectionsUsages(appId))
   },
 
-  getConnectionURL({ appId, serviceName, integrationName, serviceId, serviceType }) {
-    return req.get(routes.integrationConnectionURL(appId))
-      .query({ serviceName, integrationName, serviceId, serviceType })
+  getConnectionURL({ appId, serviceName, integrationName, serviceId, hostType }) {
+    return req.nodeAPI.get(routes.integrationConnectionURL(appId))
+      .query({ serviceName, integrationName, serviceId, hostType })
   },
 
-  getSharedServices(appId) {
-    return req.automation.get(routes.sharedServices(appId))
+  getSharedElements() {
+    return req.nodeAPI.get(routes.sharedElements())
   },
 
-  getParamDictionary(appId, name, dictionary, payload) {
-    return req.post(routes.integrationParamDictionary(appId, name, dictionary), payload)
+  getElementParamDictionary(appId, serviceName, dictionaryName, payload) {
+    return req.nodeAPI.post(routes.elementParamDictionary(appId, serviceName, dictionaryName), payload)
   },
 
-  getProductSharedStatus(productId) {
-    return req.get(routes.integrationSharedProductStatus(productId))
+  getSharedProductStatus(productId) {
+    return req.nodeAPI.get(routes.sharedProductStatus(productId))
   },
 
-  installProductAsSharedService({ productId, versionId, configs }) {
-    return req.post(routes.integrationSharedProductInstall(productId), { versionId, configs })
+  installSharedProduct({ productId, versionId, configs }) {
+    return req.nodeAPI.post(routes.sharedProductInstall(productId), { versionId, configs })
   }
 })
