@@ -35,6 +35,9 @@ const routes = prepareRoutes({
   installDetails: '/console/community/marketplace/installs/details',
 
   appInstalls: '/api/app/:appId/marketplace/installs',
+
+  integrationSharedProductStatus : '/api/node-server/manage/integration/shared/:productId/status',
+  integrationSharedProductInstall: '/api/node-server/manage/integration/shared/:productId/install'
 })
 
 export const marketplace = req => ({
@@ -89,8 +92,8 @@ export const marketplace = req => ({
     return req.community.get(routes.productResourcesDetails(productId)).query({ versionId })
   },
 
-  getProductConfigurations(productId) {
-    return req.get(routes.productConfigurations(productId))
+  getProductConfigurations(productId, version) {
+    return req.get(routes.productConfigurations(productId)).query({ version })
   },
 
   getProductPrivateDevs(productId) {
@@ -184,4 +187,13 @@ export const marketplace = req => ({
   getDeveloperGeneralSales(query) {
     return req.get(routes.developerGeneralSales()).query(query)
   },
+
+
+  getProductSharedStatus(productId) {
+    return req.get(routes.integrationSharedProductStatus(productId))
+  },
+
+  installProductAsSharedService({ productId, versionId, configs }) {
+    return req.post(routes.integrationSharedProductInstall(productId), { versionId, configs })
+  }
 })
