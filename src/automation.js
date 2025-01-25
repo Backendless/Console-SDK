@@ -28,8 +28,6 @@ const routes = prepareRoutes({
   stopDebugSession     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/stop-session',
   testMonitorHistory   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/history',
 
-  sharedServices: '/api/node-server/manage/app/:appId/shared-extension',
-
   // eslint-disable-next-line max-len
   debugExecutionContext: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/execution-context',
   runElementInDebugMode: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/run/element/:elementId',
@@ -133,10 +131,6 @@ export default req => ({
 
   getCloudCodeElements(appId) {
     return req.automation.get(routes.cloudCodeElements(appId))
-  },
-
-  getSharedServices(appId) {
-    return req.automation.get(routes.sharedServices(appId))
   },
 
   startDebugSession(appId, flowId, versionId, forceStart) {
