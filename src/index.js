@@ -47,7 +47,7 @@ import chartBuilder from './chart-builder'
 import visualizations from './visualizations'
 import consolePreview from './console-preview'
 import quickApps from './quick-apps'
-import oauth2Integration from './oauth2-integration'
+import frExtensions from './fr-extensions'
 
 import { community } from './community'
 import { marketplace } from './marketplace'
@@ -226,7 +226,7 @@ const createClient = (serverUrl, authKey, options) => {
     quickApps           : quickApps(request),
     integrations        : integrations(request),
     pdf                 : pdf(request),
-    oauth2Integration   : oauth2Integration(request)
+    frExtensions        : frExtensions(request)
   }
 }
 
