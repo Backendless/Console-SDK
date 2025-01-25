@@ -184,5 +184,4 @@ export const marketplace = req => ({
   getDeveloperGeneralSales(query) {
     return req.get(routes.developerGeneralSales()).query(query)
   },
-
 })
