@@ -38,9 +38,9 @@ export default req => ({
     return req.nodeAPI.get(routes.integrationConnectionsUsages(appId))
   },
 
-  getConnectionURL({ appId, serviceName, integrationName, serviceId, hostType }) {
+  getConnectionURL({ appId, serviceName, serviceId }) {
     return req.nodeAPI.get(routes.integrationConnectionURL(appId))
-      .query({ serviceName, integrationName, serviceId, hostType })
+      .query({ serviceName, serviceId })
   },
 
   getSharedElements() {
