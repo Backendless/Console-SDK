@@ -89,8 +89,8 @@ export const marketplace = req => ({
     return req.community.get(routes.productResourcesDetails(productId)).query({ versionId })
   },
 
-  getProductConfigurations(productId) {
-    return req.get(routes.productConfigurations(productId))
+  getProductConfigurations(productId, version) {
+    return req.get(routes.productConfigurations(productId)).query({ version })
   },
 
   getProductPrivateDevs(productId) {
