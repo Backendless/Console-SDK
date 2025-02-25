@@ -3,6 +3,7 @@ import _each from 'lodash/each'
 import urls from './urls'
 
 import { BL_MODELS, BL_CHAIN } from './utils/cache-tags'
+import { encodePath } from './utils/path'
 
 const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
 const codelessServices = appId => `${ urls.blBasePath(appId) }/codeless`
@@ -214,7 +215,7 @@ export default req => ({
   },
 
   getDraftFileContent(appId, language, model, fileId) {
-    return req.get(`${ urls.blDraft(appId, language, model) }/${ fileId }`)
+    return req.get(`${ urls.blDraft(appId, language, model) }/${ encodePath(fileId) }`)
   },
 
   getLanguages() {
