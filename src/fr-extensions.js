@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import { prepareRoutes } from './utils/routes'
+import { encodePath } from './utils/path'
 
 const routes = prepareRoutes({
   integrationConnections      : '/api/node-server/manage/app/:appId/integration/connections',
@@ -8,10 +9,11 @@ const routes = prepareRoutes({
   integrationConnectionsUsages: '/api/node-server/manage/app/:appId/integration/connections/usages',
   integrationConnectionURL    : '/api/node-server/manage/app/:appId/integration/connection/oauth/url',
   integrationConnectionToken  : '/api/node-server/manage/app/:appId/integration/connection/:connectionId/token',
+  integrationServiceAppConfigs: '/api/node-server/manage/app/:appId/integration/service/:serviceId/app-configs',
 
   elementParamDictionary: '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-dictionary/:dictionaryName',
 
-  sharedElements : '/api/node-server/manage/integration/shared/elements',
+  sharedElements: '/api/node-server/manage/integration/shared/elements',
 
   sharedProductStatus : '/api/node-server/manage/integration/shared/product/:productId/status',
   sharedProductInstall: '/api/node-server/manage/integration/shared/product/:productId/install'
@@ -57,5 +59,13 @@ export default req => ({
 
   installSharedProduct({ productId, versionId, configs }) {
     return req.nodeAPI.post(routes.sharedProductInstall(productId), { versionId, configs })
+  },
+
+  loadSharedAppConfigs(appId, serviceId) {
+    return req.nodeAPI.get(routes.integrationServiceAppConfigs(appId, encodePath(serviceId)))
+  },
+
+  saveSharedAppConfigs(appId, serviceId, configs) {
+    return req.nodeAPI.put(routes.integrationServiceAppConfigs(appId, encodePath(serviceId)), configs)
   }
 })
