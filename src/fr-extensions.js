@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import { prepareRoutes } from './utils/routes'
-import { encodePath } from './utils/path'
 
 const routes = prepareRoutes({
   integrationConnections      : '/api/node-server/manage/app/:appId/integration/connections',
@@ -62,10 +61,10 @@ export default req => ({
   },
 
   loadSharedAppConfigs(appId, serviceId) {
-    return req.nodeAPI.get(routes.integrationServiceAppConfigs(appId, encodePath(serviceId)))
+    return req.nodeAPI.get(routes.integrationServiceAppConfigs(appId, encodeURIComponent(serviceId)))
   },
 
   saveSharedAppConfigs(appId, serviceId, configs) {
-    return req.nodeAPI.put(routes.integrationServiceAppConfigs(appId, encodePath(serviceId)), configs)
+    return req.nodeAPI.put(routes.integrationServiceAppConfigs(appId, encodeURIComponent(serviceId)), configs)
   }
 })
