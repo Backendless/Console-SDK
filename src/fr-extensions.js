@@ -9,9 +9,10 @@ const routes = prepareRoutes({
   integrationConnectionURL    : '/api/node-server/manage/app/:appId/integration/connection/oauth/url',
   integrationConnectionToken  : '/api/node-server/manage/app/:appId/integration/connection/:connectionId/token',
 
-  elementParamDictionary: '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-dictionary/:dictionaryName',
+  elementParamDictionary  : '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-dictionary/:dictionaryName',
+  elementParamSchemaLoader: '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-schema/:schemaLoaderName',
 
-  sharedElements : '/api/node-server/manage/integration/shared/elements',
+  sharedElements: '/api/node-server/manage/integration/shared/elements',
 
   sharedProductStatus : '/api/node-server/manage/integration/shared/product/:productId/status',
   sharedProductInstall: '/api/node-server/manage/integration/shared/product/:productId/install'
@@ -49,6 +50,10 @@ export default req => ({
 
   getElementParamDictionary(appId, serviceName, dictionaryName, payload) {
     return req.nodeAPI.post(routes.elementParamDictionary(appId, serviceName, dictionaryName), payload)
+  },
+
+  getElementParamSchemaLoader(appId, serviceName, schemaLoaderName, payload) {
+    return req.nodeAPI.post(routes.elementParamSchemaLoader(appId, serviceName, schemaLoaderName), payload)
   },
 
   getSharedProductStatus(productId) {
