@@ -8,6 +8,7 @@ const routes = prepareRoutes({
   integrationConnectionsUsages: '/api/node-server/manage/app/:appId/integration/connections/usages',
   integrationConnectionURL    : '/api/node-server/manage/app/:appId/integration/connection/oauth/url',
   integrationConnectionToken  : '/api/node-server/manage/app/:appId/integration/connection/:connectionId/token',
+  integrationServiceAppConfigs: '/api/node-server/manage/app/:appId/integration/service/:serviceId/app-configs',
 
   elementParamDictionary  : '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-dictionary/:dictionaryName',
   elementParamSchemaLoader: '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-schema/:schemaLoaderName',
@@ -62,5 +63,13 @@ export default req => ({
 
   installSharedProduct({ productId, versionId, configs }) {
     return req.nodeAPI.post(routes.sharedProductInstall(productId), { versionId, configs })
+  },
+
+  loadSharedAppConfigs(appId, serviceId) {
+    return req.nodeAPI.get(routes.integrationServiceAppConfigs(appId, encodeURIComponent(serviceId)))
+  },
+
+  saveSharedAppConfigs(appId, serviceId, configs) {
+    return req.nodeAPI.put(routes.integrationServiceAppConfigs(appId, encodeURIComponent(serviceId)), configs)
   }
 })
