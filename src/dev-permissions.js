@@ -123,6 +123,13 @@ const OperationsTypes = {
   /** UI Builder */
   ACCESS_UI_BUILDER    : 'Access UI Builder',
   PUBLISH_UI_CONTAINERS: 111,
+
+  /** FLOWRUNNER */
+  FLOWRUNNER_SECTION     : 'FlowRunner',
+  EDIT_FLOW_VERSION      : 117, // Edit Flow Version
+  ACCESS_FLOW_PERMISSIONS: 118, // Access Flow Permissions
+  LAUNCH_FLOW_VERSION    : 119, // Launch Flow Version (via console)
+  ACCESS_VERSION_ADMIN   : 120, // Access Version Admin
 }
 
 const OperationsLabels = {}
