@@ -10,8 +10,9 @@ const routes = prepareRoutes({
   integrationConnectionToken  : '/api/node-server/manage/app/:appId/integration/connection/:connectionId/token',
   integrationServiceAppConfigs: '/api/node-server/manage/app/:appId/integration/service/:serviceId/app-configs',
 
-  elementParamDictionary  : '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-dictionary/:dictionaryName',
-  elementParamSchemaLoader: '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-schema/:schemaLoaderName',
+  elementParamDictionary: '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-dictionary/:dictionaryName',
+  elementParamSchema    : '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-schema/:schemaLoaderName',
+  elementSampleResult   : '/api/node-server/manage/app/:appId/integration/block/:serviceName/sample-result/:sampleResultMethodName',
 
   sharedElements: '/api/node-server/manage/integration/shared/elements',
 
@@ -53,8 +54,12 @@ export default req => ({
     return req.nodeAPI.post(routes.elementParamDictionary(appId, serviceName, dictionaryName), payload)
   },
 
-  getElementParamSchemaLoader(appId, serviceName, schemaLoaderName, payload) {
-    return req.nodeAPI.post(routes.elementParamSchemaLoader(appId, serviceName, schemaLoaderName), payload)
+  getElementParamSchema(appId, serviceName, schemaLoaderName, payload) {
+    return req.nodeAPI.post(routes.elementParamSchema(appId, serviceName, schemaLoaderName), payload)
+  },
+
+  getElementSampleResult(appId, serviceName, schemaLoaderName, payload) {
+    return req.nodeAPI.post(routes.elementSampleResult(appId, serviceName, schemaLoaderName), payload)
   },
 
   getSharedProductStatus(productId) {
