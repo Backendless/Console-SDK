@@ -2,6 +2,7 @@ import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
   flows             : '/api/app/:appId/automation/flow/version',
+  flowsWithElements : '/api/app/:appId/automation/flow/version/with-elements',
   flowsElements     : '/api/app/:appId/automation/flows/versions/elements',
   flow              : '/api/app/:appId/automation/flow/version/:versionId',
   flowSchedule      : '/api/app/:appId/automation/flow/version/:versionId/schedule',
@@ -51,6 +52,10 @@ export default req => ({
 
   getFlowsElements(appId, elementType, elementSubtype) {
     return req.automation.get(routes.flowsElements(appId)).query({ elementType, elementSubtype })
+  },
+
+  getFlowsWithElements(appId) {
+    return req.automation.get(routes.flowsWithElements(appId))
   },
 
   getFlow(appId, id) {
