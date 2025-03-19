@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import { prepareRoutes } from './utils/routes'
-import { encodePath } from './utils/path'
 
 const routes = prepareRoutes({
   integrationConnections      : '/api/node-server/manage/app/:appId/integration/connections',
@@ -12,6 +11,8 @@ const routes = prepareRoutes({
   integrationServiceAppConfigs: '/api/node-server/manage/app/:appId/integration/service/:serviceId/app-configs',
 
   elementParamDictionary: '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-dictionary/:dictionaryName',
+  elementParamSchema    : '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-schema/:schemaLoaderName',
+  elementSampleResult   : '/api/node-server/manage/app/:appId/integration/block/:serviceName/sample-result/:sampleResultMethodName',
 
   sharedElements: '/api/node-server/manage/integration/shared/elements',
 
@@ -53,6 +54,14 @@ export default req => ({
     return req.nodeAPI.post(routes.elementParamDictionary(appId, serviceName, dictionaryName), payload)
   },
 
+  getElementParamSchema(appId, serviceName, schemaLoaderName, payload) {
+    return req.nodeAPI.post(routes.elementParamSchema(appId, serviceName, schemaLoaderName), payload)
+  },
+
+  getElementSampleResult(appId, serviceName, schemaLoaderName, payload) {
+    return req.nodeAPI.post(routes.elementSampleResult(appId, serviceName, schemaLoaderName), payload)
+  },
+
   getSharedProductStatus(productId) {
     return req.nodeAPI.get(routes.sharedProductStatus(productId))
   },
@@ -62,10 +71,10 @@ export default req => ({
   },
 
   loadSharedAppConfigs(appId, serviceId) {
-    return req.nodeAPI.get(routes.integrationServiceAppConfigs(appId, encodePath(serviceId)))
+    return req.nodeAPI.get(routes.integrationServiceAppConfigs(appId, encodeURIComponent(serviceId)))
   },
 
   saveSharedAppConfigs(appId, serviceId, configs) {
-    return req.nodeAPI.put(routes.integrationServiceAppConfigs(appId, encodePath(serviceId)), configs)
+    return req.nodeAPI.put(routes.integrationServiceAppConfigs(appId, encodeURIComponent(serviceId)), configs)
   }
 })
