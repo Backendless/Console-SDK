@@ -207,7 +207,9 @@ export default req => ({
   },
 
   saveDraftFiles(appId, language, model, files, sync = true) {
-    return req.put(urls.blDraft(appId, language, model), files).query({ sync })
+    const encodedFiles = files.map(({ id, ...rest }) => ({ id: encodePath(id), ...rest }))
+
+    return req.put(urls.blDraft(appId, language, model), encodedFiles).query({ sync })
   },
 
   deployDraftFiles(appId, language, model, files, sync = true) {
