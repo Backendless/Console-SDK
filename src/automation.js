@@ -1,20 +1,21 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  flows               : '/api/app/:appId/automation/flow/version',
-  flowsElements       : '/api/app/:appId/automation/flows/versions/elements',
-  flow                : '/api/app/:appId/automation/flow/version/:versionId',
-  flowSchedule        : '/api/app/:appId/automation/flow/version/:versionId/schedule',
-  newFlowVersion      : '/api/app/:appId/automation/flow/version/:versionId/new-version',
-  flowState           : '/api/app/:appId/automation/flow/version/:versionId/:state',
-  flowGroupName       : '/api/app/:appId/automation/flow/:flowId/name',
-  flowDescription     : '/api/app/:appId/automation/flow/version/:versionId/description',
-  flowGroup           : '/api/app/:appId/automation/flow/:flowId',
-  flowVersionMetrics  : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
-  stepsMetrics        : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
-  flowInstances       : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
-  countInstances      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
-  flowInstance        : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
+  flows             : '/api/app/:appId/automation/flow/version',
+  flowsWithElements : '/api/app/:appId/automation/flow/version/with-elements',
+  flowsElements     : '/api/app/:appId/automation/flows/versions/elements',
+  flow              : '/api/app/:appId/automation/flow/version/:versionId',
+  flowSchedule      : '/api/app/:appId/automation/flow/version/:versionId/schedule',
+  newFlowVersion    : '/api/app/:appId/automation/flow/version/:versionId/new-version',
+  flowState         : '/api/app/:appId/automation/flow/version/:versionId/:state',
+  flowGroupName     : '/api/app/:appId/automation/flow/:flowId/name',
+  flowDescription   : '/api/app/:appId/automation/flow/version/:versionId/description',
+  flowGroup         : '/api/app/:appId/automation/flow/:flowId',
+  flowVersionMetrics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
+  stepsMetrics      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
+  flowInstances     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
+  countInstances    : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
+  flowInstance      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
   // eslint-disable-next-line max-len
   elementExecutionInfo: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId/element/:elementId',
   flowSlA             : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
@@ -23,7 +24,7 @@ const routes = prepareRoutes({
   SLACalendar         : '/api/app/:appId/automation/flow/sla/calendar/:id',
   // eslint-disable-next-line max-len
   errorHandlerAnalytics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/error-handler/:errorHandlerId/recorded-errors',
-  cloudCodeElements    : '/api/app/:appId/automation/flow/cloud-code/elements',
+  customElements       : '/api/node-server/manage/app/:appId/flowrunner/custom-elements',
   startDebugSession    : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/start-session',
   stopDebugSession     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/stop-session',
   testMonitorHistory   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/history',
@@ -51,6 +52,10 @@ export default req => ({
 
   getFlowsElements(appId, elementType, elementSubtype) {
     return req.automation.get(routes.flowsElements(appId)).query({ elementType, elementSubtype })
+  },
+
+  getFlowsWithElements(appId) {
+    return req.automation.get(routes.flowsWithElements(appId))
   },
 
   getFlow(appId, id) {
@@ -128,8 +133,8 @@ export default req => ({
       .query({ fromDate, toDate })
   },
 
-  getCloudCodeElements(appId) {
-    return req.automation.get(routes.cloudCodeElements(appId))
+  getCustomElements(appId) {
+    return req.automation.get(routes.customElements(appId))
   },
 
   startDebugSession(appId, flowId, versionId, forceStart) {
