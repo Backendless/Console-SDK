@@ -1,6 +1,6 @@
 {
   "name": "backendless-console-sdk",
-  "version": "2.38.1",
+  "version": "2.41.0",
   "description": "Backendless Console SDK for Node.js and browser",
   "browser": "dist/backendless-console-sdk.js",
   "main": "lib/index.js",
@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.21.5",
-    "backendless-request": "^0.4.3",
+    "backendless-request": "^0.8.4",
     "lodash": "^4.17.21"
   }
 }

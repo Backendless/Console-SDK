@@ -3,6 +3,7 @@ import _each from 'lodash/each'
 import urls from './urls'
 
 import { BL_MODELS, BL_CHAIN } from './utils/cache-tags'
+import { encodePath } from './utils/path'
 
 const hostedServices = appId => `${ urls.blBasePath(appId) }/generic`
 const codelessServices = appId => `${ urls.blBasePath(appId) }/codeless`
@@ -206,7 +207,9 @@ export default req => ({
   },
 
   saveDraftFiles(appId, language, model, files, sync = true) {
-    return req.put(urls.blDraft(appId, language, model), files).query({ sync })
+    const encodedFiles = files.map(({ id, ...rest }) => ({ id: encodePath(id), ...rest }))
+
+    return req.put(urls.blDraft(appId, language, model), encodedFiles).query({ sync })
   },
 
   deployDraftFiles(appId, language, model, files, sync = true) {
@@ -214,7 +217,7 @@ export default req => ({
   },
 
   getDraftFileContent(appId, language, model, fileId) {
-    return req.get(`${ urls.blDraft(appId, language, model) }/${ fileId }`)
+    return req.get(`${ urls.blDraft(appId, language, model) }/${ encodePath(fileId) }`)
   },
 
   getLanguages() {

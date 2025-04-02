@@ -8,10 +8,13 @@ const routes = prepareRoutes({
   integrationConnectionsUsages: '/api/node-server/manage/app/:appId/integration/connections/usages',
   integrationConnectionURL    : '/api/node-server/manage/app/:appId/integration/connection/oauth/url',
   integrationConnectionToken  : '/api/node-server/manage/app/:appId/integration/connection/:connectionId/token',
+  integrationServiceAppConfigs: '/api/node-server/manage/app/:appId/integration/service/:serviceId/app-configs',
 
   elementParamDictionary: '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-dictionary/:dictionaryName',
+  elementParamSchema    : '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-schema/:schemaLoaderName',
+  elementSampleResult   : '/api/node-server/manage/app/:appId/integration/block/:serviceName/sample-result/:sampleResultMethodName',
 
-  sharedElements : '/api/node-server/manage/integration/shared/elements',
+  sharedElements: '/api/node-server/manage/integration/shared/elements',
 
   sharedProductStatus : '/api/node-server/manage/integration/shared/product/:productId/status',
   sharedProductInstall: '/api/node-server/manage/integration/shared/product/:productId/install'
@@ -51,11 +54,27 @@ export default req => ({
     return req.nodeAPI.post(routes.elementParamDictionary(appId, serviceName, dictionaryName), payload)
   },
 
+  getElementParamSchema(appId, serviceName, schemaLoaderName, payload) {
+    return req.nodeAPI.post(routes.elementParamSchema(appId, serviceName, schemaLoaderName), payload)
+  },
+
+  getElementSampleResult(appId, serviceName, schemaLoaderName, payload) {
+    return req.nodeAPI.post(routes.elementSampleResult(appId, serviceName, schemaLoaderName), payload)
+  },
+
   getSharedProductStatus(productId) {
     return req.nodeAPI.get(routes.sharedProductStatus(productId))
   },
 
   installSharedProduct({ productId, versionId, configs }) {
     return req.nodeAPI.post(routes.sharedProductInstall(productId), { versionId, configs })
+  },
+
+  loadSharedAppConfigs(appId, serviceId) {
+    return req.nodeAPI.get(routes.integrationServiceAppConfigs(appId, encodeURIComponent(serviceId)))
+  },
+
+  saveSharedAppConfigs(appId, serviceId, configs) {
+    return req.nodeAPI.put(routes.integrationServiceAppConfigs(appId, encodeURIComponent(serviceId)), configs)
   }
 })
