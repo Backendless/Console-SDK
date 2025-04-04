@@ -43,6 +43,8 @@ const routes = prepareRoutes({
   importFlowVersion : '/api/app/:appId/automation/flow/:flowId/import',
   createFlowFromJSON: '/api/app/:appId/automation/flow/import',
 
+  realtimeTriggerCallbackUrl: '/api/app/:appId/automation/flow/version/trigger/realtime/callback-url',
+
   installFlowProduct  : '/api/app/:appId/automation/flow/marketplace/install/:productId',
   uninstallFlowProduct: '/api/app/:appId/automation/flow/marketplace/uninstall/:productId',
 })
@@ -138,6 +140,11 @@ export default req => ({
 
   getCustomElements(appId) {
     return req.automation.get(routes.customElements(appId))
+  },
+
+ getRealtimeTriggerCallbackUrl(appId, scope, hostType,serviceName, modelName,lang) {
+    return req.automation.get(routes.realtimeTriggerCallbackUrl(appId))
+      .query({ scope, hostType,serviceName, modelName,lang })
   },
 
   startDebugSession(appId, flowId, versionId, forceStart) {
