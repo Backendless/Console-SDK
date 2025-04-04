@@ -42,6 +42,9 @@ const routes = prepareRoutes({
   exportFlowVersion : '/api/app/:appId/automation/flow/version/:id/export',
   importFlowVersion : '/api/app/:appId/automation/flow/:flowId/import',
   createFlowFromJSON: '/api/app/:appId/automation/flow/import',
+
+  installFlowProduct  : '/api/app/:appId/automation/flow/marketplace/install/:productId',
+  uninstallFlowProduct: '/api/app/:appId/automation/flow/marketplace/uninstall/:productId',
 })
 
 export default req => ({
@@ -254,5 +257,13 @@ export default req => ({
 
   updateFlowSchedule(appId, versionId, data) {
     return req.automation.put(routes.flowSchedule(appId, versionId), data)
+  },
+
+  installFlowFromMarketplace(appId, productId, data) {
+    return req.automation.post(routes.installFlowProduct(appId, productId), data)
+  },
+
+  uninstallFlowProduct(appId, productId, data) {
+    return req.automation.delete(routes.uninstallFlowProduct(appId, productId), data)
   },
 })
