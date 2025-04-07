@@ -11,7 +11,8 @@ const jsServices = appId => `${ urls.blBasePath(appId) }/js`
 const marketplaceServices = appId => `${ urls.blBasePath(appId) }/marketplace`
 
 const hostedServiceConfig = (appId, serviceId) => `${ hostedServices(appId) }/configure/${ serviceId }`
-const marketplaceServiceConfig = (appId, serviceName) => `${ marketplaceServices(appId) }/configure/${ serviceName }`
+const marketplaceServiceConfig = (appId, serviceName, modelName) =>
+  `${ marketplaceServices(appId) }/configure/${modelName}/${ serviceName }`
 
 const MODES = {
   MARKETPLACE: 'MARKETPLACE',
@@ -194,8 +195,8 @@ export default req => ({
     return req.post(hostedServiceConfig(appId, serviceId), config)
   },
 
-  setMarketplaceServiceConfig(appId, serviceName, config) {
-    return req.post(marketplaceServiceConfig(appId, serviceName), config)
+  setMarketplaceServiceConfig(appId, serviceName, modelName, config) {
+    return req.post(marketplaceServiceConfig(appId, serviceName, modelName), config)
   },
 
   testServiceConfig(appId, serviceId, config) {
