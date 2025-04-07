@@ -3,9 +3,9 @@ import { prepareRoutes } from './utils/routes'
 const routes = prepareRoutes({
   forms     : '/api/node-server/manage/app/:appId/form-editor',
   createForm: '/api/node-server/manage/app/:appId/form-editor/form',
-  updateForm: '/api/node-server/manage/app/:appId/form-editor/:formName',
-  deleteForm: '/api/node-server/manage/app/:appId/form-editor/:formName',
-  renameForm: '/api/node-server/manage/app/:appId/rename-form',
+  updateForm: '/api/node-server/manage/app/:appId/form-editor/form/:formName',
+  deleteForm: '/api/node-server/manage/app/:appId/form-editor/form/:formName',
+  renameForm: '/api/node-server/manage/app/:appId/form-editor/rename-form',
 })
 
 export default req => ({
