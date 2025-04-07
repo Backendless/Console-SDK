@@ -42,6 +42,11 @@ const routes = prepareRoutes({
   exportFlowVersion : '/api/app/:appId/automation/flow/version/:id/export',
   importFlowVersion : '/api/app/:appId/automation/flow/:flowId/import',
   createFlowFromJSON: '/api/app/:appId/automation/flow/import',
+
+  startLearningMode        : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/start',
+  stopLearningMode         : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/stop',
+  getElementLearnedResult  : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/result',
+  getElementsLearnedResults: '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/learning/all-results',
 })
 
 export default req => ({
@@ -254,5 +259,21 @@ export default req => ({
 
   updateFlowSchedule(appId, versionId, data) {
     return req.automation.put(routes.flowSchedule(appId, versionId), data)
+  },
+
+  startLearningMode(appId, flowId, versionId, elementId) {
+    return req.automation.post(routes.startLearningMode(appId, flowId, versionId, elementId))
+  },
+
+  stopLearningMode(appId, flowId, versionId, elementId) {
+    return req.automation.post(routes.stopLearningMode(appId, flowId, versionId, elementId))
+  },
+
+  getElementLearnedResult(appId, flowId, versionId, elementId) {
+    return req.automation.get(routes.getElementLearnedResult(appId, flowId, versionId, elementId))
+  },
+
+  getElementsLearnedResults(appId, flowId, versionId) {
+    return req.automation.get(routes.getElementsLearnedResults(appId, flowId, versionId))
   },
 })
