@@ -45,10 +45,9 @@ const routes = prepareRoutes({
 
   realtimeTriggerCallbackUrl: '/api/app/:appId/automation/flow/version/trigger/realtime/callback-url',
 
-  startLearningMode        : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/start',
-  stopLearningMode         : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/stop',
-  getElementLearnedResult  : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/result',
-  getElementsLearnedResults: '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/learning/all-results',
+  startLearningMode         : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/start',
+  stopLearningMode          : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/stop',
+  getElementsLearningResults: '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/learning/all-results',
 })
 
 export default req => ({
@@ -144,9 +143,9 @@ export default req => ({
     return req.automation.get(routes.customElements(appId))
   },
 
-  getRealtimeTriggerCallbackUrl(appId, scope, hostType,serviceName, modelName,lang) {
+  getRealtimeTriggerCallbackUrl(appId, scope, hostType, serviceName, modelName, lang) {
     return req.automation.get(routes.realtimeTriggerCallbackUrl(appId))
-      .query({ scope, hostType,serviceName, modelName,lang })
+      .query({ scope, hostType, serviceName, modelName, lang })
   },
 
   startDebugSession(appId, flowId, versionId, forceStart) {
@@ -276,11 +275,7 @@ export default req => ({
     return req.automation.post(routes.stopLearningMode(appId, flowId, versionId, elementId))
   },
 
-  getElementLearnedResult(appId, flowId, versionId, elementId) {
-    return req.automation.get(routes.getElementLearnedResult(appId, flowId, versionId, elementId))
-  },
-
-  getElementsLearnedResults(appId, flowId, versionId) {
-    return req.automation.get(routes.getElementsLearnedResults(appId, flowId, versionId))
+  getElementsLearningResults(appId, flowId, versionId) {
+    return req.automation.get(routes.getElementsLearningResults(appId, flowId, versionId))
   },
 })
