@@ -48,6 +48,9 @@ const routes = prepareRoutes({
   startLearningMode         : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/start',
   stopLearningMode          : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/stop',
   getElementsLearningResults: '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/learning/all-results',
+
+  installFlowProduct  : '/api/app/:appId/automation/flow/marketplace/install/:productId',
+  uninstallFlowProduct: '/api/app/:appId/automation/flow/marketplace/uninstall/:productId',
 })
 
 export default req => ({
@@ -277,5 +280,13 @@ export default req => ({
 
   getElementsLearningResults(appId, flowId, versionId) {
     return req.automation.get(routes.getElementsLearningResults(appId, flowId, versionId))
+  },
+
+  installFlowFromMarketplace(appId, productId, data) {
+    return req.automation.post(routes.installFlowProduct(appId, productId), data)
+  },
+
+  uninstallFlowProduct(appId, productId, data) {
+    return req.automation.delete(routes.uninstallFlowProduct(appId, productId), data)
   },
 })
