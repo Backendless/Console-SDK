@@ -15,18 +15,15 @@ export default req => ({
     return req.get(routes.forms(appId))
   },
 
-  createForm(appId, formSource, formTarget) {
+  createForm(appId, formSource, appSettings) {
     return req.post(routes.createForm(appId), {
       formSource,
-      formTarget
+      appSettings
     })
   },
 
-  updateForm(appId, formSource, formTarget) {
-    return req.put(routes.updateForm(appId, formSource.name), {
-      formSource,
-      formTarget
-    })
+  updateForm(appId, formSource) {
+    return req.put(routes.updateForm(appId, formSource.name), { formSource })
   },
 
   deleteForm(appId, formName) {
