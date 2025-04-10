@@ -6,6 +6,7 @@ const routes = prepareRoutes({
   updateForm: '/api/node-server/manage/app/:appId/form-editor/form/:formName',
   deleteForm: '/api/node-server/manage/app/:appId/form-editor/form/:formName',
   renameForm: '/api/node-server/manage/app/:appId/form-editor/rename-form',
+  launchForm: '/api/app/:appId/form-editor/:formName/view',
 })
 
 export default req => ({
@@ -37,6 +38,10 @@ export default req => ({
       oldFormName,
       newFormName
     })
+  },
+
+  launchForm(appId, formName) {
+    return req.get(routes.launchForm(appId, formName), { formName })
   },
 
 })
