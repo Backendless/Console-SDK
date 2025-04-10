@@ -34,6 +34,10 @@ function normalizeAppSettings(result) {
 }
 
 export default req => ({
+  getMobileSettings(appId) {
+    return req.get(urls.mobileSettings(appId))
+  },
+
   createAndroidMobileSettings(appId, settings) {
     return req.post(urls.mobileSettingsAndroid(appId), settings)
   },
