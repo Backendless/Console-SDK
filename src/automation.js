@@ -42,6 +42,15 @@ const routes = prepareRoutes({
   exportFlowVersion : '/api/app/:appId/automation/flow/version/:id/export',
   importFlowVersion : '/api/app/:appId/automation/flow/:flowId/import',
   createFlowFromJSON: '/api/app/:appId/automation/flow/import',
+
+  realtimeTriggerCallbackUrl: '/api/app/:appId/automation/flow/version/trigger/realtime/callback-url',
+
+  startLearningMode         : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/start',
+  stopLearningMode          : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/stop',
+  getElementsLearningResults: '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/learning/all-results',
+
+  installFlowProduct  : '/api/app/:appId/automation/flow/marketplace/install/:productId',
+  uninstallFlowProduct: '/api/app/:appId/automation/flow/marketplace/uninstall/:productId',
 })
 
 export default req => ({
@@ -135,6 +144,11 @@ export default req => ({
 
   getCustomElements(appId) {
     return req.automation.get(routes.customElements(appId))
+  },
+
+  getRealtimeTriggerCallbackUrl(appId, scope, hostType, serviceName, modelName, lang) {
+    return req.automation.get(routes.realtimeTriggerCallbackUrl(appId))
+      .query({ scope, hostType, serviceName, modelName, lang })
   },
 
   startDebugSession(appId, flowId, versionId, forceStart) {
@@ -254,5 +268,25 @@ export default req => ({
 
   updateFlowSchedule(appId, versionId, data) {
     return req.automation.put(routes.flowSchedule(appId, versionId), data)
+  },
+
+  startLearningMode(appId, flowId, versionId, elementId) {
+    return req.automation.post(routes.startLearningMode(appId, flowId, versionId, elementId))
+  },
+
+  stopLearningMode(appId, flowId, versionId, elementId) {
+    return req.automation.post(routes.stopLearningMode(appId, flowId, versionId, elementId))
+  },
+
+  getElementsLearningResults(appId, flowId, versionId) {
+    return req.automation.get(routes.getElementsLearningResults(appId, flowId, versionId))
+  },
+
+  installFlowFromMarketplace(appId, productId, data) {
+    return req.automation.post(routes.installFlowProduct(appId, productId), data)
+  },
+
+  uninstallFlowProduct(appId, productId, data) {
+    return req.automation.delete(routes.uninstallFlowProduct(appId, productId), data)
   },
 })
