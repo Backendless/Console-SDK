@@ -282,8 +282,8 @@ export default req => ({
     return req.automation.get(routes.getElementsLearningResults(appId, flowId, versionId))
   },
 
-  installFlowFromMarketplace(appId, productId, data) {
-    return req.automation.post(routes.installFlowProduct(appId, productId), data)
+  installFlowFromMarketplace(appId, productId, version, data) {
+    return req.automation.post(routes.installFlowProduct(appId, productId), data).query({ version })
   },
 
   uninstallFlowProduct(appId, productId, data) {
