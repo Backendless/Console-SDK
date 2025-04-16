@@ -24,6 +24,7 @@ import developerProfile from './developer-profile'
 import devTeam from './dev-team'
 import email from './email'
 import files from './files'
+import formEditor from './form-editor'
 import gamification from './gamification'
 import geo from './geo'
 import license from './license'
@@ -198,6 +199,7 @@ const createClient = (serverUrl, authKey, options) => {
     devTeam             : devTeam(request),
     email               : email(request),
     files               : files(request),
+    formEditor          : formEditor(request),
     gamification        : gamification(request),
     geo                 : geo(request),
     license             : license(request),
