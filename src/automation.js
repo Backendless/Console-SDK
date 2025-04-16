@@ -1,21 +1,22 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  flows             : '/api/app/:appId/automation/flow/version',
+  flows               : '/api/app/:appId/automation/flow/version',
   flowsWithElements : '/api/app/:appId/automation/flow/version/with-elements',
-  flowsElements     : '/api/app/:appId/automation/flows/versions/elements',
-  flow              : '/api/app/:appId/automation/flow/version/:versionId',
-  flowSchedule      : '/api/app/:appId/automation/flow/version/:versionId/schedule',
-  newFlowVersion    : '/api/app/:appId/automation/flow/version/:versionId/new-version',
-  flowState         : '/api/app/:appId/automation/flow/version/:versionId/:state',
-  flowGroupName     : '/api/app/:appId/automation/flow/:flowId/name',
-  flowDescription   : '/api/app/:appId/automation/flow/version/:versionId/description',
-  flowGroup         : '/api/app/:appId/automation/flow/:flowId',
-  flowVersionMetrics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
-  stepsMetrics      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
-  flowInstances     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
-  countInstances    : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
-  flowInstance      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
+  flowsElements       : '/api/app/:appId/automation/flows/versions/elements',
+  flow                : '/api/app/:appId/automation/flow/version/:versionId',
+  flowSchedule        : '/api/app/:appId/automation/flow/version/:versionId/schedule',
+  newFlowVersion      : '/api/app/:appId/automation/flow/version/:versionId/new-version',
+  flowState           : '/api/app/:appId/automation/flow/version/:versionId/:state',
+  flowGroupName       : '/api/app/:appId/automation/flow/:flowId/name',
+  flowDescription     : '/api/app/:appId/automation/flow/version/:versionId/description',
+  flowGroup           : '/api/app/:appId/automation/flow/:flowId',
+  flowVersionAnalytics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics',
+  flowVersionMetrics  : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
+  stepsMetrics        : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
+  flowInstances       : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
+  countInstances      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
+  flowInstance        : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
   // eslint-disable-next-line max-len
   elementExecutionInfo: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId/element/:elementId',
   flowSlA             : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
@@ -131,6 +132,10 @@ export default req => ({
 
   getFlowInstanceAnalytics(appId, flowId, versionId, executionId) {
     return req.automation.get(routes.flowInstance(appId, flowId, versionId, executionId))
+  },
+
+  cleanFlowVersionAnalytics(appId, flowId, versionId) {
+    return req.automation.delete(routes.flowVersionAnalytics(appId, flowId, versionId))
   },
 
   getElementExecutionInfo(appId, flowId, versionId, executionId, elementId) {
