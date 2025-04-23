@@ -3,10 +3,9 @@ import { prepareRoutes } from './utils/routes'
 const routes = prepareRoutes({
   forms     : '/api/node-server/manage/app/:appId/form-editor',
   createForm: '/api/node-server/manage/app/:appId/form-editor/form',
-  updateForm: '/api/node-server/manage/app/:appId/form-editor/form/:formName',
-  deleteForm: '/api/node-server/manage/app/:appId/form-editor/form/:formName',
-  renameForm: '/api/node-server/manage/app/:appId/form-editor/rename-form',
-  launchForm: '/api/app/:appId/form-editor/:formName/view',
+  updateForm: '/api/node-server/manage/app/:appId/form-editor/form/:formId',
+  deleteForm: '/api/node-server/manage/app/:appId/form-editor/form/:formId',
+  launchForm: '/api/app/:appId/form-editor/:formId/view',
 })
 
 export default req => ({
@@ -23,22 +22,15 @@ export default req => ({
   },
 
   updateForm(appId, formSource) {
-    return req.put(routes.updateForm(appId, formSource.name), { formSource })
+    return req.put(routes.updateForm(appId, formSource.id), { formSource })
   },
 
-  deleteForm(appId, formName) {
-    return req.delete(routes.deleteForm(appId, formName))
+  deleteForm(appId, formSource) {
+    return req.delete(routes.deleteForm(appId, formSource.id), { formSource })
   },
 
-  renameForm(appId, oldFormName, newFormName) {
-    return req.put(routes.renameForm(appId), {
-      oldFormName,
-      newFormName
-    })
-  },
-
-  launchForm(appId, formName) {
-    return req.get(routes.launchForm(appId, formName), { formName })
+  launchForm(appId, formId) {
+    return req.get(routes.launchForm(appId, formId))
   },
 
 })
