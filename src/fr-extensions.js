@@ -10,6 +10,8 @@ const routes = prepareRoutes({
   integrationConnectionToken  : '/api/node-server/manage/app/:appId/integration/connection/:connectionId/token',
   integrationServiceAppConfigs: '/api/node-server/manage/app/:appId/integration/service/:serviceId/app-configs',
 
+  publicServiceIcon: '/api/node-server/public/app/:appId/cloud-code/:lang/:model/:mode/:filePath',
+
   elementParamDictionary: '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-dictionary/:dictionaryName',
   elementParamSchema    : '/api/node-server/manage/app/:appId/integration/block/:serviceName/param-schema/:schemaLoaderName',
   elementSampleResult   : '/api/node-server/manage/app/:appId/integration/block/:serviceName/sample-result/:sampleResultMethodName',
@@ -76,5 +78,11 @@ export default req => ({
 
   saveSharedAppConfigs(appId, serviceId, configs) {
     return req.nodeAPI.put(routes.integrationServiceAppConfigs(appId, encodeURIComponent(serviceId)), configs)
+  },
+
+  getPublicServiceIcon(appId, lang, model, mode, filePath) {
+    return req.nodeAPI.get(routes.publicServiceIcon(appId, lang, model, mode, filePath))
+      .unwrapBody(false)
+      .setEncoding(null)
   }
 })
