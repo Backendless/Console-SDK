@@ -13,7 +13,6 @@ import cloudCode from './cloud-code'
 import blueprints from './blueprints'
 import cache from './cache'
 import cacheControl from './cache-control'
-import codegen from './codegen'
 import codeless from './codeless'
 import counters from './counters'
 import dataConnectors from './data-connectors'
@@ -26,11 +25,9 @@ import email from './email'
 import files from './files'
 import formEditor from './form-editor'
 import gamification from './gamification'
-import geo from './geo'
 import license from './license'
 import messaging from './messaging'
 import navigator from './navigator'
-import projectTemplate from './project-template'
 import security from './security'
 import devPermissions, { DevPermissions } from './dev-permissions'
 import openAI from './open-ai'
@@ -188,7 +185,6 @@ const createClient = (serverUrl, authKey, options) => {
     blueprints          : blueprints(request),
     cache               : cache(request),
     cacheControl        : cacheControl(request),
-    codegen             : codegen(request),
     codeless            : codeless(request),
     counters            : counters(request),
     dataConnectors      : dataConnectors(request),
@@ -201,11 +197,9 @@ const createClient = (serverUrl, authKey, options) => {
     files               : files(request),
     formEditor          : formEditor(request),
     gamification        : gamification(request),
-    geo                 : geo(request),
     license             : license(request),
     messaging           : messaging(request),
     navigator           : navigator(request),
-    projectTemplate     : projectTemplate(request),
     security            : security(request),
     devPermissions      : devPermissions(request),
     openAI              : openAI(request),
