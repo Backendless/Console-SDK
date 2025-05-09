@@ -34,7 +34,8 @@ const routes = prepareRoutes({
 
   installDetails: '/console/community/marketplace/installs/details',
 
-  appInstalls: '/api/app/:appId/marketplace/installs',
+  appInstalls               : '/api/app/:appId/marketplace/installs',
+  productDependenciesInstall: '/api/app/:appId/marketplace/product-dependencies/install',
 })
 
 export const marketplace = req => ({
@@ -150,6 +151,13 @@ export const marketplace = req => ({
   },
 
   //---- APP INSTALLS ----//
+
+  //---- PRODUCT DEPENDENCIES ==>
+  installProductDependencies(appId, data) {
+    return req.post(routes.productDependenciesInstall(appId), data)
+  },
+
+  // ---- PRODUCT DEPENDENCIES ----//
 
   //---- SUBMISSIONS ==>
 
