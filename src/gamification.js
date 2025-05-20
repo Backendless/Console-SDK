@@ -49,48 +49,24 @@ export default req => ({
     return req.post(`${urls.gamification()}/social-link`, data)
   },
 
-  getLastUpdates() {
-    return req.get(`${urls.gamification()}/updates`)
+  getUnnotifiedEvents() {
+    return req.get(`${urls.gamification()}/unnotified-events`)
+  },
+
+  getUnnotifiedAchievements() {
+    return req.get(`${urls.gamification()}/unnotified-achievements`)
   },
 
   markEventPlayed(taskId) {
     return req.put(`${urls.gamification()}/mark-event-played`, { taskId })
   },
 
-  enableAppAPITracking(appId) {
-    return req.put(`${urls.gamificationApp(appId)}/enable`)
-  },
-
-  disableAppAPITracking(appId) {
-    return req.put(`${urls.gamificationApp(appId)}/disable`)
-  },
-
   isAppAPITrackingEnabled(appId) {
     return req.get(`${urls.gamificationApp(appId)}/enabled`)
   },
 
-  enableAccountAPITracking() { // enable API monitoring for all developer's apps
-    return req.put(`${urls.gamification()}/enable`)
-  },
-
-  disableAccountAPITracking() { // disable API monitoring for all developer's apps
-    return req.put(`${urls.gamification()}/disable`)
-  },
-
-  isAccountAPITrackingEnabled() {
-    return req.get(`${urls.gamification()}/enabled`)
-  },
-
-  unlockSpringboardPlan(appId) {
-    return req.put(`${urls.gamification()}/unlock-springboard`).query({ appId })
-  },
-
   getFreeMilestoneProgress() {
     return req.get(`${urls.gamification()}/free-plan-milestone-progress`)
-  },
-
-  getUnlockedFreePlanAppId() {
-    return req.get(`${urls.gamification()}/free-plan-status`)
   },
 
   getSettings() {
@@ -103,5 +79,9 @@ export default req => ({
 
   getSocialPostsCollection() {
     return req.get(`${urls.gamification()}/social-posts-templates`)
+  },
+
+  validateFlowRunnerAchievements(appId, event) {
+    return req.post(`/api/gamification/${appId}/flowrunner-achievements/validate`, event)
   }
 })
