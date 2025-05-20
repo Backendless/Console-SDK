@@ -2,7 +2,7 @@ import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
   flows               : '/api/app/:appId/automation/flow/version',
-  flowsWithElements : '/api/app/:appId/automation/flow/version/with-elements',
+  flowsWithElements   : '/api/app/:appId/automation/flow/version/with-elements',
   flowsElements       : '/api/app/:appId/automation/flows/versions/elements',
   flow                : '/api/app/:appId/automation/flow/version/:versionId',
   flowSchedule        : '/api/app/:appId/automation/flow/version/:versionId/schedule',
@@ -49,6 +49,7 @@ const routes = prepareRoutes({
   startLearningMode         : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/start',
   stopLearningMode          : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/stop',
   getElementsLearningResults: '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/learning/all-results',
+  getElementLearningResult  : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/result',
 
   installFlowProduct  : '/api/app/:appId/automation/flow/marketplace/install/:productId',
   uninstallFlowProduct: '/api/app/:appId/automation/flow/marketplace/uninstall/:productId',
@@ -285,6 +286,10 @@ export default req => ({
 
   getElementsLearningResults(appId, flowId, versionId) {
     return req.automation.get(routes.getElementsLearningResults(appId, flowId, versionId))
+  },
+
+  getElementLearningResult(appId, flowId, versionId, elementId) {
+    return req.automation.get(routes.getElementLearningResult(appId, flowId, versionId, elementId))
   },
 
   installFlowFromMarketplace(appId, productId, version, data) {
