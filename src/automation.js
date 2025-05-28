@@ -9,6 +9,7 @@ const routes = prepareRoutes({
   flowSchedule            : '/api/app/:appId/automation/flow/version/:versionId/schedule',
   newFlowVersion          : '/api/app/:appId/automation/flow/version/:versionId/new-version',
   flowState               : '/api/app/:appId/automation/flow/version/:versionId/:state',
+  sharedMemory            : '/api/app/:appId/automation/flow/version/:versionId/shared-memory',
   flowGroupName           : '/api/app/:appId/automation/flow/:flowId/name',
   flowDescription         : '/api/app/:appId/automation/flow/version/:versionId/description',
   flowGroup               : '/api/app/:appId/automation/flow/:flowId',
@@ -305,4 +306,8 @@ export default req => ({
   uninstallFlowProduct(appId, productId, data) {
     return req.automation.delete(routes.uninstallFlowProduct(appId, productId), data)
   },
+
+  updateSharedMemorySettings(appId, versionId, data) {
+    return req.automation.put(routes.sharedMemory(appId, versionId), data)
+  }
 })
