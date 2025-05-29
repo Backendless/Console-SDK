@@ -1,22 +1,23 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  flows               : '/api/app/:appId/automation/flow/version',
-  flowsWithElements : '/api/app/:appId/automation/flow/version/with-elements',
-  flowsElements       : '/api/app/:appId/automation/flows/versions/elements',
-  flow                : '/api/app/:appId/automation/flow/version/:versionId',
-  flowSchedule        : '/api/app/:appId/automation/flow/version/:versionId/schedule',
-  newFlowVersion      : '/api/app/:appId/automation/flow/version/:versionId/new-version',
-  flowState           : '/api/app/:appId/automation/flow/version/:versionId/:state',
-  flowGroupName       : '/api/app/:appId/automation/flow/:flowId/name',
-  flowDescription     : '/api/app/:appId/automation/flow/version/:versionId/description',
-  flowGroup           : '/api/app/:appId/automation/flow/:flowId',
-  flowVersionAnalytics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics',
-  flowVersionMetrics  : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
-  stepsMetrics        : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
-  flowInstances       : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
-  countInstances      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
-  flowInstance        : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
+  flows                   : '/api/app/:appId/automation/flow/version',
+  flowsWithElements       : '/api/app/:appId/automation/flow/version/with-elements',
+  flowsWithElementsDetails: '/api/app/:appId/automation/flow/version/with-elements-details',
+  flowsElements           : '/api/app/:appId/automation/flows/versions/elements',
+  flow                    : '/api/app/:appId/automation/flow/version/:versionId',
+  flowSchedule            : '/api/app/:appId/automation/flow/version/:versionId/schedule',
+  newFlowVersion          : '/api/app/:appId/automation/flow/version/:versionId/new-version',
+  flowState               : '/api/app/:appId/automation/flow/version/:versionId/:state',
+  flowGroupName           : '/api/app/:appId/automation/flow/:flowId/name',
+  flowDescription         : '/api/app/:appId/automation/flow/version/:versionId/description',
+  flowGroup               : '/api/app/:appId/automation/flow/:flowId',
+  flowVersionAnalytics    : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics',
+  flowVersionMetrics      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-metrics',
+  stepsMetrics            : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/step-metrics',
+  flowInstances           : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
+  countInstances          : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
+  flowInstance            : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
   // eslint-disable-next-line max-len
   elementExecutionInfo: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId/element/:elementId',
   flowSlA             : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
@@ -49,6 +50,7 @@ const routes = prepareRoutes({
   startLearningMode         : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/start',
   stopLearningMode          : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/stop',
   getElementsLearningResults: '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/learning/all-results',
+  getElementLearningResult  : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/result',
 
   installFlowProduct  : '/api/app/:appId/automation/flow/marketplace/install/:productId',
   uninstallFlowProduct: '/api/app/:appId/automation/flow/marketplace/uninstall/:productId',
@@ -66,6 +68,11 @@ export default req => ({
 
   getFlowsWithElements(appId) {
     return req.automation.get(routes.flowsWithElements(appId))
+  },
+
+  getFlowsWithElementsDetails(appId, status = []) {
+    return req.automation.get(routes.flowsWithElementsDetails(appId))
+      .query({ status })
   },
 
   getFlow(appId, id) {
@@ -285,6 +292,10 @@ export default req => ({
 
   getElementsLearningResults(appId, flowId, versionId) {
     return req.automation.get(routes.getElementsLearningResults(appId, flowId, versionId))
+  },
+
+  getElementLearningResult(appId, flowId, versionId, elementId) {
+    return req.automation.get(routes.getElementLearningResult(appId, flowId, versionId, elementId))
   },
 
   installFlowFromMarketplace(appId, productId, version, data) {
