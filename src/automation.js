@@ -50,6 +50,7 @@ const routes = prepareRoutes({
 
   startLearningMode         : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/start',
   stopLearningMode          : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/stop',
+  getElementsResults        : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/results',
   getElementsLearningResults: '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/learning/all-results',
   getElementLearningResult  : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/result',
 
@@ -289,6 +290,10 @@ export default req => ({
 
   stopLearningMode(appId, flowId, versionId, elementId) {
     return req.automation.post(routes.stopLearningMode(appId, flowId, versionId, elementId))
+  },
+
+  getElementsResults(appId, flowId, versionId) {
+    return req.automation.get(routes.getElementsResults(appId, flowId, versionId))
   },
 
   getElementsLearningResults(appId, flowId, versionId) {
