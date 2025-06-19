@@ -9,6 +9,7 @@ const routes = prepareRoutes({
   flowSchedule            : '/api/app/:appId/automation/flow/version/:versionId/schedule',
   newFlowVersion          : '/api/app/:appId/automation/flow/version/:versionId/new-version',
   flowState               : '/api/app/:appId/automation/flow/version/:versionId/:state',
+  sharedMemory            : '/api/app/:appId/automation/flow/version/:versionId/shared-memory',
   flowGroupName           : '/api/app/:appId/automation/flow/:flowId/name',
   flowDescription         : '/api/app/:appId/automation/flow/version/:versionId/description',
   flowGroup               : '/api/app/:appId/automation/flow/:flowId',
@@ -49,6 +50,7 @@ const routes = prepareRoutes({
 
   startLearningMode         : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/start',
   stopLearningMode          : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/stop',
+  getElementsResults        : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/results',
   getElementsLearningResults: '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/learning/all-results',
   getElementLearningResult  : '/api/app/:appId/automation/flow/:flowId/version/:id/debug/element/:elementId/learning/result',
 
@@ -290,6 +292,10 @@ export default req => ({
     return req.automation.post(routes.stopLearningMode(appId, flowId, versionId, elementId))
   },
 
+  getElementsResults(appId, flowId, versionId) {
+    return req.automation.get(routes.getElementsResults(appId, flowId, versionId))
+  },
+
   getElementsLearningResults(appId, flowId, versionId) {
     return req.automation.get(routes.getElementsLearningResults(appId, flowId, versionId))
   },
@@ -305,4 +311,8 @@ export default req => ({
   uninstallFlowProduct(appId, productId, data) {
     return req.automation.delete(routes.uninstallFlowProduct(appId, productId), data)
   },
+
+  updateSharedMemorySettings(appId, versionId, data) {
+    return req.automation.put(routes.sharedMemory(appId, versionId), data)
+  }
 })
