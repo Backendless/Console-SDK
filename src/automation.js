@@ -28,6 +28,9 @@ const routes = prepareRoutes({
   // eslint-disable-next-line max-len
   errorHandlerAnalytics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/error-handler/:errorHandlerId/recorded-errors',
   customElements       : '/api/node-server/manage/app/:appId/flowrunner/custom-elements',
+
+  flowrunnerAiAgentsProviders: '/api/node-server/manage/flowrunner/ai-agents/providers',
+
   startDebugSession    : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/start-session',
   stopDebugSession     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/stop-session',
   testMonitorHistory   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/history',
@@ -158,6 +161,10 @@ export default req => ({
 
   getCustomElements(appId) {
     return req.automation.get(routes.customElements(appId))
+  },
+
+  getAiAgentsProviders() {
+    return req.nodeAPI.get(routes.flowrunnerAiAgentsProviders())
   },
 
   getRealtimeTriggerCallbackUrl(appId, scope, hostType, serviceName, modelName, lang) {
