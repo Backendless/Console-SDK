@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
@@ -19,13 +20,13 @@ const routes = prepareRoutes({
   flowInstances           : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
   countInstances          : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
   flowInstance            : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
-  // eslint-disable-next-line max-len
+
   elementExecutionInfo: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId/element/:elementId',
   flowSlA             : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
   flowSlAGoal         : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals/:id',
   SLACalendars        : '/api/app/:appId/automation/flow/sla/calendar',
   SLACalendar         : '/api/app/:appId/automation/flow/sla/calendar/:id',
-  // eslint-disable-next-line max-len
+
   errorHandlerAnalytics: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/error-handler/:errorHandlerId/recorded-errors',
   customElements       : '/api/node-server/manage/app/:appId/flowrunner/custom-elements',
 
@@ -34,7 +35,6 @@ const routes = prepareRoutes({
   startDebugSession    : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/start-session',
   stopDebugSession     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/stop-session',
   testMonitorHistory   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/history',
-  // eslint-disable-next-line max-len
   debugExecutionContext: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/execution-context',
   runElementInDebugMode: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/run/element/:elementId',
 
