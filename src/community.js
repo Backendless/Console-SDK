@@ -16,6 +16,8 @@ const routes = prepareRoutes({
   onProductInstall: '/console/community/activity/products/install',
 
   reportUserActivity: '/console/community/activity/report',
+
+  devSuicide:  '/console/community/dev/suicide',
 })
 
 export const community = req => ({
@@ -87,4 +89,8 @@ export const community = req => ({
   reportUserActivity() {
     return req.community.post(routes.reportUserActivity())
   },
+
+  onDeveloperSuicide() {
+    return req.community.delete(routes.devSuicide())
+  }
 })
