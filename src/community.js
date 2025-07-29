@@ -20,10 +20,6 @@ const routes = prepareRoutes({
   devSuicide:  '/console/community/dev/suicide',
 })
 
-const activeCampaignRoutes = prepareRoutes({
-  registerDeveloper: '/console/community/active-campaign/registration'
-})
-
 export const community = req => ({
 
   //---- COMMENTS ----//
@@ -92,12 +88,6 @@ export const community = req => ({
 
   reportUserActivity() {
     return req.community.post(routes.reportUserActivity())
-  },
-
-  //---- ACTIVE CAMPAIGN ----//
-
-  onRegisterDeveloper(dev) {
-    return req.community.post(activeCampaignRoutes.registerDeveloper(), { dev })
   },
 
   onDeveloperSuicide() {
