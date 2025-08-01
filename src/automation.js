@@ -59,6 +59,14 @@ const routes = prepareRoutes({
 
   installFlowProduct  : '/api/app/:appId/automation/flow/marketplace/install/:productId',
   uninstallFlowProduct: '/api/app/:appId/automation/flow/marketplace/uninstall/:productId',
+
+  createSubFlow                 : '/api/app/:appId/automation/version/:versionId/subflow',
+  getSubFlowByID                : '/api/app/:appId/automation/version/:versionId/subflow/:subFlowId',
+  updateSubFlowByID             : '/api/app/:appId/automation/version/:versionId/subflow/:subFlowId',
+  deleteSubFlowByID             : '/api/app/:appId/automation/version/:versionId/subflow/:subFlowId',
+  getSubFlows                   : '/api/app/:appId/automation/version/:versionId/subflow',
+  getSubFlowsWithElements       : '/api/app/:appId/automation/version/:versionId/subflow/with-elements',
+  getSubFlowsWithElementsDetails: '/api/app/:appId/automation/version/:versionId/subflow/with-elements-details',
 })
 
 export default req => ({
@@ -321,5 +329,34 @@ export default req => ({
 
   updateSharedMemorySettings(appId, versionId, data) {
     return req.automation.put(routes.sharedMemory(appId, versionId), data)
-  }
+  },
+
+  createSubFlow(appId, versionId, data) {
+    return req.automation.post(routes.createSubFlow(appId, versionId), data)
+  },
+
+  getSubFlow(appId, versionId, subFlowVersionId) {
+    return req.automation.get(routes.getSubFlowByID(appId, versionId, subFlowVersionId))
+  },
+
+  updateSubFlow(appId, versionId, subFlowVersionId, data) {
+    return req.automation.put(routes.updateSubFlowByID(appId, versionId, subFlowVersionId), data)
+  },
+
+  deleteSubFlow(appId, versionId, subFlowId) {
+    return req.automation.delete(routes.deleteSubFlowByID(appId, versionId, subFlowId))
+  },
+
+  getSubFlows(appId, versionId) {
+    return req.automation.get(routes.getSubFlows(appId, versionId))
+  },
+
+  getSubFlowsWithElements(appId, versionId) {
+    return req.automation.get(routes.getSubFlowsWithElements(appId, versionId))
+  },
+
+  getSubFlowsWithElementsDetails(appId, versionId) {
+    return req.automation.get(routes.getSubFlowsWithElementsDetails(appId, versionId))
+  },
 })
+
