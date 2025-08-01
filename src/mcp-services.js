@@ -19,8 +19,8 @@ export default req => ({
     return req.nodeAPI.delete(routes.integrationMcpClient(appId), data)
   },
 
-  updateMcpClient(appId, clientId, data) {
-    return req.nodeAPI.put(routes.integrationMcpClient(appId, clientId), data)
+  updateMcpClient(appId, data) {
+    return req.nodeAPI.put(routes.integrationMcpClient(appId), data)
   },
 
   validateMcpConnection(appId, data) {
