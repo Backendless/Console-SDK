@@ -46,6 +46,7 @@ import visualizations from './visualizations'
 import consolePreview from './console-preview'
 import quickApps from './quick-apps'
 import frExtensions from './fr-extensions'
+import mcpServices from './mcp-services'
 
 import { community } from './community'
 import { marketplace } from './marketplace'
@@ -222,7 +223,8 @@ const createClient = (serverUrl, authKey, options) => {
     quickApps           : quickApps(request),
     integrations        : integrations(request),
     pdf                 : pdf(request),
-    frExtensions        : frExtensions(request)
+    frExtensions        : frExtensions(request),
+    mcpServices         : mcpServices(request)
   }
 }
 
