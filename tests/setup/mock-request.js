@@ -32,7 +32,6 @@ export function resetRequestCache() {
 }
 
 export function apiRequestCalls() {
-  // received is the mock function (Request.send)
   if (!jest.isMockFunction(Request.send)) {
     throw new Error('Expected a mock function but received: ' + typeof Request.send)
   }
