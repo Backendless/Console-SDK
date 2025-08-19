@@ -22,7 +22,7 @@ export default req => ({
   },
 
   deleteContainer(appId, containerId) {
-    return req.delete(routes.containers(appId, containerId))
+    return req.delete(routes.container(appId, containerId))
   },
 
   deployContainer(appId, containerId, data) {
