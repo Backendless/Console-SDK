@@ -1,5 +1,3 @@
-import { mockSuccessAPIRequest, mockFailedAPIRequest, apiRequestCalls } from '../setup/mock-request'
-
 describe('apiClient.initialQuestionnaire', () => {
   let apiClient
   let initialQuestionnaireAPI

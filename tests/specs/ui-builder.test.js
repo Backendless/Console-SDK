@@ -1,5 +1,3 @@
-import { mockFailedAPIRequest } from '../setup/mock-request'
-
 describe('apiClient.uiBuilder', () => {
   let apiClient
   let uiBuilderAPI
@@ -2039,7 +2037,7 @@ describe('apiClient.uiBuilder', () => {
     })
   })
 
-  // Layout Logic Methods  
+  // Layout Logic Methods
   describe('updateLayoutUI', () => {
     it('should make PUT request to update layout UI', async () => {
       mockSuccessAPIRequest(successResult)

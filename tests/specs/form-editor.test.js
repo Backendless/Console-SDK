@@ -1,5 +1,3 @@
-import { mockSuccessAPIRequest, mockFailedAPIRequest, apiRequestCalls } from '../setup/mock-request'
-
 describe('apiClient.formEditor', () => {
   let apiClient
   let formEditorAPI

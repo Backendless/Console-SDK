@@ -1,5 +1,3 @@
-import { mockFailedAPIRequest } from '../setup/mock-request'
-
 describe('apiClient.navigator', () => {
   let apiClient
   let navigatorAPI

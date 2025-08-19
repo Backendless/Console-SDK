@@ -1,5 +1,3 @@
-import { mockFailedAPIRequest } from '../setup/mock-request'
-
 describe('apiClient.codeless', () => {
   let apiClient
   let codelessAPI
@@ -248,9 +246,9 @@ describe('apiClient.codeless', () => {
     it('should make PUT request to update function source', async () => {
       const xml = '<blocks><block type="start"></block></blocks>'
       const code = 'function updatedTest() { return false; }'
-      const definition = { 
-        inputs: [{ name: 'param1', type: 'string' }], 
-        outputs: [{ name: 'result', type: 'boolean' }] 
+      const definition = {
+        inputs: [{ name: 'param1', type: 'string' }],
+        outputs: [{ name: 'result', type: 'boolean' }]
       }
 
       const updatedFunction = {

@@ -1,5 +1,3 @@
-import { mockSuccessAPIRequest, mockFailedAPIRequest, apiRequestCalls } from '../setup/mock-request'
-
 describe('apiClient.sqlService', () => {
   let apiClient
   let sqlServiceAPI
@@ -1039,7 +1037,7 @@ describe('apiClient.sqlService', () => {
       const connectionName = 'analytics-db'
       const data = {
         sql: `
-          SELECT 
+          SELECT
             p.name as product,
             SUM(o.amount) as total_sales,
             COUNT(o.id) as order_count

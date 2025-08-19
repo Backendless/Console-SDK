@@ -1,5 +1,3 @@
-import { mockFailedAPIRequest } from '../setup/mock-request'
-
 describe('apiClient.security', () => {
   let apiClient
   let securityAPI
@@ -210,7 +208,7 @@ describe('apiClient.security', () => {
   describe('loadPermissions', () => {
     it('should load permissions for data service with users policy', async () => {
       const permissionsResponse = [
-        { 
+        {
           roleId: 'role-123',
           permissions: [
             { operation: 'find', access: 'GRANT' },
@@ -223,11 +221,11 @@ describe('apiClient.security', () => {
 
       // Use roles policy to avoid totalRows complexity
       const result = await securityAPI.loadPermissions(
-        appId, 
-        'roles', 
-        'messaging', 
-        'service-123', 
-        'ServiceName', 
+        appId,
+        'roles',
+        'messaging',
+        'service-123',
+        'ServiceName',
         'all'
       )
 
@@ -744,13 +742,13 @@ describe('apiClient.security', () => {
   describe('searchDataACLUsers', () => {
     it('should search for users in data ACL', async () => {
       const usersResponse = [
-        { 
-          userId: 'user-123', 
+        {
+          userId: 'user-123',
           email: 'test@example.com',
           permissions: [{ operation: 'find', access: 'GRANT' }]
         },
-        { 
-          userId: 'user-456', 
+        {
+          userId: 'user-456',
           email: 'another@example.com',
           permissions: [{ operation: 'create', access: 'DENY' }]
         }

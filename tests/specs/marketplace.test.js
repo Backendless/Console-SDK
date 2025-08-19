@@ -1,5 +1,3 @@
-import { mockSuccessAPIRequest, mockFailedAPIRequest, apiRequestCalls } from '../setup/mock-request'
-
 describe('apiClient.marketplace', () => {
   let apiClient
   let marketplaceAPI
@@ -210,6 +208,139 @@ describe('apiClient.marketplace', () => {
         timeout: 0,
         withCredentials: false
       }])
+    })
+  })
+
+  describe('getProductConfigurations', () => {
+    it('should make GET request to get product configurations with version query', async () => {
+      const configurationsResult = {
+        configurations: [
+          { key: 'database.host', value: 'localhost', type: 'string' },
+          { key: 'database.port', value: '5432', type: 'number' },
+          { key: 'features.analytics', value: 'true', type: 'boolean' }
+        ],
+        version: '2.1.0'
+      }
+      mockSuccessAPIRequest(configurationsResult)
+
+      const productId = 'ecommerce-template'
+      const version = '2.1.0'
+      const result = await marketplaceAPI.getProductConfigurations(productId, version)
+
+      expect(result).toEqual(configurationsResult)
+      expect(apiRequestCalls()).toEqual([{
+        path: `http://test-host:3000/console/community/marketplace/products/${productId}/configurations?version=${version}`,
+        body: undefined,
+        method: 'GET',
+        encoding: 'utf8',
+        headers: {},
+        timeout: 0,
+        withCredentials: false
+      }])
+    })
+
+    it('fails when server responds with non 200 status code', async () => {
+      mockFailedAPIRequest('Product configuration not found', 404)
+
+      const productId = 'invalid-product'
+      const version = '1.0.0'
+      const error = await marketplaceAPI.getProductConfigurations(productId, version).catch(e => e)
+
+      expect(error).toBeInstanceOf(Error)
+      expect({ ...error }).toEqual({
+        body: { message: 'Product configuration not found' },
+        message: 'Product configuration not found',
+        status: 404
+      })
+    })
+  })
+
+  describe('getProductPrivateDevs', () => {
+    it('should make GET request to get product private devs using req.community', async () => {
+      const privateDevsResult = {
+        privateDevs: [
+          { userId: 'dev-123', email: 'dev1@example.com', role: 'owner' },
+          { userId: 'dev-456', email: 'dev2@example.com', role: 'collaborator' }
+        ],
+        count: 2
+      }
+      mockSuccessAPIRequest(privateDevsResult)
+
+      const productId = 'premium-plugin'
+      const result = await marketplaceAPI.getProductPrivateDevs(productId)
+
+      expect(result).toEqual(privateDevsResult)
+      expect(apiRequestCalls()).toEqual([{
+        path: `http://test-host:3000/console/community/marketplace/products/${productId}/private-devs`,
+        body: undefined,
+        method: 'GET',
+        encoding: 'utf8',
+        headers: {},
+        timeout: 0,
+        withCredentials: false
+      }])
+    })
+
+    it('fails when server responds with access denied error', async () => {
+      mockFailedAPIRequest('Access denied to private developers list', 403)
+
+      const productId = 'restricted-plugin'
+      const error = await marketplaceAPI.getProductPrivateDevs(productId).catch(e => e)
+
+      expect(error).toBeInstanceOf(Error)
+      expect({ ...error }).toEqual({
+        body: { message: 'Access denied to private developers list' },
+        message: 'Access denied to private developers list',
+        status: 403
+      })
+    })
+  })
+
+  describe('updateProductPrivateDevs', () => {
+    it('should make PUT request to update product private devs using req.community', async () => {
+      const updateResult = {
+        success: true,
+        updatedCount: 3,
+        message: 'Private developers list updated successfully'
+      }
+      mockSuccessAPIRequest(updateResult)
+
+      const productId = 'premium-plugin'
+      const privateDevs = [
+        { userId: 'dev-123', email: 'dev1@example.com', role: 'owner' },
+        { userId: 'dev-456', email: 'dev2@example.com', role: 'collaborator' },
+        { userId: 'dev-789', email: 'dev3@example.com', role: 'viewer' }
+      ]
+
+      const result = await marketplaceAPI.updateProductPrivateDevs(productId, privateDevs)
+
+      expect(result).toEqual(updateResult)
+      expect(apiRequestCalls()).toEqual([{
+        path: `http://test-host:3000/console/community/marketplace/products/${productId}/private-devs`,
+        body: JSON.stringify(privateDevs),
+        method: 'PUT',
+        encoding: 'utf8',
+        headers: { 'Content-Type': 'application/json' },
+        timeout: 0,
+        withCredentials: false
+      }])
+    })
+
+    it('fails when server responds with validation error', async () => {
+      mockFailedAPIRequest('Invalid user ID in private developers list', 400)
+
+      const productId = 'premium-plugin'
+      const privateDevs = [
+        { userId: 'invalid-user', email: 'invalid@example.com', role: 'owner' }
+      ]
+      const error = await marketplaceAPI.updateProductPrivateDevs(productId, privateDevs).catch(e => e)
+
+      expect(error).toBeInstanceOf(Error)
+      expect({ ...error }).toEqual({
+        body: { message: 'Invalid user ID in private developers list' },
+        message: 'Invalid user ID in private developers list',
+        status: 400
+      })
     })
   })
 
@@ -670,6 +801,135 @@ describe('apiClient.marketplace', () => {
     })
   })
 
+  describe('allocateAccountProduct', () => {
+    it('should make POST request to allocate account product with options', async () => {
+      const allocationResult = {
+        success: true,
+        allocationId: 'account-alloc-456',
+        productId: 'enterprise-plan',
+        allocatedAt: '2024-01-15T16:00:00Z',
+        status: 'active'
+      }
+      mockSuccessAPIRequest(allocationResult)
+
+      const productId = 'enterprise-plan'
+      const options = {
+        billingCycle: 'annual',
+        paymentMethod: 'credit-card',
+        couponCode: 'ENTERPRISE20',
+        autoRenew: true
+      }
+
+      const result = await marketplaceAPI.allocateAccountProduct(productId, options)
+
+      expect(result).toEqual(allocationResult)
+      expect(apiRequestCalls()).toEqual([{
+        path: `http://test-host:3000/console/community/marketplace/account-purchases/${productId}`,
+        body: JSON.stringify(options),
+        method: 'POST',
+        encoding: 'utf8',
+        headers: { 'Content-Type': 'application/json' },
+        timeout: 0,
+        withCredentials: false
+      }])
+    })
+
+    it('fails when server responds with payment error', async () => {
+      mockFailedAPIRequest('Payment method declined', 402)
+
+      const productId = 'premium-plan'
+      const options = { paymentMethod: 'invalid-card' }
+      const error = await marketplaceAPI.allocateAccountProduct(productId, options).catch(e => e)
+
+      expect(error).toBeInstanceOf(Error)
+      expect({ ...error }).toEqual({
+        body: { message: 'Payment method declined' },
+        message: 'Payment method declined',
+        status: 402
+      })
+    })
+  })
+
+  describe('updateAccountPurchasesPaymentProfile', () => {
+    it('should make PUT request to update payment profile with paymentProfileId in body', async () => {
+      const updateResult = {
+        success: true,
+        message: 'Payment profile updated successfully',
+        updatedAt: '2024-01-15T17:00:00Z'
+      }
+      mockSuccessAPIRequest(updateResult)
+
+      const paymentProfileId = 'payment-profile-789'
+      const result = await marketplaceAPI.updateAccountPurchasesPaymentProfile(paymentProfileId)
+
+      expect(result).toEqual(updateResult)
+      expect(apiRequestCalls()).toEqual([{
+        path: 'http://test-host:3000/console/community/marketplace/account-purchases/update-payment-profile',
+        body: JSON.stringify({ paymentProfileId }),
+        method: 'PUT',
+        encoding: 'utf8',
+        headers: { 'Content-Type': 'application/json' },
+        timeout: 0,
+        withCredentials: false
+      }])
+    })
+
+    it('fails when server responds with invalid payment profile error', async () => {
+      mockFailedAPIRequest('Invalid payment profile ID', 400)
+
+      const paymentProfileId = 'invalid-profile'
+      const error = await marketplaceAPI.updateAccountPurchasesPaymentProfile(paymentProfileId).catch(e => e)
+
+      expect(error).toBeInstanceOf(Error)
+      expect({ ...error }).toEqual({
+        body: { message: 'Invalid payment profile ID' },
+        message: 'Invalid payment profile ID',
+        status: 400
+      })
+    })
+  })
+
+  describe('reactivateAccountPurchase', () => {
+    it('should make POST request to reactivate account purchase', async () => {
+      const reactivationResult = {
+        success: true,
+        productId: 'premium-plan',
+        reactivatedAt: '2024-01-15T18:00:00Z',
+        newExpirationDate: '2024-02-15T18:00:00Z',
+        status: 'active'
+      }
+      mockSuccessAPIRequest(reactivationResult)
+
+      const productId = 'premium-plan'
+      const result = await marketplaceAPI.reactivateAccountPurchase(productId)
+
+      expect(result).toEqual(reactivationResult)
+      expect(apiRequestCalls()).toEqual([{
+        path: `http://test-host:3000/console/community/marketplace/account-purchases/${productId}/renew`,
+        body: undefined,
+        method: 'POST',
+        encoding: 'utf8',
+        headers: {},
+        timeout: 0,
+        withCredentials: false
+      }])
+    })
+
+    it('fails when server responds with subscription not found error', async () => {
+      mockFailedAPIRequest('Subscription not found or already active', 404)
+
+      const productId = 'nonexistent-plan'
+      const error = await marketplaceAPI.reactivateAccountPurchase(productId).catch(e => e)
+
+      expect(error).toBeInstanceOf(Error)
+      expect({ ...error }).toEqual({
+        body: { message: 'Subscription not found or already active' },
+        message: 'Subscription not found or already active',
+        status: 404
+      })
+    })
+  })
+
   describe('getDeveloperPayoutHistory', () => {
     it('should make GET request to get developer payout history', async () => {
       const payoutResult = {
@@ -698,6 +958,69 @@ describe('apiClient.marketplace', () => {
         timeout: 0,
         withCredentials: false
       }])
+    })
+  })
+
+  describe('getDeveloperProductSales', () => {
+    it('should make GET request to get developer product sales', async () => {
+      const productSalesResult = {
+        sales: [
+          {
+            productId: 'ecommerce-template',
+            productName: 'E-commerce Template',
+            totalSales: 1599.93,
+            totalUnits: 16,
+            averagePrice: 99.99,
+            lastSaleDate: '2024-01-14T15:30:00Z',
+            revenue: {
+              monthly: 899.91,
+              yearly: 1599.93
+            }
+          },
+          {
+            productId: 'chat-plugin',
+            productName: 'Real-time Chat Plugin',
+            totalSales: 799.75,
+            totalUnits: 20,
+            averagePrice: 39.99,
+            lastSaleDate: '2024-01-13T09:45:00Z',
+            revenue: {
+              monthly: 479.88,
+              yearly: 799.75
+            }
+          }
+        ],
+        totalRevenue: 2399.68,
+        totalUnits: 36,
+        reportPeriod: 'all-time'
+      }
+      mockSuccessAPIRequest(productSalesResult)
+
+      const result = await marketplaceAPI.getDeveloperProductSales()
+
+      expect(result).toEqual(productSalesResult)
+      expect(apiRequestCalls()).toEqual([{
+        path: 'http://test-host:3000/console/community/marketplace/developer-sales/product-sales',
+        body: undefined,
+        method: 'GET',
+        encoding: 'utf8',
+        headers: {},
+        timeout: 0,
+        withCredentials: false
+      }])
+    })
+
+    it('fails when server responds with access denied error', async () => {
+      mockFailedAPIRequest('Access denied to developer sales data', 403)
+
+      const error = await marketplaceAPI.getDeveloperProductSales().catch(e => e)
+
+      expect(error).toBeInstanceOf(Error)
+      expect({ ...error }).toEqual({
+        body: { message: 'Access denied to developer sales data' },
+        message: 'Access denied to developer sales data',
+        status: 403
+      })
     })
   })
 

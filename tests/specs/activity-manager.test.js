@@ -1,5 +1,3 @@
-import { mockFailedAPIRequest } from '../setup/mock-request'
-
 describe('apiClient.activityManager', () => {
   let apiClient
   let activityAPI

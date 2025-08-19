@@ -1,5 +1,3 @@
-import { mockFailedAPIRequest } from '../setup/mock-request'
-
 describe('apiClient.files', () => {
   let apiClient
   let filesAPI
@@ -157,7 +155,7 @@ describe('apiClient.files', () => {
 
       // Mock total count request (first request in loadFullDirectory)
       mockSuccessAPIRequest(totalCount)
-      
+
       // Mock paginated data requests (3 pages of 100 items each)
       mockSuccessAPIRequest(Array(100).fill(mockFile1))
       mockSuccessAPIRequest(Array(100).fill(mockFile2))
@@ -171,12 +169,12 @@ describe('apiClient.files', () => {
       expect(result.slice(200, 250)).toEqual(Array(50).fill(mockFile3))
 
       expect(apiRequestCalls()).toHaveLength(4) // 1 for count + 3 for data
-      
+
       // Verify count request (totalRows.get call)
       expect(apiRequestCalls()[0].path).toBe(
         'http://test-host:3000/test-app-id/console/files/directory/view/uploads/count'
       )
-      
+
       // Verify paginated requests
       expect(apiRequestCalls()[1].path).toBe(
         'http://test-host:3000/test-app-id/console/files/directory/view/uploads?pageSize=100&offset=0'
@@ -453,7 +451,7 @@ describe('apiClient.files', () => {
         method: 'POST',
         body: JSON.stringify({ file: fileContent }),
         encoding: 'utf8',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Accept': '*/*'
         },

@@ -1,5 +1,3 @@
-import { mockSuccessAPIRequest, mockFailedAPIRequest, apiRequestCalls } from '../setup/mock-request'
-
 describe('apiClient.pdf', () => {
   let apiClient
   let pdfAPI
@@ -138,7 +136,7 @@ describe('apiClient.pdf', () => {
       mockSuccessAPIRequest(pdfResult)
 
       const pdf = { templateId: 'simple-template' }
-      const inputs = { 
+      const inputs = {
         title: 'Simple Document',
         content: 'This is a basic PDF document.'
       }

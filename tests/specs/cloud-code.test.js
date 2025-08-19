@@ -1,5 +1,3 @@
-import { mockFailedAPIRequest } from '../setup/mock-request'
-
 describe('apiClient.cloudCode', () => {
   let apiClient
   let cloudCodeAPI
@@ -42,7 +40,7 @@ describe('apiClient.cloudCode', () => {
       const differentAppId = 'my-custom-app'
       const differentProductId = 'special-product-123'
       const version = '2.1.0'
-      
+
       const result = await cloudCodeAPI.installMarketplaceDeploymentModel(differentAppId, differentProductId, version)
 
       expect(result).toEqual(successResult)
@@ -64,7 +62,7 @@ describe('apiClient.cloudCode', () => {
       mockSuccessAPIRequest(successResult)
 
       const version = '1.0.0-beta+build.123'
-      
+
       const result = await cloudCodeAPI.installMarketplaceDeploymentModel(appId, productId, version)
 
       expect(result).toEqual(successResult)
@@ -208,7 +206,7 @@ describe('apiClient.cloudCode', () => {
 
       const differentAppId = 'another-app-id'
       const differentProductId = 'another-product-id'
-      
+
       const result = await cloudCodeAPI.uninstallMarketplaceDeploymentModel(differentAppId, differentProductId)
 
       expect(result).toEqual(successResult)
@@ -231,7 +229,7 @@ describe('apiClient.cloudCode', () => {
 
       const appIdWithSpecialChars = 'app-with-dashes_and_underscores'
       const productIdWithSpecialChars = 'product.with.dots'
-      
+
       const result = await cloudCodeAPI.uninstallMarketplaceDeploymentModel(appIdWithSpecialChars, productIdWithSpecialChars)
 
       expect(result).toEqual(successResult)

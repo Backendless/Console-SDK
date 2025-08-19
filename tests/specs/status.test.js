@@ -1,5 +1,3 @@
-import { mockFailedAPIRequest } from '../setup/mock-request'
-
 describe('apiClient.status', () => {
   let apiClient
   let statusAPI
@@ -77,7 +75,7 @@ describe('apiClient.status', () => {
       // First call creates the cache
       mockSuccessAPIRequest(successResult)
       await statusAPI(true) // force=true creates initial request
-      
+
       // Second call should reuse cached request
       const result = await statusAPI(false)
 

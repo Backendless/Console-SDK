@@ -1,4 +1,3 @@
-import { mockFailedAPIRequest } from '../setup/mock-request'
 import { DevPermissions } from '../../src/dev-permissions'
 
 describe('apiClient.devPermissions', () => {

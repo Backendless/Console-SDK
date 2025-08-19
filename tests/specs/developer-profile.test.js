@@ -1,5 +1,3 @@
-import { mockFailedAPIRequest } from '../setup/mock-request'
-
 describe('apiClient.developerProfile', () => {
   let apiClient
   let developerProfileAPI

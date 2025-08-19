@@ -10,8 +10,6 @@ This document provides comprehensive testing guidelines and patterns for writing
 
 ### Basic Test Structure
 ```javascript
-import { mockFailedAPIRequest } from '../setup/mock-request'
-
 describe('apiClient.{moduleName}', () => {
   let apiClient
   let moduleAPI
@@ -211,8 +209,6 @@ Most API requests will have these standard properties:
 ## Example: Complete Test File
 
 ```javascript
-import { mockFailedAPIRequest } from '../setup/mock-request'
-
 describe('apiClient.userManagement', () => {
   let apiClient
   let userAPI

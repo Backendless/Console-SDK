@@ -1,4 +1,3 @@
-import { mockFailedAPIRequest } from '../setup/mock-request'
 
 describe('apiClient.tables', () => {
   let apiClient
