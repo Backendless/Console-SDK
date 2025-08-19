@@ -3,7 +3,7 @@ import totalRows from './utils/total-rows'
 import { CHANNEL_DEVICES } from './utils/cache-tags'
 
 // This method is needed in perspective (c) Arthur Dzidoiev
-const enrichChannelWithSettings = (channel = {}) => ({
+const enrichChannelWithSettings = channel => ({
   ...channel,
   settings: {
     polling  : true,

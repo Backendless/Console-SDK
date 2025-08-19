@@ -320,6 +320,53 @@ it('should handle optional parameters', async () => {
 })
 ```
 
+## Additional Testing Patterns
+
+### Testing Array Query Parameters
+When testing methods that accept arrays as query parameters, the system repeats the parameter name:
+```javascript
+it('should handle array query parameters', async () => {
+  mockSuccessAPIRequest([])
+  
+  await api.loadAppsInfo(['app1', 'app2', 'app3'])
+  
+  expect(apiRequestCalls()[0].path).toBe(
+    'http://test-host:3000/console/apps-info?appsIds=app1&appsIds=app2&appsIds=app3'
+  )
+})
+```
+
+### Testing Undefined Query Parameters
+When query parameters are undefined, they are typically omitted from the URL:
+```javascript
+it('should omit undefined query parameters', async () => {
+  mockSuccessAPIRequest([])
+  
+  await api.getApps() // zone parameter is undefined
+  
+  expect(apiRequestCalls()[0].path).toBe('http://test-host:3000/console/applications')
+})
+```
+
+### Testing Error Message Formats
+Always use error messages as a string when using `mockFailedAPIRequest`:
+```javascript
+// Correct - passing string directly
+mockFailedAPIRequest('Error message', 400)
+
+// Incorrect - wrap in object
+mockFailedAPIRequest({ message: 'Error message' }, 400)
+```
+
+The error object structure will be:
+```javascript
+expect({ ...error }).toEqual({
+  body: { message: 'Error message' },
+  message: 'Error message',
+  status: 400
+})
+```
+
 ## Running Tests
 
 ```bash

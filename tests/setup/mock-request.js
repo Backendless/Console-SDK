@@ -1,4 +1,5 @@
 import Request from 'backendless-request'
+import { cache as RequestCache } from 'backendless-request/lib/cache'
 
 jest.mock('backendless-request', () => {
   const originalModule = jest.requireActual('backendless-request')
@@ -15,11 +16,15 @@ export function mockSuccessAPIRequest(response, statusCode) {
   })
 }
 
-export function mockFailedAPIRequest(error, statusCode) {
+export function mockFailedAPIRequest(errorMessage, statusCode) {
   Request.send.mockResolvedValueOnce({
-    body  : JSON.stringify(error || { message: 'test error message' }),
+    body  : JSON.stringify({ message: errorMessage || 'test error message' }),
     status: statusCode || 400,
   })
+}
+
+export function resetRequestCache() {
+  RequestCache.deleteAll()
 }
 
 export function apiRequestCalls() {

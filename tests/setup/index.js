@@ -1,6 +1,6 @@
 // Test setup for Backendless Console SDK
 // This file is loaded before each test suite
-import { apiRequestCalls, mockFailedAPIRequest, mockSuccessAPIRequest } from './mock-request'
+import { apiRequestCalls, mockFailedAPIRequest, mockSuccessAPIRequest, resetRequestCache } from './mock-request'
 import { createClient } from '../../src'
 
 global.mockSuccessAPIRequest = mockSuccessAPIRequest
@@ -12,5 +12,6 @@ global.createAPIClient = createClient
 
 // Reset all mocks after each test
 afterEach(() => {
+  resetRequestCache()
   jest.clearAllMocks()
 })
