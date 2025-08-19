@@ -18,12 +18,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views`,
-        body: undefined,
-        method: 'GET',
-        encoding: 'utf8',
-        headers: {},
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views`,
+        body           : undefined,
+        method         : 'GET',
+        encoding       : 'utf8',
+        headers        : {},
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -35,9 +35,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Unauthorized' },
+        body   : { message: 'Unauthorized' },
         message: 'Unauthorized',
-        status: 401
+        status : 401
       })
     })
 
@@ -48,9 +48,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Service unavailable' },
+        body   : { message: 'Service unavailable' },
         message: 'Service unavailable',
-        status: 503
+        status : 503
       })
     })
   })
@@ -64,12 +64,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views/${viewName}`,
-        body: undefined,
-        method: 'GET',
-        encoding: 'utf8',
-        headers: {},
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views/${viewName}`,
+        body           : undefined,
+        method         : 'GET',
+        encoding       : 'utf8',
+        headers        : {},
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -82,12 +82,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views/${viewName}`,
-        body: undefined,
-        method: 'GET',
-        encoding: 'utf8',
-        headers: {},
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views/${viewName}`,
+        body           : undefined,
+        method         : 'GET',
+        encoding       : 'utf8',
+        headers        : {},
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -100,9 +100,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'View not found' },
+        body   : { message: 'View not found' },
         message: 'View not found',
-        status: 404
+        status : 404
       })
     })
 
@@ -114,9 +114,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Access denied to view' },
+        body   : { message: 'Access denied to view' },
         message: 'Access denied to view',
-        status: 403
+        status : 403
       })
     })
   })
@@ -126,23 +126,23 @@ describe('apiClient.dataViews', () => {
       mockSuccessAPIRequest(successResult)
 
       const view = {
-        name: 'Active Users View',
-        tableName: 'Users',
+        name       : 'Active Users View',
+        tableName  : 'Users',
         whereClause: 'status = "active"',
-        columns: ['objectId', 'name', 'email', 'created'],
-        orderBy: 'created DESC'
+        columns    : ['objectId', 'name', 'email', 'created'],
+        orderBy    : 'created DESC'
       }
 
       const result = await dataViewsAPI.createView(appId, view)
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views`,
-        body: JSON.stringify(view),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views`,
+        body           : JSON.stringify(view),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -151,7 +151,7 @@ describe('apiClient.dataViews', () => {
       mockSuccessAPIRequest(successResult)
 
       const view = {
-        name: 'Simple View',
+        name     : 'Simple View',
         tableName: 'Products'
       }
 
@@ -159,12 +159,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views`,
-        body: JSON.stringify(view),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views`,
+        body           : JSON.stringify(view),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -173,26 +173,26 @@ describe('apiClient.dataViews', () => {
       mockSuccessAPIRequest(successResult)
 
       const view = {
-        name: 'User Orders Summary',
-        tableName: 'Orders',
+        name       : 'User Orders Summary',
+        tableName  : 'Orders',
         whereClause: 'status != "cancelled"',
-        columns: ['user.name', 'COUNT(*) as orderCount', 'SUM(total) as totalAmount'],
-        joins: [{ table: 'Users', on: 'Orders.userId = Users.objectId', alias: 'user' }],
-        groupBy: 'user.objectId',
-        having: 'COUNT(*) > 1',
-        orderBy: 'totalAmount DESC'
+        columns    : ['user.name', 'COUNT(*) as orderCount', 'SUM(total) as totalAmount'],
+        joins      : [{ table: 'Users', on: 'Orders.userId = Users.objectId', alias: 'user' }],
+        groupBy    : 'user.objectId',
+        having     : 'COUNT(*) > 1',
+        orderBy    : 'totalAmount DESC'
       }
 
       const result = await dataViewsAPI.createView(appId, view)
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views`,
-        body: JSON.stringify(view),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views`,
+        body           : JSON.stringify(view),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -205,9 +205,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'View name is required' },
+        body   : { message: 'View name is required' },
         message: 'View name is required',
-        status: 400
+        status : 400
       })
     })
 
@@ -219,9 +219,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'View name already exists' },
+        body   : { message: 'View name already exists' },
         message: 'View name already exists',
-        status: 409
+        status : 409
       })
     })
   })
@@ -231,24 +231,24 @@ describe('apiClient.dataViews', () => {
       mockSuccessAPIRequest(successResult)
 
       const view = {
-        viewId: 'view-123',
-        name: 'Updated Active Users View',
-        tableName: 'Users',
+        viewId     : 'view-123',
+        name       : 'Updated Active Users View',
+        tableName  : 'Users',
         whereClause: 'status = "active" AND verified = true',
-        columns: ['objectId', 'name', 'email', 'created', 'lastLogin'],
-        orderBy: 'lastLogin DESC'
+        columns    : ['objectId', 'name', 'email', 'created', 'lastLogin'],
+        orderBy    : 'lastLogin DESC'
       }
 
       const result = await dataViewsAPI.updateView(appId, view)
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views/${view.viewId}`,
-        body: JSON.stringify(view),
-        method: 'PUT',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views/${view.viewId}`,
+        body           : JSON.stringify(view),
+        method         : 'PUT',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -257,7 +257,7 @@ describe('apiClient.dataViews', () => {
       mockSuccessAPIRequest(successResult)
 
       const view = {
-        viewId: 'view-456',
+        viewId     : 'view-456',
         whereClause: 'status = "premium"'
       }
 
@@ -265,12 +265,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views/${view.viewId}`,
-        body: JSON.stringify(view),
-        method: 'PUT',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views/${view.viewId}`,
+        body           : JSON.stringify(view),
+        method         : 'PUT',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -280,19 +280,19 @@ describe('apiClient.dataViews', () => {
 
       const view = {
         viewId: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
-        name: 'Updated View Name'
+        name  : 'Updated View Name'
       }
 
       const result = await dataViewsAPI.updateView(appId, view)
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views/${view.viewId}`,
-        body: JSON.stringify(view),
-        method: 'PUT',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views/${view.viewId}`,
+        body           : JSON.stringify(view),
+        method         : 'PUT',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -305,9 +305,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'View not found' },
+        body   : { message: 'View not found' },
         message: 'View not found',
-        status: 404
+        status : 404
       })
     })
 
@@ -319,9 +319,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Invalid WHERE clause syntax' },
+        body   : { message: 'Invalid WHERE clause syntax' },
         message: 'Invalid WHERE clause syntax',
-        status: 422
+        status : 422
       })
     })
   })
@@ -337,12 +337,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views/${viewId}/name`,
-        body: JSON.stringify({ name }),
-        method: 'PUT',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views/${viewId}/name`,
+        body           : JSON.stringify({ name }),
+        method         : 'PUT',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -357,12 +357,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views/${viewId}/name`,
-        body: JSON.stringify({ name }),
-        method: 'PUT',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views/${viewId}/name`,
+        body           : JSON.stringify({ name }),
+        method         : 'PUT',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -376,9 +376,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'View not found' },
+        body   : { message: 'View not found' },
         message: 'View not found',
-        status: 404
+        status : 404
       })
     })
 
@@ -391,9 +391,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'View name already exists' },
+        body   : { message: 'View name already exists' },
         message: 'View name already exists',
-        status: 409
+        status : 409
       })
     })
   })
@@ -407,12 +407,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views/${viewId}`,
-        body: undefined,
-        method: 'DELETE',
-        encoding: 'utf8',
-        headers: {},
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views/${viewId}`,
+        body           : undefined,
+        method         : 'DELETE',
+        encoding       : 'utf8',
+        headers        : {},
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -425,12 +425,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-views/${viewId}`,
-        body: undefined,
-        method: 'DELETE',
-        encoding: 'utf8',
-        headers: {},
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-views/${viewId}`,
+        body           : undefined,
+        method         : 'DELETE',
+        encoding       : 'utf8',
+        headers        : {},
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -443,9 +443,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'View not found' },
+        body   : { message: 'View not found' },
         message: 'View not found',
-        status: 404
+        status : 404
       })
     })
 
@@ -457,9 +457,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Cannot delete system view' },
+        body   : { message: 'Cannot delete system view' },
         message: 'Cannot delete system view',
-        status: 403
+        status : 403
       })
     })
   })
@@ -475,12 +475,31 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/Users/find`,
-        body: JSON.stringify({ offset: 0, pageSize: 50, where: 'status = "active"' }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/Users/find`,
+        body           : JSON.stringify({ offset: 0, pageSize: 50, where: 'status = "active"' }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
+        withCredentials: false
+      }])
+    })
+
+    it('should make POST request to load records without query', async () => {
+      mockSuccessAPIRequest(successResult)
+
+      const view = { name: 'Users', viewId: 'view-123' }
+
+      const result = await dataViewsAPI.loadRecords(appId, view)
+
+      expect(result).toEqual(successResult)
+      expect(apiRequestCalls()).toEqual([{
+        path           : `http://test-host:3000/${appId}/console/data/Users/find`,
+        body           : JSON.stringify({ offset: 0, pageSize: 15 }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -495,12 +514,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/Products/find`,
-        body: JSON.stringify({ offset: 0, pageSize: 15 }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/Products/find`,
+        body           : JSON.stringify({ offset: 0, pageSize: 15 }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -510,10 +529,10 @@ describe('apiClient.dataViews', () => {
 
       const view = { name: 'Orders', viewId: 'view-789' }
       const query = {
-        pageSize: 25,
-        offset: 100,
-        where: 'total > 100 AND status = "completed"',
-        sortBy: 'created DESC',
+        pageSize     : 25,
+        offset       : 100,
+        where        : 'total > 100 AND status = "completed"',
+        sortBy       : 'created DESC',
         loadRelations: ['customer', 'items']
       }
 
@@ -521,12 +540,18 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/Orders/find`,
-        body: JSON.stringify({ offset: 100, pageSize: 25, where: 'total > 100 AND status = "completed"', loadRelations: ['customer', 'items'], sortBy: 'created DESC' }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/Orders/find`,
+        body           : JSON.stringify({
+          offset       : 100,
+          pageSize     : 25,
+          where        : 'total > 100 AND status = "completed"',
+          loadRelations: ['customer', 'items'],
+          sortBy       : 'created DESC'
+        }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -540,9 +565,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Invalid query syntax' },
+        body   : { message: 'Invalid query syntax' },
         message: 'Invalid query syntax',
-        status: 400
+        status : 400
       })
     })
   })
@@ -558,12 +583,31 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/Users/count`,
-        body: JSON.stringify({ where: 'status = "active"' }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/Users/count`,
+        body           : JSON.stringify({ where: 'status = "active"' }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
+        withCredentials: false
+      }])
+    })
+
+    it('should make POST request to get records count without query', async () => {
+      mockSuccessAPIRequest(successResult)
+
+      const view = { name: 'Users', viewId: 'view-123' }
+
+      const result = await dataViewsAPI.getRecordsCount(appId, view)
+
+      expect(result).toEqual(successResult)
+      expect(apiRequestCalls()).toEqual([{
+        path           : `http://test-host:3000/${appId}/console/data/Users/count`,
+        body           : JSON.stringify({}),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -579,12 +623,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/Products/count`,
-        body: JSON.stringify({ where: 'price > 50' }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/Products/count`,
+        body           : JSON.stringify({ where: 'price > 50' }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -599,12 +643,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/Orders/count`,
-        body: JSON.stringify({}),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/Orders/count`,
+        body           : JSON.stringify({}),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -618,9 +662,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Invalid WHERE clause' },
+        body   : { message: 'Invalid WHERE clause' },
         message: 'Invalid WHERE clause',
-        status: 400
+        status : 400
       })
     })
   })
@@ -639,12 +683,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/tables-counters`,
-        body: JSON.stringify({ tables: views, resetCache: undefined }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/tables-counters`,
+        body           : JSON.stringify({ tables: views, resetCache: undefined }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -662,12 +706,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/tables-counters`,
-        body: JSON.stringify({ tables: views, resetCache: true }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/tables-counters`,
+        body           : JSON.stringify({ tables: views, resetCache: true }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -681,12 +725,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/tables-counters`,
-        body: JSON.stringify({ tables: views, resetCache: undefined }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/tables-counters`,
+        body           : JSON.stringify({ tables: views, resetCache: undefined }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -703,12 +747,42 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/data-grouping/Orders`,
-        body: JSON.stringify({ offset: 0, pageSize: 15, groupPageSize: 5, recordsPageSize: 5, groupBy: 'status' }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/data-grouping/Orders`,
+        body           : JSON.stringify({
+          offset         : 0,
+          pageSize       : 15,
+          groupPageSize  : 5,
+          recordsPageSize: 5,
+          groupBy        : 'status'
+        }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
+        withCredentials: false
+      }])
+    })
+
+    it('should make POST request to load group records without query', async () => {
+      mockSuccessAPIRequest(successResult)
+
+      const view = { name: 'Orders', viewId: 'view-123' }
+
+      const result = await dataViewsAPI.loadGroupRecords(appId, view)
+
+      expect(result).toEqual(successResult)
+      expect(apiRequestCalls()).toEqual([{
+        path           : `http://test-host:3000/${appId}/console/data/data-grouping/Orders`,
+        body           : JSON.stringify({
+          offset         : 0,
+          pageSize       : 15,
+          groupPageSize  : 5,
+          recordsPageSize: 5,
+        }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -718,23 +792,30 @@ describe('apiClient.dataViews', () => {
 
       const view = { name: 'Sales', viewId: 'view-456' }
       const query = {
-        groupBy: 'region, category',
+        groupBy    : 'region, category',
         aggregation: 'SUM(amount), AVG(amount), COUNT(*)',
-        having: 'COUNT(*) > 10',
-        where: 'date > "2024-01-01"',
-        orderBy: 'SUM(amount) DESC'
+        having     : 'COUNT(*) > 10',
+        where      : 'date > "2024-01-01"',
+        orderBy    : 'SUM(amount) DESC'
       }
 
       const result = await dataViewsAPI.loadGroupRecords(appId, view, query)
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/data-grouping/Sales`,
-        body: JSON.stringify({ offset: 0, pageSize: 15, groupPageSize: 5, recordsPageSize: 5, where: 'date > "2024-01-01"', groupBy: 'region, category' }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/data-grouping/Sales`,
+        body           : JSON.stringify({
+          offset         : 0,
+          pageSize       : 15,
+          groupPageSize  : 5,
+          recordsPageSize: 5,
+          where          : 'date > "2024-01-01"',
+          groupBy        : 'region, category'
+        }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -749,12 +830,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/data-grouping/Users`,
-        body: JSON.stringify({ offset: 0, pageSize: 15, groupPageSize: 5, recordsPageSize: 5 }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/data-grouping/Users`,
+        body           : JSON.stringify({ offset: 0, pageSize: 15, groupPageSize: 5, recordsPageSize: 5 }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -771,12 +852,31 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/data-grouping/Orders/count`,
-        body: JSON.stringify({ where: 'created > "2024-01-01"' }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/data-grouping/Orders/count`,
+        body           : JSON.stringify({ where: 'created > "2024-01-01"' }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
+        withCredentials: false
+      }])
+    })
+
+    it('should make POST request to get group records count without query', async () => {
+      mockSuccessAPIRequest(successResult)
+
+      const view = { name: 'Orders', viewId: 'view-123' }
+
+      const result = await dataViewsAPI.getGroupRecordsCount(appId, view)
+
+      expect(result).toEqual(successResult)
+      expect(apiRequestCalls()).toEqual([{
+        path           : `http://test-host:3000/${appId}/console/data/data-grouping/Orders/count`,
+        body           : JSON.stringify({}),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -787,20 +887,20 @@ describe('apiClient.dataViews', () => {
       const view = { name: 'Sales', viewId: 'view-456' }
       const query = {
         groupBy: 'region',
-        having: 'SUM(amount) > 1000',
-        where: 'status = "completed"'
+        having : 'SUM(amount) > 1000',
+        where  : 'status = "completed"'
       }
 
       const result = await dataViewsAPI.getGroupRecordsCount(appId, view, query)
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/data-grouping/Sales/count`,
-        body: JSON.stringify({ where: 'status = "completed"' }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/data-grouping/Sales/count`,
+        body           : JSON.stringify({ where: 'status = "completed"' }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -815,12 +915,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/data-grouping/Products/count`,
-        body: JSON.stringify(query),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/data-grouping/Products/count`,
+        body           : JSON.stringify(query),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -837,12 +937,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-pre-view/Users/find`,
-        body: JSON.stringify({ pageSize: 10, offset: 0 }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-pre-view/Users/find`,
+        body           : JSON.stringify({ pageSize: 10, offset: 0 }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -857,12 +957,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-pre-view/User%20Profile%20Data/find`,
-        body: JSON.stringify({ pageSize: 5, offset: 0 }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-pre-view/User%20Profile%20Data/find`,
+        body           : JSON.stringify({ pageSize: 5, offset: 0 }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -876,12 +976,12 @@ describe('apiClient.dataViews', () => {
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-pre-view/Products/find`,
-        body: JSON.stringify({ pageSize: 15, offset: 0 }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-pre-view/Products/find`,
+        body           : JSON.stringify({ pageSize: 15, offset: 0 }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -891,23 +991,28 @@ describe('apiClient.dataViews', () => {
 
       const table = { name: 'Orders', columns: [{ name: 'objectId', dataType: 'STRING' }] }
       const query = {
-        pageSize: 15,
-        where: 'total > 50',
-        sortBy: 'created DESC',
+        pageSize     : 15,
+        where        : 'total > 50',
+        sortBy       : 'created DESC',
         loadRelations: ['customer', 'items.product'],
-        properties: ['objectId', 'total', 'status', 'customer.name']
+        properties   : ['objectId', 'total', 'status', 'customer.name']
       }
 
       const result = await dataViewsAPI.loadSampleRecords(appId, table, query)
 
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/data/table-pre-view/Orders/find`,
-        body: JSON.stringify({ pageSize: 15, offset: 0, sortBy: 'created DESC', loadRelations: ['customer', 'items.product'] }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/data/table-pre-view/Orders/find`,
+        body           : JSON.stringify({
+          pageSize     : 15,
+          offset       : 0,
+          sortBy       : 'created DESC',
+          loadRelations: ['customer', 'items.product']
+        }),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -921,9 +1026,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Table not found' },
+        body   : { message: 'Table not found' },
         message: 'Table not found',
-        status: 404
+        status : 404
       })
     })
 
@@ -936,9 +1041,9 @@ describe('apiClient.dataViews', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Invalid sample query' },
+        body   : { message: 'Invalid sample query' },
         message: 'Invalid sample query',
-        status: 400
+        status : 400
       })
     })
   })

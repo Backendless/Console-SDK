@@ -748,6 +748,28 @@ describe('apiClient.bl', () => {
         withCredentials: false
       }])
     })
+
+    it('should deploy draft files without sync param, by default it is true', async () => {
+      const language = 'JS'
+      const model = 'test-model'
+      const files = [{ id: 'test.js', content: 'test' }]
+
+      mockSuccessAPIRequest(successResult)
+
+      const result = await blAPI.deployDraftFiles(appId, language, model, files)
+
+      expect(result).toEqual(successResult)
+
+      expect(apiRequestCalls()).toEqual([{
+        path: `http://test-host:3000/${appId}/console/servercode/${model}/production/${language}?sync=true`,
+        method: 'PUT',
+        body: JSON.stringify(files),
+        encoding: 'utf8',
+        headers: { 'Content-Type': 'application/json' },
+        timeout: 0,
+        withCredentials: false
+      }])
+    })
   })
 
   describe('getDraftFileContent', () => {
