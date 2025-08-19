@@ -83,7 +83,7 @@ export default req => ({
     return req.automation.get(routes.flowsWithElements(appId))
   },
 
-  getFlowsWithElementsDetails(appId, status = []) {
+  getFlowsWithElementsDetails(appId, status) {
     return req.automation.get(routes.flowsWithElementsDetails(appId))
       .query({ status })
   },

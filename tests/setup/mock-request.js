@@ -9,6 +9,10 @@ jest.mock('backendless-request', () => {
   return originalModule
 })
 
+export function mockAPIRequest(response) {
+  Request.send.mockResolvedValueOnce(response)
+}
+
 export function mockSuccessAPIRequest(response, statusCode) {
   Request.send.mockResolvedValueOnce({
     body  : JSON.stringify(response),

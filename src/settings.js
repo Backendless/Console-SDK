@@ -20,15 +20,8 @@ function normalizeAppSettings(result) {
     }
   })
 
-  result.apiKeys = []
-
-  systemAPIKeys.forEach(apiKey => {
-    if (apiKey) {
-      result.apiKeys.push(apiKey)
-    }
-  })
-
-  result.apiKeys.push(...customAPIKeys)
+  result.apiKeys = [...systemAPIKeys, ...customAPIKeys]
+  result.apiKeys = result.apiKeys.filter(Boolean)
 
   return result
 }

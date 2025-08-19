@@ -1,8 +1,15 @@
 // Test setup for Backendless Console SDK
 // This file is loaded before each test suite
-import { apiRequestCalls, mockFailedAPIRequest, mockSuccessAPIRequest, resetRequestCache } from './mock-request'
+import {
+  apiRequestCalls,
+  mockAPIRequest,
+  mockFailedAPIRequest,
+  mockSuccessAPIRequest,
+  resetRequestCache
+} from './mock-request'
 import { createClient } from '../../src'
 
+global.mockAPIRequest = mockAPIRequest
 global.mockSuccessAPIRequest = mockSuccessAPIRequest
 global.mockFailedAPIRequest = mockFailedAPIRequest
 

@@ -19,12 +19,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/mobilesettings`,
-          body: undefined,
-          method: 'GET',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/mobilesettings`,
+          body           : undefined,
+          method         : 'GET',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -37,9 +37,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Service unavailable' },
+        body   : { message: 'Service unavailable' },
         message: 'Service unavailable',
-        status: 503
+        status : 503
       })
     })
   })
@@ -54,12 +54,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/mobilesettings/android`,
-          body: JSON.stringify(settings),
-          method: 'POST',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/mobilesettings/android`,
+          body           : JSON.stringify(settings),
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -73,9 +73,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Invalid Android settings' },
+        body   : { message: 'Invalid Android settings' },
         message: 'Invalid Android settings',
-        status: 400
+        status : 400
       })
     })
   })
@@ -91,12 +91,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/mobilesettings/android/${id}`,
-          body: JSON.stringify(settings),
-          method: 'PUT',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/mobilesettings/android/${id}`,
+          body           : JSON.stringify(settings),
+          method         : 'PUT',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -111,9 +111,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Settings not found' },
+        body   : { message: 'Settings not found' },
         message: 'Settings not found',
-        status: 404
+        status : 404
       })
     })
   })
@@ -128,12 +128,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/mobilesettings/android/${id}`,
-          body: undefined,
-          method: 'DELETE',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/mobilesettings/android/${id}`,
+          body           : undefined,
+          method         : 'DELETE',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -147,9 +147,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Cannot delete settings' },
+        body   : { message: 'Cannot delete settings' },
         message: 'Cannot delete settings',
-        status: 403
+        status : 403
       })
     })
   })
@@ -165,12 +165,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/mobilesettings/${deviceType}`,
-          body: JSON.stringify(settings),
-          method: 'POST',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/mobilesettings/${deviceType}`,
+          body           : JSON.stringify(settings),
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -185,9 +185,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Invalid Apple certificate' },
+        body   : { message: 'Invalid Apple certificate' },
         message: 'Invalid Apple certificate',
-        status: 400
+        status : 400
       })
     })
   })
@@ -204,12 +204,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/mobilesettings/${deviceType}/${id}`,
-          body: JSON.stringify(settings),
-          method: 'PUT',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/mobilesettings/${deviceType}/${id}`,
+          body           : JSON.stringify(settings),
+          method         : 'PUT',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -225,9 +225,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Apple settings not found' },
+        body   : { message: 'Apple settings not found' },
         message: 'Apple settings not found',
-        status: 404
+        status : 404
       })
     })
   })
@@ -243,12 +243,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/mobilesettings/${deviceType}/${id}`,
-          body: undefined,
-          method: 'DELETE',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/mobilesettings/${deviceType}/${id}`,
+          body           : undefined,
+          method         : 'DELETE',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -263,9 +263,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Certificate not found' },
+        body   : { message: 'Certificate not found' },
         message: 'Certificate not found',
-        status: 404
+        status : 404
       })
     })
   })
@@ -279,12 +279,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/settings/custom-domain`,
-          body: undefined,
-          method: 'GET',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/settings/custom-domain`,
+          body           : undefined,
+          method         : 'GET',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -297,9 +297,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Access denied' },
+        body   : { message: 'Access denied' },
         message: 'Access denied',
-        status: 403
+        status : 403
       })
     })
   })
@@ -314,12 +314,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/settings/custom-domain`,
-          body: JSON.stringify(domainData),
-          method: 'POST',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/settings/custom-domain`,
+          body           : JSON.stringify(domainData),
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -336,12 +336,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/settings/custom-domain/assign-generated-domain`,
-          body: JSON.stringify(domainData),
-          method: 'POST',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/settings/custom-domain/assign-generated-domain`,
+          body           : JSON.stringify(domainData),
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -358,12 +358,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/settings/custom-domain/${domainData.id}`,
-          body: JSON.stringify(domainData),
-          method: 'PUT',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/settings/custom-domain/${domainData.id}`,
+          body           : JSON.stringify(domainData),
+          method         : 'PUT',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -380,12 +380,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/settings/custom-domain/${domainId}`,
-          body: undefined,
-          method: 'DELETE',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/settings/custom-domain/${domainId}`,
+          body           : undefined,
+          method         : 'DELETE',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -401,12 +401,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: 'http://test-host:3000/console/datavalidators',
-          body: undefined,
-          method: 'GET',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : 'http://test-host:3000/console/datavalidators',
+          body           : undefined,
+          method         : 'GET',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -419,9 +419,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Service unavailable' },
+        body   : { message: 'Service unavailable' },
         message: 'Service unavailable',
-        status: 503
+        status : 503
       })
     })
   })
@@ -440,17 +440,17 @@ describe('apiClient.settings', () => {
       const result = await settingsAPI.getAppSettings(appId)
 
       expect(result.apiKeysMap).toEqual({
-        JS: 'js-key-123',
+        JS  : 'js-key-123',
         REST: 'rest-key-456'
       })
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/appsettings`,
-          body: undefined,
-          method: 'GET',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/appsettings`,
+          body           : undefined,
+          method         : 'GET',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -485,10 +485,39 @@ describe('apiClient.settings', () => {
 
       expect(result.apiKeysMap).toEqual({
         ANDROID: 'android-key',
-        IOS: 'ios-key',
-        JS: 'js-key',
-        REST: 'rest-key',
-        WP: 'wp-key'
+        IOS    : 'ios-key',
+        JS     : 'js-key',
+        REST   : 'rest-key',
+        WP     : 'wp-key'
+      })
+    })
+
+    it('should normalize API keys with empty apiKey values', async () => {
+      const mockSettings = {
+        apiKeys: [
+          { deviceType: 'CUSTOM1', apiKey: 'custom1-key' },
+          { deviceType: 'ANDROID', apiKey: 'android-key' },
+          { deviceType: 'REST', apiKey: 'rest-key' },
+          { deviceType: 'BL', apiKey: 'bl-key' }
+        ]
+      }
+
+      mockSuccessAPIRequest(mockSettings)
+
+      const result = await settingsAPI.getAppSettings(appId)
+
+      // Should maintain SYSTEM_API_KEYS order: ['ANDROID', 'IOS', 'JS', 'REST', 'WP', 'AS', 'BL']
+      expect(result.apiKeys).toEqual([
+        { apiKey: 'android-key', deviceType: 'ANDROID' },
+        { apiKey: 'rest-key', deviceType: 'REST' },
+        { apiKey: 'bl-key', deviceType: 'BL' },
+        { apiKey: 'custom1-key', deviceType: 'CUSTOM1' }
+      ])
+
+      expect(result.apiKeysMap).toEqual({
+        ANDROID: 'android-key',
+        BL     : 'bl-key',
+        REST   : 'rest-key'
       })
     })
 
@@ -534,9 +563,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'App settings not found' },
+        body   : { message: 'App settings not found' },
         message: 'App settings not found',
-        status: 404
+        status : 404
       })
     })
   })
@@ -551,12 +580,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/apikey/${apiKeyId}/regenerate`,
-          body: undefined,
-          method: 'POST',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/apikey/${apiKeyId}/regenerate`,
+          body           : undefined,
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -573,12 +602,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/apikey/${apiKeyId}`,
-          body: undefined,
-          method: 'GET',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/apikey/${apiKeyId}`,
+          body           : undefined,
+          method         : 'GET',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -595,12 +624,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/apikey`,
-          body: JSON.stringify(apiKey),
-          method: 'POST',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/apikey`,
+          body           : JSON.stringify(apiKey),
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -618,12 +647,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/apikey/${apiKeyId}`,
-          body: JSON.stringify(apiKey),
-          method: 'PUT',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/apikey/${apiKeyId}`,
+          body           : JSON.stringify(apiKey),
+          method         : 'PUT',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -640,12 +669,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/apikey/${apiKeyId}`,
-          body: undefined,
-          method: 'DELETE',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/apikey/${apiKeyId}`,
+          body           : undefined,
+          method         : 'DELETE',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -661,12 +690,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/logging/config`,
-          body: undefined,
-          method: 'GET',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/logging/config`,
+          body           : undefined,
+          method         : 'GET',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -683,12 +712,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/logging/config`,
-          body: JSON.stringify(config),
-          method: 'POST',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/logging/config`,
+          body           : JSON.stringify(config),
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -705,12 +734,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/logging/integration`,
-          body: JSON.stringify(integration),
-          method: 'POST',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/logging/integration`,
+          body           : JSON.stringify(integration),
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -726,12 +755,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/logging/loggers`,
-          body: undefined,
-          method: 'DELETE',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/logging/loggers`,
+          body           : undefined,
+          method         : 'DELETE',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -748,12 +777,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/socialparams`,
-          body: JSON.stringify(param),
-          method: 'POST',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/socialparams`,
+          body           : JSON.stringify(param),
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -769,12 +798,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/landing-page`,
-          body: undefined,
-          method: 'GET',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/landing-page`,
+          body           : undefined,
+          method         : 'GET',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -790,12 +819,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/landing-page/templates`,
-          body: undefined,
-          method: 'GET',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/landing-page/templates`,
+          body           : undefined,
+          method         : 'GET',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -812,12 +841,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/landing-page`,
-          body: JSON.stringify(data),
-          method: 'PUT',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/landing-page`,
+          body           : JSON.stringify(data),
+          method         : 'PUT',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -834,12 +863,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/landing-page/publish`,
-          body: JSON.stringify(data),
-          method: 'POST',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/landing-page/publish`,
+          body           : JSON.stringify(data),
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -858,12 +887,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/landing-page/file?section=${section}&name=${name}`,
-          body: expect.any(Object),
-          method: 'POST',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/landing-page/file?section=${section}&name=${name}`,
+          body           : expect.any(Object),
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -879,9 +908,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'File upload failed' },
+        body   : { message: 'File upload failed' },
         message: 'File upload failed',
-        status: 413
+        status : 413
       })
     })
   })
@@ -896,12 +925,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/ioscert`,
-          body: JSON.stringify(certData),
-          method: 'POST',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/ioscert`,
+          body           : JSON.stringify(certData),
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -915,9 +944,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Invalid certificate' },
+        body   : { message: 'Invalid certificate' },
         message: 'Invalid certificate',
-        status: 400
+        status : 400
       })
     })
   })
@@ -926,7 +955,8 @@ describe('apiClient.settings', () => {
     let consoleWarnSpy
 
     beforeEach(() => {
-      consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {})
+      consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
+      })
     })
 
     afterEach(() => {
@@ -945,12 +975,12 @@ describe('apiClient.settings', () => {
       )
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/logging/config`,
-          body: JSON.stringify(logging),
-          method: 'POST',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/logging/config`,
+          body           : JSON.stringify(logging),
+          method         : 'POST',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -964,9 +994,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Invalid logging config' },
+        body   : { message: 'Invalid logging config' },
         message: 'Invalid logging config',
-        status: 400
+        status : 400
       })
       expect(consoleWarnSpy).toHaveBeenCalled()
     })
@@ -982,12 +1012,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/domaincontrolsettings`,
-          body: JSON.stringify(['example.com', 'subdomain.example.com']),
-          method: 'PUT',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/domaincontrolsettings`,
+          body           : JSON.stringify(['example.com', 'subdomain.example.com']),
+          method         : 'PUT',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -1002,12 +1032,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/domaincontrolsettings`,
-          body: JSON.stringify(['single.example.com']),
-          method: 'PUT',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/domaincontrolsettings`,
+          body           : JSON.stringify(['single.example.com']),
+          method         : 'PUT',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -1022,12 +1052,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/domaincontrolsettings`,
-          body: JSON.stringify(['first.com', 'second.com', 'third.com', 'fourth.com']),
-          method: 'PUT',
-          encoding: 'utf8',
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/domaincontrolsettings`,
+          body           : JSON.stringify(['first.com', 'second.com', 'third.com', 'fourth.com']),
+          method         : 'PUT',
+          encoding       : 'utf8',
+          headers        : { 'Content-Type': 'application/json' },
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -1041,9 +1071,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Invalid domain format' },
+        body   : { message: 'Invalid domain format' },
         message: 'Invalid domain format',
-        status: 400
+        status : 400
       })
     })
   })
@@ -1058,12 +1088,12 @@ describe('apiClient.settings', () => {
       expect(result).toEqual(successResult)
       expect(apiRequestCalls()).toEqual([
         {
-          path: `http://test-host:3000/${appId}/console/dnsmapping`,
-          body: domainName,
-          method: 'PUT',
-          encoding: 'utf8',
-          headers: {},
-          timeout: 0,
+          path           : `http://test-host:3000/${appId}/console/dnsmapping`,
+          body           : domainName,
+          method         : 'PUT',
+          encoding       : 'utf8',
+          headers        : {},
+          timeout        : 0,
           withCredentials: false
         }
       ])
@@ -1077,9 +1107,9 @@ describe('apiClient.settings', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Domain already exists' },
+        body   : { message: 'Domain already exists' },
         message: 'Domain already exists',
-        status: 409
+        status : 409
       })
     })
   })
