@@ -4,6 +4,7 @@ import { prepareRoutes } from './utils/routes'
 const routes = prepareRoutes({
   integrationMcpClient        : '/api/node-server/manage/app/:appId/integration/mcp/clients',
   integrationMcpClientValidate: '/api/node-server/manage/app/:appId/integration/mcp/clients/validate',
+  integrationMcpClientCheckOAuth: '/api/node-server/manage/app/:appId/integration/mcp/clients/check-oauth',
 })
 
 export default req => ({
@@ -25,5 +26,9 @@ export default req => ({
 
   validateMcpConnection(appId, data) {
     return req.nodeAPI.post(routes.integrationMcpClientValidate(appId), data)
+  },
+
+  checkOAuthForMCPClient(appId, data) {
+    return req.nodeAPI.post(routes.integrationMcpClientCheckOAuth(appId), data)
   }
 })
