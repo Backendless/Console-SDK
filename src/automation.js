@@ -60,8 +60,10 @@ const routes = prepareRoutes({
   installFlowProduct  : '/api/app/:appId/automation/flow/marketplace/install/:productId',
   uninstallFlowProduct: '/api/app/:appId/automation/flow/marketplace/uninstall/:productId',
 
-  createSubFlow                 : '/api/app/:appId/automation/version/:versionId/subflow',
-  getSubFlowByID                : '/api/app/:appId/automation/version/:versionId/subflow/:subFlowId',
+  createSubFlow : '/api/app/:appId/automation/version/:versionId/subflow',
+  getSubFlowByID: '/api/app/:appId/automation/version/:versionId/subflow/:subFlowId',
+
+  updateSubFlowName             : '/api/app/:appId/automation/version/:versionId/subflow/:subFlowId/name',
   updateSubFlowByID             : '/api/app/:appId/automation/version/:versionId/subflow/:subFlowId',
   deleteSubFlowByID             : '/api/app/:appId/automation/version/:versionId/subflow/:subFlowId',
   getSubFlows                   : '/api/app/:appId/automation/version/:versionId/subflow',
@@ -341,6 +343,10 @@ export default req => ({
 
   updateSubFlow(appId, versionId, subFlowVersionId, data) {
     return req.automation.put(routes.updateSubFlowByID(appId, versionId, subFlowVersionId), data)
+  },
+
+  updateSubFlowName(appId, versionId, subFlowVersionId, name) {
+    return req.automation.put(routes.updateSubFlowByID(appId, versionId, subFlowVersionId), { name })
   },
 
   deleteSubFlow(appId, versionId, subFlowId) {
