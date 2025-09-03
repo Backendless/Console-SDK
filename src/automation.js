@@ -345,8 +345,8 @@ export default req => ({
     return req.automation.put(routes.updateSubFlowByID(appId, versionId, subFlowVersionId), data)
   },
 
-  updateSubFlowName(appId, versionId, subFlowVersionId, name) {
-    return req.automation.put(routes.updateSubFlowName(appId, versionId, subFlowVersionId), { name })
+  updateSubFlowName(appId, versionId, subFlowId, name) {
+    return req.automation.put(routes.updateSubFlowName(appId, versionId, subFlowId), { name })
   },
 
   deleteSubFlow(appId, versionId, subFlowId) {
