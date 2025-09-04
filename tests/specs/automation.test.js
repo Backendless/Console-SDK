@@ -1352,6 +1352,28 @@ describe('apiClient.automation', () => {
       })
     })
 
+    describe('updateSubFlowName', () => {
+      it('should make PUT request to update subflow name', async () => {
+        mockSuccessAPIRequest(successResult)
+
+        const name = 'Updated SubFlow Name'
+        const result = await automationAPI.updateSubFlowName(appId, versionId, subFlowId, name)
+
+        expect(result).toEqual(successResult)
+        expect(apiRequestCalls()).toEqual([
+          {
+            path: `http://test-host:3000/api/app/${appId}/automation/version/${versionId}/subflow/${subFlowId}/name`,
+            body: JSON.stringify({ name }),
+            method: 'PUT',
+            encoding: 'utf8',
+            headers: { 'Content-Type': 'application/json' },
+            timeout: 0,
+            withCredentials: false
+          }
+        ])
+      })
+    })
+
     describe('deleteSubFlow', () => {
       it('should make DELETE request to delete subflow', async () => {
         mockSuccessAPIRequest(successResult)
