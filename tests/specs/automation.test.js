@@ -868,27 +868,6 @@ describe('apiClient.automation', () => {
   })
 
   describe('AI Assistant Methods', () => {
-    describe('getAllowedAIModels', () => {
-      it('should make GET request to get allowed AI models', async () => {
-        mockSuccessAPIRequest(successResult)
-
-        const result = await automationAPI.getAllowedAIModels(appId)
-
-        expect(result).toEqual(successResult)
-        expect(apiRequestCalls()).toEqual([
-          {
-            path: `http://test-host:3000/api/app/${appId}/automation/ai/assistants/allowed-models`,
-            body: undefined,
-            method: 'GET',
-            encoding: 'utf8',
-            headers: {},
-            timeout: 0,
-            withCredentials: false
-          }
-        ])
-      })
-    })
-
     describe('registerAIAssistant', () => {
       it('should make POST request to register AI assistant', async () => {
         mockSuccessAPIRequest(successResult)
