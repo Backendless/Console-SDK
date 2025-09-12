@@ -9,36 +9,43 @@ const routes = prepareRoutes({
   airtableImport  : '/:appId/console/airtable',
 })
 
-export default req => ({
+class Transfer {
+  constructor(req) {
+    this.req = req
+    this.serviceName = 'transfer'
+  }
+
   getExportedData(appId) {
-    return req.get(routes.export(appId))
-  },
+    return this.req.get(routes.export(appId))
+  }
 
   startExport(appId, data) {
-    return req.post(routes.export(appId), data)
-  },
+    return this.req.post(routes.export(appId), data)
+  }
 
   startImport(appId, data, type, query) {
-    return req.post(routes.singleStepImport(appId, type), data).query(query)
-  },
+    return this.req.post(routes.singleStepImport(appId, type), data).query(query)
+  }
 
   importDataServiceFiles(appId, data, step) {
-    return req.post(routes.multiStepImport(appId, step), data)
-  },
+    return this.req.post(routes.multiStepImport(appId, step), data)
+  }
 
   importFirebaseUsers(appId, data) {
-    return req.post(routes.firebaseUsers(appId), data)
-  },
+    return this.req.post(routes.firebaseUsers(appId), data)
+  }
 
   getAirtableBasesList(appId, accessToken) {
-    return req.get(routes.airtableBases(appId)).query({ accessToken })
-  },
+    return this.req.get(routes.airtableBases(appId)).query({ accessToken })
+  }
 
   getAirtableTablesList(appId, accessToken, baseId) {
-    return req.get(routes.airtableBases(appId, baseId)).query({ accessToken })
-  },
+    return this.req.get(routes.airtableBases(appId, baseId)).query({ accessToken })
+  }
 
   startAirtableImport(appId, accessToken, baseId, tables) {
-    return req.post(routes.airtableImport(appId, baseId), { accessToken, baseId, tables })
+    return this.req.post(routes.airtableImport(appId, baseId), { accessToken, baseId, tables })
   }
-})
+}
+
+export default req => new Transfer(req)
