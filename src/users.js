@@ -1,10 +1,11 @@
 /* eslint-disable max-len */
 
 import { appConsole as appUrl, users, oauth1, oauth2, oauth0Config, oauth0Binding } from './urls'
+import BaseService from './base/BaseService'
 
-class Users {
+class Users extends BaseService {
   constructor(req) {
-    this.req = req
+    super(req)
     this.serviceName = 'users'
   }
   /**
@@ -186,4 +187,4 @@ class Users {
   }
 }
 
-export default req => new Users(req)
+export default req => Users.create(req)

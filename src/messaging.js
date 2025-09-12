@@ -3,6 +3,7 @@
 import urls from './urls'
 import totalRows from './utils/total-rows'
 import { CHANNEL_DEVICES } from './utils/cache-tags'
+import BaseService from './base/BaseService'
 
 // This method is needed in perspective (c) Arthur Dzidoiev
 const enrichChannelWithSettings = channel => ({
@@ -14,9 +15,9 @@ const enrichChannelWithSettings = channel => ({
   }
 })
 
-class Messaging {
+class Messaging extends BaseService {
   constructor(req) {
-    this.req = req
+    super(req)
     this.serviceName = 'messaging'
   }
 
@@ -323,4 +324,4 @@ class Messaging {
   }
 }
 
-export default req => new Messaging(req)
+export default req => Messaging.create(req)

@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 
 import { prepareRoutes } from './utils/routes'
+import BaseService from './base/BaseService'
 
 const routes = prepareRoutes({
   generatePDF: '/api/app/:appId/pdf/generate',
@@ -8,9 +9,9 @@ const routes = prepareRoutes({
   template   : '/:appId/console/pdf/:templateId',
 })
 
-class PDF {
+class PDF extends BaseService {
   constructor(req) {
-    this.req = req
+    super(req)
     this.serviceName = 'pdf'
   }
 
@@ -62,4 +63,4 @@ class PDF {
   }
 }
 
-export default req => new PDF(req)
+export default req => PDF.create(req)

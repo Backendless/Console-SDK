@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 
 import { prepareRoutes } from './utils/routes'
+import BaseService from './base/BaseService'
 
 const routes = prepareRoutes({
   apps         : '/console/applications',
@@ -22,9 +23,9 @@ const routes = prepareRoutes({
   suggestedGeneratedDomains: '/console/applications/suggested-generated-domains'
 })
 
-class Apps {
+class Apps extends BaseService {
   constructor(req) {
-    this.req = req
+    super(req)
     this.serviceName = 'apps'
   }
 
@@ -151,4 +152,4 @@ class Apps {
   }
 }
 
-export default req => new Apps(req)
+export default req => Apps.create(req)

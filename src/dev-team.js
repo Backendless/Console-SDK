@@ -1,10 +1,11 @@
 /* eslint-disable max-len */
 
 import urls, { devTeam } from './urls'
+import BaseService from './base/BaseService'
 
-class DevTeam {
+class DevTeam extends BaseService {
   constructor(req) {
-    this.req = req
+    super(req)
     this.serviceName = 'devTeam'
   }
 
@@ -73,6 +74,8 @@ class DevTeam {
   }
 
   loadSentOwnershipTransfer(appId) {
+    console.log('loadSentOwnershipTransfer', { req: this.req })
+
     return this.req.get(`${urls.appConsole(appId)}/devteam/application-owner-change/pending-sent-proposal`)
   }
 
@@ -91,4 +94,4 @@ class DevTeam {
   }
 }
 
-export default req => new DevTeam(req)
+export default req => DevTeam.create(req)

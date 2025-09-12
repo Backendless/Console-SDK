@@ -2,6 +2,7 @@
 
 import { dataHive, dataHives, dataHiveStore, dataHiveStoreKey } from './urls'
 import { prepareRoutes } from './utils/routes'
+import BaseService from './base/BaseService'
 
 const routes = prepareRoutes({
   setKeyExpire                : '/:appId/console/hive/:hiveName/:store/:key/expire',
@@ -26,9 +27,9 @@ const HiveDataTypesMap = {
   SORTED_SET: 'sorted-set',
 }
 
-class DataHives {
+class DataHives extends BaseService {
   constructor(req) {
-    this.req = req
+    super(req)
     this.serviceName = 'dataHives'
   }
 
@@ -322,4 +323,4 @@ class DataHives {
   //---- SET Type -------------------------//
 }
 
-export default req => new DataHives(req)
+export default req => DataHives.create(req)

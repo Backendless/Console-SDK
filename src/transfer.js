@@ -1,4 +1,5 @@
 import { prepareRoutes } from './utils/routes'
+import BaseService from './base/BaseService'
 
 const routes = prepareRoutes({
   export          : '/:appId/console/export',
@@ -9,9 +10,9 @@ const routes = prepareRoutes({
   airtableImport  : '/:appId/console/airtable',
 })
 
-class Transfer {
+class Transfer extends BaseService {
   constructor(req) {
-    this.req = req
+    super(req)
     this.serviceName = 'transfer'
   }
 
@@ -48,4 +49,4 @@ class Transfer {
   }
 }
 
-export default req => new Transfer(req)
+export default req => Transfer.create(req)

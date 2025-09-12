@@ -2,6 +2,7 @@
 
 import { cookieEnabled, deleteCookie, getCookie } from './utils/cookie'
 import { prepareRoutes } from './utils/routes'
+import BaseService from './base/BaseService'
 
 const routes = prepareRoutes({
   getMyAccount      : '/console/home/myaccount',
@@ -30,9 +31,9 @@ const routes = prepareRoutes({
   devPermissions: '/:appId/console/my-permissions',
 })
 
-class User {
+class User extends BaseService {
   constructor(req, context) {
-    this.req = req
+    super(req)
     this.context = context
     this.serviceName = 'user'
   }
@@ -194,7 +195,7 @@ class User {
   }
 }
 
-export default (req, context) => new User(req, context)
+export default (req, context) => User.create(req, context)
 
 function contextifyWithAuthToken(res, context) {
   const authKey = (cookieEnabled() && getCookie('dev-auth-key')) || res.headers['auth-key']

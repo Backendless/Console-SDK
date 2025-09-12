@@ -6,6 +6,7 @@ import totalRows from './utils/total-rows'
 import { TABLE_DATA } from './utils/cache-tags'
 import { tableRecordsReq, tableRecordsCountReq, buildRecordsSearch } from './utils/table'
 import { prepareRoutes } from './utils/routes'
+import BaseService from './base/BaseService'
 
 const RELATION_URL_SUFFIX = 'relation'
 const GEO_RELATION_URL_SUFFIX = 'georelation'
@@ -52,9 +53,9 @@ const routes = prepareRoutes({
   tableOwnerPolicyDelayCheck: '/:appId/console/data/tables/:tableName/acl/owner-policy-delay-check',
 })
 
-class Tables {
+class Tables extends BaseService {
   constructor(req) {
-    this.req = req
+    super(req)
     this.serviceName = 'tables'
   }
 
@@ -536,7 +537,7 @@ class Tables {
   }
 }
 
-export default req => new Tables(req)
+export default req => Tables.create(req)
 
 const normalizeTable = table => ({
   ...table,

@@ -1,10 +1,11 @@
 /* eslint-disable max-len */
 
 import urls from './urls'
+import BaseService from './base/BaseService'
 
-class Email {
+class Email extends BaseService {
   constructor(req) {
-    this.req = req
+    super(req)
     this.serviceName = 'email'
   }
 
@@ -168,4 +169,4 @@ class Email {
   }
 }
 
-export default req => new Email(req)
+export default req => Email.create(req)

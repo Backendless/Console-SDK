@@ -1,5 +1,5 @@
-/* eslint-disable max-len */
 import urls from './urls'
+import BaseService from './base/BaseService'
 
 const DEFAULT_NAME_PATTERN = '*'
 
@@ -8,9 +8,9 @@ const normalizeResponse = item => ({
   objectId: item.name,
 })
 
-class AtomicCounters {
+class AtomicCounters extends BaseService {
   constructor(req) {
-    this.req = req
+    super(req)
     this.serviceName = 'counters'
   }
 
@@ -105,4 +105,4 @@ class AtomicCounters {
   }
 }
 
-export default req => new AtomicCounters(req)
+export default req => AtomicCounters.create(req)

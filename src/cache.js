@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 
 import urls from './urls'
+import BaseService from './base/BaseService'
 
 const normalizeValue = value => typeof value === 'string' ? value : JSON.stringify(value)
 
@@ -17,9 +18,9 @@ const normalizeResponse = res => {
   })
 }
 
-class Cache {
+class Cache extends BaseService {
   constructor(req) {
-    this.req = req
+    super(req)
     this.serviceName = 'cache'
   }
 
@@ -98,4 +99,4 @@ class Cache {
   }
 }
 
-export default req => new Cache(req)
+export default req => Cache.create(req)

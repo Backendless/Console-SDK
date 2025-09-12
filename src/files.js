@@ -4,6 +4,7 @@ import urls from './urls'
 import totalRows from './utils/total-rows'
 import { FOLDER } from './utils/cache-tags'
 import { encodePath } from './utils/path'
+import BaseService from './base/BaseService'
 
 const getFileFolder = file => {
   const tokens = file.split('/')
@@ -17,9 +18,9 @@ const getFileFolder = file => {
   return ''
 }
 
-class Files {
+class Files extends BaseService {
   constructor(req) {
-    this.req = req
+    super(req)
     this.serviceName = 'files'
   }
 
@@ -278,4 +279,4 @@ class Files {
   }
 }
 
-export default req => new Files(req)
+export default req => Files.create(req)
