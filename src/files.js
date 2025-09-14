@@ -4,7 +4,7 @@ import urls from './urls'
 import totalRows from './utils/total-rows'
 import { FOLDER } from './utils/cache-tags'
 import { encodePath } from './utils/path'
-import BaseService from './base/BaseService'
+import BaseService from './base/base-service'
 
 const getFileFolder = file => {
   const tokens = file.split('/')

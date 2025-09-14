@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 import urls, { devTeam } from './urls'
-import BaseService from './base/BaseService'
+import BaseService from './base/base-service'
 
 class DevTeam extends BaseService {
   constructor(req) {

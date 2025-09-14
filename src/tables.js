@@ -6,7 +6,7 @@ import totalRows from './utils/total-rows'
 import { TABLE_DATA } from './utils/cache-tags'
 import { tableRecordsReq, tableRecordsCountReq, buildRecordsSearch } from './utils/table'
 import { prepareRoutes } from './utils/routes'
-import BaseService from './base/BaseService'
+import BaseService from './base/base-service'
 
 const RELATION_URL_SUFFIX = 'relation'
 const GEO_RELATION_URL_SUFFIX = 'georelation'

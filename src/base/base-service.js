@@ -11,6 +11,7 @@ class BaseService {
 
     return methods.reduce((obj, name) => {
       obj[name] = instance[name].bind(instance)
+
       return obj
     }, {})
   }

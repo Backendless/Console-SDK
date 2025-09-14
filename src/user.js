@@ -2,7 +2,7 @@
 
 import { cookieEnabled, deleteCookie, getCookie } from './utils/cookie'
 import { prepareRoutes } from './utils/routes'
-import BaseService from './base/BaseService'
+import BaseService from './base/base-service'
 
 const routes = prepareRoutes({
   getMyAccount      : '/console/home/myaccount',

@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 import urls from './urls'
-import BaseService from './base/BaseService'
+import BaseService from './base/base-service'
 
 const normalizeValue = value => typeof value === 'string' ? value : JSON.stringify(value)
 

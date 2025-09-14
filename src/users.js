@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 import { appConsole as appUrl, users, oauth1, oauth2, oauth0Config, oauth0Binding } from './urls'
-import BaseService from './base/BaseService'
+import BaseService from './base/base-service'
 
 class Users extends BaseService {
   constructor(req) {

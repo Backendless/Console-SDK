@@ -2,7 +2,7 @@
 
 import { dataHive, dataHives, dataHiveStore, dataHiveStoreKey } from './urls'
 import { prepareRoutes } from './utils/routes'
-import BaseService from './base/BaseService'
+import BaseService from './base/base-service'
 
 const routes = prepareRoutes({
   setKeyExpire                : '/:appId/console/hive/:hiveName/:store/:key/expire',

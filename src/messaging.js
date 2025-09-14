@@ -3,7 +3,7 @@
 import urls from './urls'
 import totalRows from './utils/total-rows'
 import { CHANNEL_DEVICES } from './utils/cache-tags'
-import BaseService from './base/BaseService'
+import BaseService from './base/base-service'
 
 // This method is needed in perspective (c) Arthur Dzidoiev
 const enrichChannelWithSettings = channel => ({
