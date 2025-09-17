@@ -20,6 +20,7 @@ const routes = prepareRoutes({
   flowInstances           : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
   countInstances          : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
   flowInstance            : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
+  stopInstanceExecution   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/instances/:executionId/stop',
 
   elementExecutionInfo: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId/element/:elementId',
   flowSlA             : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
@@ -153,6 +154,10 @@ export default req => ({
 
   getFlowInstanceAnalytics(appId, flowId, versionId, executionId) {
     return req.automation.get(routes.flowInstance(appId, flowId, versionId, executionId))
+  },
+
+  stopFlowInstanceExecution(appId, flowId, versionId, executionId) {
+    return req.automation.post(routes.stopInstanceExecution(appId, flowId, versionId, executionId))
   },
 
   cleanFlowVersionAnalytics(appId, flowId, versionId) {
