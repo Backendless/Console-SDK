@@ -20,6 +20,7 @@ const routes = prepareRoutes({
   flowInstances           : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
   countInstances          : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
   flowInstance            : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
+  stopInstanceExecution   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/instances/:executionId/stop',
 
   elementExecutionInfo: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId/element/:elementId',
   flowSlA             : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
@@ -38,7 +39,6 @@ const routes = prepareRoutes({
   debugExecutionContext: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/execution-context',
   runElementInDebugMode: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/run/element/:elementId',
 
-  allowedAIModels    : '/api/app/:appId/automation/ai/assistants/allowed-models',
   registerAIAssistant: '/api/app/:appId/automation/ai/assistants/register',
   aiAssistants       : '/api/app/:appId/automation/ai/assistants',
   aiAssistant        : '/api/app/:appId/automation/ai/assistants/:id',
@@ -156,6 +156,10 @@ export default req => ({
     return req.automation.get(routes.flowInstance(appId, flowId, versionId, executionId))
   },
 
+  stopFlowInstanceExecution(appId, flowId, versionId, executionId) {
+    return req.automation.post(routes.stopInstanceExecution(appId, flowId, versionId, executionId))
+  },
+
   cleanFlowVersionAnalytics(appId, flowId, versionId) {
     return req.automation.delete(routes.flowVersionAnalytics(appId, flowId, versionId))
   },
@@ -247,10 +251,6 @@ export default req => ({
 
   deleteSLACalendar(appId, id) {
     return req.automation.delete(routes.SLACalendar(appId, id))
-  },
-
-  getAllowedAIModels(appId) {
-    return req.automation.get(routes.allowedAIModels(appId))
   },
 
   registerAIAssistant(appId, openAiAssistantId) {

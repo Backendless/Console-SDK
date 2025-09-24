@@ -47,6 +47,7 @@ import consolePreview from './console-preview'
 import quickApps from './quick-apps'
 import frExtensions from './fr-extensions'
 import mcpServices from './mcp-services'
+import webhooks from './webhooks'
 
 import { community } from './community'
 import { marketplace } from './marketplace'
@@ -222,6 +223,7 @@ const createClient = (serverUrl, authKey, options) => {
     consolePreview      : consolePreview(request),
     quickApps           : quickApps(request),
     integrations        : integrations(request),
+    webhooks            : webhooks(request),
     pdf                 : pdf(request),
     frExtensions        : frExtensions(request),
     mcpServices         : mcpServices(request)
