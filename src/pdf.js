@@ -1,14 +1,14 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  generatePDF: '/api/app/:appId/pdf/generate',
+  generatePDF: '/api/node-server/manage/app/:appId/pdf/generate',
   templates  : '/:appId/console/pdf',
   template   : '/:appId/console/pdf/:templateId',
 })
 
 export default req => ({
-  generatePDF(appId, pdf, inputs) {
-    return req.post(routes.generatePDF(appId), { pdf, inputs })
+  generatePDF(appId, pdf) {
+    return req.nodeAPI.post(routes.generatePDF(appId), pdf)
   },
 
   listTemplates(appId) {
