@@ -1,8 +1,8 @@
 import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
-  integrations              : '/:appId/console/integrations',
-  integration               : '/:appId/console/integrations/:name',
+  integrations: '/:appId/console/integrations',
+  integration : '/:appId/console/integrations/:name',
 })
 
 export default req => ({
@@ -21,5 +21,4 @@ export default req => ({
   deleteIntegration(appId, name) {
     return req.delete(routes.integration(appId, name))
   },
-
 })

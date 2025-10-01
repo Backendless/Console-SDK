@@ -430,6 +430,27 @@ describe('apiClient.automation', () => {
     })
   })
 
+  describe('stopFlowInstanceExecution', () => {
+    it('should make POST request to stop flow instance execution', async () => {
+      mockSuccessAPIRequest(successResult)
+
+      const result = await automationAPI.stopFlowInstanceExecution(appId, flowId, versionId, executionId)
+
+      expect(result).toEqual(successResult)
+      expect(apiRequestCalls()).toEqual([
+        {
+          path: `http://test-host:3000/api/app/${appId}/automation/flow/${flowId}/version/${versionId}/instances/${executionId}/stop`,
+          body: undefined,
+          method: 'POST',
+          encoding: 'utf8',
+          headers: {},
+          timeout: 0,
+          withCredentials: false
+        }
+      ])
+    })
+  })
+
   describe('cleanFlowVersionAnalytics', () => {
     it('should make DELETE request to clean flow version analytics', async () => {
       mockSuccessAPIRequest(successResult)
@@ -868,27 +889,6 @@ describe('apiClient.automation', () => {
   })
 
   describe('AI Assistant Methods', () => {
-    describe('getAllowedAIModels', () => {
-      it('should make GET request to get allowed AI models', async () => {
-        mockSuccessAPIRequest(successResult)
-
-        const result = await automationAPI.getAllowedAIModels(appId)
-
-        expect(result).toEqual(successResult)
-        expect(apiRequestCalls()).toEqual([
-          {
-            path: `http://test-host:3000/api/app/${appId}/automation/ai/assistants/allowed-models`,
-            body: undefined,
-            method: 'GET',
-            encoding: 'utf8',
-            headers: {},
-            timeout: 0,
-            withCredentials: false
-          }
-        ])
-      })
-    })
-
     describe('registerAIAssistant', () => {
       it('should make POST request to register AI assistant', async () => {
         mockSuccessAPIRequest(successResult)
@@ -1601,6 +1601,16 @@ describe('apiClient.automation', () => {
         expect(error).toBeInstanceOf(Error)
         expect(error.status).toBe(500)
         expect(error.message).toBe('Internal server error')
+      })
+
+      it('stopFlowInstanceExecution fails with not found error', async () => {
+        mockFailedAPIRequest('Flow instance not found', 404)
+
+        const error = await automationAPI.stopFlowInstanceExecution(appId, flowId, versionId, executionId).catch(e => e)
+
+        expect(error).toBeInstanceOf(Error)
+        expect(error.status).toBe(404)
+        expect(error.message).toBe('Flow instance not found')
       })
     })
 
