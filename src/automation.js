@@ -186,9 +186,9 @@ export default req => ({
       .query({ scope, hostType, serviceName, modelName, lang })
   },
 
-  startDebugSession(appId, flowId, versionId, forceStart) {
+  startDebugSession(appId, flowId, versionId, forceStart, fromSubFlowElementId) {
     return req.automation.post(routes.startDebugSession(appId, flowId, versionId))
-      .query({ forceStart })
+      .query({ forceStart, fromSubFlowElementId })
   },
 
   stopDebugSession(appId, flowId, versionId, sessionId) {
