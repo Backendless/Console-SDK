@@ -6,6 +6,7 @@ import totalRows from './utils/total-rows'
 import { TABLE_DATA } from './utils/cache-tags'
 import { tableRecordsReq, tableRecordsCountReq, buildRecordsSearch } from './utils/table'
 import { prepareRoutes } from './utils/routes'
+import BaseService from './base/base-service'
 
 const RELATION_URL_SUFFIX = 'relation'
 const GEO_RELATION_URL_SUFFIX = 'georelation'
@@ -52,35 +53,40 @@ const routes = prepareRoutes({
   tableOwnerPolicyDelayCheck: '/:appId/console/data/tables/:tableName/acl/owner-policy-delay-check',
 })
 
-export default req => ({
+class Tables extends BaseService {
+  constructor(req) {
+    super(req)
+    this.serviceName = 'tables'
+  }
+
   get(appId, query) {
-    return req.get(urls.dataTables(appId)).query(query)
+    return this.req.get(urls.dataTables(appId)).query(query)
       .then(resp => ({
         ...resp,
         tables: resp.tables.map(normalizeTable)
       }))
-  },
+  }
 
   create(appId, table) {
-    return req.post(urls.dataTables(appId), table).then(normalizeTable)
-  },
+    return this.req.post(urls.dataTables(appId), table).then(normalizeTable)
+  }
 
   update(appId, table, props) {
-    return req.put(tableUrl(appId, table), props).then(normalizeTable)
-  },
+    return this.req.put(tableUrl(appId, table), props).then(normalizeTable)
+  }
 
   remove(appId, table) {
-    return req.delete(tableUrl(appId, table))
-  },
+    return this.req.delete(tableUrl(appId, table))
+  }
 
   async loadRecords(appId, table, query, ignoreCounter) {
-    const dataRequest = recordsReq(req, appId, table, query)
+    const dataRequest = recordsReq(this.req, appId, table, query)
 
     if (ignoreCounter) {
       return dataRequest
     }
 
-    const countRequest = totalRows(req).getViaPostFor(recordsCountReq(req, appId, table, query))
+    const countRequest = totalRows(this.req).getViaPostFor(recordsCountReq(this.req, appId, table, query))
 
     const [total, data] = await Promise.all([countRequest, dataRequest])
 
@@ -88,7 +94,7 @@ export default req => ({
       totalRows: total,
       data
     }
-  },
+  }
 
   exportRecords(appId, connectorId, table, query) {
     const { sqlSearch, where, filterString, sortBy, props } = query
@@ -122,127 +128,128 @@ export default req => ({
       delete params.props
     }
 
-    return req.post(`${urls.dataTable(appId, tableName)}/csv`, params)
-  },
+    return this.req.post(`${urls.dataTable(appId, tableName)}/csv`, params)
+  }
 
   getRecordsCount(appId, table, query, resetCache) {
-    return totalRows(req).getViaPostFor(recordsCountReq(req, appId, table, query, resetCache))
-  },
+    return totalRows(this.req).getViaPostFor(recordsCountReq(this.req, appId, table, query, resetCache))
+  }
 
   getCount(appId, table, query) {
-    return totalRows(req).getFor(recordsCountReq(req, appId, table, query))
-  },
+    return totalRows(this.req).getFor(recordsCountReq(this.req, appId, table, query))
+  }
 
   getRecordsCountForTables(appId, tables, connectorId, resetCache) {
-    return req.post(`${urls.data(appId)}/tables-counters`, { tables, connectorId, resetCache })
-  },
+    return this.req.post(`${urls.data(appId)}/tables-counters`, { tables, connectorId, resetCache })
+  }
 
   getCellData(appId, tableName, recordId, columnName) {
-    return req.get(`${urls.dataCell(appId, tableName, recordId, columnName)}/retrieve-value`)
-  },
+    return this.req.get(`${urls.dataCell(appId, tableName, recordId, columnName)}/retrieve-value`)
+  }
 
   createRecord(appId, table, record) {
-    return req.post(urls.dataTable(appId, table.name), record).cacheTags(TABLE_DATA(table.tableId))
-  },
+    return this.req.post(urls.dataTable(appId, table.name), record).cacheTags(TABLE_DATA(table.tableId))
+  }
 
   bulkCreateRecords(appId, tableName, records) {
-    return req.post(urls.dataTableBulkCreate(appId, tableName), records)
-  },
+    return this.req.post(urls.dataTableBulkCreate(appId, tableName), records)
+  }
 
   bulkUpsertRecords(appId, tableName, records) {
-    return req.put(urls.dataTableBulkUpsert(appId, tableName), records)
-  },
+    return this.req.put(urls.dataTableBulkUpsert(appId, tableName), records)
+  }
 
   updateRecord(appId, table, record) {
-    return req.put(urls.dataRecord(appId, table.name, record.objectId), record)
-  },
+    return this.req.put(urls.dataRecord(appId, table.name, record.objectId), record)
+  }
 
   updateImageTypeRecord(appId, table, record) {
-    return req.put(`${urls.dataTable(appId, table.name)}/file/${ record.columnName }/${ record.objectId }`, record.value)
-  },
+    return this.req.put(`${urls.dataTable(appId, table.name)}/file/${ record.columnName }/${ record.objectId }`, record.value)
+  }
 
   deleteRecords(appId, table, recordIds) {
     const url = removeRecordsUrl(appId, table, !recordIds)
     const removeItems = recordIds && recordIds.map(objectId => ({ objectId }))
 
-    return req.delete(url, removeItems).cacheTags(TABLE_DATA(table.tableId))
-  },
+    return this.req.delete(url, removeItems).cacheTags(TABLE_DATA(table.tableId))
+  }
 
   deleteImageTypeRecord(appId, tableName, columnName, recordId) {
-    return req.delete(`${urls.dataTable(appId, tableName)}/file/${ columnName }/${ recordId }`)
-  },
+    return this.req.delete(`${urls.dataTable(appId, tableName)}/file/${ columnName }/${ recordId }`)
+  }
 
   updateRelations(appId, table, columnName, recordId, relationIds) {
     const relationColumn = getRelationColumn(table, columnName)
 
-    return req
+    return this.req
       .put(updateRelationsUrl(appId, table, columnName, recordId), relationIds)
       .cacheTags(TABLE_DATA(relationColumn.toTableId))
-  },
+  }
 
   removeRelations(appId, table, columnName, recordId, relationIds) {
     const relationColumn = getRelationColumn(table, columnName)
 
-    return req
+    return this.req
       .delete(removeRelationsUrl(appId, table, columnName, recordId), relationIds)
       .cacheTags(TABLE_DATA(relationColumn.toTableId))
-  },
+  }
 
   createColumn(appId, table, column) {
     const url = tableColumnsUrl(appId, table)
     const urlSuffix = COLUMNS_URL_SUFFIX[column.dataType]
 
-    return req.post(url + (urlSuffix ? `/${urlSuffix}` : ''), column).then(resp => {
+    return this.req.post(url + (urlSuffix ? `/${urlSuffix}` : ''), column).then(resp => {
       return { ...resp, dataType: column.dataType }
     })
-  },
+  }
 
   deleteColumn(appId, table, column) {
     const path = tableColumnsUrl(appId, table)
     const columnName = encodeURI(column.name)
 
     if (isRelType(column.dataType)) {
-      return req.delete(`${path}/${RELATION_URL_SUFFIX}/${columnName}`)
+      return this.req.delete(`${path}/${RELATION_URL_SUFFIX}/${columnName}`)
     }
 
-    return req.delete(`${path}/${columnName}`)
-  },
+    return this.req.delete(`${path}/${columnName}`)
+  }
 
   updateColumn(appId, table, prevColumn, column) {
     const urlSuffix = COLUMNS_URL_SUFFIX[prevColumn.dataType] || prevColumn.name
     const url = tableColumnsUrl(appId, table)
 
-    return req.put(`${url}/${urlSuffix}`, column).then(resp => ({
+    return this.req.put(`${url}/${urlSuffix}`, column).then(resp => ({
       ...resp,
       dataType: resp.dataType || prevColumn.dataType
     }))
-  },
+  }
 
   loadConfigs(appId) {
-    return req.get(urls.dataConfigs(appId))
-  },
+    return this.req.get(urls.dataConfigs(appId))
+  }
 
   setConfigs(appId, configs) {
-    return req.put(urls.dataConfigs(appId), configs)
-  },
+    return this.req.put(urls.dataConfigs(appId), configs)
+  }
 
   loadAssignedUserRoles(appId, users) {
-    return req.get(assignedUserRoles(appId)).query({ users: users.join(',') })
-  },
+    return this.req.get(assignedUserRoles(appId)).query({ users: users.join(',') })
+  }
 
   updateAssignedUserRoles(appId, roles, users) {
-    return req.put(assignedUserRoles(appId), { roles, users })
-  },
+    return this.req.put(assignedUserRoles(appId), { roles, users })
+  }
 
   loadTableOwnerPolicyDelayCheck(appId, tableName) {
-    return req.get(routes.tableOwnerPolicyDelayCheck(appId, tableName))
-  },
+    return this.req.get(routes.tableOwnerPolicyDelayCheck(appId, tableName))
+  }
 
   changeTableOwnerPolicyDelayCheck(appId, tableName, data) {
-    return req.put(routes.tableOwnerPolicyDelayCheck(appId, tableName), data)
-  },
+    return this.req.put(routes.tableOwnerPolicyDelayCheck(appId, tableName), data)
+  }
+}
 
-})
+export default req => Tables.create(req)
 
 const normalizeTable = table => ({
   ...table,

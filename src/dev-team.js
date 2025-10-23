@@ -1,51 +1,61 @@
-import urls, { devTeam } from './urls'
+/* eslint-disable max-len */
 
-export default req => ({
+import urls, { devTeam } from './urls'
+import BaseService from './base/base-service'
+
+class DevTeam extends BaseService {
+  constructor(req) {
+    super(req)
+    this.serviceName = 'devTeam'
+  }
+
   getDevelopers(appId) {
-    return req.get(devTeam(appId))
-  },
+    return this.req.get(devTeam(appId))
+  }
 
   updateDevPermissions(appId, devId, permissions) {
-    return req.put(`${devTeam(appId, devId)}/permissions`, permissions)
-  },
+    return this.req.put(`${devTeam(appId, devId)}/permissions`, permissions)
+  }
 
   updateDevPermissionGroups(appId, devId, groups) {
-    return req.put(`${devTeam(appId, devId)}/permission/groups`, groups)
-  },
+    return this.req.put(`${devTeam(appId, devId)}/permission/groups`, groups)
+  }
 
   inviteDeveloper(appId, email) {
-    return req.post(devTeam(appId), email)
-  },
+    return this.req.post(devTeam(appId), email)
+  }
 
   removeDeveloper(appId, devId) {
-    return req.delete(`${devTeam(appId, devId)}`)
-  },
+    return this.req.delete(`${devTeam(appId, devId)}`)
+  }
 
   updateNotificationSettings(appId, settings) {
-    return req.put(`${urls.appConsole(appId)}/notifications/limits`, settings)
-  },
+    return this.req.put(`${urls.appConsole(appId)}/notifications/limits`, settings)
+  }
 
   transferOwnership(appId, developerId) {
-    return req.put(`${urls.appConsole(appId)}/devteam/owner`, { developerId })
-  },
+    return this.req.put(`${urls.appConsole(appId)}/devteam/owner`, { developerId })
+  }
 
   loadOwnershipTransferProposals() {
-    return req.get('/console/devteam/application-owner-change/pending-received-proposal')
-  },
+    return this.req.get('/console/devteam/application-owner-change/pending-received-proposal')
+  }
 
   confirmOwnershipChange(appId, data) {
-    return req.put(`${urls.appConsole(appId)}/devteam/owner-confirm`, data)
-  },
+    return this.req.put(`${urls.appConsole(appId)}/devteam/owner-confirm`, data)
+  }
 
   loadSentOwnershipTransfer(appId) {
-    return req.get(`${urls.appConsole(appId)}/devteam/application-owner-change/pending-sent-proposal`)
-  },
+    return this.req.get(`${urls.appConsole(appId)}/devteam/application-owner-change/pending-sent-proposal`)
+  }
 
   cancelSentOwnershipTransfer(appId) {
-    return req.delete(`${urls.appConsole(appId)}/devteam/application-owner-change/pending-sent-proposal`)
-  },
+    return this.req.delete(`${urls.appConsole(appId)}/devteam/application-owner-change/pending-sent-proposal`)
+  }
 
   generateDeveloperSignature() {
-    return req.get(`${urls.console()}/developer/signature`)
-  },
-})
+    return this.req.get(`${urls.console()}/developer/signature`)
+  }
+}
+
+export default req => DevTeam.create(req)

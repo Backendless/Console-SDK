@@ -1,7 +1,10 @@
+/* eslint-disable max-len */
+
 import urls from './urls'
 import totalRows from './utils/total-rows'
 import { FOLDER } from './utils/cache-tags'
 import { encodePath } from './utils/path'
+import BaseService from './base/base-service'
 
 const getFileFolder = file => {
   const tokens = file.split('/')
@@ -15,19 +18,23 @@ const getFileFolder = file => {
   return ''
 }
 
-export default req => ({
+class Files extends BaseService {
+  constructor(req) {
+    super(req)
+    this.serviceName = 'files'
+  }
 
   loadDirectory(appId, path, params) {
     path = path || '/'
 
     const { pattern, sub, sortBy, sortDirection, pageSize, offset } = params || {}
 
-    const dataReq = req.get(urls.directoryView(appId, path))
+    const dataReq = this.req.get(urls.directoryView(appId, path))
       .query({ pattern, sub, sortBy, sortDirection, pageSize, offset })
       .cacheTags(FOLDER(appId, path))
 
-    return totalRows(req).getWithData(dataReq)
-  },
+    return totalRows(this.req).getWithData(dataReq)
+  }
 
   async loadFullDirectory(appId, path, params) {
     let currentQuery = {
@@ -38,13 +45,13 @@ export default req => ({
 
     const url = urls.directoryView(appId, path)
 
-    const totalCount = await totalRows(req).get(url)
+    const totalCount = await totalRows(this.req).get(url)
 
     const filesList = []
     const requests = []
 
     while (currentQuery.offset < totalCount) {
-      requests.push(req.get(url).query(currentQuery))
+      requests.push(this.req.get(url).query(currentQuery))
 
       currentQuery = {
         ...currentQuery,
@@ -57,73 +64,75 @@ export default req => ({
     results.forEach(files => filesList.push(...files))
 
     return filesList
-  },
+  }
 
   createDir(appId, path, folderName) {
-    return req.post(urls.createDir(appId, path, folderName)).cacheTags(FOLDER(appId, path))
-  },
+    return this.req.post(urls.createDir(appId, path, folderName)).cacheTags(FOLDER(appId, path))
+  }
 
   async getFileContent(appId, filePath) {
-    return req.get(urls.fileDownload(appId, filePath))
-  },
+    return this.req.get(urls.fileDownload(appId, filePath))
+  }
 
   performOperation(appId, filePath, operation) {
     //for root directory operations it has send '/' as path
     const path = filePath ? encodePath(filePath) : encodeURIComponent('/')
 
-    return req.put(`${urls.appConsole(appId)}/files/${path}`)
+    return this.req.put(`${urls.appConsole(appId)}/files/${path}`)
       .query({ operation })
       .cacheTags(FOLDER(appId, getFileFolder(path)))
-  },
+  }
 
   fileExists(appId, filePath) {
-    return req.get(urls.fileExists(appId, filePath))
-  },
+    return this.req.get(urls.fileExists(appId, filePath))
+  }
 
   editFile(appId, filePath, fileContent) {
-    return req.post(urls.fileEdit(appId, filePath), { file: fileContent })
-  },
+    return this.req.post(urls.fileEdit(appId, filePath), { file: fileContent })
+  }
 
   createFile(appId, filePath, fileContent) {
-    return req
+    return this.req
       .post(urls.fileCreate(appId, filePath), { file: fileContent })
       .set('Accept', '*/*') //workarround for BKNDLSS-13702
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
-  },
+  }
 
   moveFile(appId, filePath, newFilePath) {
-    return req.post(urls.fileMove(appId, filePath), encodePath(newFilePath))
+    return this.req.post(urls.fileMove(appId, filePath), encodePath(newFilePath))
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
-  },
+  }
 
   copyFile(appId, filePath, newFilePath) {
-    return req.post(urls.fileCopy(appId, filePath), encodePath(newFilePath))
+    return this.req.post(urls.fileCopy(appId, filePath), encodePath(newFilePath))
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
-  },
+  }
 
   renameFile(appId, filePath, newFileName) {
-    return req.post(urls.fileRename(appId, filePath), encodeURIComponent(newFileName))
+    return this.req.post(urls.fileRename(appId, filePath), encodeURIComponent(newFileName))
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
-  },
+  }
 
   deleteFile(appId, filePath) {
-    return req.delete(urls.fileDelete(appId, filePath))
+    return this.req.delete(urls.fileDelete(appId, filePath))
       .cacheTags(FOLDER(appId, getFileFolder(filePath)))
-  },
+  }
 
   uploadFile(appId, file, path, fileName, overwrite = false) {
-    return req.post(urls.fileUpload(appId, `${path}/${fileName}`), file)
+    return this.req.post(urls.fileUpload(appId, `${path}/${fileName}`), file)
       .query({ overwrite })
       .cacheTags(FOLDER(appId, path))
-  },
+  }
 
   createConsoleFile(appId, path, content) {
-    return req.post(`${urls.appConsole(appId)}/files/create/${encodePath(path)}`, content)
+    return this.req.post(`${urls.appConsole(appId)}/files/create/${encodePath(path)}`, content)
       .set('Accept', '*/*') //workarround for BKNDLSS-13702
       .cacheTags(FOLDER(appId, getFileFolder(path)))
-  },
+  }
 
   viewFiles(appId, path = '') {
-    return req.get(urls.fileView(appId, path))
+    return this.req.get(urls.fileView(appId, path))
   }
-})
+}
+
+export default req => Files.create(req)
