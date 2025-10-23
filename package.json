@@ -10,7 +10,8 @@
     "dist",
     "lib",
     "es",
-    "src"
+    "src",
+    "definitions.json"
   ],
   "scripts": {
     "clean": "rimraf lib dist es",

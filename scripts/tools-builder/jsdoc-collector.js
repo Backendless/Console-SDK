@@ -1,6 +1,11 @@
 import fs from 'fs'
 import jsdoc2md from 'jsdoc-to-markdown'
-import { resolve } from 'path'
+import path from 'path'
+import url from 'url'
+
+const __filename = url.fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const SCR_ROOT = path.resolve(__dirname, '..')
 
 function isMethodAndNotSystem(item) {
   return item.kind === 'function'
@@ -44,7 +49,7 @@ export default class JSDocCollector {
       const stats = fs.statSync(filePath)
 
       if (stats.isDirectory()) {
-        fs.readdirSync(filePath).forEach(entry => walk(resolve(filePath, entry)))
+        fs.readdirSync(filePath).forEach(entry => walk(path.resolve(filePath, entry)))
       } else if (stats.isFile() && filePath.endsWith('.js')) {
         files.push(filePath)
       }
@@ -68,6 +73,8 @@ export default class JSDocCollector {
 
     for (const fileName of jsFiles) {
       try {
+        const relativeFilePath = path.relative(SCR_ROOT, fileName)
+
         const data = await jsdoc2md.getJsdocData({ files: fileName })
 
         const fileTypedefs = this.collectTypedefs(data)
@@ -77,10 +84,13 @@ export default class JSDocCollector {
         })
 
         const serviceName = extractServiceName(data)
-        const serviceInfo = { fileName, serviceName }
+        const serviceInfo = {
+          fileName: relativeFilePath,
+          serviceName
+        }
 
         if (!serviceName) {
-          console.error(`Add "serviceName" to class constructor ${fileName}`)
+          console.error(`Add "serviceName" to class constructor ${relativeFilePath}`)
           continue
         }
 
@@ -94,7 +104,7 @@ export default class JSDocCollector {
 
         services.push({ methods, serviceInfo })
       } catch (error) {
-        console.error(`❌ Error processing ${fileName}:`, error.message)
+        console.error(`❌ Error processing ${relativeFilePath}:`, error.message)
       }
     }
 
