@@ -4,7 +4,7 @@ import { prepareRoutes } from './utils/routes'
 import BaseService from './base/base-service'
 
 const routes = prepareRoutes({
-  generatePDF: '/api/app/:appId/pdf/generate',
+  generatePDF: '/api/node-server/manage/app/:appId/pdf/generate',
   templates  : '/:appId/console/pdf',
   template   : '/:appId/console/pdf/:templateId',
 })
@@ -16,7 +16,7 @@ class PDF extends BaseService {
   }
 
   generatePDF(appId, pdf, inputs) {
-    return this.req.post(routes.generatePDF(appId), { pdf, inputs })
+    return this.req.nodeAPI.post(routes.generatePDF(appId), { pdf, inputs })
   }
 
   /**
