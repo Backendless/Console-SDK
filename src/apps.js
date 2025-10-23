@@ -1,4 +1,7 @@
+/* eslint-disable max-len */
+
 import { prepareRoutes } from './utils/routes'
+import BaseService from './base/base-service'
 
 const routes = prepareRoutes({
   apps         : '/console/applications',
@@ -20,77 +23,83 @@ const routes = prepareRoutes({
   suggestedGeneratedDomains: '/console/applications/suggested-generated-domains'
 })
 
-export default req => ({
+class Apps extends BaseService {
+  constructor(req) {
+    super(req)
+    this.serviceName = 'apps'
+  }
+
   createApp(app, query) {
-    return req.post(routes.apps(), app).query(query)
-  },
+    return this.req.post(routes.apps(), app).query(query)
+  }
 
   createAppFromZIP(app) {
-    return req.post(routes.appFromZip(), app)
-  },
+    return this.req.post(routes.appFromZip(), app)
+  }
 
   createAppFromZipUrl(data) {
-    return req.post(routes.appFromZipURL(), data)
-  },
+    return this.req.post(routes.appFromZipURL(), data)
+  }
 
   getApps(zone) {
-    return req.get(routes.apps()).query({ zone })
-  },
+    return this.req.get(routes.apps()).query({ zone })
+  }
 
   resetApp(appId, resets) {
-    return req.post(routes.appReset(appId), resets)
-  },
+    return this.req.post(routes.appReset(appId), resets)
+  }
 
   renameApp(appId, appName) {
-    return req.put(routes.app(appId), { appName })
-  },
+    return this.req.put(routes.app(appId), { appName })
+  }
 
   deleteApp(appId) {
-    return req.delete(routes.app(appId))
-  },
+    return this.req.delete(routes.app(appId))
+  }
 
   cloneApp(appId, newApp) {
-    return req.post(routes.appClone(appId), newApp)
-  },
+    return this.req.post(routes.appClone(appId), newApp)
+  }
 
   generateAppZIP(appId) {
-    return req.post(routes.appTransfer(appId))
-  },
+    return this.req.post(routes.appTransfer(appId))
+  }
 
   getCloningAppStatus(appId, processId) {
-    return req.get(routes.appCloneProcess(appId, processId))
-  },
+    return this.req.get(routes.appCloneProcess(appId, processId))
+  }
 
   loadAppsMenuItems() {
-    return req.get('/console/applications/menu-items')
-  },
+    return this.req.get('/console/applications/menu-items')
+  }
 
   loadAppFavorites(appId, devId) {
-    return req.get('/console/applications/app-favorites').query({ appId, devId })
-  },
+    return this.req.get('/console/applications/app-favorites').query({ appId, devId })
+  }
 
   loadAppsInfo(appsIds) {
-    return req.get(routes.appsInfo()).query({ appsIds })
-  },
+    return this.req.get(routes.appsInfo()).query({ appsIds })
+  }
 
   updateAppInfo(appId, info) {
-    return req.post(routes.appInfo(appId), info)
-  },
+    return this.req.post(routes.appInfo(appId), info)
+  }
 
   updateAppLogo(appId, logo) {
-    return req.post(routes.appInfoLogo(appId), logo)
-  },
+    return this.req.post(routes.appInfoLogo(appId), logo)
+  }
 
   generateSubdomains(zone) {
-    return req.get(routes.suggestedGeneratedDomains()).query({ zone })
-  },
+    return this.req.get(routes.suggestedGeneratedDomains()).query({ zone })
+  }
 
   getAppDevOptions(appId) {
-    return req.get(routes.appDevOptions(appId))
-  },
+    return this.req.get(routes.appDevOptions(appId))
+  }
 
   updateAppDevOptions(appId, options) {
-    return req.put(routes.appDevOptions(appId), options)
-  },
+    return this.req.put(routes.appDevOptions(appId), options)
+  }
+}
 
-})
+export default req => Apps.create(req)

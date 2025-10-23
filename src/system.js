@@ -2,7 +2,7 @@ import { prepareRoutes } from './utils/routes'
 
 const routes = prepareRoutes({
   status  : '/console/status',
-  mainManu: '/api/console/main-menu/items',
+  mainMenu: '/api/console/main-menu/items',
 })
 
 export const systemAPI = req => ({
@@ -22,7 +22,6 @@ export const systemAPI = req => ({
   },
 
   loadMainMenu() {
-    return req.get(routes.mainManu())
+    return req.get(routes.mainMenu())
   },
-
 })

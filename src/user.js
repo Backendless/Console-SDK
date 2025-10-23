@@ -1,5 +1,8 @@
+/* eslint-disable max-len */
+
 import { cookieEnabled, deleteCookie, getCookie } from './utils/cookie'
 import { prepareRoutes } from './utils/routes'
+import BaseService from './base/base-service'
 
 const routes = prepareRoutes({
   getMyAccount      : '/console/home/myaccount',
@@ -28,18 +31,15 @@ const routes = prepareRoutes({
   devPermissions: '/:appId/console/my-permissions',
 })
 
-/**
- *
- * @param req
- * @param {Context} context
- */
-export default (req, context) => ({
-  /**
-   * @param {String=}authKey
-   * @return {Promise|*}
-   */
+class User extends BaseService {
+  constructor(req, context) {
+    super(req)
+    this.context = context
+    this.serviceName = 'user'
+  }
+
   getAccountInfo(authKey) {
-    const request = req.get(routes.getMyAccount())
+    const request = this.req.get(routes.getMyAccount())
 
     if (authKey) {
       request.set('auth-key', authKey)
@@ -47,27 +47,22 @@ export default (req, context) => ({
 
     return request.send()
       .then(account => {
-        context.setAuthKey(account.authKey)
+        this.context.setAuthKey(account.authKey)
 
         return account
       })
-  },
+  }
 
   register(userData) {
-    return req.post(routes.registerDev()).send(userData)
-  },
+    return this.req.post(routes.registerDev()).send(userData)
+  }
 
   suicide() {
-    return req.delete(routes.deleteDev()).send()
-  },
+    return this.req.delete(routes.deleteDev()).send()
+  }
 
-  /**
-   * @param {String} login
-   * @param {String} password
-   * @return {Promise.<{name:String, email:String, authKey:String}>}
-   */
   login(login, password) {
-    return req.post(routes.login())
+    return this.req.post(routes.login())
       .unwrapBody(false)
       .send({ login, password })
       .then(res => {
@@ -75,24 +70,19 @@ export default (req, context) => ({
           return res.body
         }
 
-        return contextifyWithAuthToken(res, context)
+        return contextifyWithAuthToken(res, this.context)
       })
-  },
+  }
 
   loginWithTOTP(authData) {
-    return req.post(routes.loginWithTOTP())
+    return this.req.post(routes.loginWithTOTP())
       .unwrapBody(false)
       .send(authData)
-      .then(res => contextifyWithAuthToken(res, context))
-  },
+      .then(res => contextifyWithAuthToken(res, this.context))
+  }
 
-  /**
-   * @param {String} login
-   * @param {String} password
-   * @return {Promise.<{name:String, email:String, authKey:String}>}
-   */
   cloudLogin(login, password) {
-    return req.post(routes.cloudLogin())
+    return this.req.post(routes.cloudLogin())
       .unwrapBody(false)
       .send({ login, password })
       .then(res => {
@@ -100,97 +90,99 @@ export default (req, context) => ({
           return res.body
         }
 
-        return contextifyWithAuthToken(res, context)
+        return contextifyWithAuthToken(res, this.context)
       })
-  },
+  }
 
   cloudLoginWithTOTP(authData) {
-    return req.post(routes.cloudLoginWithTOTP())
+    return this.req.post(routes.cloudLoginWithTOTP())
       .unwrapBody(false)
       .send(authData)
-      .then(res => contextifyWithAuthToken(res, context))
-  },
+      .then(res => contextifyWithAuthToken(res, this.context))
+  }
 
   loginSocial(type) {
-    return req.get(routes.socialLogin(type))
-  },
+    return this.req.get(routes.socialLogin(type))
+  }
 
   logout() {
-    return req.delete(routes.logout()).then(() => {
-      context.setAuthKey(null)
+    return this.req.delete(routes.logout()).then(() => {
+      this.context.setAuthKey(null)
 
       if (cookieEnabled()) {
         deleteCookie('dev-auth-key')
       }
     })
-  },
+  }
 
   restorePassword(email) {
-    return req.post(routes.restorePassword())
+    return this.req.post(routes.restorePassword())
       .type('application/x-www-form-urlencoded; charset=UTF-8')
       .send('email=' + encodeURIComponent(email))
-  },
+  }
 
   resendConfirmEmail(email) {
-    return req.get(routes.resendConfirmEmail()).query({ email })
-  },
+    return this.req.get(routes.resendConfirmEmail()).query({ email })
+  }
 
   updateProfile(profile) {
-    return req.put(routes.updateMyAccount(), profile)
-  },
+    return this.req.put(routes.updateMyAccount(), profile)
+  }
 
   registerAndJoinAppTeam(appId, confirmationCode, userData) {
-    return req.post(routes.devToAppTeam(appId))
+    return this.req.post(routes.devToAppTeam(appId))
       .query({ 'confirmation-code': confirmationCode })
       .unwrapBody(false)
       .send(userData)
-      .then(res => contextifyWithAuthToken(res, context))
-  },
+      .then(res => contextifyWithAuthToken(res, this.context))
+  }
 
   registerAndJoinWorkspace(workspaceId, confirmationCode, userData) {
-    return req.automation.post(routes.devToAutomationWorkspace(workspaceId))
+    return this.req.automation.post(routes.devToAutomationWorkspace(workspaceId))
       .query({ 'confirmation-code': confirmationCode })
       .unwrapBody(false)
       .send(userData)
-      .then(res => contextifyWithAuthToken(res, context))
-  },
+      .then(res => contextifyWithAuthToken(res, this.context))
+  }
 
   loginToDiscourse(user, sig, sso) {
-    return req.post(routes.discourseSSO(), { user, sig, sso })
-  },
+    return this.req.post(routes.discourseSSO(), { user, sig, sso })
+  }
 
   getPermissions(appId) {
-    return req.get(routes.devPermissions(appId))
-  },
+    return this.req.get(routes.devPermissions(appId))
+  }
 
   completeStripeConnection(data) {
-    return req.post(routes.stripeConnectionAuth(), data)
-  },
+    return this.req.post(routes.stripeConnectionAuth(), data)
+  }
 
   getStripeConnectToken() {
-    return req.get(routes.stripeConnectionToken())
-  },
+    return this.req.get(routes.stripeConnectionToken())
+  }
 
   getStripeConnectAccountId() {
-    return req.get(routes.stripeConnect())
-  },
+    return this.req.get(routes.stripeConnect())
+  }
 
   setStripeConnectAccountId(data) {
-    return req.put(routes.stripeConnect(), data)
-  },
+    return this.req.put(routes.stripeConnect(), data)
+  }
 
   get2FAState() {
-    return req.get(routes.twoFA())
-  },
+    return this.req.get(routes.twoFA())
+  }
 
   update2FAState(enabled) {
-    return req.put(routes.twoFA(), { enabled })
-  },
+    return this.req.put(routes.twoFA(), { enabled })
+  }
 
   changePassword(id, password) {
-    return req.post(routes.changePassword(), { id, password })
+    return this.req.post(routes.changePassword(), { id, password })
   }
-})
+}
+
+export default (req, context) => User.create(req, context)
 
 function contextifyWithAuthToken(res, context) {
   const authKey = (cookieEnabled() && getCookie('dev-auth-key')) || res.headers['auth-key']
