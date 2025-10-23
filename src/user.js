@@ -37,7 +37,13 @@ class User extends BaseService {
     this.context = context
     this.serviceName = 'user'
   }
-
+  /**
+   * @aiToolName Get Account Info
+   * @category User
+   * @description Get account information for the current user
+   * @paramDef {"type":"string","name":"authKey","label":"Auth Key","description":"Optional authentication key","required":false}
+   * @sampleResult {"name":"John Developer","email":"john@example.com","authKey":"auth123"}
+   */
   getAccountInfo(authKey) {
     const request = this.req.get(routes.getMyAccount())
 
@@ -149,6 +155,13 @@ class User extends BaseService {
     return this.req.post(routes.discourseSSO(), { user, sig, sso })
   }
 
+  /**
+   * @aiToolName Get Permissions
+   * @category User
+   * @description Get user permissions for an application
+   * @paramDef {"type":"string","name":"appId","label":"Application ID","description":"The identifier of the application","required":true}
+   * @sampleResult {"canRead":true,"canWrite":false,"canDelete":false,"roles":["viewer"]}
+   */
   getPermissions(appId) {
     return this.req.get(routes.devPermissions(appId))
   }

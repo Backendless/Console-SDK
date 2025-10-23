@@ -10,7 +10,8 @@
     "dist",
     "lib",
     "es",
-    "src"
+    "src",
+    "definitions.json"
   ],
   "scripts": {
     "clean": "rimraf lib dist es",
@@ -18,11 +19,12 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "check": "npm run lint && npm run test",
+    "generate:definitions": "node scripts/tools-builder/index.js",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel ./src --out-dir lib",
     "build:es": "cross-env BABEL_ENV=es babel ./src --out-dir es",
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack ./src/index.js -o ./dist/backendless-console-sdk.js",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack ./src/index.js -o ./dist/backendless-console-sdk.min.js",
-    "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
+    "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min && npm run generate:definitions",
     "prepare": "npm run clean && npm run check && npm run build"
   },
   "repository": {
@@ -59,6 +61,7 @@
   "dependencies": {
     "@babel/runtime": "^7.21.5",
     "backendless-request": "^0.8.5",
+    "jsdoc-to-markdown": "^9.1.2",
     "lodash": "^4.17.21"
   }
 }

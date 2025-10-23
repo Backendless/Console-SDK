@@ -8,7 +8,13 @@ class Users extends BaseService {
     super(req)
     this.serviceName = 'users'
   }
-
+  /**
+   * @aiToolName Get Users Regs
+   * @category Users
+   * @description Get user registration settings
+   * @paramDef {"type":"string","name":"appId","label":"Application ID","description":"The identifier of the application","required":true}
+   * @sampleResult {"enabled":true,"emailConfirmation":true,"roles":["default"]}
+   */
   getUsersRegs(appId) {
     return this.req.get(`${appUrl(appId)}/userregistration`)
   }
@@ -17,14 +23,35 @@ class Users extends BaseService {
     return this.req.put(`${appUrl(appId)}/userregistration`, data)
   }
 
+  /**
+   * @aiToolName Get Users Login
+   * @category Users
+   * @description Get user login settings
+   * @paramDef {"type":"string","name":"appId","label":"Application ID","description":"The identifier of the application","required":true}
+   * @sampleResult {"sessionTimeout":3600,"maxFailedAttempts":5,"lockoutDuration":300}
+   */
   getUsersLogin(appId) {
     return this.req.get(`${appUrl(appId)}/userlogin`)
   }
 
+  /**
+   * @aiToolName Logout All Users
+   * @category Users
+   * @description Logout all users from the application
+   * @paramDef {"type":"string","name":"appId","label":"Application ID","description":"The identifier of the application","required":true}
+   * @sampleResult {"loggedOut":150,"success":true}
+   */
   logoutAllUsers(appId) {
     return this.req.post(`${appUrl(appId)}/userlogin/logout/all`)
   }
 
+  /**
+   * @aiToolName Get User Social Login
+   * @category Users
+   * @description Get social login URL for a provider
+   * @paramDef {"type":"string","name":"provider","label":"Provider","description":"The social provider name","required":true}
+   * @sampleResult {"url":"https://accounts.google.com/oauth/authorize?..."}
+   */
   getUserSocialLogin(provider) {
     return this.req.get(`/console/social/oauth/${provider}/request_url`)
   }
@@ -53,18 +80,48 @@ class Users extends BaseService {
     return this.req.get(`${users(appId)}/oauth2-templates`)
   }
 
+  /**
+   * @aiToolName Get OAuth1 Providers
+   * @category Users
+   * @description Get all OAuth1 providers
+   * @paramDef {"type":"string","name":"appId","label":"Application ID","description":"The identifier of the application","required":true}
+   * @sampleResult [{"id":"provider1","name":"Twitter","enabled":true}]
+   */
   getOAuth1Providers(appId) {
     return this.req.get(`${oauth1(appId)}`)
   }
 
+  /**
+   * @aiToolName Get OAuth2 Providers
+   * @category Users
+   * @description Get all OAuth2 providers
+   * @paramDef {"type":"string","name":"appId","label":"Application ID","description":"The identifier of the application","required":true}
+   * @sampleResult [{"id":"provider2","name":"Google","enabled":true}]
+   */
   getOAuth2Providers(appId) {
     return this.req.get(`${oauth2(appId)}`)
   }
 
+  /**
+   * @aiToolName Get OAuth1 Provider
+   * @category Users
+   * @description Get a specific OAuth1 provider
+   * @paramDef {"type":"string","name":"appId","label":"Application ID","description":"The identifier of the application","required":true}
+   * @paramDef {"type":"string","name":"providerId","label":"Provider ID","description":"The identifier of the OAuth1 provider","required":true}
+   * @sampleResult {"id":"provider1","name":"Twitter","consumerKey":"key123","enabled":true}
+   */
   getOAuth1Provider(appId, providerId) {
     return this.req.get(`${oauth1(appId)}/${providerId}`)
   }
 
+  /**
+   * @aiToolName Get OAuth2 Provider
+   * @category Users
+   * @description Get a specific OAuth2 provider
+   * @paramDef {"type":"string","name":"appId","label":"Application ID","description":"The identifier of the application","required":true}
+   * @paramDef {"type":"string","name":"providerId","label":"Provider ID","description":"The identifier of the OAuth2 provider","required":true}
+   * @sampleResult {"id":"provider2","name":"Google","clientId":"client123","enabled":true}
+   */
   getOAuth2Provider(appId, providerId) {
     return this.req.get(`${oauth2(appId)}/${providerId}`)
   }
