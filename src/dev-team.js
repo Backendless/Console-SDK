@@ -74,8 +74,6 @@ class DevTeam extends BaseService {
   }
 
   loadSentOwnershipTransfer(appId) {
-    console.log('loadSentOwnershipTransfer', { req: this.req })
-
     return this.req.get(`${urls.appConsole(appId)}/devteam/application-owner-change/pending-sent-proposal`)
   }
 
