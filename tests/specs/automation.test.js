@@ -579,6 +579,27 @@ describe('apiClient.automation', () => {
           }
         ])
       })
+
+      it('should make POST request to start debug session with fromSubFlowElementId', async () => {
+        mockSuccessAPIRequest(successResult)
+
+        const forceStart = true
+        const fromSubFlowElementId = 'subflow-element-123'
+        const result = await automationAPI.startDebugSession(appId, flowId, versionId, forceStart, fromSubFlowElementId)
+
+        expect(result).toEqual(successResult)
+        expect(apiRequestCalls()).toEqual([
+          {
+            path: `http://test-host:3000/api/app/${appId}/automation/flow/${flowId}/version/${versionId}/debug/test-monitor/start-session?forceStart=${forceStart}&fromSubFlowElementId=${fromSubFlowElementId}`,
+            body: undefined,
+            method: 'POST',
+            encoding: 'utf8',
+            headers: {},
+            timeout: 0,
+            withCredentials: false
+          }
+        ])
+      })
     })
 
     describe('stopDebugSession', () => {
