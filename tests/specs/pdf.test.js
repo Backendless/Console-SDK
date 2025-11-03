@@ -40,7 +40,7 @@ describe('apiClient.pdf', () => {
 
       expect(result).toEqual(pdfResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/api/app/${appId}/pdf/generate`,
+        path: `http://test-host:3000/api/node-server/manage/app/${appId}/pdf/generate`,
         body: JSON.stringify({ pdf, inputs }),
         method: 'POST',
         encoding: 'utf8',
