@@ -20,7 +20,9 @@ const routes = prepareRoutes({
   flowInstances           : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/find',
   countInstances          : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/count',
   flowInstance            : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId',
+  flowInstanceInitialData : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId/initial-and-static-data',
   stopInstanceExecution   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/instances/:executionId/stop',
+  runDebugInstance        : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/instance/run-new',
 
   elementExecutionInfo: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId/element/:elementId',
   flowSlA             : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
@@ -146,6 +148,14 @@ export default req => ({
 
   getFlowInstances(appId, flowId, versionId, body) {
     return req.automation.post(routes.flowInstances(appId, flowId, versionId), body)
+  },
+
+  getFlowInstanceInitialData(appId, flowId, versionId, executionId) {
+    return req.automation.get(routes.flowInstanceInitialData(appId, flowId, versionId, executionId))
+  },
+
+  runDebugInstance(appId, flowId, versionId, body) {
+    return req.automation.post(routes.runDebugInstance(appId, flowId, versionId), body)
   },
 
   countFlowInstances(appId, flowId, versionId, body) {

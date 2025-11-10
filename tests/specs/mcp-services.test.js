@@ -803,4 +803,62 @@ describe('apiClient.mcpServices', () => {
       })
     })
   })
+
+  describe('pingMcpClient', () => {
+    it('should make POST request to ping MCP client', async () => {
+      mockSuccessAPIRequest(undefined)
+
+      const pingData = {
+        method: 'ping',
+        jsonrpc: '2.0',
+        id: 1,
+        params: {}
+      }
+
+      const result = await mcpServicesAPI.pingMcpClient(appId, 'test-mcp-server-name', pingData)
+
+      expect(result).toBeUndefined()
+
+      expect(apiRequestCalls()).toEqual([{
+        path: `http://test-host:3000/api/node-server/public/app/${appId}/mcp/test-mcp-server-name`,
+        body: JSON.stringify(pingData),
+        method: 'POST',
+        encoding: 'utf8',
+        headers: { 'Content-Type': 'application/json' },
+        timeout: 0,
+        withCredentials: false
+      }])
+    })
+
+    it('fails when MCP client is not found', async () => {
+      mockFailedAPIRequest('MCP client not found', 404)
+
+      const pingData = {
+        method: 'ping',
+        jsonrpc: '2.0',
+        id: 2,
+        params: {}
+      }
+
+      const error = await mcpServicesAPI.pingMcpClient(appId, 'nonexistent-client', pingData).catch(e => e)
+
+      expect(error).toBeInstanceOf(Error)
+
+      expect({ ...error }).toEqual({
+        body: { message: 'MCP client not found' },
+        message: 'MCP client not found',
+        status: 404
+      })
+
+      expect(apiRequestCalls()).toEqual([{
+        path: `http://test-host:3000/api/node-server/public/app/${appId}/mcp/nonexistent-client`,
+        body: JSON.stringify(pingData),
+        method: 'POST',
+        encoding: 'utf8',
+        headers: { 'Content-Type': 'application/json' },
+        timeout: 0,
+        withCredentials: false
+      }])
+    })
+  })
 })
