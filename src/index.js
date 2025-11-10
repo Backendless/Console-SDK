@@ -48,6 +48,7 @@ import quickApps from './quick-apps'
 import frExtensions from './fr-extensions'
 import mcpServices from './mcp-services'
 import mcpHosting from './mcp-hosting'
+import mcpApiServices from './mcp-api-services'
 import webhooks from './webhooks'
 import knowledgeBase from './knowledge-base'
 
@@ -230,6 +231,7 @@ const createClient = (serverUrl, authKey, options) => {
     frExtensions        : frExtensions(request),
     mcpServices         : mcpServices(request),
     hostingMcpServices  : mcpHosting(request),
+    mcpApiServices      : mcpApiServices(request),
     knowledgeBase       : knowledgeBase(request)
   }
 }
