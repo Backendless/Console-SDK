@@ -15,8 +15,8 @@ class PDF extends BaseService {
     this.serviceName = 'pdf'
   }
 
-  generatePDF(appId, pdf, inputs) {
-    return this.req.nodeAPI.post(routes.generatePDF(appId), { pdf, inputs })
+  generatePDF(appId, payload) {
+    return this.req.nodeAPI.post(routes.generatePDF(appId), payload)
   }
 
   /**

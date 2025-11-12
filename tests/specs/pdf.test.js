@@ -3,7 +3,6 @@ describe('apiClient.pdf', () => {
   let pdfAPI
 
   const appId = 'test-app-id'
-  const successResult = { data: 'success' }
 
   beforeAll(() => {
     apiClient = createAPIClient('http://test-host:3000')
@@ -13,155 +12,173 @@ describe('apiClient.pdf', () => {
   describe('generatePDF', () => {
     it('should make POST request to generate PDF', async () => {
       const pdfResult = {
-        url: 'https://storage.example.com/pdfs/generated-report-123.pdf',
-        fileSize: 245680,
-        pages: 3,
+        url        : 'https://storage.example.com/pdfs/generated-report-123.pdf',
+        fileSize   : 245680,
+        pages      : 3,
         generatedAt: '2024-01-15T12:00:00Z',
-        expiresAt: '2024-01-16T12:00:00Z'
+        expiresAt  : '2024-01-16T12:00:00Z'
       }
       mockSuccessAPIRequest(pdfResult)
 
-      const pdf = {
-        templateId: 'invoice-template',
-        format: 'A4',
-        orientation: 'portrait'
-      }
-      const inputs = {
-        customerName: 'John Doe',
-        items: [
-          { name: 'Product A', quantity: 2, price: 25.99 },
-          { name: 'Product B', quantity: 1, price: 45.50 }
-        ],
-        total: 97.48,
-        dueDate: '2024-02-15'
+      const payload = {
+        template: {
+          templateId : 'invoice-template',
+          format     : 'A4',
+          orientation: 'portrait'
+        },
+        values  : {
+          customerName: 'John Doe',
+          items       : [
+            { name: 'Product A', quantity: 2, price: 25.99 },
+            { name: 'Product B', quantity: 1, price: 45.50 }
+          ],
+          total       : 97.48,
+          dueDate     : '2024-02-15'
+        },
+        path    : '/pdfs',
+        name    : 'test.pdf'
       }
 
-      const result = await pdfAPI.generatePDF(appId, pdf, inputs)
+      const result = await pdfAPI.generatePDF(appId, payload)
 
       expect(result).toEqual(pdfResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/api/node-server/manage/app/${appId}/pdf/generate`,
-        body: JSON.stringify({ pdf, inputs }),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/api/node-server/manage/app/${appId}/pdf/generate`,
+        body           : JSON.stringify(payload),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
 
     it('should handle complex PDF generation with custom styling', async () => {
       const pdfResult = {
-        url: 'https://storage.example.com/pdfs/report-456.pdf',
+        url     : 'https://storage.example.com/pdfs/report-456.pdf',
         fileSize: 1024000,
-        pages: 8,
+        pages   : 8,
         metadata: {
-          title: 'Monthly Sales Report',
-          author: 'Backendless App',
+          title  : 'Monthly Sales Report',
+          author : 'Backendless App',
           subject: 'Sales Analytics'
         }
       }
       mockSuccessAPIRequest(pdfResult)
 
-      const pdf = {
-        templateId: 'sales-report-template',
-        format: 'A4',
-        orientation: 'landscape',
-        margins: {
-          top: 20,
-          right: 15,
-          bottom: 20,
-          left: 15
+      const payload = {
+        template: {
+          templateId : 'sales-report-template',
+          format     : 'A4',
+          orientation: 'landscape',
+          margins    : {
+            top   : 20,
+            right : 15,
+            bottom: 20,
+            left  : 15
+          },
+          styling    : {
+            primaryColor  : '#2563eb',
+            secondaryColor: '#64748b',
+            fontFamily    : 'Inter',
+            fontSize      : 12
+          },
+          options    : {
+            includeHeader: true,
+            includeFooter: true,
+            watermark    : 'CONFIDENTIAL',
+            compression  : 'medium'
+          }
         },
-        styling: {
-          primaryColor: '#2563eb',
-          secondaryColor: '#64748b',
-          fontFamily: 'Inter',
-          fontSize: 12
-        },
-        options: {
-          includeHeader: true,
-          includeFooter: true,
-          watermark: 'CONFIDENTIAL',
-          compression: 'medium'
-        }
-      }
-      const inputs = {
-        reportTitle: 'Q4 2024 Sales Report',
-        dateRange: {
-          start: '2024-10-01',
-          end: '2024-12-31'
-        },
-        summary: {
-          totalRevenue: 485650.25,
-          totalOrders: 1247,
-          averageOrderValue: 389.45
-        },
-        chartData: {
-          monthlySales: [
-            { month: 'Oct', revenue: 145230 },
-            { month: 'Nov', revenue: 167890 },
-            { month: 'Dec', revenue: 172530 }
-          ],
-          topProducts: [
-            { name: 'Premium Package', sales: 89 },
-            { name: 'Standard Package', sales: 156 },
-            { name: 'Basic Package', sales: 203 }
+        values  : {
+          reportTitle: 'Q4 2024 Sales Report',
+          dateRange  : {
+            start: '2024-10-01',
+            end  : '2024-12-31'
+          },
+          summary    : {
+            totalRevenue     : 485650.25,
+            totalOrders      : 1247,
+            averageOrderValue: 389.45
+          },
+          chartData  : {
+            monthlySales: [
+              { month: 'Oct', revenue: 145230 },
+              { month: 'Nov', revenue: 167890 },
+              { month: 'Dec', revenue: 172530 }
+            ],
+            topProducts : [
+              { name: 'Premium Package', sales: 89 },
+              { name: 'Standard Package', sales: 156 },
+              { name: 'Basic Package', sales: 203 }
+            ]
+          },
+          tables     : [
+            {
+              title  : 'Regional Performance',
+              headers: ['Region', 'Revenue', 'Orders', 'Growth'],
+              rows   : [
+                ['North America', '$285,640', '742', '+12.3%'],
+                ['Europe', '$156,890', '389', '+8.7%'],
+                ['Asia Pacific', '$43,120', '116', '+15.2%']
+              ]
+            }
           ]
         },
-        tables: [
-          {
-            title: 'Regional Performance',
-            headers: ['Region', 'Revenue', 'Orders', 'Growth'],
-            rows: [
-              ['North America', '$285,640', '742', '+12.3%'],
-              ['Europe', '$156,890', '389', '+8.7%'],
-              ['Asia Pacific', '$43,120', '116', '+15.2%']
-            ]
-          }
-        ]
+        path    : '/pdfs',
+        name    : 'test.pdf'
       }
 
-      const result = await pdfAPI.generatePDF(appId, pdf, inputs)
+      const result = await pdfAPI.generatePDF(appId, payload)
 
       expect(result).toEqual(pdfResult)
     })
 
     it('should handle simple PDF generation with minimal inputs', async () => {
       const pdfResult = {
-        url: 'https://storage.example.com/pdfs/simple-doc.pdf',
+        url     : 'https://storage.example.com/pdfs/simple-doc.pdf',
         fileSize: 12450,
-        pages: 1
+        pages   : 1
       }
       mockSuccessAPIRequest(pdfResult)
 
-      const pdf = { templateId: 'simple-template' }
-      const inputs = {
-        title: 'Simple Document',
-        content: 'This is a basic PDF document.'
+      const payload = {
+        template: {
+          templateId: 'simple-template'
+        },
+        values  : {
+          title  : 'Simple Document',
+          content: 'This is a basic PDF document.'
+        },
+        path    : '/pdfs',
+        name    : 'test.pdf'
       }
 
-      const result = await pdfAPI.generatePDF(appId, pdf, inputs)
+      const result = await pdfAPI.generatePDF(appId, payload)
 
       expect(result).toEqual(pdfResult)
     })
 
     it('should handle PDF generation without template', async () => {
       const pdfResult = {
-        url: 'https://storage.example.com/pdfs/dynamic-doc.pdf',
+        url     : 'https://storage.example.com/pdfs/dynamic-doc.pdf',
         fileSize: 45680,
-        pages: 2
+        pages   : 2
       }
       mockSuccessAPIRequest(pdfResult)
 
-      const pdf = {
-        content: '<html><body><h1>Dynamic PDF</h1><p>Generated content</p></body></html>',
-        format: 'Letter',
-        orientation: 'portrait'
+      const payload = {
+        template: {
+          content    : '<html><body><h1>Dynamic PDF</h1><p>Generated content</p></body></html>',
+          format     : 'Letter',
+          orientation: 'portrait'
+        },
+        values  : {},
+        path    : '/pdfs',
+        name    : 'test.pdf'
       }
-      const inputs = {}
 
-      const result = await pdfAPI.generatePDF(appId, pdf, inputs)
+      const result = await pdfAPI.generatePDF(appId, payload)
 
       expect(result).toEqual(pdfResult)
     })
@@ -169,45 +186,70 @@ describe('apiClient.pdf', () => {
     it('fails when server responds with template not found error', async () => {
       mockFailedAPIRequest('PDF template not found', 404)
 
-      const pdf = { templateId: 'nonexistent-template' }
-      const inputs = {}
-      const error = await pdfAPI.generatePDF(appId, pdf, inputs).catch(e => e)
+      const payload = {
+        template: {
+          templateId: 'nonexistent-template'
+        },
+        values  : {},
+        path    : '/pdfs',
+        name    : 'test.pdf'
+      }
+
+      const error = await pdfAPI.generatePDF(appId, payload).catch(e => e)
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'PDF template not found' },
+        body   : { message: 'PDF template not found' },
         message: 'PDF template not found',
-        status: 404
+        status : 404
       })
     })
 
     it('fails when server responds with invalid input data error', async () => {
       mockFailedAPIRequest('Invalid input data for PDF generation', 400)
 
-      const pdf = { templateId: 'invoice-template' }
-      const inputs = { invalidField: 'value' }
-      const error = await pdfAPI.generatePDF(appId, pdf, inputs).catch(e => e)
+      const payload = {
+        template: {
+          templateId: 'invoice-template'
+        },
+        values  : {
+          invalidField: 'value'
+        },
+        path    : '/pdfs',
+        name    : 'test.pdf'
+      }
+
+      const error = await pdfAPI.generatePDF(appId, payload).catch(e => e)
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Invalid input data for PDF generation' },
+        body   : { message: 'Invalid input data for PDF generation' },
         message: 'Invalid input data for PDF generation',
-        status: 400
+        status : 400
       })
     })
 
     it('fails when server responds with generation timeout error', async () => {
       mockFailedAPIRequest('PDF generation timeout', 408)
 
-      const pdf = { templateId: 'complex-template' }
-      const inputs = { largeDataSet: new Array(10000).fill('data') }
-      const error = await pdfAPI.generatePDF(appId, pdf, inputs).catch(e => e)
+      const payload = {
+        template: {
+          templateId: 'complex-template'
+        },
+        values  : {
+          largeDataSet: new Array(10000).fill('data')
+        },
+        path    : '/pdfs',
+        name    : 'test.pdf'
+      }
+
+      const error = await pdfAPI.generatePDF(appId, payload).catch(e => e)
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'PDF generation timeout' },
+        body   : { message: 'PDF generation timeout' },
         message: 'PDF generation timeout',
-        status: 408
+        status : 408
       })
     })
   })
@@ -215,24 +257,24 @@ describe('apiClient.pdf', () => {
   describe('listTemplates', () => {
     it('should make GET request to list templates', async () => {
       const templatesResult = {
-        templates: [
+        templates : [
           {
-            id: 'invoice-template',
-            name: 'Invoice Template',
+            id         : 'invoice-template',
+            name       : 'Invoice Template',
             description: 'Standard invoice template with company branding',
-            category: 'invoicing',
-            format: 'A4',
-            createdAt: '2024-01-10T09:00:00Z',
-            updatedAt: '2024-01-12T14:30:00Z'
+            category   : 'invoicing',
+            format     : 'A4',
+            createdAt  : '2024-01-10T09:00:00Z',
+            updatedAt  : '2024-01-12T14:30:00Z'
           },
           {
-            id: 'report-template',
-            name: 'Monthly Report',
+            id         : 'report-template',
+            name       : 'Monthly Report',
             description: 'Comprehensive monthly business report template',
-            category: 'reporting',
-            format: 'Letter',
-            createdAt: '2024-01-08T11:15:00Z',
-            updatedAt: '2024-01-10T16:45:00Z'
+            category   : 'reporting',
+            format     : 'Letter',
+            createdAt  : '2024-01-08T11:15:00Z',
+            updatedAt  : '2024-01-10T16:45:00Z'
           }
         ],
         totalCount: 2,
@@ -244,21 +286,21 @@ describe('apiClient.pdf', () => {
 
       expect(result).toEqual(templatesResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/pdf`,
-        body: undefined,
-        method: 'GET',
-        encoding: 'utf8',
-        headers: {},
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/pdf`,
+        body           : undefined,
+        method         : 'GET',
+        encoding       : 'utf8',
+        headers        : {},
+        timeout        : 0,
         withCredentials: false
       }])
     })
 
     it('should handle empty templates list', async () => {
       const templatesResult = {
-        templates: [],
+        templates : [],
         totalCount: 0,
-        message: 'No PDF templates found for this application'
+        message   : 'No PDF templates found for this application'
       }
       mockSuccessAPIRequest(templatesResult)
 
@@ -269,46 +311,46 @@ describe('apiClient.pdf', () => {
 
     it('should handle comprehensive templates with metadata', async () => {
       const templatesResult = {
-        templates: [
+        templates : [
           {
-            id: 'advanced-invoice',
-            name: 'Advanced Invoice Template',
+            id         : 'advanced-invoice',
+            name       : 'Advanced Invoice Template',
             description: 'Professional invoice with tax calculations and multiple currencies',
-            category: 'invoicing',
-            tags: ['professional', 'multi-currency', 'tax-ready'],
-            format: 'A4',
+            category   : 'invoicing',
+            tags       : ['professional', 'multi-currency', 'tax-ready'],
+            format     : 'A4',
             orientation: 'portrait',
-            variables: [
+            variables  : [
               { name: 'customerName', type: 'string', required: true },
               { name: 'items', type: 'array', required: true },
               { name: 'taxRate', type: 'number', required: false, default: 0.1 }
             ],
-            preview: {
+            preview    : {
               thumbnail: 'https://storage.example.com/thumbnails/invoice-preview.png',
               samplePdf: 'https://storage.example.com/samples/invoice-sample.pdf'
             },
-            usage: {
+            usage      : {
               timesUsed: 45,
-              lastUsed: '2024-01-14T10:30:00Z'
+              lastUsed : '2024-01-14T10:30:00Z'
             },
-            version: '2.1',
-            author: 'Template Designer',
-            isPublic: false,
-            createdAt: '2024-01-01T00:00:00Z',
-            updatedAt: '2024-01-14T08:20:00Z'
+            version    : '2.1',
+            author     : 'Template Designer',
+            isPublic   : false,
+            createdAt  : '2024-01-01T00:00:00Z',
+            updatedAt  : '2024-01-14T08:20:00Z'
           }
         ],
         pagination: {
-          page: 1,
-          pageSize: 10,
+          page      : 1,
+          pageSize  : 10,
           totalCount: 1,
           totalPages: 1
         },
         statistics: {
-          totalTemplates: 1,
+          totalTemplates  : 1,
           mostUsedCategory: 'invoicing',
-          recentlyCreated: 0,
-          recentlyUpdated: 1
+          recentlyCreated : 0,
+          recentlyUpdated : 1
         }
       }
       mockSuccessAPIRequest(templatesResult)
@@ -325,9 +367,9 @@ describe('apiClient.pdf', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Unauthorized access to PDF templates' },
+        body   : { message: 'Unauthorized access to PDF templates' },
         message: 'Unauthorized access to PDF templates',
-        status: 401
+        status : 401
       })
     })
 
@@ -338,9 +380,9 @@ describe('apiClient.pdf', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Application not found' },
+        body   : { message: 'Application not found' },
         message: 'Application not found',
-        status: 404
+        status : 404
       })
     })
   })
@@ -348,53 +390,53 @@ describe('apiClient.pdf', () => {
   describe('loadTemplate', () => {
     it('should make GET request to load template', async () => {
       const templateResult = {
-        id: 'invoice-template',
-        name: 'Professional Invoice',
+        id         : 'invoice-template',
+        name       : 'Professional Invoice',
         description: 'A comprehensive invoice template with modern design',
-        content: '<!DOCTYPE html><html><head><title>Invoice</title></head><body>...</body></html>',
-        variables: [
+        content    : '<!DOCTYPE html><html><head><title>Invoice</title></head><body>...</body></html>',
+        variables  : [
           {
-            name: 'customerName',
-            type: 'string',
-            required: true,
+            name       : 'customerName',
+            type       : 'string',
+            required   : true,
             description: 'Customer or client name'
           },
           {
-            name: 'invoiceNumber',
-            type: 'string',
-            required: true,
+            name       : 'invoiceNumber',
+            type       : 'string',
+            required   : true,
             description: 'Unique invoice identifier'
           },
           {
-            name: 'items',
-            type: 'array',
-            required: true,
+            name       : 'items',
+            type       : 'array',
+            required   : true,
             description: 'List of invoice items',
-            schema: {
-              type: 'object',
+            schema     : {
+              type      : 'object',
               properties: {
-                name: { type: 'string' },
+                name    : { type: 'string' },
                 quantity: { type: 'number' },
-                price: { type: 'number' }
+                price   : { type: 'number' }
               }
             }
           }
         ],
-        styling: {
-          primaryColor: '#2563eb',
+        styling    : {
+          primaryColor  : '#2563eb',
           secondaryColor: '#64748b',
-          fontFamily: 'Inter',
-          headerHeight: 80,
-          footerHeight: 60
+          fontFamily    : 'Inter',
+          headerHeight  : 80,
+          footerHeight  : 60
         },
-        layout: {
-          format: 'A4',
+        layout     : {
+          format     : 'A4',
           orientation: 'portrait',
-          margins: { top: 20, right: 15, bottom: 20, left: 15 }
+          margins    : { top: 20, right: 15, bottom: 20, left: 15 }
         },
-        version: '1.2',
-        createdAt: '2024-01-10T09:00:00Z',
-        updatedAt: '2024-01-15T10:30:00Z'
+        version    : '1.2',
+        createdAt  : '2024-01-10T09:00:00Z',
+        updatedAt  : '2024-01-15T10:30:00Z'
       }
       mockSuccessAPIRequest(templateResult)
 
@@ -403,21 +445,21 @@ describe('apiClient.pdf', () => {
 
       expect(result).toEqual(templateResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/pdf/${templateId}`,
-        body: undefined,
-        method: 'GET',
-        encoding: 'utf8',
-        headers: {},
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/pdf/${templateId}`,
+        body           : undefined,
+        method         : 'GET',
+        encoding       : 'utf8',
+        headers        : {},
+        timeout        : 0,
         withCredentials: false
       }])
     })
 
     it('should handle simple template structure', async () => {
       const templateResult = {
-        id: 'simple-template',
-        name: 'Simple Document',
-        content: '<html><body><h1>{{title}}</h1><p>{{content}}</p></body></html>',
+        id       : 'simple-template',
+        name     : 'Simple Document',
+        content  : '<html><body><h1>{{title}}</h1><p>{{content}}</p></body></html>',
         variables: [
           { name: 'title', type: 'string', required: true },
           { name: 'content', type: 'string', required: false }
@@ -433,34 +475,34 @@ describe('apiClient.pdf', () => {
 
     it('should handle template with complex nested variables', async () => {
       const templateResult = {
-        id: 'report-template',
-        name: 'Business Report Template',
-        content: '<!-- Complex HTML template -->',
-        variables: [
+        id               : 'report-template',
+        name             : 'Business Report Template',
+        content          : '<!-- Complex HTML template -->',
+        variables        : [
           {
-            name: 'company',
-            type: 'object',
-            required: true,
+            name      : 'company',
+            type      : 'object',
+            required  : true,
             properties: {
-              name: { type: 'string', required: true },
+              name   : { type: 'string', required: true },
               address: { type: 'string', required: false },
-              logo: { type: 'string', format: 'url', required: false }
+              logo   : { type: 'string', format: 'url', required: false }
             }
           },
           {
-            name: 'reportData',
-            type: 'object',
-            required: true,
+            name      : 'reportData',
+            type      : 'object',
+            required  : true,
             properties: {
-              period: { type: 'string', required: true },
+              period : { type: 'string', required: true },
               metrics: {
-                type: 'array',
+                type : 'array',
                 items: {
-                  type: 'object',
+                  type      : 'object',
                   properties: {
-                    name: { type: 'string' },
+                    name : { type: 'string' },
                     value: { type: 'number' },
-                    unit: { type: 'string' },
+                    unit : { type: 'string' },
                     trend: { type: 'string', enum: ['up', 'down', 'stable'] }
                   }
                 }
@@ -471,7 +513,7 @@ describe('apiClient.pdf', () => {
         conditionalBlocks: [
           {
             condition: 'company.logo',
-            content: '<img src="{{company.logo}}" alt="Company Logo">'
+            content  : '<img src="{{company.logo}}" alt="Company Logo">'
           }
         ]
       }
@@ -491,9 +533,9 @@ describe('apiClient.pdf', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'PDF template not found' },
+        body   : { message: 'PDF template not found' },
         message: 'PDF template not found',
-        status: 404
+        status : 404
       })
     })
 
@@ -505,9 +547,9 @@ describe('apiClient.pdf', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Access denied to template' },
+        body   : { message: 'Access denied to template' },
         message: 'Access denied to template',
-        status: 403
+        status : 403
       })
     })
   })
@@ -515,23 +557,23 @@ describe('apiClient.pdf', () => {
   describe('createTemplate', () => {
     it('should make POST request to create template', async () => {
       const createResult = {
-        id: 'new-template-123',
-        name: 'Custom Invoice Template',
-        message: 'Template created successfully',
+        id       : 'new-template-123',
+        name     : 'Custom Invoice Template',
+        message  : 'Template created successfully',
         createdAt: '2024-01-15T12:00:00Z'
       }
       mockSuccessAPIRequest(createResult)
 
       const template = {
-        name: 'Custom Invoice Template',
+        name       : 'Custom Invoice Template',
         description: 'A customized invoice template for our business',
-        content: '<!DOCTYPE html><html><head><title>{{invoiceTitle}}</title></head><body><h1>Invoice #{{invoiceNumber}}</h1></body></html>',
-        variables: [
+        content    : '<!DOCTYPE html><html><head><title>{{invoiceTitle}}</title></head><body><h1>Invoice #{{invoiceNumber}}</h1></body></html>',
+        variables  : [
           { name: 'invoiceTitle', type: 'string', required: true },
           { name: 'invoiceNumber', type: 'string', required: true }
         ],
-        category: 'invoicing',
-        format: 'A4',
+        category   : 'invoicing',
+        format     : 'A4',
         orientation: 'portrait'
       }
 
@@ -539,12 +581,12 @@ describe('apiClient.pdf', () => {
 
       expect(result).toEqual(createResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/pdf`,
-        body: JSON.stringify(template),
-        method: 'POST',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/pdf`,
+        body           : JSON.stringify(template),
+        method         : 'POST',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -554,47 +596,47 @@ describe('apiClient.pdf', () => {
       mockSuccessAPIRequest(createResult)
 
       const template = {
-        name: 'Advanced Report Template',
+        name       : 'Advanced Report Template',
         description: 'Comprehensive business report with charts and tables',
-        content: '<!-- Complex HTML with CSS and JavaScript -->',
-        variables: [
+        content    : '<!-- Complex HTML with CSS and JavaScript -->',
+        variables  : [
           {
-            name: 'reportConfig',
-            type: 'object',
-            required: true,
+            name      : 'reportConfig',
+            type      : 'object',
+            required  : true,
             properties: {
-              title: { type: 'string' },
-              subtitle: { type: 'string' },
+              title    : { type: 'string' },
+              subtitle : { type: 'string' },
               dateRange: {
-                type: 'object',
+                type      : 'object',
                 properties: {
                   start: { type: 'string', format: 'date' },
-                  end: { type: 'string', format: 'date' }
+                  end  : { type: 'string', format: 'date' }
                 }
               }
             }
           }
         ],
-        styling: {
+        styling    : {
           primaryColor: '#1f2937',
-          accentColor: '#3b82f6',
-          fonts: {
+          accentColor : '#3b82f6',
+          fonts       : {
             heading: 'Roboto Slab',
-            body: 'Source Sans Pro'
+            body   : 'Source Sans Pro'
           }
         },
-        layout: {
-          format: 'A4',
+        layout     : {
+          format     : 'A4',
           orientation: 'landscape',
-          margins: { top: 25, right: 20, bottom: 25, left: 20 }
+          margins    : { top: 25, right: 20, bottom: 25, left: 20 }
         },
-        features: {
-          includeCharts: true,
-          includeTables: true,
+        features   : {
+          includeCharts   : true,
+          includeTables   : true,
           includeWatermark: false,
-          compression: 'high'
+          compression     : 'high'
         },
-        tags: ['business', 'report', 'analytics', 'professional']
+        tags       : ['business', 'report', 'analytics', 'professional']
       }
 
       const result = await pdfAPI.createTemplate(appId, template)
@@ -607,7 +649,7 @@ describe('apiClient.pdf', () => {
       mockSuccessAPIRequest(createResult)
 
       const template = {
-        name: 'Simple Template',
+        name   : 'Simple Template',
         content: '<html><body><h1>{{title}}</h1></body></html>'
       }
 
@@ -624,9 +666,9 @@ describe('apiClient.pdf', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Template validation failed' },
+        body   : { message: 'Template validation failed' },
         message: 'Template validation failed',
-        status: 400
+        status : 400
       })
     })
 
@@ -638,9 +680,9 @@ describe('apiClient.pdf', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Template with this name already exists' },
+        body   : { message: 'Template with this name already exists' },
         message: 'Template with this name already exists',
-        status: 409
+        status : 409
       })
     })
   })
@@ -648,20 +690,20 @@ describe('apiClient.pdf', () => {
   describe('updateTemplate', () => {
     it('should make PUT request to update template', async () => {
       const updateResult = {
-        id: 'invoice-template',
-        name: 'Updated Invoice Template',
-        message: 'Template updated successfully',
+        id       : 'invoice-template',
+        name     : 'Updated Invoice Template',
+        message  : 'Template updated successfully',
         updatedAt: '2024-01-15T12:00:00Z',
-        version: '1.3'
+        version  : '1.3'
       }
       mockSuccessAPIRequest(updateResult)
 
       const template = {
-        id: 'invoice-template',
-        name: 'Updated Invoice Template',
+        id         : 'invoice-template',
+        name       : 'Updated Invoice Template',
         description: 'Updated version with new styling',
-        content: '<!DOCTYPE html><html><head><title>Invoice</title><style>/* Updated CSS */</style></head><body>Updated content</body></html>',
-        variables: [
+        content    : '<!DOCTYPE html><html><head><title>Invoice</title><style>/* Updated CSS */</style></head><body>Updated content</body></html>',
+        variables  : [
           { name: 'customerName', type: 'string', required: true },
           { name: 'newField', type: 'string', required: false }
         ]
@@ -671,12 +713,12 @@ describe('apiClient.pdf', () => {
 
       expect(result).toEqual(updateResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/pdf/${template.id}`,
-        body: JSON.stringify(template),
-        method: 'PUT',
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/pdf/${template.id}`,
+        body           : JSON.stringify(template),
+        method         : 'PUT',
+        encoding       : 'utf8',
+        headers        : { 'Content-Type': 'application/json' },
+        timeout        : 0,
         withCredentials: false
       }])
     })
@@ -686,9 +728,9 @@ describe('apiClient.pdf', () => {
       mockSuccessAPIRequest(updateResult)
 
       const template = {
-        id: 'report-template',
+        id         : 'report-template',
         description: 'Updated description',
-        styling: {
+        styling    : {
           primaryColor: '#059669'
         }
       }
@@ -706,9 +748,9 @@ describe('apiClient.pdf', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Template not found' },
+        body   : { message: 'Template not found' },
         message: 'Template not found',
-        status: 404
+        status : 404
       })
     })
 
@@ -720,9 +762,9 @@ describe('apiClient.pdf', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Template update validation failed' },
+        body   : { message: 'Template update validation failed' },
         message: 'Template update validation failed',
-        status: 422
+        status : 422
       })
     })
   })
@@ -730,8 +772,8 @@ describe('apiClient.pdf', () => {
   describe('deleteTemplate', () => {
     it('should make DELETE request to delete template', async () => {
       const deleteResult = {
-        success: true,
-        message: 'Template deleted successfully',
+        success          : true,
+        message          : 'Template deleted successfully',
         deletedTemplateId: 'old-template-123'
       }
       mockSuccessAPIRequest(deleteResult)
@@ -741,27 +783,27 @@ describe('apiClient.pdf', () => {
 
       expect(result).toEqual(deleteResult)
       expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/${appId}/console/pdf/${templateId}`,
-        body: undefined,
-        method: 'DELETE',
-        encoding: 'utf8',
-        headers: {},
-        timeout: 0,
+        path           : `http://test-host:3000/${appId}/console/pdf/${templateId}`,
+        body           : undefined,
+        method         : 'DELETE',
+        encoding       : 'utf8',
+        headers        : {},
+        timeout        : 0,
         withCredentials: false
       }])
     })
 
     it('should handle template deletion with usage statistics', async () => {
       const deleteResult = {
-        success: true,
-        message: 'Template deleted successfully',
+        success   : true,
+        message   : 'Template deleted successfully',
         statistics: {
-          totalUsages: 47,
-          lastUsed: '2024-01-10T14:30:00Z',
+          totalUsages  : 47,
+          lastUsed     : '2024-01-10T14:30:00Z',
           generatedPdfs: 47
         },
-        cleanup: {
-          backupCreated: true,
+        cleanup   : {
+          backupCreated : true,
           backupLocation: 'backups/templates/template-456_20240115.json'
         }
       }
@@ -781,9 +823,9 @@ describe('apiClient.pdf', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Template not found' },
+        body   : { message: 'Template not found' },
         message: 'Template not found',
-        status: 404
+        status : 404
       })
     })
 
@@ -795,9 +837,9 @@ describe('apiClient.pdf', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Cannot delete template currently in use' },
+        body   : { message: 'Cannot delete template currently in use' },
         message: 'Cannot delete template currently in use',
-        status: 409
+        status : 409
       })
     })
 
@@ -809,9 +851,9 @@ describe('apiClient.pdf', () => {
 
       expect(error).toBeInstanceOf(Error)
       expect({ ...error }).toEqual({
-        body: { message: 'Insufficient permissions to delete template' },
+        body   : { message: 'Insufficient permissions to delete template' },
         message: 'Insufficient permissions to delete template',
-        status: 403
+        status : 403
       })
     })
   })
