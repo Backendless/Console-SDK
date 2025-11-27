@@ -35,11 +35,12 @@ const routes = prepareRoutes({
 
   flowrunnerAiAgentsProviders: '/api/node-server/manage/flowrunner/ai-agents/providers',
 
-  startDebugSession    : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/start-session',
-  stopDebugSession     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/stop-session',
-  testMonitorHistory   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/history',
-  debugExecutionContext: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/execution-context',
-  runElementInDebugMode: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/run/element/:elementId',
+  startDebugSession     : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/start-session',
+  stopDebugSession      : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/stop-session',
+  testMonitorHistory    : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/history',
+  debugExecutionContext : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/execution-context',
+  runElementInDebugMode : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/run/element/:elementId',
+  stopTriggerInDebugMode: '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/stop/trigger/:triggerId',
 
   registerAIAssistant: '/api/app/:appId/automation/ai/assistants/register',
   aiAssistants       : '/api/app/:appId/automation/ai/assistants',
@@ -228,6 +229,11 @@ export default req => ({
 
   runElementInDebugMode(appId, flowId, versionId, elementId, body, sessionId) {
     return req.automation.post(routes.runElementInDebugMode(appId, flowId, versionId, elementId), body, sessionId)
+      .query({ sessionId })
+  },
+
+  stopTriggerInDebugMode(appId, flowId, versionId, tiggerId, sessionId) {
+    return req.automation.delete(routes.stopTriggerInDebugMode(appId, flowId, versionId, tiggerId), sessionId)
       .query({ sessionId })
   },
 
