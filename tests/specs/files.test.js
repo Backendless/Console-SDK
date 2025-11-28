@@ -120,7 +120,7 @@ describe('apiClient.files', () => {
     it('should handle path with special characters', async () => {
       const mockTotalCount = 1
       const mockData = []
-      const path = '/folder with spaces/special-chars@#$'
+      const path = '/folder with spaces/special-chars@#$&+?='
 
       mockSuccessAPIRequest(mockData)      // Data request first
       mockSuccessAPIRequest(mockTotalCount) // Count request second
@@ -128,7 +128,7 @@ describe('apiClient.files', () => {
       await filesAPI.loadDirectory(appId, path)
 
       expect(apiRequestCalls()[0].path).toBe(
-        'http://test-host:3000/test-app-id/console/files/directory/view/folder%20with%20spaces/special-chars%40%23%2524'
+        'http://test-host:3000/test-app-id/console/files/directory/view/folder%20with%20spaces/special-chars%40%23%24%26%2B%3F%3D'
       )
     })
 
