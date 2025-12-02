@@ -23,6 +23,7 @@ const routes = prepareRoutes({
   flowInstanceInitialData : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId/initial-and-static-data',
   stopInstanceExecution   : '/api/app/:appId/automation/flow/:flowId/version/:versionId/instances/:executionId/stop',
   runDebugInstance        : '/api/app/:appId/automation/flow/:flowId/version/:versionId/debug/test-monitor/instance/run-new',
+  getFlowHistoricalConfig : '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/version-history/:configId',
 
   elementExecutionInfo: '/api/app/:appId/automation/flow/:flowId/version/:versionId/analytics/instances/:executionId/element/:elementId',
   flowSlA             : '/api/app/:appId/automation/flow/:flowId/version/:versionId/sla/goals',
@@ -379,6 +380,10 @@ export default req => ({
 
   getSubFlowsWithElementsDetails(appId, versionId) {
     return req.automation.get(routes.getSubFlowsWithElementsDetails(appId, versionId))
+  },
+
+  getFlowHistoricalConfig(appId, flowId, versionId, configId) {
+    return req.automation.get(routes.getFlowHistoricalConfig(appId, flowId, versionId, configId))
   },
 })
 
