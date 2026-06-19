@@ -56,7 +56,6 @@ describe('index', () => {
       expect(client.analytics).toBeDefined()
       expect(client.apiDocs).toBeDefined()
       expect(client.apps).toBeDefined()
-      expect(client.automation).toBeDefined()
       expect(client.billing).toBeDefined()
       expect(client.bl).toBeDefined()
       expect(client.cloudCode).toBeDefined()
@@ -73,7 +72,6 @@ describe('index', () => {
       expect(client.devTeam).toBeDefined()
       expect(client.email).toBeDefined()
       expect(client.files).toBeDefined()
-      expect(client.formEditor).toBeDefined()
       expect(client.gamification).toBeDefined()
       expect(client.license).toBeDefined()
       expect(client.messaging).toBeDefined()
@@ -111,7 +109,6 @@ describe('index', () => {
         billingAuth: 'basic-auth-token',
         communityURL: 'http://community.example.com',
         sqlServiceURL: 'http://sql.example.com',
-        automationURL: 'http://automation.example.com',
         nodeApiURL: 'http://node-api.example.com',
         middleware: jest.fn()
       }
@@ -122,7 +119,6 @@ describe('index', () => {
       expect(client.request.billing).toBeDefined()
       expect(client.request.community).toBeDefined()
       expect(client.request.sqlService).toBeDefined()
-      expect(client.request.automation).toBeDefined()
       expect(client.request.nodeAPI).toBeDefined()
     })
 
@@ -176,23 +172,6 @@ describe('index', () => {
       const client = createClient(serverUrl, authKey)
       
       expect(client.request.sqlService).toBe(client.request)
-    })
-
-    it('should set up automation request with custom URL', () => {
-      const options = {
-        automationURL: 'http://automation.example.com'
-      }
-
-      const client = createClient(serverUrl, authKey, options)
-      
-      expect(client.request.automation).toBeDefined()
-      expect(client.request.automation).not.toBe(client.request)
-    })
-
-    it('should use default automation request when no automation URL provided', () => {
-      const client = createClient(serverUrl, authKey)
-      
-      expect(client.request.automation).toBe(client.request)
     })
 
     it('should set up node API request with custom URL', () => {

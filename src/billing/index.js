@@ -13,10 +13,6 @@ export function billingAPI(req) {
       return req.billing.get(routes.appBillingInfo(appId))
     },
 
-    getAutomationBillingInfo(appId) {
-      return req.billing.get(routes.automationBillingInfo(appId))
-    },
-
     getSubscriptionStatus(appId) {
       return req.billing.get(routes.subscriptionStatus(appId))
     },
@@ -27,10 +23,6 @@ export function billingAPI(req) {
 
     getAppBillingPeriodInfo(appId) {
       return req.billing.get(routes.appBillingPeriodInfo(appId))
-    },
-
-    getAutomationBillingPeriodInfo(appId) {
-      return req.billing.get(routes.automationBillingPeriodInfo(appId))
     },
 
     // TODO: seems like we do not use the function

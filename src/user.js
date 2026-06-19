@@ -22,8 +22,6 @@ const routes = prepareRoutes({
   discourseSSO      : '/console/discourse/sso',
   socialLogin       : '/console/social/oauth/:type/request_url',
 
-  devToAutomationWorkspace: '/console/automation/management/:workspaceId/activatedev',
-
   stripeConnectionAuth : '/console/community/marketplace/stripe-connect/auth',
   stripeConnectionToken: '/console/community/marketplace/stripe-connect/token',
 
@@ -137,14 +135,6 @@ class User extends BaseService {
 
   registerAndJoinAppTeam(appId, confirmationCode, userData) {
     return this.req.post(routes.devToAppTeam(appId))
-      .query({ 'confirmation-code': confirmationCode })
-      .unwrapBody(false)
-      .send(userData)
-      .then(res => contextifyWithAuthToken(res, this.context))
-  }
-
-  registerAndJoinWorkspace(workspaceId, confirmationCode, userData) {
-    return this.req.automation.post(routes.devToAutomationWorkspace(workspaceId))
       .query({ 'confirmation-code': confirmationCode })
       .unwrapBody(false)
       .send(userData)
