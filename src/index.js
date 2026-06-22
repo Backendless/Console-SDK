@@ -43,7 +43,6 @@ import chartBuilder from './chart-builder'
 import visualizations from './visualizations'
 import consolePreview from './console-preview'
 import quickApps from './quick-apps'
-import frExtensions from './fr-extensions'
 import mcpServices from './mcp-services'
 import mcpHosting from './mcp-hosting'
 import mcpApiServices from './mcp-api-services'
@@ -216,7 +215,6 @@ const createClient = (serverUrl, authKey, options) => {
     integrations        : integrations(request),
     webhooks            : webhooks(request),
     pdf                 : pdf(request),
-    frExtensions        : frExtensions(request),
     mcpServices         : mcpServices(request),
     hostingMcpServices  : mcpHosting(request),
     mcpApiServices      : mcpApiServices(request),

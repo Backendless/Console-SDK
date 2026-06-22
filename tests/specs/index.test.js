@@ -98,7 +98,6 @@ describe('index', () => {
       expect(client.quickApps).toBeDefined()
       expect(client.integrations).toBeDefined()
       expect(client.pdf).toBeDefined()
-      expect(client.frExtensions).toBeDefined()
       expect(client.mcpServices).toBeDefined()
       expect(client.system).toBeDefined()
     })
