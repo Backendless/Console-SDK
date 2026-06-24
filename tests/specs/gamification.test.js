@@ -860,44 +860,4 @@ describe('apiClient.gamification', () => {
       })
     })
   })
-
-  describe('validateFlowRunnerAchievements', () => {
-    it('should make POST request to validate flow runner achievements', async () => {
-      mockSuccessAPIRequest(successResult)
-
-      const event = {
-        type: 'flow_completion',
-        flowId: 'flow-123',
-        timestamp: Date.now()
-      }
-
-      const result = await gamificationAPI.validateFlowRunnerAchievements(appId, event)
-
-      expect(result).toEqual(successResult)
-
-      expect(apiRequestCalls()).toEqual([{
-        path: `http://test-host:3000/api/gamification/${appId}/flowrunner-achievements/validate`,
-        method: 'POST',
-        body: JSON.stringify(event),
-        encoding: 'utf8',
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 0,
-        withCredentials: false
-      }])
-    })
-
-    it('fails when server responds with non 200 status code', async () => {
-      mockFailedAPIRequest('Invalid flow event', 422)
-
-      const event = { type: 'invalid' }
-      const error = await gamificationAPI.validateFlowRunnerAchievements(appId, event).catch(e => e)
-
-      expect(error).toBeInstanceOf(Error)
-      expect({ ...error }).toEqual({
-        body: { message: 'Invalid flow event' },
-        message: 'Invalid flow event',
-        status: 422
-      })
-    })
-  })
 })

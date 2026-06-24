@@ -6,7 +6,6 @@ import activityManager from './activity-manager'
 import analytics from './analytics'
 import apiDocs from './api-docs'
 import apps from './apps'
-import automation from './automation'
 import { billingAPI } from './billing'
 import bl from './bl'
 import cloudCode from './cloud-code'
@@ -23,7 +22,6 @@ import developerProfile from './developer-profile'
 import devTeam from './dev-team'
 import email from './email'
 import files from './files'
-import formEditor from './form-editor'
 import gamification from './gamification'
 import license from './license'
 import messaging from './messaging'
@@ -45,7 +43,6 @@ import chartBuilder from './chart-builder'
 import visualizations from './visualizations'
 import consolePreview from './console-preview'
 import quickApps from './quick-apps'
-import frExtensions from './fr-extensions'
 import mcpServices from './mcp-services'
 import mcpHosting from './mcp-hosting'
 import mcpApiServices from './mcp-api-services'
@@ -149,14 +146,6 @@ const createClient = (serverUrl, authKey, options) => {
     request.sqlService = request
   }
 
-  if (options.automationURL) {
-    request.automation = contextifyRequest(context, options.automationURL, req => {
-      req.path = req.path.replace('/console/automation', '')
-    })
-  } else {
-    request.automation = request
-  }
-
   if (options.nodeApiURL) {
     request.nodeAPI = contextifyRequest(context, options.nodeApiURL, req => {
       req.path = req.path.replace('/api/node-server', '')
@@ -183,7 +172,6 @@ const createClient = (serverUrl, authKey, options) => {
     analytics           : analytics(request),
     apiDocs             : apiDocs(request),
     apps                : apps(request),
-    automation          : automation(request),
     billing             : billingAPI(request),
     bl                  : bl(request),
     cloudCode           : cloudCode(request),
@@ -200,7 +188,6 @@ const createClient = (serverUrl, authKey, options) => {
     devTeam             : devTeam(request),
     email               : email(request),
     files               : files(request),
-    formEditor          : formEditor(request),
     gamification        : gamification(request),
     license             : license(request),
     messaging           : messaging(request),
@@ -228,7 +215,6 @@ const createClient = (serverUrl, authKey, options) => {
     integrations        : integrations(request),
     webhooks            : webhooks(request),
     pdf                 : pdf(request),
-    frExtensions        : frExtensions(request),
     mcpServices         : mcpServices(request),
     hostingMcpServices  : mcpHosting(request),
     mcpApiServices      : mcpApiServices(request),

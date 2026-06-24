@@ -30,7 +30,7 @@ npm run prepare               # Full pipeline: clean, check, build
 ### Core Client Structure
 - `src/index.js` - Main entry point with `createClient()` factory function
 - Creates a context-aware request system that handles authentication and multiple service endpoints
-- Supports multiple backend URLs (billing, community, SQL service, automation, node API)
+- Supports multiple backend URLs (billing, community, SQL service, node API)
 
 ### API Module Pattern
 Each API module follows a consistent pattern:
@@ -55,7 +55,7 @@ The SDK covers these main functional areas:
 - Application management (`apps.js`)
 - User and team management (`users.js`, `dev-team.js`)
 - Data operations (`tables.js`, `data-views.js`, `sql-service.js`)
-- Cloud code and automation (`cloud-code.js`, `automation.js`)
+- Cloud code (`cloud-code.js`)
 - Security and permissions (`security.js`, `dev-permissions.js`)
 - UI and visualization tools (`ui-builder.js`, `chart-builder.js`)
 - Billing and marketplace (`billing/`, `marketplace.js`)

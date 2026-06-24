@@ -58,10 +58,6 @@ describe('apiClient.devPermissions', () => {
         expect(operations.CACHE_CONTROL_SECTION).toBe('CACHE_CONTROL_SECTION')
         expect(operations.MODIFY_CACHE_CONTROL_RULES).toBe('MODIFY_CACHE_CONTROL_RULES')
 
-        // Automation operations
-        expect(operations.AUTOMATION_SECTION).toBe('AUTOMATION_SECTION')
-        expect(operations.CREATE_MODIFY_DELETE_FLOWS).toBe('CREATE_MODIFY_DELETE_FLOWS')
-
         // Cloud Code operations
         expect(operations.CLOUD_CODE_SECTION).toBe('CLOUD_CODE_SECTION')
         expect(operations.MODIFY_BL).toBe('MODIFY_BL')
@@ -129,13 +125,6 @@ describe('apiClient.devPermissions', () => {
         // UI Builder operations
         expect(operations.ACCESS_UI_BUILDER).toBe('ACCESS_UI_BUILDER')
         expect(operations.PUBLISH_UI_CONTAINERS).toBe('PUBLISH_UI_CONTAINERS')
-
-        // FlowRunner operations
-        expect(operations.FLOWRUNNER_SECTION).toBe('FLOWRUNNER_SECTION')
-        expect(operations.EDIT_FLOW_VERSION).toBe('EDIT_FLOW_VERSION')
-        expect(operations.ACCESS_FLOW_PERMISSIONS).toBe('ACCESS_FLOW_PERMISSIONS')
-        expect(operations.LAUNCH_FLOW_VERSION).toBe('LAUNCH_FLOW_VERSION')
-        expect(operations.ACCESS_VERSION_ADMIN).toBe('ACCESS_VERSION_ADMIN')
       })
 
       it('should have all expected operation types transformed', () => {
@@ -174,7 +163,6 @@ describe('apiClient.devPermissions', () => {
         expect(DevPermissions.OperationsLabels.ASSIGN_TEAM_MEMBER_PERMISSION).toBe(3)
         expect(DevPermissions.OperationsLabels.DATA_SERVICE_SECTION).toBe('Data Service section')
         expect(DevPermissions.OperationsLabels.MODIFY_CACHE_CONTROL_RULES).toBe(116)
-        expect(DevPermissions.OperationsLabels.FLOWRUNNER_SECTION).toBe('FlowRunner')
       })
     })
   })
@@ -243,7 +231,6 @@ describe('apiClient.devPermissions', () => {
         { operation: 'APP_RESET', category: 'App Settings' },
         { operation: 'ADD_UPDATE_CREDIT_CARD', category: 'Billing' },
         { operation: 'MODIFY_CACHE_CONTROL_RULES', category: 'Cache Control' },
-        { operation: 'CREATE_MODIFY_DELETE_FLOWS', category: 'Automation' },
         { operation: 'PUBLISH_TO_MARKETPLACE', category: 'Cloud Code' },
         { operation: 'CREATE_DELETE_UPDATE_OBJECTS', category: 'Data Service' },
         { operation: 'STORED_PROCEDURE', category: 'Data Connector' },
@@ -256,8 +243,7 @@ describe('apiClient.devPermissions', () => {
         { operation: 'SEND_PUSH_BY_TEMPLATE', category: 'Messaging' },
         { operation: 'ADD_MODIFY_ASSIGN_ROLE', category: 'Security Roles' },
         { operation: 'LOGOUT_ALL_USERS', category: 'Users' },
-        { operation: 'ACCESS_UI_BUILDER', category: 'UI Builder' },
-        { operation: 'LAUNCH_FLOW_VERSION', category: 'FlowRunner' }
+        { operation: 'ACCESS_UI_BUILDER', category: 'UI Builder' }
       ]
 
       for (const testCase of testCases) {

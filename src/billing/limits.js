@@ -10,14 +10,6 @@ export function billingLimitsAPI(req) {
       return req.billing.get(routes.appPlanComponentsData(appId, 'current', 'current'))
     },
 
-    getAutomationPlanComponentsData(appId, planId, billingPeriod) {
-      return req.billing.get(routes.automationPlanComponentsData(appId, planId, billingPeriod))
-    },
-
-    getAutomationCurrentPlanComponentData(appId) {
-      return req.billing.get(routes.automationPlanComponentsData(appId, 'current', 'current'))
-    },
-
     getComponentLimit(appId, componentId) {
       return req.billing.get(routes.componentLimit(appId, componentId))
     },
