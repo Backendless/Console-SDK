@@ -36,10 +36,6 @@ const OperationsTypes = {
   CACHE_CONTROL_SECTION     : 'Cache-Control settings',
   MODIFY_CACHE_CONTROL_RULES: 116,  // Modify Cache-Control rules
 
-  /** AUTOMATION **/
-  AUTOMATION_SECTION        : 'Automation',
-  CREATE_MODIFY_DELETE_FLOWS: 117,  // Create/Rename/Delete flows
-
   /** Cloud Code */
   CLOUD_CODE_SECTION     : 'Cloud Code section',
   DELETE_FROM_MARKETPLACE: 98, // Delete from marketplace
@@ -123,13 +119,6 @@ const OperationsTypes = {
   /** UI Builder */
   ACCESS_UI_BUILDER    : 'Access UI Builder',
   PUBLISH_UI_CONTAINERS: 111,
-
-  /** FLOWRUNNER */
-  FLOWRUNNER_SECTION     : 'FlowRunner',
-  EDIT_FLOW_VERSION      : 117, // Edit Flow Version
-  ACCESS_FLOW_PERMISSIONS: 118, // Access Flow Permissions
-  LAUNCH_FLOW_VERSION    : 119, // Launch Flow Version (via console)
-  ACCESS_VERSION_ADMIN   : 120, // Access Version Admin
 }
 
 const OperationsLabels = {}

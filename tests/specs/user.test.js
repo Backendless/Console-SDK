@@ -3,7 +3,6 @@ describe('apiClient.user', () => {
   let userAPI
 
   const appId = 'test-app-id'
-  const workspaceId = 'test-workspace-id'
   const successResult = { id: 'test-id', name: 'test-user' }
 
   function mockLoginAPIRequest(response) {
@@ -521,45 +520,6 @@ describe('apiClient.user', () => {
       expect(error).toBeInstanceOf(Error)
       expect(error.status).toBe(400)
       expect(error.message).toBe('Invalid confirmation code')
-    })
-  })
-
-  describe('registerAndJoinWorkspace', () => {
-    it('should register and join automation workspace', async () => {
-      const registrationResult = { name: 'Test User', email: 'test@example.com' }
-      mockLoginAPIRequest(registrationResult)
-
-      const userData = {
-        name    : 'Test User',
-        email   : 'test@example.com',
-        password: 'password123'
-      }
-      const confirmationCode = 'workspace-confirm-123'
-
-      const result = await userAPI.registerAndJoinWorkspace(workspaceId, confirmationCode, userData)
-
-      expect(result).toEqual({ ...registrationResult, authKey: 'test-auth-key', })
-
-      expect(apiRequestCalls()).toEqual([{
-        path           : `http://test-host:3000/console/automation/management/${workspaceId}/activatedev?confirmation-code=workspace-confirm-123`,
-        method         : 'POST',
-        body           : JSON.stringify(userData),
-        encoding       : 'utf8',
-        headers        : { 'Content-Type': 'application/json' },
-        timeout        : 0,
-        withCredentials: false
-      }])
-    })
-
-    it('fails when server responds with non 200 status code', async () => {
-      mockFailedAPIRequest('Invalid workspace confirmation code', 400)
-
-      const userData = { email: 'test@example.com' }
-      const error = await userAPI.registerAndJoinWorkspace(workspaceId, 'invalid-code', userData).catch(e => e)
-
-      expect(error).toBeInstanceOf(Error)
-      expect(error.status).toBe(400)
-      expect(error.message).toBe('Invalid workspace confirmation code')
     })
   })
 
