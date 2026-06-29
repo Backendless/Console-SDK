@@ -99,9 +99,5 @@ export default req => ({
 
   getSocialPostsCollection() {
     return req.get(`${urls.gamification()}/social-posts-templates`)
-  },
-
-  validateFlowRunnerAchievements(appId, event) {
-    return req.post(`/api/gamification/${appId}/flowrunner-achievements/validate`, event)
   }
 })
